@@ -1,0 +1,15 @@
+// ============================================
+// Layout: Container
+// ============================================
+
+.l-container {
+  font-family: var(--font-family-base);
+  height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .l-container {
+    display: flex;
+    flex-direction: column;
+  }
+}

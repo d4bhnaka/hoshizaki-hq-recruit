@@ -1,0 +1,43 @@
+// ============================================
+// Base Typography
+// ============================================
+
+h1 {
+  font-size: var(--font-size-h1);
+  margin-top: 0.25em;
+}
+
+h2 {
+  margin: 0 0 1em;
+  font-weight: normal;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-h2);
+}
+
+p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  letter-spacing: -0.006em;
+  margin: 0;
+}
+
+pre {
+  font-family: var(--font-family-mono);
+  font-weight: normal;
+  background: linear-gradient(14deg, var(--color-accent-red) 0%, var(--color-accent-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+code {
+  display: inline-block;
+  background:
+    linear-gradient(66.77deg, var(--color-accent-pink-lighter) 0%, var(--color-accent-pink-light) 100%) padding-box,
+    linear-gradient(155deg, var(--color-accent-red) 0%, var(--color-accent-pink) 18%, var(--color-accent-pink-light) 45%) border-box;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid transparent;
+  padding: 6px var(--spacing-xs);
+}

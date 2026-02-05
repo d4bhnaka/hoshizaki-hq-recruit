@@ -1,0 +1,37 @@
+// ============================================
+// Main SCSS Entry Point
+// FLOCSS Architecture
+// ============================================
+
+// --------------------------------------------
+// Foundation
+// --------------------------------------------
+@use "foundation/variables";
+@use "foundation/reset";
+@use "foundation/base";
+
+// --------------------------------------------
+// Layout
+// --------------------------------------------
+@use "layout/l-container";
+@use "layout/l-main";
+@use "layout/l-background";
+
+// --------------------------------------------
+// Object - Component
+// --------------------------------------------
+@use "object/component/c-box";
+@use "object/component/c-button";
+
+// --------------------------------------------
+// Object - Project
+// --------------------------------------------
+@use "object/project/p-hero";
+@use "object/project/p-links";
+@use "object/project/p-news";
+@use "object/project/p-about";
+
+// --------------------------------------------
+// Object - Utility
+// --------------------------------------------
+// (utility classes will be added here as needed)

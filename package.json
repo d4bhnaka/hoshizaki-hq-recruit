@@ -1,0 +1,21 @@
+{
+  "name": "hoshizaki-hq-recruit",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "npm run build:scss && astro build && find dist -name '*.html' -exec npx js-beautify --type html -r {} +",
+    "build:scss": "sass src/scss/style.scss public/css/style.css --style expanded --no-source-map",
+    "watch:scss": "sass src/scss/style.scss public/css/style.css --style expanded --no-source-map --watch",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.17.1"
+  },
+  "devDependencies": {
+    "js-beautify": "^1.15.4",
+    "prettier": "^3.8.1",
+    "sass": "^1.97.3"
+  }
+}

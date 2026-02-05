@@ -1,0 +1,22 @@
+// ============================================
+// Project: Hero Section
+// ============================================
+
+.p-hero {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+@media screen and (max-width: 768px) {
+  .p-hero {
+    display: block;
+    padding-top: 10%;
+  }
+
+  .p-hero h1 {
+    line-height: 1.5;
+  }
+}

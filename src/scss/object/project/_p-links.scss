@@ -1,0 +1,32 @@
+// ============================================
+// Project: Links Section
+// ============================================
+
+.p-links {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.p-links__item {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-sm) 12px;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.p-links__item:hover {
+  color: var(--color-text-muted);
+}
+
+.p-links__item svg {
+  height: 1em;
+  margin-left: var(--spacing-xs);
+}
+
+@media screen and (max-width: 768px) {
+  .p-links {
+    flex-wrap: wrap;
+  }
+}

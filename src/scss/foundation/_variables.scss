@@ -1,0 +1,54 @@
+// ============================================
+// CSS Custom Properties
+// ============================================
+
+:root {
+  // --------------------------------------------
+  // Colors
+  // --------------------------------------------
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: rgb(78, 80, 86);
+
+  --color-white: #fff;
+  --color-white-transparent: rgba(255, 255, 255, 0.55);
+
+  --color-accent-primary: #3245ff;
+  --color-accent-secondary: #bc52ee;
+  --color-accent-pink: #f041ff;
+  --color-accent-red: #d83333;
+  --color-accent-pink-light: #f5cee7;
+  --color-accent-pink-lighter: #f3cddd;
+
+  // --------------------------------------------
+  // Typography
+  // --------------------------------------------
+  --font-family-base: Inter, Roboto, "Helvetica Neue", "Arial Nova", "Nimbus Sans", Arial, sans-serif;
+  --font-family-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+
+  --font-size-h1: 22px;
+  --font-size-h2: 20px;
+  --font-size-base: 16px;
+
+  --line-height-base: 24px;
+
+  // --------------------------------------------
+  // Spacing
+  // --------------------------------------------
+  --spacing-xs: 8px;
+  --spacing-sm: 10px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+
+  // --------------------------------------------
+  // Border Radius
+  // --------------------------------------------
+  --border-radius-sm: 8px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
+
+  // --------------------------------------------
+  // Transitions
+  // --------------------------------------------
+  --transition-fast: 0.2s;
+}
