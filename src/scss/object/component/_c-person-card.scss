@@ -51,43 +51,6 @@
   object-fit: cover;
 }
 
-.c-person-card__bubble {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 80%;
-  padding: 14px 18px;
-  background: var(--color-white);
-  border-radius: var(--border-radius-md);
-  box-shadow: 0 4px 12px rgba(0, 47, 95, 0.15);
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: -8px;
-    width: 14px;
-    height: 14px;
-    background: var(--color-white);
-    transform: translateX(-50%) rotate(45deg);
-    box-shadow: 2px 2px 4px rgba(0, 47, 95, 0.06);
-  }
-}
-
-.c-person-card__bubble-text {
-  position: relative;
-  z-index: 1;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: var(--color-brand-navy);
-  text-align: center;
-}
-
 // --------------------------------------------
 // Body text + footer
 // --------------------------------------------

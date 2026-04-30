@@ -1089,42 +1089,6 @@ img {
   object-fit: cover;
 }
 
-.c-person-card__bubble {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 80%;
-  padding: 14px 18px;
-  background: var(--color-white);
-  border-radius: var(--border-radius-md);
-  box-shadow: 0 4px 12px rgba(0, 47, 95, 0.15);
-}
-.c-person-card__bubble::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: -8px;
-  width: 14px;
-  height: 14px;
-  background: var(--color-white);
-  transform: translateX(-50%) rotate(45deg);
-  box-shadow: 2px 2px 4px rgba(0, 47, 95, 0.06);
-}
-
-.c-person-card__bubble-text {
-  position: relative;
-  z-index: 1;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: var(--color-brand-navy);
-  text-align: center;
-}
-
 .c-person-card__body {
   display: flex;
   flex-direction: column;
@@ -3963,14 +3927,23 @@ img {
 }
 
 .p-person__catch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4em;
   margin: 20px 0 0;
   font-size: 22px;
   font-weight: 700;
   color: var(--color-brand-navy);
   letter-spacing: 0.04em;
 }
-.p-person__catch span {
-  color: var(--color-brand-primary);
+
+.p-person__catch-img {
+  display: inline-block;
+  width: auto;
+  height: 1.6em;
+  vertical-align: middle;
 }
 
 .p-person__filter {

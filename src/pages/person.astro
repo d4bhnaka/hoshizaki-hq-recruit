@@ -21,59 +21,43 @@ const filters = [
 
 interface PersonCard {
   image: string;
-  quote: string;
   body: string;
   department: string;
   tags: string[];
 }
 
+const thumb = (i: number) =>
+  `${base}images/person/thumb${String((i % 4) + 1).padStart(2, "0")}.png`;
+
 const firstRow: PersonCard[] = [
   {
-    image: `${base}images/person/person-01.jpg`,
-    quote: "最新技術を学べて、プロフェッショナルとして成長できる！",
+    image: thumb(0),
     body: "ペンギンマークの会社で／働いています！と／自信をもって言える事",
     department: "開発設計職",
     tags: ["tech", "science", "male"],
   },
   {
-    image: `${base}images/person/person-02.jpg`,
-    quote: "世界を相手に「食のインフラ」を届ける醍醐味があります。",
+    image: thumb(1),
     body: "ペンギンマークの会社で／働いています！と／自信をもって言える事",
     department: "海外事業企画・海外営業",
     tags: ["admin", "humanities", "female"],
   },
   {
-    image: `${base}images/person/person-03.jpg`,
-    quote: "お客様の現場に立ち、本当に求められる営業提案を。",
+    image: thumb(2),
     body: "ペンギンマークの会社で／働いています！と／自信をもって言える事",
     department: "国内広域営業・営業企画",
     tags: ["admin", "humanities", "male"],
   },
   {
-    image: `${base}images/person/person-04.jpg`,
-    quote: "人と組織の成長を支える、縁の下の力持ち。",
+    image: thumb(3),
     body: "ペンギンマークの会社で／働いています！と／自信をもって言える事",
     department: "コーポレート",
     tags: ["admin", "humanities", "female"],
   },
 ];
 
-const serviceQuotes = [
-  "最新技術を学べて、プロフェッショナルとして成長できる！",
-  "お客様の「助かった」の一言が、何よりのやりがい。",
-  "現場で培った知識が、そのまま自分の強みになる。",
-  "仲間と助け合いながら、一台一台に責任を持つ。",
-  "毎日違う現場で、新しい発見と出会える仕事。",
-  "ペンギンマークに込められた信頼を、自分の手で届ける。",
-  "技術者として、一生磨き続けられる仕事がある。",
-  "お客様の笑顔が、次の一歩への原動力になる。",
-  "どんなトラブルも「解決できた！」の達成感に変わる。",
-  "世界中の「食」を支える現場で、誇りをもって働ける。",
-];
-
-const serviceCards: PersonCard[] = serviceQuotes.map((quote, i) => ({
-  image: `${base}images/person/person-${String(i + 5).padStart(2, "0")}.jpg`,
-  quote,
+const serviceCards: PersonCard[] = Array.from({ length: 10 }, (_, i) => ({
+  image: thumb(i + 4),
   body: "ペンギンマークの会社で／働いています！と／自信をもって言える事",
   department: "技術サービス",
   tags: ["tech", i % 2 === 0 ? "science" : "humanities", i % 3 === 0 ? "female" : "male"],
@@ -93,7 +77,13 @@ const cards: PersonCard[] = [...firstRow, ...serviceCards];
       <article class="p-person">
         <PageHero en="Person" ja="はたらく人を知る" variant="cloud">
           <p class="p-person__catch">
-            先輩たちの<span>「ここに決めた！」</span>
+            先輩たちの<img
+              class="p-person__catch-img"
+              src={`${base}images/person/copy02.svg`}
+              alt="「ここに決めた！」"
+              width="494"
+              height="62"
+            />
           </p>
         </PageHero>
 
@@ -129,7 +119,6 @@ const cards: PersonCard[] = [...firstRow, ...serviceCards];
                 >
                   <PersonCard
                     image={card.image}
-                    quote={card.quote}
                     body={card.body}
                     department={card.department}
                   />

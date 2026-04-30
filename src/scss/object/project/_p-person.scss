@@ -10,15 +10,23 @@
 
 // PageHero catch copy (passed via slot)
 .p-person__catch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4em;
   margin: 20px 0 0;
   font-size: 22px;
   font-weight: 700;
   color: var(--color-brand-navy);
   letter-spacing: 0.04em;
+}
 
-  span {
-    color: var(--color-brand-primary);
-  }
+.p-person__catch-img {
+  display: inline-block;
+  width: auto;
+  height: 1.6em;
+  vertical-align: middle;
 }
 
 // --------------------------------------------

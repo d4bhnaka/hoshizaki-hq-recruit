@@ -1,13 +1,12 @@
 ---
 interface Props {
   image: string;
-  quote: string;
   body: string;
   department: string;
   href?: string;
 }
 
-const { image, quote, body, department, href = "./detail/" } = Astro.props;
+const { image, body, department, href = "./detail/" } = Astro.props;
 
 const bodyLines = body.split("／");
 ---
@@ -26,9 +25,6 @@ const bodyLines = body.split("／");
       alt=""
       loading="lazy"
     />
-    <figcaption class="c-person-card__bubble">
-      <span class="c-person-card__bubble-text">{quote}</span>
-    </figcaption>
   </figure>
   <div class="c-person-card__body">
     <p class="c-person-card__text">
