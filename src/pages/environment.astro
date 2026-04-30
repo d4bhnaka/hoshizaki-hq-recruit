@@ -1,0 +1,408 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import BottomCta from "../components/BottomCta.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+
+const base = "../";
+
+// --------------------------------------------
+// 3a. 教育体系図 matrix
+// --------------------------------------------
+type MatrixTone = "blue" | "green" | "orange";
+
+interface MatrixCell {
+  label: string;
+  tone: MatrixTone;
+}
+
+interface MatrixRow {
+  stage: string;
+  cells: MatrixCell[][];
+}
+
+const matrixColumns = [
+  "階層別研修",
+  "専門スキル・社内検定",
+  "自己啓発支援・フォローアップ",
+];
+
+const matrixRows: MatrixRow[] = [
+  {
+    stage: "管理職",
+    cells: [
+      [
+        { label: "管理職研修", tone: "blue" },
+        { label: "階層別教育", tone: "blue" },
+      ],
+      [
+        { label: "情報処理技術者", tone: "green" },
+        { label: "QC検定", tone: "green" },
+        { label: "内部監査員", tone: "green" },
+      ],
+      [
+        { label: "語学研修", tone: "orange" },
+        { label: "資格取得補助制度", tone: "orange" },
+      ],
+    ],
+  },
+  {
+    stage: "中堅社員",
+    cells: [
+      [{ label: "階層別教育", tone: "blue" }],
+      [
+        { label: "溶接研修", tone: "green" },
+        { label: "フォークリフト運転者", tone: "green" },
+        { label: "ビジネススキル研修", tone: "green" },
+      ],
+      [
+        { label: "語学研修", tone: "orange" },
+        { label: "社内セミナー受講制度", tone: "orange" },
+      ],
+    ],
+  },
+  {
+    stage: "若手社員(1〜3年目)",
+    cells: [
+      [{ label: "階層別教育", tone: "blue" }],
+      [
+        { label: "ビジネススキル研修", tone: "green" },
+        { label: "社内検定", tone: "green" },
+      ],
+      [
+        { label: "メンター制度", tone: "orange" },
+        { label: "語学研修", tone: "orange" },
+      ],
+    ],
+  },
+  {
+    stage: "新入社員",
+    cells: [
+      [{ label: "新入社員研修", tone: "blue" }],
+      [{ label: "基礎スキル研修", tone: "green" }],
+      [{ label: "メンター制度", tone: "orange" }],
+    ],
+  },
+];
+
+// --------------------------------------------
+// 3b. Training cards
+// --------------------------------------------
+const trainingCards = [
+  {
+    title: "若手を支えるメンター制度",
+    body: "入社1年目から3年目までの新入社員を対象にメンター制度を導入しています。2年目以降のメンター指名は、部門や年次に関わらずメンティー自身のリクエストを受けて調整する柔軟な仕組みです。",
+    image: `${base}images/environment/training-01.jpg`,
+  },
+  {
+    title: "語学研修制度",
+    body: "社員の主体的な学びを促進するため、語学研修プログラムや資格取得補助制度を設けています。グローバル展開を進めるホシザキにおいて、語学力の習得を会社として後押しします。",
+    image: `${base}images/environment/training-02.jpg`,
+  },
+  {
+    title: "社内検定制度",
+    body: "各種技能検定（溶接、フォークリフト等）や情報処理技術者、QC、内部監査員などの資格取得支援、昇進資格認定を行っています。自身の専門性を可視化できる仕組みです。",
+    image: `${base}images/environment/training-03.jpg`,
+  },
+  {
+    title: "選抜型研修制度",
+    body: "次世代を担うリーダー候補を対象とした選抜型の研修プログラムを用意。外部研修への派遣や経営層との対話を通じて、経営視点と実行力を磨いていきます。",
+    image: `${base}images/environment/training-04.jpg`,
+  },
+];
+
+// --------------------------------------------
+// 4. Benefits
+// --------------------------------------------
+type BenefitIcon =
+  | "club"
+  | "retirement"
+  | "savings"
+  | "stock"
+  | "qualification"
+  | "dorm"
+  | "housing"
+  | "resort";
+
+interface BenefitItem {
+  title: string;
+  body: string;
+  icon: BenefitIcon;
+}
+
+const benefits: BenefitItem[] = [
+  {
+    title: "福利厚生倶楽部（リロクラブ）",
+    body: "多彩なサービスを優待価格で利用できる倶楽部型の福利厚生制度です。",
+    icon: "club",
+  },
+  {
+    title: "退職金制度",
+    body: "勤続年数に応じて、退職時に退職金が支給される制度です。",
+    icon: "retirement",
+  },
+  {
+    title: "財形貯蓄制度",
+    body: "給与天引により、無理なく計画的な資産形成を行える制度です。",
+    icon: "savings",
+  },
+  {
+    title: "社員持株制度",
+    body: "自社株を定期的に購入でき、中長期的な資産形成を支援します。",
+    icon: "stock",
+  },
+  {
+    title: "資格取得補助制度",
+    body: "資格取得にかかる費用を会社が補助し、自己啓発を支援します。",
+    icon: "qualification",
+  },
+  {
+    title: "独身寮制度（入寮要件あり）",
+    body: "遠方出身の若手社員が安心して生活を始められるよう、独身寮を用意しています。",
+    icon: "dorm",
+  },
+  {
+    title: "社宅制度",
+    body: "転勤時にもご家族が安心して暮らせるよう、社宅を提供しています。",
+    icon: "housing",
+  },
+  {
+    title: "会社保養施設",
+    body: "自然豊かな場所に保養所を有しており、休日をリフレッシュできます。",
+    icon: "resort",
+  },
+];
+
+// --------------------------------------------
+// 5. Office Tour
+// --------------------------------------------
+interface OfficePhoto {
+  src?: string;
+  caption: string;
+}
+
+interface OfficeBlock {
+  label: string;
+  note: string;
+  photos: OfficePhoto[];
+}
+
+const offices: OfficeBlock[] = [
+  {
+    label: "愛知（本社）",
+    note: "愛知県豊明市に所在するホシザキ本社。研究開発から製造・営業までの中枢機能が集まる拠点です。",
+    photos: [
+      { src: `${base}images/environment/aichi-01.jpg`, caption: "外観" },
+      { caption: "エントランス" },
+      { caption: "執務スペース" },
+      { caption: "食堂" },
+      { caption: "中央研究所" },
+    ],
+  },
+  {
+    label: "島根工場",
+    note: "島根県出雲市にある主力工場。広大な敷地で、業務用冷凍冷蔵庫など主力製品の生産を担います。",
+    photos: [
+      { caption: "外観" },
+      { caption: "製造ライン" },
+      { caption: "検査エリア" },
+      { caption: "休憩スペース" },
+      { caption: "屋外エリア" },
+    ],
+  },
+];
+---
+
+<Layout
+  basePath={base}
+  title="Environment｜ホシザキ本社採用サイト"
+  description="ホシザキ本社のはたらく環境。教育研修制度、福利厚生、愛知本社と島根工場の拠点情報を紹介します。"
+>
+  <div class="l-container">
+    <Header basePath={base} />
+    <main class="l-main">
+      <article class="p-env">
+        <PageHero en="Environment" ja="はたらく環境を知る" variant="cloud" />
+
+        <!-- Banner image -->
+        <section class="p-env__banner" aria-hidden="true">
+          <div class="p-env__banner-inner">
+            <img
+              class="p-env__banner-image"
+              src={`${base}images/environment/banner.jpg`}
+              alt=""
+              loading="lazy"
+              onerror="this.style.display='none'"
+            />
+            <p class="p-env__banner-placeholder">ホシザキ株式会社</p>
+          </div>
+        </section>
+
+        <!-- Training -->
+        <section class="p-env__section p-env__section--training" aria-labelledby="env-training-title">
+          <div class="p-env__section-inner">
+            <SectionHeading
+              id="env-training-title"
+              en="Training"
+              ja="教育研修制度"
+              note="ホシザキでは、新人をしっかりと育成し長く働ける体制を整えています。"
+            />
+
+            <!-- 3a. Matrix -->
+            <div class="p-env-matrix" role="table" aria-label="教育体系図">
+              <div class="p-env-matrix__row p-env-matrix__row--head" role="row">
+                <div class="p-env-matrix__cell p-env-matrix__cell--corner" role="columnheader">
+                  キャリアステージ
+                </div>
+                {
+                  matrixColumns.map((col) => (
+                    <div class="p-env-matrix__cell p-env-matrix__cell--head" role="columnheader">
+                      {col}
+                    </div>
+                  ))
+                }
+              </div>
+              {
+                matrixRows.map((row) => (
+                  <div class="p-env-matrix__row" role="row">
+                    <div class="p-env-matrix__cell p-env-matrix__cell--stage" role="rowheader">
+                      {row.stage}
+                    </div>
+                    {row.cells.map((group) => (
+                      <div class="p-env-matrix__cell" role="cell">
+                        <ul class="p-env-matrix__chips">
+                          {group.map((chip) => (
+                            <li class={`p-env-matrix__chip p-env-matrix__chip--${chip.tone}`}>
+                              {chip.label}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ))
+              }
+            </div>
+
+            <!-- 3b. Training cards -->
+            <ul class="p-env-training__list">
+              {
+                trainingCards.map((card) => (
+                  <li class="p-env-training__item">
+                    <figure class="p-env-training__thumb">
+                      <img
+                        src={card.image}
+                        alt=""
+                        loading="lazy"
+                        onerror="this.style.visibility='hidden'"
+                      />
+                    </figure>
+                    <div class="p-env-training__body">
+                      <h3 class="p-env-training__title">{card.title}</h3>
+                      <p class="p-env-training__text">{card.body}</p>
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </section>
+
+        <!-- Benefits -->
+        <section class="p-env__section p-env__section--benefits" aria-labelledby="env-benefits-title">
+          <div class="p-env__section-inner">
+            <SectionHeading
+              id="env-benefits-title"
+              en="Benefits"
+              ja="福利厚生"
+              note="ホシザキの充実した福利厚生制度の一部をご紹介します。"
+            />
+
+            <ul class="p-env-benefits__list">
+              {
+                benefits.map((item) => (
+                  <li class="p-env-benefits__item">
+                    <div
+                      class={`p-env-benefits__icon p-env-benefits__icon--${item.icon}`}
+                      aria-hidden="true"
+                    >
+                      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                        <circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="2" />
+                        <path
+                          d="M22 32h20M32 22v20"
+                          stroke="currentColor"
+                          stroke-width="2.5"
+                          stroke-linecap="round"
+                        />
+                      </svg>
+                    </div>
+                    <h3 class="p-env-benefits__title">{item.title}</h3>
+                    <p class="p-env-benefits__text">{item.body}</p>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </section>
+
+        <!-- Office Tour -->
+        <section class="p-env__section p-env__section--office" aria-labelledby="env-office-title">
+          <div class="p-env__section-inner">
+            <SectionHeading
+              id="env-office-title"
+              en="Office Tour"
+              ja="拠点紹介"
+              note="愛知本社と島根工場のはたらく環境を紹介します。"
+            />
+
+            {
+              offices.map((office) => (
+                <div class="p-env-office__block">
+                  <header class="p-env-office__header">
+                    <h3 class="p-env-office__label">{office.label}</h3>
+                    <p class="p-env-office__note">{office.note}</p>
+                  </header>
+                  <div class="p-env-office__scroller">
+                    <ul class="p-env-office__list">
+                      {office.photos.map((photo) => (
+                        <li class="p-env-office__item">
+                          <figure class="p-env-office__thumb">
+                            {photo.src ? (
+                              <img
+                                src={photo.src}
+                                alt=""
+                                loading="lazy"
+                                onerror="this.style.visibility='hidden'"
+                              />
+                            ) : (
+                              <span class="p-env-office__placeholder" aria-hidden="true">
+                                PHOTO
+                              </span>
+                            )}
+                            <figcaption class="p-env-office__caption">{photo.caption}</figcaption>
+                          </figure>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+
+        <!-- Bottom CTA -->
+        <BottomCta basePath={base} />
+
+        <!-- Breadcrumb -->
+        <div class="p-env__breadcrumb">
+          <Breadcrumb basePath={base} items={[{ label: "はたらく環境を知る" }]} />
+        </div>
+      </article>
+    </main>
+    <Footer basePath={base} />
+  </div>
+</Layout>

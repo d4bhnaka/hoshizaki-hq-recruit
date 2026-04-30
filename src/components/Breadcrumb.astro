@@ -1,0 +1,38 @@
+---
+interface Crumb {
+  href?: string;
+  label: string;
+}
+
+interface Props {
+  basePath?: string;
+  items: Crumb[];
+}
+
+const { basePath = "./", items } = Astro.props;
+
+const trail: Crumb[] = [{ href: basePath, label: "採用TOP" }, ...items];
+---
+
+<nav class="c-breadcrumb" aria-label="パンくず">
+  <ol class="c-breadcrumb__list">
+    {
+      trail.map((crumb, index) => (
+        <li class="c-breadcrumb__item">
+          {crumb.href && index < trail.length - 1 ? (
+            <a class="c-breadcrumb__link" href={crumb.href}>
+              {crumb.label}
+            </a>
+          ) : (
+            <span class="c-breadcrumb__current">{crumb.label}</span>
+          )}
+          {index < trail.length - 1 && (
+            <span class="c-breadcrumb__sep" aria-hidden="true">
+              ›
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

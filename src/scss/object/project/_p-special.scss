@@ -1,0 +1,189 @@
+// ============================================
+// Project: SPECIAL CONTENTS Index
+// ============================================
+
+.p-special {
+  display: block;
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background: linear-gradient(180deg, #d9ecf7 0%, #eef6fb 100%);
+  overflow: hidden;
+}
+
+// --------------------------------------------
+// Hero
+// --------------------------------------------
+.p-special__hero {
+  position: relative;
+  padding: 160px 64px 120px;
+  background: linear-gradient(180deg, #0d3d7a 0%, #0a69d9 100%);
+  color: var(--color-text-inverse);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.p-special__hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+  opacity: 0.25;
+  filter: blur(1px);
+}
+
+.p-special__hero-inner {
+  position: relative;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+}
+
+.p-special__hero-title {
+  font-family: var(--font-family-en);
+  font-size: clamp(80px, 10vw, 168px);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+  margin: 0;
+}
+
+.p-special__hero-sub {
+  margin-top: 24px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+// --------------------------------------------
+// Cards
+// --------------------------------------------
+.p-special__cards {
+  padding: 80px 64px;
+}
+
+.p-special__list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  list-style: none;
+  padding: 0;
+}
+
+.p-special__card {
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  background: var(--color-brand-navy-deep);
+}
+
+.p-special__card-link {
+  position: relative;
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  min-height: 260px;
+  color: var(--color-text-inverse);
+  transition: transform var(--transition-base);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.p-special__card-panel {
+  position: relative;
+  padding: 40px 36px;
+  background: rgba(10, 20, 40, 0.92);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  z-index: 1;
+}
+
+.p-special__card-category {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-brand-blue-200);
+  margin: 0;
+}
+
+.p-special__card-title {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.5;
+  margin: 0;
+  color: var(--color-text-inverse);
+}
+
+.p-special__card-sub {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-brand-blue-200);
+  margin: 0;
+}
+
+.p-special__card-avatars {
+  display: inline-flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.p-special__card-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-brand-blue-300);
+  border: 2px solid var(--color-brand-navy-deep);
+}
+
+.p-special__card-more {
+  position: absolute;
+  right: 24px;
+  bottom: 20px;
+  font-family: var(--font-family-en);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--color-text-inverse);
+}
+
+.p-special__card-photo {
+  background-size: cover;
+  background-position: center;
+  background-color: var(--color-brand-blue-300);
+  filter: brightness(0.9);
+}
+
+.p-special__card--crosstalk .p-special__card-photo {
+  background-color: #3d6aa0;
+}
+
+.p-special__card--project .p-special__card-photo {
+  background-color: #244168;
+}
+
+.p-special__card--talk .p-special__card-photo {
+  background-color: #2f4766;
+}
+
+@media screen and (max-width: 960px) {
+  .p-special__hero {
+    padding: 120px 20px 80px;
+  }
+
+  .p-special__cards {
+    padding: 48px 16px;
+  }
+
+  .p-special__card-link {
+    grid-template-columns: 1fr;
+  }
+
+  .p-special__card-photo {
+    min-height: 180px;
+  }
+}

@@ -1,0 +1,190 @@
+// ============================================
+// Project: Requirement Page
+// Figma node: 242:71
+// ============================================
+
+.p-req {
+  display: block;
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background: var(--color-white);
+  overflow: hidden;
+}
+
+// --------------------------------------------
+// Intro
+// --------------------------------------------
+.p-req__intro {
+  padding: 80px 32px 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.p-req__intro-text {
+  max-width: 800px;
+  width: 100%;
+  margin: 0;
+  font-size: 16px;
+  line-height: 2;
+  color: var(--color-text-primary);
+  text-align: left;
+}
+
+// --------------------------------------------
+// Section wrapper
+// --------------------------------------------
+.p-req__section {
+  padding: 40px 32px 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.p-req__section + .p-req__section {
+  padding-top: 24px;
+}
+
+// --------------------------------------------
+// Label (section sub-heading with blue square icon)
+// --------------------------------------------
+.p-req__label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 24px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: 0.04em;
+}
+
+.p-req__icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: var(--color-brand-cyan);
+  flex-shrink: 0;
+}
+
+.p-req__label-text {
+  display: inline-block;
+}
+
+// --------------------------------------------
+// Card
+// --------------------------------------------
+.p-req__card {
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 24px 40px;
+}
+
+.p-req__card--note {
+  padding: 32px 40px;
+}
+
+// --------------------------------------------
+// Table (dt / dd)
+// --------------------------------------------
+.p-req__table {
+  margin: 0;
+  padding: 0;
+}
+
+.p-req__row {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+  align-items: baseline;
+  padding: 20px 0;
+  border-bottom: 1px dotted var(--color-border);
+}
+
+.p-req__row:last-child {
+  border-bottom: none;
+}
+
+.p-req__term {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  letter-spacing: 0.04em;
+}
+
+.p-req__desc {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--color-text-primary);
+}
+
+// --------------------------------------------
+// Note (初期配属について)
+// --------------------------------------------
+.p-req__note {
+  margin: 0;
+  font-size: 16px;
+  line-height: 2;
+  color: var(--color-text-primary);
+}
+
+// --------------------------------------------
+// Breadcrumb wrapper
+// --------------------------------------------
+.p-req__breadcrumb {
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// --------------------------------------------
+// Responsive
+// --------------------------------------------
+@media screen and (max-width: 768px) {
+  .p-req__intro {
+    padding: 48px 20px 24px;
+  }
+
+  .p-req__intro-text {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  .p-req__section {
+    padding: 24px 20px 40px;
+  }
+
+  .p-req__label {
+    font-size: 18px;
+  }
+
+  .p-req__card {
+    padding: 16px 20px;
+  }
+
+  .p-req__card--note {
+    padding: 20px;
+  }
+
+  .p-req__row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 16px 0;
+  }
+
+  .p-req__term {
+    font-size: 14px;
+  }
+
+  .p-req__desc,
+  .p-req__note {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .p-req__breadcrumb {
+    padding: 20px;
+  }
+}

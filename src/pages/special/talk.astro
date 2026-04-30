@@ -1,0 +1,88 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import BottomCta from "../../components/BottomCta.astro";
+
+const base = "../../";
+
+const qa = [
+  {
+    q: "ホシザキの『技術力』って、どのような面で評価されているのでしょうか？",
+    who: "開発責任者",
+    body: "製氷機からスタートした冷却技術は、世代を重ねるごとに精度と省エネ性を磨いてきました。『止まらない』『長持ち』『静か』という評価は、地道な研究と現場の声を反映し続けた積み重ねです。",
+    image: `${base}images/special/talk-scene-01.jpg`,
+  },
+  {
+    q: "では『次世代の挑戦』、開発部門が向かう『食』の未来像とは、どういったものでしょうか？",
+    who: "開発責任者",
+    body: "食のロスをゼロに近づけるための『先読み保存技術』と、医療・農業・物流へ広がる冷却ネットワークの構築です。冷却は単なる裏方ではなく、社会インフラそのもの。ホシザキはその未来をリードしたいと考えています。",
+    image: `${base}images/special/talk-scene-02.jpg`,
+  },
+  {
+    q: "最後に学生の皆様へ、ホシザキで『働くこと』のやりがいとは、何でしょうか？",
+    who: "開発責任者",
+    body: "自分の関わった技術が、世の中の『当たり前』を支えているという実感です。派手さはないかもしれませんが、10年後・20年後にも残る仕事に携われることが、エンジニア冥利に尽きると思います。",
+    image: `${base}images/special/talk-scene-03.jpg`,
+  },
+];
+---
+
+<Layout
+  basePath={base}
+  title="ホシザキの技術が作る未来｜スペシャルトーク｜ホシザキ本社採用サイト"
+  description="ホシザキの開発責任者による特別トーク。製氷機から世界を支える技術、そしてホシザキの技術が描く食の未来について語ります。"
+>
+  <div class="l-container">
+    <Header basePath={base} />
+    <main class="l-main">
+      <article class="p-special-talk">
+        <section class="p-special-talk__hero">
+          <figure class="p-special-talk__hero-image">
+            <img src={`${base}images/special/talk-hero.jpg`} alt="" loading="eager" />
+          </figure>
+          <div class="p-special-talk__hero-body">
+            <p class="p-special-talk__kicker">スペシャルトーク</p>
+            <h1 class="p-special-talk__title">ホシザキの技術が作る未来</h1>
+            <p class="p-special-talk__lead">
+              ホシザキの開発責任者による特別トーク。世代を超えて磨かれてきた技術と、これからの『食』の未来を語ります。
+            </p>
+          </div>
+        </section>
+
+        <div class="p-special-talk__body">
+          {
+            qa.map((block) => (
+              <section class="p-special-talk__qa">
+                <h2 class="p-special-talk__q">— {block.q}</h2>
+                <p class="p-special-talk__answer-who">{block.who}</p>
+                <p class="p-special-talk__answer-body">{block.body}</p>
+                <figure class="p-special-talk__scene">
+                  <img src={block.image} alt="" loading="lazy" />
+                </figure>
+              </section>
+            ))
+          }
+        </div>
+
+        <p class="p-special-talk__back">
+          <a href={`${base}special/`} class="p-special-talk__back-link">
+            SPECIAL CONTENTS 一覧へ
+            <span aria-hidden="true">›</span>
+          </a>
+        </p>
+
+        <BottomCta basePath={base} />
+        <Breadcrumb
+          basePath={base}
+          items={[
+            { href: `${base}special/`, label: "スペシャルコンテンツ" },
+            { label: "ホシザキの技術が作る未来" },
+          ]}
+        />
+      </article>
+    </main>
+    <Footer basePath={base} />
+  </div>
+</Layout>

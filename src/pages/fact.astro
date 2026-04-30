@@ -1,0 +1,270 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import BottomCta from "../components/BottomCta.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+
+const base = "../";
+
+interface GrowthStat {
+  label: string;
+  number: string;
+  unit?: string;
+  prefix?: string;
+  suffix?: string;
+  supplement?: string;
+  variant?: "pie";
+  span?: "1" | "2";
+}
+
+const growthStats: GrowthStat[] = [
+  {
+    label: "歴史",
+    prefix: "創業",
+    number: "1947",
+    unit: "年",
+  },
+  {
+    label: "業界シェア",
+    prefix: "製氷機 国内シェア",
+    number: "No.1",
+  },
+  {
+    label: "製品機種",
+    number: "600",
+    unit: "種以上",
+  },
+  {
+    label: "受賞歴",
+    number: "15",
+    unit: "回",
+  },
+  {
+    label: "売上高",
+    number: "4,858",
+    unit: "億",
+    suffix: "9,000万円（連結）",
+    supplement: "確かな技術力とサポート体制を武器に、持続的な成長を続けています。",
+    span: "2",
+  },
+  {
+    label: "海外売上比率",
+    number: "45.9",
+    unit: "%",
+    supplement: "売上の約半分は海外から。真のグローバル企業として、海外市場のさらなる開拓を進めています。",
+    variant: "pie",
+    span: "2",
+  },
+  {
+    label: "社員数",
+    number: "1,157",
+    unit: "名",
+    suffix: "（単体）",
+  },
+  {
+    label: "国内ネットワーク",
+    number: "427",
+    unit: "ヶ所",
+    suffix: "の営業拠点",
+  },
+  {
+    label: "グローバル展開",
+    prefix: "世界",
+    number: "60",
+    unit: "ヶ国以上",
+    suffix: "のネットワーク",
+  },
+];
+
+interface BenefitStat {
+  label: string;
+  number: string;
+  unit?: string;
+  suffix?: string;
+  secondary?: { label: string; number: string; unit: string };
+  description: string;
+}
+
+const benefitStats: BenefitStat[] = [
+  {
+    label: "平均勤続年数",
+    number: "17.5",
+    unit: "年",
+    description:
+      "社員が安心してキャリアを築ける環境があります。腰を据えて専門性を高め、長く活躍できるのがホシザキの強みです。",
+  },
+  {
+    label: "平均残業時間",
+    number: "13.1",
+    unit: "時間",
+    suffix: "/月",
+    description:
+      "効率的な働き方を推進。仕事の質を追求しながら、プライベートの時間も確保できる風土です。",
+  },
+  {
+    label: "有給休暇取得率",
+    number: "68.4",
+    unit: "%",
+    description:
+      "「休むときはしっかり休む」リフレッシュを推奨し、オンとオフの切り替えを大切にしています。",
+  },
+  {
+    label: "育児休暇取得率",
+    number: "100",
+    unit: "%",
+    suffix: "（女性）",
+    secondary: { label: "男性", number: "51.9", unit: "%" },
+    description:
+      "ライフステージが変わっても、キャリアを諦める必要はありません。特に男性の取得率も上昇しており、互いにサポートし合う文化が根付いています。",
+  },
+];
+---
+
+<Layout
+  basePath={base}
+  title="What's HOSHIZAKI｜ホシザキ本社採用サイト"
+  description="数字で見るホシザキ。国内シェアNo.1の基盤と世界60ヶ国以上のネットワーク、社員の働きやすさを支える環境を数字で紹介します。"
+>
+  <div class="l-container">
+    <Header basePath={base} />
+    <main class="l-main">
+      <article class="p-fact">
+        <PageHero en="What's HOSHIZAKI" ja="数字で見るホシザキ" variant="cloud" />
+
+        <!-- Banner image -->
+        <section class="p-fact__banner" aria-hidden="true">
+          <div class="p-fact__banner-inner">
+            <div class="p-fact__banner-image">
+              <img
+                src={`${base}images/top/bg-city.png`}
+                alt=""
+                class="p-fact__banner-city"
+                loading="lazy"
+              />
+              <img
+                src={`${base}images/top/ap_03.png`}
+                alt=""
+                class="p-fact__banner-penguin"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Intro -->
+        <section class="p-fact__intro">
+          <p class="p-fact__intro-text">
+            街中で見かける「ペンギンマーク」。その親しみやすさの裏側には、あなたの想像を超えるダイナミックな世界が広がっています。<br
+            />
+            国内シェアNo.1という盤石な基盤、世界五大陸を舞台にしたグローバルな躍進、そして一人ひとりの挑戦を支える確かな環境。<br
+            />
+            まだ見ぬホシザキの「驚き」と「可能性」を、確かな数字で解き明かします。
+          </p>
+        </section>
+
+        <!-- Section A: Growth -->
+        <section class="p-fact__section p-fact__section--growth" aria-labelledby="fact-growth-title">
+          <div class="p-fact__section-inner">
+            <SectionHeading
+              id="fact-growth-title"
+              en="Growth"
+              ja="HOSHIZAKIの成長を知る"
+              note="圧倒的なシェアとグローバルな広がりが、挑戦のフィールドです。"
+            />
+
+            <ul class="p-fact__grid p-fact__grid--growth">
+              {
+                growthStats.map((stat) => (
+                  <li
+                    class={`p-fact__grid-item${stat.span ? ` p-fact__grid-item--span-${stat.span}` : ""}`}
+                  >
+                    <article class="c-stat-card">
+                      <p class="c-stat-card__label">{stat.label}</p>
+                      <div class="c-stat-card__body">
+                        <p class="c-stat-card__figure">
+                          {stat.prefix && <span class="c-stat-card__prefix">{stat.prefix}</span>}
+                          <span class="c-stat-card__number">{stat.number}</span>
+                          {stat.unit && <span class="c-stat-card__unit">{stat.unit}</span>}
+                          {stat.suffix && <span class="c-stat-card__suffix">{stat.suffix}</span>}
+                        </p>
+                        {stat.variant === "pie" && (
+                          <div class="c-stat-card__pie" aria-hidden="true">
+                            <div class="c-stat-card__pie-chart" />
+                            <ul class="c-stat-card__pie-legend">
+                              <li class="c-stat-card__pie-legend-item c-stat-card__pie-legend-item--overseas">
+                                海外 45.9%
+                              </li>
+                              <li class="c-stat-card__pie-legend-item c-stat-card__pie-legend-item--domestic">
+                                国内 54.1%
+                              </li>
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                      {stat.supplement && (
+                        <p class="c-stat-card__supplement">{stat.supplement}</p>
+                      )}
+                    </article>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </section>
+
+        <!-- Section B: Benefits -->
+        <section class="p-fact__section p-fact__section--benefits" aria-labelledby="fact-benefits-title">
+          <div class="p-fact__section-inner">
+            <SectionHeading
+              id="fact-benefits-title"
+              en="Benefits"
+              ja="長く、自分らしく働く【環境・福利厚生】"
+              note="安定した経営基盤があるからこそ、一人ひとりの生活も大切にできます。"
+            />
+
+            <ul class="p-fact__grid p-fact__grid--benefits">
+              {
+                benefitStats.map((stat) => (
+                  <li class="p-fact__grid-item">
+                    <article class="c-stat-card c-stat-card--benefit">
+                      <p class="c-stat-card__label">{stat.label}</p>
+                      <div class="c-stat-card__body">
+                        <p class="c-stat-card__figure">
+                          <span class="c-stat-card__number">{stat.number}</span>
+                          {stat.unit && <span class="c-stat-card__unit">{stat.unit}</span>}
+                          {stat.suffix && <span class="c-stat-card__suffix">{stat.suffix}</span>}
+                        </p>
+                        {stat.secondary && (
+                          <p class="c-stat-card__figure c-stat-card__figure--secondary">
+                            <span class="c-stat-card__secondary-label">{stat.secondary.label}</span>
+                            <span class="c-stat-card__number c-stat-card__number--sm">
+                              {stat.secondary.number}
+                            </span>
+                            <span class="c-stat-card__unit">{stat.secondary.unit}</span>
+                          </p>
+                        )}
+                      </div>
+                      <p class="c-stat-card__description">{stat.description}</p>
+                    </article>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </section>
+
+        <!-- Breadcrumb -->
+        <div class="p-fact__breadcrumb">
+          <Breadcrumb basePath={base} items={[{ label: "数字とキーワードで見るホシザキ" }]} />
+        </div>
+
+        <!-- Bottom CTA -->
+        <BottomCta basePath={base} />
+      </article>
+    </main>
+    <Footer basePath={base} />
+  </div>
+</Layout>

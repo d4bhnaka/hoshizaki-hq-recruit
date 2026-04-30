@@ -1,0 +1,144 @@
+// ============================================
+// c-person-card : Reusable person card (grid item)
+// ============================================
+
+.c-person-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 32px rgba(0, 47, 95, 0.12);
+  }
+}
+
+// --------------------------------------------
+// Photo + speech bubble
+// --------------------------------------------
+.c-person-card__photo {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--color-brand-blue-100);
+}
+
+.c-person-card__photo-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(14px) brightness(0.9);
+  transform: scale(1.15);
+}
+
+.c-person-card__photo-img {
+  position: relative;
+  display: block;
+  width: 70%;
+  height: 100%;
+  margin: 0 auto;
+  object-fit: cover;
+}
+
+.c-person-card__bubble {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 80%;
+  padding: 14px 18px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 4px 12px rgba(0, 47, 95, 0.15);
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    width: 14px;
+    height: 14px;
+    background: var(--color-white);
+    transform: translateX(-50%) rotate(45deg);
+    box-shadow: 2px 2px 4px rgba(0, 47, 95, 0.06);
+  }
+}
+
+.c-person-card__bubble-text {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--color-brand-navy);
+  text-align: center;
+}
+
+// --------------------------------------------
+// Body text + footer
+// --------------------------------------------
+.c-person-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px 20px 18px;
+  gap: 14px;
+}
+
+.c-person-card__text {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.7;
+  color: var(--color-text-primary);
+}
+
+.c-person-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-brand-blue-100);
+}
+
+.c-person-card__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: var(--color-brand-blue-100);
+  color: var(--color-brand-primary);
+  border-radius: var(--border-radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.c-person-card__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--border-radius-pill);
+  background: var(--color-brand-primary);
+  color: var(--color-white);
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 700;
+}

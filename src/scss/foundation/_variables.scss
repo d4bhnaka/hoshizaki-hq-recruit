@@ -4,33 +4,51 @@
 
 :root {
   // --------------------------------------------
-  // Colors
+  // Brand Colors (Hoshizaki)
   // --------------------------------------------
+  --color-brand-navy: #002f5f;
+  --color-brand-navy-deep: #001f40;
+  --color-brand-primary: #0a69d9;
+  --color-brand-cyan: #00a0e9;
+  --color-brand-blue-50: #f3f8fc;
+  --color-brand-blue-100: #e5f0fa;
+  --color-brand-blue-200: #cfe3f4;
+  --color-brand-blue-300: #9cc3e4;
+  --color-brand-blue-400: #5a9bd1;
+  --color-brand-ice: #b9d9ee;
+  --color-brand-magenta: #ff2d9a;
+  --color-bg-sky: #eaf4fc;
+  --color-bg-cloud: #d4ebf8;
+  --color-bg-page: #e8f3fb;
+  --color-bg-light: #f3faff;
+
   --color-text-primary: #111827;
   --color-text-secondary: #4b5563;
   --color-text-muted: rgb(78, 80, 86);
+  --color-text-inverse: #ffffff;
 
   --color-white: #fff;
   --color-white-transparent: rgba(255, 255, 255, 0.55);
-
-  --color-accent-primary: #3245ff;
-  --color-accent-secondary: #bc52ee;
-  --color-accent-pink: #f041ff;
-  --color-accent-red: #d83333;
-  --color-accent-pink-light: #f5cee7;
-  --color-accent-pink-lighter: #f3cddd;
+  --color-border: #d0d7de;
 
   // --------------------------------------------
   // Typography
   // --------------------------------------------
-  --font-family-base: Inter, Roboto, "Helvetica Neue", "Arial Nova", "Nimbus Sans", Arial, sans-serif;
+  --font-family-base: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, system-ui, sans-serif;
+  --font-family-en: "Montserrat", "Helvetica Neue", Arial, sans-serif;
   --font-family-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
 
   --font-size-h1: 22px;
   --font-size-h2: 20px;
   --font-size-base: 16px;
 
-  --line-height-base: 24px;
+  --line-height-base: 1.8;
+
+  // --------------------------------------------
+  // Layout
+  // --------------------------------------------
+  --page-max-width: 1600px;
+  --content-max-width: 1200px;
 
   // --------------------------------------------
   // Spacing
@@ -39,6 +57,9 @@
   --spacing-sm: 10px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 64px;
+  --spacing-3xl: 96px;
 
   // --------------------------------------------
   // Border Radius
@@ -46,9 +67,17 @@
   --border-radius-sm: 8px;
   --border-radius-md: 10px;
   --border-radius-lg: 16px;
+  --border-radius-xl: 24px;
+  --border-radius-pill: 9999px;
+
+  // --------------------------------------------
+  // Shadows
+  // --------------------------------------------
+  --shadow-card: 0 4px 24px rgba(0, 47, 95, 0.08);
 
   // --------------------------------------------
   // Transitions
   // --------------------------------------------
   --transition-fast: 0.2s;
+  --transition-base: 0.3s ease;
 }

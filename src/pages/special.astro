@@ -1,0 +1,90 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import BottomCta from "../components/BottomCta.astro";
+import { specialStories } from "../data/specialStories";
+
+const base = "../";
+
+const cards = specialStories.map((story) => ({
+  href: `./${story.slug}/`,
+  category: story.category,
+  titleLines: story.titleLines,
+  sub: story.sub,
+  bg: `${base}${story.bg}`,
+  avatars: story.avatars,
+  modifier: story.slug,
+}));
+---
+
+<Layout
+  basePath={base}
+  title="スペシャルコンテンツ｜ホシザキ本社採用サイト"
+  description="ホシザキをさらに深く知るスペシャルコンテンツ。若手社員のクロストーク、開発プロジェクトストーリー、開発責任者によるスペシャルトークを掲載。"
+>
+  <div class="l-container">
+    <Header basePath={base} />
+    <main class="l-main">
+      <article class="p-special">
+        <!-- Hero -->
+        <section class="p-special__hero" aria-labelledby="special-hero-title">
+          <div
+            class="p-special__hero-bg"
+            style={`background-image: url('${base}images/top/top_penguins.png');`}
+            aria-hidden="true"
+          >
+          </div>
+          <div class="p-special__hero-inner">
+            <h1 class="p-special__hero-title" id="special-hero-title">SPECIAL<br />CONTENTS</h1>
+            <p class="p-special__hero-sub">ホシザキをさらに深く知るスペシャルコンテンツ</p>
+          </div>
+        </section>
+
+        <!-- Cards -->
+        <section class="p-special__cards" aria-label="スペシャルコンテンツ一覧">
+          <ul class="p-special__list">
+            {
+              cards.map((card) => (
+                <li class={`p-special__card p-special__card--${card.modifier}`}>
+                  <a class="p-special__card-link" href={card.href}>
+                    <div class="p-special__card-panel">
+                      <p class="p-special__card-category">{card.category}</p>
+                      <h2 class="p-special__card-title">
+                        {card.titleLines.map((line, i) => (
+                          <>
+                            {line}
+                            {i < card.titleLines.length - 1 && <br />}
+                          </>
+                        ))}
+                      </h2>
+                      <p class="p-special__card-sub">{card.sub}</p>
+                      <div class="p-special__card-avatars" aria-hidden="true">
+                        {Array.from({ length: card.avatars }).map(() => (
+                          <span class="p-special__card-avatar" />
+                        ))}
+                      </div>
+                      <span class="p-special__card-more">
+                        READ MORE <span aria-hidden="true">→</span>
+                      </span>
+                    </div>
+                    <div
+                      class="p-special__card-photo"
+                      style={`background-image: url('${card.bg}');`}
+                      aria-hidden="true"
+                    />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <BottomCta basePath={base} />
+        <Breadcrumb basePath={base} items={[{ label: "スペシャルコンテンツ" }]} />
+      </article>
+    </main>
+    <Footer basePath={base} />
+  </div>
+</Layout>

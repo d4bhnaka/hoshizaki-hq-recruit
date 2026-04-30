@@ -1,0 +1,274 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const base = "../";
+
+const courses = [
+  {
+    image: `${base}images/internship/course-01.jpg`,
+    tag: "5Days",
+    title: "【理系】開発設計職5Daysインターンシップ（機械設計コース／制御設計コース）",
+  },
+  {
+    image: `${base}images/internship/course-02.jpg`,
+    tag: "2Days",
+    title: "【理系】2Days仕事体験　工場技術コース（愛知本社）",
+  },
+  {
+    image: `${base}images/internship/course-03.jpg`,
+    tag: "1Day",
+    title: "【理系】1Day仕事体験　電子設計コース（WEB）",
+  },
+  {
+    image: `${base}images/internship/course-04.jpg`,
+    tag: "1Day",
+    title: "【理系】1Day仕事体験　機械設計コース（WEB）",
+  },
+];
+
+const points = [
+  {
+    num: "01",
+    title: "「1台丸ごと」を生み出す開発体験",
+    body: "少人数チームで開発の「1から10まで」に携わり、歯車ではないモノづくりの醍醐味を味わう。",
+  },
+  {
+    num: "02",
+    title: "最先端の開発拠点「中央研究所」が舞台",
+    body: "プロが使用するCADシステムや試験室など、実際の開発環境で実務レベルの課題に没頭する。",
+  },
+  {
+    num: "03",
+    title: "第一線のプロによる個別フィードバック",
+    body: "最終日の報告会では、現場で活躍する社員が学生一人ひとりに本気のフィードバックを実施。",
+  },
+];
+
+const programDays = [
+  {
+    day: "DAY 1",
+    title: "インプットと現場理解",
+    body: "会社紹介、工場・試験室見学、オリエンテーション",
+  },
+  {
+    day: "DAY 2〜4",
+    title: "設計開発・実務体験",
+    body: "社員とのミーティング同席、実際の製品（製氷機や冷蔵庫等）の動作観察、図面作成、開発試験",
+  },
+  {
+    day: "DAY 5",
+    title: "アウトプットとフィードバック",
+    body: "実習の振返り、成果報告会、現場社員（若手〜マネジメント層）からの個別フィードバック",
+  },
+];
+
+const requirements = [
+  {
+    label: "対象",
+    value: "理系学生（学部・学科不問／基礎的なOffice操作ができる方）",
+  },
+  {
+    label: "開催時期",
+    value: "8月〜9月の平日5日間",
+  },
+  {
+    label: "会場",
+    value: "愛知本社（中央研究所）または 島根工場（中央研究所）",
+  },
+  {
+    label: "待遇",
+    value: "交通費実費支給／宿泊手配あり（遠方者）／昼食代支給（社員食堂利用可）",
+  },
+  {
+    label: "選考",
+    value: "マイナビよりES提出 → WEB面接（1回） → 参加決定",
+  },
+];
+
+const voices = [
+  {
+    avatar: `${base}images/internship/voice-01.png`,
+    text: "大手メーカーは分業制だと思っていましたが、ホシザキのインターンでは「1台丸ごと」設計に携われることに驚きました。チームで意見を出し合い、CADでの設計から試作まで一貫して体験できたことで、モノづくりの本質的な面白さを実感。自分のアイデアが形になる瞬間の達成感は想像以上でした。",
+  },
+  {
+    avatar: `${base}images/internship/voice-02.png`,
+    text: "厨房機器という身近な製品の裏に、どれほど高度な熱力学や流体工学が使われているかを知り圧倒されました。中央研究所という最先端の設備の中で、プロが妥協なく「冷やす」技術を追求する姿を間近で見ることができ、自身の研究をどう社会実装していくかエンジニアとしての視界が一気に開けました。",
+  },
+  {
+    avatar: `${base}images/internship/voice-03.png`,
+    text: "一番の収穫は、現場の最前線で活躍する社員の方々からの本気のフィードバックです。学生扱いせず、一人の技術者として厳しいながらも的確なアドバイスをいただき、自分の課題が明確になりました。座談会でも若手からベテランまで風通しが良く、ここでなら自分も大きく成長できると確信しました。",
+  },
+  {
+    avatar: `${base}images/internship/voice-04.png`,
+    text: "単に機械を作るのではなく、「食のインフラを支え、環境問題を解決する」という使命感に心を打たれました。特に自然冷媒を用いた省エネ技術のワークでは、自分の学んできた知識が社会課題の解決に直結することを実感。世界シェアNo.1企業の「パイオニア・スピリット」を肌で感じた5日間でした。",
+  },
+];
+---
+
+<Layout
+  basePath={base}
+  title="インターンシップ｜ホシザキ本社採用サイト"
+  description="ホシザキのインターンシップ情報。日本初の全自動製氷機を生み出した開発現場で、モノづくりの手触り感を体感する5日間のプログラムを紹介します。"
+>
+  <div class="l-container">
+    <Header basePath={base} />
+    <main class="l-main">
+      <article class="p-internship">
+        <!-- Hero -->
+        <section class="p-internship-hero" aria-labelledby="internship-hero-title">
+          <div class="p-internship-hero__bg" aria-hidden="true"></div>
+          <div class="p-internship-hero__inner">
+            <p class="p-internship-hero__label">インターンシップ</p>
+            <h1 class="p-internship-hero__title" id="internship-hero-title">
+              常識の先へ、一歩。<br />
+              未知の自分に、跳びこもう。
+            </h1>
+            <a class="p-internship-hero__entry c-entry-button" href="#entry">ENTRY</a>
+          </div>
+        </section>
+
+        <!-- Intro -->
+        <section class="p-internship-intro">
+          <p class="p-internship-intro__text">
+            日本初の全自動製氷機を生み出したホシザキ。<br />
+            私たちの開発は、一部の設計だけを担う歯車ではありません。<br />
+            構想からリリースまでのすべての工程に携わるからこそ味わえる、<br />
+            「モノづくりの圧倒的な手触り感」を体感してください。
+          </p>
+        </section>
+
+        <!-- Course -->
+        <section class="p-internship-section p-internship-course" aria-labelledby="internship-course-title">
+          <header class="p-internship-section__heading">
+            <p class="p-internship-section__ja">コース</p>
+            <h2 class="p-internship-section__en" id="internship-course-title">COURSE</h2>
+          </header>
+          <ul class="p-internship-course__list">
+            {
+              courses.map((course) => (
+                <li class="p-internship-course__item">
+                  <figure class="p-internship-course__thumb">
+                    <img src={course.image} alt="" loading="lazy" />
+                    <figcaption class="p-internship-course__tag">{course.tag}</figcaption>
+                  </figure>
+                  <h3 class="p-internship-course__title">{course.title}</h3>
+                  <a class="p-internship-course__link" href="#">
+                    詳細を見る<span class="p-internship-course__chevron" aria-hidden="true">›</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <!-- Point -->
+        <section class="p-internship-section p-internship-point" aria-labelledby="internship-point-title">
+          <header class="p-internship-section__heading">
+            <p class="p-internship-section__ja">ポイント</p>
+            <h2 class="p-internship-section__en" id="internship-point-title">POINT</h2>
+          </header>
+          <ul class="p-internship-point__list">
+            {
+              points.map((point) => (
+                <li class="p-internship-point__item">
+                  <p class="p-internship-point__num">{point.num}</p>
+                  <h3 class="p-internship-point__title">{point.title}</h3>
+                  <p class="p-internship-point__body">{point.body}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <!-- Program -->
+        <section class="p-internship-section p-internship-program" aria-labelledby="internship-program-title">
+          <header class="p-internship-section__heading">
+            <p class="p-internship-section__ja">プログラム</p>
+            <h2 class="p-internship-section__en" id="internship-program-title">PROGRAM</h2>
+          </header>
+          <div class="p-internship-program__card">
+            <ol class="p-internship-program__list">
+              {
+                programDays.map((day) => (
+                  <li class="p-internship-program__row">
+                    <p class="p-internship-program__day">{day.day}</p>
+                    <div class="p-internship-program__body">
+                      <h3 class="p-internship-program__title">{day.title}</h3>
+                      <p class="p-internship-program__desc">{day.body}</p>
+                    </div>
+                  </li>
+                ))
+              }
+            </ol>
+          </div>
+        </section>
+
+        <!-- Requirements -->
+        <section class="p-internship-section p-internship-requirements" aria-labelledby="internship-req-title">
+          <header class="p-internship-section__heading">
+            <p class="p-internship-section__ja">募集要項</p>
+            <h2 class="p-internship-section__en" id="internship-req-title">REQUIREMENTS</h2>
+          </header>
+          <dl class="p-internship-requirements__table">
+            {
+              requirements.map((req) => (
+                <div class="p-internship-requirements__row">
+                  <dt class="p-internship-requirements__label">{req.label}</dt>
+                  <dd class="p-internship-requirements__value">{req.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </section>
+
+        <!-- Voices -->
+        <section class="p-internship-section p-internship-voices" aria-labelledby="internship-voices-title">
+          <header class="p-internship-section__heading">
+            <p class="p-internship-section__ja">体験者の声</p>
+            <h2 class="p-internship-section__en" id="internship-voices-title">VOICES</h2>
+          </header>
+          <ul class="p-internship-voices__list">
+            {
+              voices.map((voice) => (
+                <li class="p-internship-voices__item">
+                  <div class="p-internship-voices__avatar">
+                    <img src={voice.avatar} alt="" loading="lazy" />
+                  </div>
+                  <p class="p-internship-voices__text">{voice.text}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <!-- Message -->
+        <section
+          class="p-internship-section p-internship-message"
+          aria-labelledby="internship-message-title"
+          id="entry"
+        >
+          <header class="p-internship-section__heading">
+            <p class="p-internship-section__ja">採用担当からのメッセージ</p>
+            <h2 class="p-internship-section__en" id="internship-message-title">MESSAGE</h2>
+          </header>
+          <p class="p-internship-message__body">
+            「ホシザキを、ただの厨房機器メーカーだと思っていないか。」<br />
+            私たちが求めているのは、既存の枠を超え、<br />
+            新しい「食の当たり前」を創り出すパイオニア精神です。<br />
+            世界中の厨房、そして医療や農業の現場を支える製品が、<br />
+            どのような思考と情熱から生まれるのか。<br />
+            この5日間で、あなたの「常識」を塗り替える体験が待っています。
+          </p>
+          <p class="p-internship-message__lead">
+            さあ、その想いを翼に変えて。<br />
+            エントリーはマイページから。
+          </p>
+          <a class="p-internship-message__entry c-entry-button" href="#">ENTRY</a>
+        </section>
+      </article>
+    </main>
+    <Footer basePath={base} />
+  </div>
+</Layout>

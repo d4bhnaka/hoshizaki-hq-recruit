@@ -1,0 +1,631 @@
+// ============================================
+// Project: Strategy (Beyond HOSHIZAKI)
+// ============================================
+
+.p-strategy {
+  background: var(--color-bg-light);
+  color: var(--color-text-primary);
+}
+
+// --------------------------------------------
+// Banner
+// --------------------------------------------
+.p-strategy-banner {
+  width: 100%;
+  background: linear-gradient(180deg, #cfe3f4 0%, #9cc3e4 100%);
+}
+
+.p-strategy-banner__inner {
+  position: relative;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  aspect-ratio: 1600 / 520;
+  overflow: hidden;
+}
+
+.p-strategy-banner__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.p-strategy-banner__penguin {
+  position: absolute;
+  right: 10%;
+  bottom: 10%;
+  width: 160px;
+  height: auto;
+  pointer-events: none;
+}
+
+// --------------------------------------------
+// Intro + Pie chart
+// --------------------------------------------
+.p-strategy-intro {
+  padding: 120px 64px;
+}
+
+.p-strategy-intro__inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr minmax(320px, 420px);
+  gap: 64px;
+  align-items: start;
+}
+
+.p-strategy-intro__title {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.6;
+  margin: 0 0 24px;
+  color: var(--color-brand-navy);
+}
+
+.p-strategy-intro__lead {
+  display: inline-block;
+  margin: 0 0 24px;
+  padding: 6px 16px;
+  border: 1px solid var(--color-brand-primary);
+  border-radius: var(--border-radius-pill);
+  color: var(--color-brand-primary);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.p-strategy-intro__paragraph {
+  margin: 0 0 20px;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.p-strategy-intro__chart {
+  padding: 32px 28px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.p-strategy-intro__chart-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  margin: 0 0 6px;
+}
+
+.p-strategy-intro__chart-sub {
+  font-family: var(--font-family-en);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-brand-navy);
+  margin: 0 0 20px;
+}
+
+.p-strategy-intro__chart-wrap {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin: 0 auto 24px;
+}
+
+.p-strategy-intro__pie {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--color-brand-primary) 0deg 212.04deg,
+    var(--color-brand-cyan) 212.04deg 360deg
+  );
+}
+
+.p-strategy-intro__pie-center {
+  position: absolute;
+  inset: 28%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-white);
+  border-radius: 50%;
+  text-align: center;
+  gap: 4px;
+}
+
+.p-strategy-intro__pie-label-main {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+}
+
+.p-strategy-intro__pie-label-pct {
+  font-family: var(--font-family-en);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-brand-primary);
+}
+
+.p-strategy-intro__legend {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.p-strategy-intro__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--color-text-primary);
+}
+
+.p-strategy-intro__legend-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.p-strategy-intro__legend-swatch--primary {
+  background: var(--color-brand-primary);
+}
+
+.p-strategy-intro__legend-swatch--secondary {
+  background: var(--color-brand-cyan);
+}
+
+.p-strategy-intro__legend-label {
+  flex: 1;
+  text-align: left;
+}
+
+.p-strategy-intro__legend-value {
+  font-family: var(--font-family-en);
+  font-weight: 700;
+  color: var(--color-brand-navy);
+}
+
+// --------------------------------------------
+// Business Field
+// --------------------------------------------
+.p-strategy-field {
+  padding: 120px 64px;
+  background: var(--color-bg-sky);
+}
+
+.p-strategy-field__inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.p-strategy-field__intro {
+  margin-bottom: 48px;
+}
+
+.p-strategy-field__paragraph {
+  margin: 0 0 16px;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.p-strategy-field__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.p-strategy-field__item {
+  background: var(--color-white);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.p-strategy-field__details[open] .p-strategy-field__summary-icon::after {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+.p-strategy-field__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 32px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
+
+.p-strategy-field__summary-label {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-brand-navy);
+}
+
+.p-strategy-field__summary-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: var(--color-brand-primary);
+    transition: transform var(--transition-base), opacity var(--transition-base);
+  }
+
+  &::before {
+    width: 16px;
+    height: 2px;
+    transform: translate(-50%, -50%);
+  }
+
+  &::after {
+    width: 2px;
+    height: 16px;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.p-strategy-field__body {
+  padding: 0 32px 28px;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+
+  p {
+    margin: 0;
+  }
+}
+
+// --------------------------------------------
+// Global Market
+// --------------------------------------------
+.p-strategy-global {
+  padding: 120px 64px;
+  background: linear-gradient(180deg, #eaf4fc 0%, #d4ebf8 100%);
+}
+
+.p-strategy-global__inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.p-strategy-global__subtitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-brand-navy);
+  margin: -24px 0 32px;
+}
+
+.p-strategy-global__intro {
+  margin-bottom: 64px;
+}
+
+.p-strategy-global__paragraph {
+  margin: 0 0 20px;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.p-strategy-global__map {
+  position: relative;
+  padding: 48px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 64px;
+  display: grid;
+  place-items: center;
+  min-height: 360px;
+}
+
+.p-strategy-global__map-img {
+  width: 100%;
+  max-width: 960px;
+  height: auto;
+  display: block;
+}
+
+.p-strategy-global__stat {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px 28px;
+  border-radius: var(--border-radius-md);
+  text-align: center;
+  pointer-events: none;
+}
+
+.p-strategy-global__stat-line {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-brand-navy);
+  line-height: 1.6;
+}
+
+.p-strategy-global__stat-num {
+  font-family: var(--font-family-en);
+  font-size: 28px;
+  color: var(--color-brand-primary);
+  margin: 0 4px;
+}
+
+.p-strategy-global__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.p-strategy-global__item {
+  background: var(--color-white);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.p-strategy-global__details[open] .p-strategy-global__summary-icon::after {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+.p-strategy-global__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 28px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
+
+.p-strategy-global__summary-label {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-brand-navy);
+}
+
+.p-strategy-global__summary-icon {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: var(--color-brand-primary);
+    transition: transform var(--transition-base), opacity var(--transition-base);
+  }
+
+  &::before {
+    width: 14px;
+    height: 2px;
+    transform: translate(-50%, -50%);
+  }
+
+  &::after {
+    width: 2px;
+    height: 14px;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.p-strategy-global__body {
+  padding: 0 28px 24px;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+
+  p {
+    margin: 0;
+  }
+}
+
+// --------------------------------------------
+// Global Pioneers
+// --------------------------------------------
+.p-strategy-pioneers {
+  padding: 120px 64px;
+  background: var(--color-bg-light);
+}
+
+.p-strategy-pioneers__inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.p-strategy-pioneers__intro {
+  margin-bottom: 56px;
+}
+
+.p-strategy-pioneers__paragraph {
+  margin: 0 0 16px;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.p-strategy-pioneers__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.p-strategy-pioneers__item {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 40px;
+  align-items: center;
+  padding: 32px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.p-strategy-pioneers__avatar {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-brand-blue-100);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.p-strategy-pioneers__content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.p-strategy-pioneers__market {
+  display: inline-block;
+  align-self: flex-start;
+  margin: 0;
+  padding: 4px 14px;
+  background: var(--color-brand-primary);
+  color: var(--color-white);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--border-radius-pill);
+}
+
+.p-strategy-pioneers__body {
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+}
+
+// --------------------------------------------
+// Responsive
+// --------------------------------------------
+@media screen and (max-width: 960px) {
+  .p-strategy-intro,
+  .p-strategy-field,
+  .p-strategy-global,
+  .p-strategy-pioneers {
+    padding: 72px 20px;
+  }
+
+  .p-strategy-intro__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .p-strategy-intro__title {
+    font-size: 22px;
+  }
+
+  .p-strategy-global__subtitle {
+    font-size: 18px;
+    margin-top: -12px;
+  }
+
+  .p-strategy-global__map {
+    padding: 24px;
+    min-height: 240px;
+  }
+
+  .p-strategy-global__stat {
+    padding: 14px 18px;
+  }
+
+  .p-strategy-global__stat-line {
+    font-size: 13px;
+  }
+
+  .p-strategy-global__stat-num {
+    font-size: 22px;
+  }
+
+  .p-strategy-field__summary,
+  .p-strategy-global__summary {
+    padding: 18px 20px;
+  }
+
+  .p-strategy-field__summary-label {
+    font-size: 17px;
+  }
+
+  .p-strategy-global__summary-label {
+    font-size: 16px;
+  }
+
+  .p-strategy-field__body,
+  .p-strategy-global__body {
+    padding: 0 20px 20px;
+    font-size: 14px;
+  }
+
+  .p-strategy-pioneers__item {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 24px;
+  }
+
+  .p-strategy-pioneers__avatar {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+  }
+
+  .p-strategy-banner__penguin {
+    width: 100px;
+  }
+}

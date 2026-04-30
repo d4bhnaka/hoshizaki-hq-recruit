@@ -1,0 +1,66 @@
+// ============================================
+// Component: Section Heading
+// 日本語キャッチ + 英語大見出し + 補足の3点セット
+// ============================================
+
+.c-section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.c-section-heading--center {
+  align-items: center;
+  text-align: center;
+}
+
+.c-section-heading__ja {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.c-section-heading__icon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background: var(--color-brand-cyan);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.c-section-heading__en {
+  font-family: var(--font-family-en);
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.c-section-heading--lg .c-section-heading__en {
+  font-size: 56px;
+}
+
+.c-section-heading__note {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+@media screen and (max-width: 768px) {
+  .c-section-heading__en {
+    font-size: 32px;
+  }
+
+  .c-section-heading--lg .c-section-heading__en {
+    font-size: 40px;
+  }
+}

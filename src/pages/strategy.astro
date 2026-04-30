@@ -1,0 +1,297 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import BottomCta from "../components/BottomCta.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+
+const base = "../";
+
+const businessFields = [
+  {
+    title: "飲食市場",
+    body: "ホテル・レストラン・居酒屋・カフェ・給食など、あらゆる飲食の現場に製氷機・冷蔵庫・食器洗浄機を供給。国内トップクラスのシェアを誇り、日本の外食文化を厨房から支えています。高い信頼性と省エネ性能で、食の品質と安全を24時間365日守り続けています。",
+  },
+  {
+    title: "飲食外市場",
+    body: "医療・介護施設の薬用保冷庫、研究機関向け冷凍機器、農業・水産業の急速冷凍システムなど、厨房の枠を超えた新領域へ進出。ホシザキが培ってきた「冷やす」技術を、社会課題の解決に直結する新しい事業の柱へと育てています。",
+  },
+];
+
+const globalMarkets = [
+  {
+    title: "アメリカ市場",
+    body: "北米は当社海外展開の最重要市場。現地法人・現地工場を軸にレストランチェーンや大型ホテルへ製氷機を供給し、キューブアイスという新しい食文化を根付かせました。現在はアイスディスペンサーや業務用冷蔵庫まで製品ラインを拡大しています。",
+  },
+  {
+    title: "中国市場",
+    body: "急成長する外食マーケットに対応するため、現地での開発・生産・販売体制を整備。厨房機器のフルラインナップを展開し、高級ホテルから地場チェーンまで幅広い顧客に支持されています。",
+  },
+  {
+    title: "南米市場",
+    body: "ブラジルを中心に、多湿・高温環境に最適化された製氷機をローカライズ開発。食文化と気候に寄り添った製品づくりで、地域のスタンダードを塗り替えつつあります。",
+  },
+  {
+    title: "中国・香港市場",
+    body: "香港を拠点に、大陸・アジア太平洋エリアへの商品供給ハブ機能を担います。多様な食文化に対応するカスタマイズ力が強み。",
+  },
+  {
+    title: "東南アジア市場",
+    body: "シンガポール・タイ・マレーシア・ベトナム・インドネシアなど急成長都市部へ進出。ハラル対応・現地食材の保存要件に応える製品を企画し、地場ニーズに深くコミットしています。",
+  },
+  {
+    title: "オセアニア市場",
+    body: "オーストラリア・ニュージーランドで業務用製氷機のトップシェアを獲得。広域な国土に対応する販売・サービスネットワークを構築しています。",
+  },
+  {
+    title: "ヨーロッパ市場",
+    body: "オランダを欧州統括拠点とし、英国・ドイツ・フランス・イタリアなど主要国へ拡販中。厳格な省エネ規制と環境基準をクリアする自然冷媒モデルで、持続可能な厨房を提案しています。",
+  },
+];
+
+const pioneers = [
+  {
+    avatar: `${base}images/strategy/pioneer-01.png`,
+    market: "東南アジア市場",
+    body: "テキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプル。現地のパートナーと膝を突き合わせて商品企画を磨き込み、現地発のヒット商品を世に送り出した挑戦の記録。テキストサンプルテキストサンプルテキストサンプルテキストサンプル。",
+  },
+  {
+    avatar: `${base}images/strategy/pioneer-02.png`,
+    market: "中国・香港市場",
+    body: "テキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプル。急拡大する外食マーケットの最前線で、現地法人の立ち上げから販売網の構築までを担った20代のリアル。テキストサンプルテキストサンプルテキストサンプルテキストサンプル。",
+  },
+  {
+    avatar: `${base}images/strategy/pioneer-03.png`,
+    market: "ヨーロッパ市場",
+    body: "テキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプル。省エネ規制が厳しい欧州で、自然冷媒モデルの拡販に挑む。文化の壁・言語の壁を越えて信頼を勝ち取るまでの道のり。テキストサンプルテキストサンプルテキストサンプルテキストサンプル。",
+  },
+];
+---
+
+<Layout
+  basePath={base}
+  title="Beyond HOSHIZAKI｜ホシザキ本社採用サイト"
+  description="ホシザキの事業領域と海外展開。厨房機器の枠を超えて、医療・福祉や世界60ヵ国へと広がるビジネスのフロンティアを紹介します。"
+>
+  <div class="l-container">
+    <Header basePath={base} />
+    <main class="l-main">
+      <article class="p-strategy">
+        <PageHero
+          en="Beyond HOSHIZAKI"
+          ja="「厨房」という事業領域の、その先へ。"
+          variant="cloud"
+        />
+
+        <!-- Banner -->
+        <section class="p-strategy-banner" aria-hidden="true">
+          <div class="p-strategy-banner__inner">
+            <img
+              class="p-strategy-banner__img"
+              src={`${base}images/strategy/banner.jpg`}
+              alt=""
+              loading="lazy"
+              onerror="this.style.display='none'"
+            />
+            <img
+              class="p-strategy-banner__penguin"
+              src={`${base}images/top/ap_02.png`}
+              alt=""
+              loading="lazy"
+              onerror="this.style.display='none'"
+            />
+          </div>
+        </section>
+
+        <!-- Intro + Pie chart -->
+        <section class="p-strategy-intro" aria-labelledby="strategy-intro-title">
+          <div class="p-strategy-intro__inner">
+            <div class="p-strategy-intro__text">
+              <h2 class="p-strategy-intro__title" id="strategy-intro-title">
+                ホシザキを厨房機器だけのメーカーと思っていないか。
+              </h2>
+              <p class="p-strategy-intro__lead">「再検討」</p>
+              <p class="p-strategy-intro__paragraph">
+                ホシザキは、製氷機や業務用冷蔵庫などで国内トップクラスのシェアです。<br />
+                しかし、私たちのフィールドは飲食業界だけにとどまりません。
+              </p>
+              <p class="p-strategy-intro__paragraph">
+                医療や福祉、社会課題を解決する新たな領域への挑戦、<br />
+                そして、私たちは国際の問題を打ち始め、世界規模で支持の「食のインフラ」になっていきます。
+              </p>
+            </div>
+
+            <aside class="p-strategy-intro__chart" aria-label="国内飲食市場の割合">
+              <p class="p-strategy-intro__chart-title">国内 飲食市場/飲食外市場の割合</p>
+              <p class="p-strategy-intro__chart-sub">1,598億円</p>
+              <div class="p-strategy-intro__chart-wrap">
+                <div class="p-strategy-intro__pie" aria-hidden="true"></div>
+                <div class="p-strategy-intro__pie-center">
+                  <span class="p-strategy-intro__pie-label-main">飲食市場</span>
+                  <span class="p-strategy-intro__pie-label-pct">58.9%</span>
+                </div>
+              </div>
+              <ul class="p-strategy-intro__legend">
+                <li class="p-strategy-intro__legend-item">
+                  <span class="p-strategy-intro__legend-swatch p-strategy-intro__legend-swatch--primary" aria-hidden="true"></span>
+                  <span class="p-strategy-intro__legend-label">飲食市場</span>
+                  <span class="p-strategy-intro__legend-value">58.9%</span>
+                </li>
+                <li class="p-strategy-intro__legend-item">
+                  <span class="p-strategy-intro__legend-swatch p-strategy-intro__legend-swatch--secondary" aria-hidden="true"></span>
+                  <span class="p-strategy-intro__legend-label">飲食外市場</span>
+                  <span class="p-strategy-intro__legend-value">41.1%</span>
+                </li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <!-- Business Field -->
+        <section class="p-strategy-field" aria-labelledby="strategy-field-title">
+          <div class="p-strategy-field__inner">
+            <SectionHeading en="Business Field" ja="事業領域" id="strategy-field-title" />
+            <div class="p-strategy-field__intro">
+              <p class="p-strategy-field__paragraph">
+                飲食店の創業を支え続けてきた確かな技術力。<br />
+                私たちは、その強みを武器に「未知の事業領域」へと進出しています。
+              </p>
+              <p class="p-strategy-field__paragraph">
+                医療・福祉を第一次産業まで、その領域化に取り組むために社会課題の解決へ。<br />
+                同時に、グローバル市場では、当社のみの名度化を「製氷機」に次ぐ第二・第三の柱として、<br />
+                地域ごとの課題に合わせ食品流通機器の拡張ネットワークを急速化しています。
+              </p>
+              <p class="p-strategy-field__paragraph">
+                既存の枠組みを超え、常に新しい市場を開拓し続けるのがホシザキのビジネスです。
+              </p>
+            </div>
+
+            <ul class="p-strategy-field__list">
+              {
+                businessFields.map((field) => (
+                  <li class="p-strategy-field__item">
+                    <details class="p-strategy-field__details">
+                      <summary class="p-strategy-field__summary">
+                        <span class="p-strategy-field__summary-label">{field.title}</span>
+                        <span class="p-strategy-field__summary-icon" aria-hidden="true" />
+                      </summary>
+                      <div class="p-strategy-field__body">
+                        <p>{field.body}</p>
+                      </div>
+                    </details>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </section>
+
+        <!-- Global Market -->
+        <section class="p-strategy-global" aria-labelledby="strategy-global-title">
+          <div class="p-strategy-global__inner">
+            <SectionHeading en="Global Market" ja="海外展開" id="strategy-global-title" />
+            <p class="p-strategy-global__subtitle">五大陸をつなぐ、世界No.1ブランドへ</p>
+            <div class="p-strategy-global__intro">
+              <p class="p-strategy-global__paragraph">
+                ホシザキを、日本を代表する厨房機器メーカーだけ思っているなら、それはまだ半分の姿にすぎません。<br />
+                現在、私たちの舞台は世界の国以上。海外売上比率50%に迫る、名実ともにグローバル企業へと進化を遂げました。
+              </p>
+              <p class="p-strategy-global__paragraph">
+                しかし、私たちが目指すのは単なる「日本でつくった製品」ではありません。<br />
+                温度、湿度、水質、そして何よりその土地に根付いた「食文化」。<br />
+                世界中の多種多様なニーズを読み解き、現地で開発し、現地で支える。
+              </p>
+              <p class="p-strategy-global__paragraph">
+                「Global HOSHIZAKI」が追求するのは、その国の、その国の、かけがえのないパートナーになることです。<br />
+                常識を飛び越え、世界のスタンダードを塗り替えていく。その最前線をご紹介します。
+              </p>
+            </div>
+
+            <div class="p-strategy-global__map">
+              <img
+                class="p-strategy-global__map-img"
+                src={`${base}images/strategy/world-map.png`}
+                alt=""
+                loading="lazy"
+                onerror="this.style.display='none'"
+              />
+              <div class="p-strategy-global__stat">
+                <p class="p-strategy-global__stat-line">世界<span class="p-strategy-global__stat-num">60</span>ヵ国</p>
+                <p class="p-strategy-global__stat-line"><span class="p-strategy-global__stat-num">40</span>億人以上の</p>
+                <p class="p-strategy-global__stat-line">食を支え</p>
+                <p class="p-strategy-global__stat-line">進化し続ける</p>
+              </div>
+            </div>
+
+            <ul class="p-strategy-global__list">
+              {
+                globalMarkets.map((market) => (
+                  <li class="p-strategy-global__item">
+                    <details class="p-strategy-global__details">
+                      <summary class="p-strategy-global__summary">
+                        <span class="p-strategy-global__summary-label">{market.title}</span>
+                        <span class="p-strategy-global__summary-icon" aria-hidden="true" />
+                      </summary>
+                      <div class="p-strategy-global__body">
+                        <p>{market.body}</p>
+                      </div>
+                    </details>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </section>
+
+        <!-- Global Pioneers -->
+        <section class="p-strategy-pioneers" aria-labelledby="strategy-pioneers-title">
+          <div class="p-strategy-pioneers__inner">
+            <SectionHeading
+              en="Global Pioneers"
+              ja="未知の海へ飛び込んだ、3人のファーストペンギン。"
+              id="strategy-pioneers-title"
+            />
+            <div class="p-strategy-pioneers__intro">
+              <p class="p-strategy-pioneers__paragraph">
+                ホシザキのグローバル化の最前線になっているのは、自らが国境を超え、未知な文化やビジネスの壁に挑む勇気たち。
+              </p>
+              <p class="p-strategy-pioneers__paragraph">
+                「世界No.1ブランド」という目標に向かって、彼らは何を見て、どう進化を始めているのか。
+              </p>
+              <p class="p-strategy-pioneers__paragraph">
+                日本を飛び出し、世界の最前線で活躍する3人のリアルな挑戦の現場をたずねた。
+              </p>
+            </div>
+
+            <ul class="p-strategy-pioneers__list">
+              {
+                pioneers.map((pioneer) => (
+                  <li class="p-strategy-pioneers__item">
+                    <div class="p-strategy-pioneers__avatar">
+                      <img
+                        src={pioneer.avatar}
+                        alt=""
+                        loading="lazy"
+                        onerror="this.style.display='none'"
+                      />
+                    </div>
+                    <div class="p-strategy-pioneers__content">
+                      <p class="p-strategy-pioneers__market">{pioneer.market}</p>
+                      <p class="p-strategy-pioneers__body">{pioneer.body}</p>
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </section>
+
+        <Breadcrumb basePath={base} items={[{ label: "ホシザキの海外展開" }]} />
+      </article>
+    </main>
+    <BottomCta basePath={base} />
+    <Footer basePath={base} />
+  </div>
+</Layout>

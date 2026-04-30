@@ -1,0 +1,51 @@
+// ============================================
+// Component: Breadcrumb
+// ============================================
+
+.c-breadcrumb {
+  padding: 16px 64px;
+  background: transparent;
+}
+
+.c-breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.c-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.c-breadcrumb__link {
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-brand-primary);
+  }
+}
+
+.c-breadcrumb__current {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.c-breadcrumb__sep {
+  color: var(--color-text-muted);
+}
+
+@media screen and (max-width: 960px) {
+  .c-breadcrumb {
+    padding: 12px 16px;
+  }
+}

@@ -1,0 +1,68 @@
+---
+interface Props {
+  basePath?: string;
+  variant?: "light" | "solid";
+}
+
+const { basePath = "./", variant = "light" } = Astro.props;
+
+const drawerLinks = [
+  { href: `${basePath}`, label: "採用TOP" },
+  { href: `${basePath}message/`, label: "採用メッセージ" },
+  { href: `${basePath}fact/`, label: "What's HOSHIZAKI" },
+  { href: `${basePath}strategy/`, label: "Beyond HOSHIZAKI" },
+  { href: `${basePath}job/`, label: "Team HOSHIZAKI" },
+  { href: `${basePath}person/`, label: "先輩たちの「ここに決めた」" },
+  { href: `${basePath}environment/`, label: "はたらく環境を知る" },
+  { href: `${basePath}requirement/`, label: "募集要項" },
+  { href: `${basePath}special/`, label: "SPECIAL CONTENTS" },
+  { href: `${basePath}internship/`, label: "インターンシップ" },
+];
+---
+
+<header class={`l-header l-header--${variant}`} data-variant={variant}>
+  <div class="l-header__inner">
+    <a class="l-header__logo" href={basePath} aria-label="ホシザキ採用サイト トップ">
+      <img src={`${basePath}images/common/logo-hoshizaki.svg`} alt="HOSHIZAKI" onerror="this.style.display='none'" />
+      <span class="l-header__logo-fallback">HOSHIZAKI</span>
+    </a>
+    <div class="l-header__actions">
+      <a class="l-header__cta" href={`${basePath}internship/`}>
+        <span class="l-header__cta-icon" aria-hidden="true"></span>
+        <span class="l-header__cta-label">インターンシップ</span>
+      </a>
+      <a class="l-header__cta" href={`${basePath}requirement/`}>
+        <span class="l-header__cta-icon" aria-hidden="true"></span>
+        <span class="l-header__cta-label">応募はこちら</span>
+      </a>
+      <button
+        class="l-header__menu"
+        type="button"
+        aria-label="メニューを開く"
+        aria-expanded="false"
+        aria-controls="l-drawer"
+        data-drawer-toggle
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="l-drawer" id="l-drawer" hidden>
+    <nav class="l-drawer__nav" aria-label="メインナビゲーション">
+      <ul class="l-drawer__list">
+        {
+          drawerLinks.map((item) => (
+            <li class="l-drawer__item">
+              <a class="l-drawer__link" href={item.href}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

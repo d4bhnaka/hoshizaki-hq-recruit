@@ -1,0 +1,174 @@
+// ============================================
+// Project: Fact (What's HOSHIZAKI / 数字で見るホシザキ)
+// ============================================
+
+.p-fact {
+  display: block;
+  background: var(--color-bg-page);
+}
+
+// --------------------------------------------
+// Banner image (penguin on ice)
+// --------------------------------------------
+.p-fact__banner {
+  padding: 40px 64px 0;
+}
+
+.p-fact__banner-inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.p-fact__banner-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 5;
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, #bfe1f5 0%, #e8f3fb 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.p-fact__banner-city {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+}
+
+.p-fact__banner-penguin {
+  position: absolute;
+  right: 8%;
+  bottom: 0;
+  width: 22%;
+  min-width: 180px;
+  max-width: 320px;
+  height: auto;
+  object-fit: contain;
+}
+
+// --------------------------------------------
+// Intro copy
+// --------------------------------------------
+.p-fact__intro {
+  padding: 64px 24px 32px;
+}
+
+.p-fact__intro-text {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 2;
+  text-align: center;
+  color: var(--color-text-primary);
+}
+
+// --------------------------------------------
+// Sections
+// --------------------------------------------
+.p-fact__section {
+  padding: 80px 64px;
+}
+
+.p-fact__section--growth {
+  background: transparent;
+}
+
+.p-fact__section--benefits {
+  background: var(--color-bg-cloud);
+}
+
+.p-fact__section-inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+// --------------------------------------------
+// Grid layouts
+// --------------------------------------------
+.p-fact__grid {
+  display: grid;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.p-fact__grid--growth {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.p-fact__grid--growth .p-fact__grid-item {
+  grid-column: span 2;
+}
+
+.p-fact__grid--growth .p-fact__grid-item--span-2 {
+  grid-column: span 3;
+}
+
+.p-fact__grid--benefits {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.p-fact__grid-item {
+  display: flex;
+}
+
+.p-fact__grid-item > .c-stat-card {
+  flex: 1;
+}
+
+// --------------------------------------------
+// Breadcrumb wrapper
+// --------------------------------------------
+.p-fact__breadcrumb {
+  padding: 32px 64px 0;
+}
+
+@media screen and (max-width: 960px) {
+  .p-fact__banner {
+    padding: 24px 20px 0;
+  }
+
+  .p-fact__banner-image {
+    aspect-ratio: 16 / 7;
+  }
+
+  .p-fact__intro {
+    padding: 40px 20px 24px;
+  }
+
+  .p-fact__intro-text {
+    font-size: 15px;
+    line-height: 1.9;
+    text-align: left;
+  }
+
+  .p-fact__section {
+    padding: 56px 20px;
+  }
+
+  .p-fact__grid {
+    gap: 16px;
+  }
+
+  .p-fact__grid--growth {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .p-fact__grid--growth .p-fact__grid-item,
+  .p-fact__grid--growth .p-fact__grid-item--span-2 {
+    grid-column: span 2;
+  }
+
+  .p-fact__grid--benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .p-fact__breadcrumb {
+    padding: 24px 20px 0;
+  }
+}

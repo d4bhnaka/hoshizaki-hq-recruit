@@ -1,0 +1,333 @@
+// ============================================
+// Project: Recruit Message Page
+// Figma node: 162:53 (1600x2804)
+// ============================================
+
+.p-message {
+  display: block;
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background: var(--color-white);
+  overflow: hidden;
+}
+
+// --------------------------------------------
+// Hero
+// --------------------------------------------
+.p-message-hero {
+  position: relative;
+  min-height: 760px;
+  padding: 200px 64px 160px;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--color-text-inverse);
+}
+
+.p-message-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(180deg, #9cd0f2 0%, #c8e6f7 55%, #eaf4fc 100%);
+}
+
+.p-message-hero__clouds {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.p-message-hero__cloud {
+  position: absolute;
+  opacity: 0.9;
+}
+
+.p-message-hero__cloud--01 {
+  top: 80px;
+  right: -120px;
+  width: 640px;
+  height: auto;
+}
+
+.p-message-hero__cloud--02 {
+  bottom: 40px;
+  left: -80px;
+  width: 520px;
+  height: auto;
+}
+
+.p-message-hero__cloud--03 {
+  top: 360px;
+  left: 40%;
+  width: 360px;
+  height: auto;
+  opacity: 0.7;
+}
+
+.p-message-hero__inner {
+  position: relative;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  z-index: 1;
+}
+
+.p-message-hero__title {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  color: var(--color-white);
+  font-weight: 900;
+  font-size: clamp(64px, 10vw, 156px);
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-shadow: 0 4px 24px rgba(0, 47, 95, 0.18);
+}
+
+.p-message-hero__title-line {
+  display: block;
+}
+
+.p-message-hero__penguins {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.p-message-hero__penguin {
+  position: absolute;
+  height: auto;
+}
+
+.p-message-hero__penguin--01 {
+  top: 140px;
+  right: 12%;
+  width: 120px;
+}
+
+.p-message-hero__penguin--02 {
+  top: 240px;
+  right: 28%;
+  width: 96px;
+}
+
+.p-message-hero__penguin--03 {
+  top: 380px;
+  right: 8%;
+  width: 140px;
+}
+
+.p-message-hero__penguin--04 {
+  top: 500px;
+  right: 22%;
+  width: 104px;
+}
+
+.p-message-hero__penguin--05 {
+  top: 600px;
+  right: 34%;
+  width: 88px;
+}
+
+.p-message-hero__penguin--group {
+  bottom: -20px;
+  right: 6%;
+  width: 280px;
+}
+
+.p-message-hero__caption {
+  position: absolute;
+  left: 64px;
+  bottom: 40px;
+  z-index: 2;
+  color: var(--color-brand-navy);
+}
+
+.p-message-hero__caption-en {
+  font-family: var(--font-family-en);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.p-message-hero__caption-ja {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+}
+
+// --------------------------------------------
+// Body (2 columns)
+// --------------------------------------------
+.p-message-body {
+  background: var(--color-bg-sky);
+  padding: 120px 64px;
+}
+
+.p-message-body__inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 72px;
+  align-items: start;
+}
+
+.p-message-body__text {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.p-message-body__paragraph {
+  font-size: 16px;
+  line-height: 2.1;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.p-message-body__photos {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.p-message-body__photo {
+  margin: 0;
+  position: relative;
+  background: var(--color-brand-blue-100);
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  aspect-ratio: 4 / 3;
+}
+
+.p-message-body__photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.p-message-body__photo-note {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: var(--border-radius-sm);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-accent-red);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.p-message-body__photo-note-line {
+  display: block;
+}
+
+// --------------------------------------------
+// Responsive
+// --------------------------------------------
+@media screen and (max-width: 960px) {
+  .p-message-hero {
+    min-height: 560px;
+    padding: 140px 24px 140px;
+  }
+
+  .p-message-hero__cloud--01 {
+    width: 420px;
+    top: 60px;
+    right: -80px;
+  }
+
+  .p-message-hero__cloud--02 {
+    width: 360px;
+  }
+
+  .p-message-hero__cloud--03 {
+    display: none;
+  }
+
+  .p-message-hero__title {
+    font-size: clamp(48px, 12vw, 96px);
+  }
+
+  .p-message-hero__penguin--01 {
+    width: 72px;
+    right: 8%;
+  }
+
+  .p-message-hero__penguin--02 {
+    width: 56px;
+  }
+
+  .p-message-hero__penguin--03 {
+    width: 80px;
+    top: 320px;
+  }
+
+  .p-message-hero__penguin--04 {
+    width: 64px;
+    top: 400px;
+  }
+
+  .p-message-hero__penguin--05 {
+    width: 48px;
+    top: 480px;
+  }
+
+  .p-message-hero__penguin--group {
+    width: 180px;
+    right: 4%;
+  }
+
+  .p-message-hero__caption {
+    left: 24px;
+    bottom: 24px;
+  }
+
+  .p-message-hero__caption-en {
+    font-size: 18px;
+  }
+
+  .p-message-body {
+    padding: 80px 24px;
+  }
+
+  .p-message-body__inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .p-message-body__paragraph {
+    font-size: 15px;
+    line-height: 2;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .p-message-hero {
+    padding: 120px 20px 120px;
+  }
+
+  .p-message-hero__title {
+    gap: 8px;
+    font-size: clamp(40px, 14vw, 72px);
+  }
+
+  .p-message-body {
+    padding: 64px 20px;
+  }
+
+  .p-message-body__photos {
+    gap: 20px;
+  }
+}

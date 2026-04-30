@@ -1,0 +1,342 @@
+// ============================================
+// Project: Team HOSHIZAKI / 職種紹介 Page
+// Figma node: 245:287 (1600 x 6226)
+// ============================================
+
+.p-job {
+  display: block;
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background: var(--color-white);
+  overflow: hidden;
+}
+
+// --------------------------------------------
+// Banner
+// --------------------------------------------
+.p-job__banner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1600 / 520;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--color-bg-cloud) 0%, var(--color-bg-sky) 100%);
+}
+
+.p-job__banner-inner {
+  position: absolute;
+  inset: 0;
+  background-image: url("../images/top/top_penguins.png");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+}
+
+// --------------------------------------------
+// Intro copy
+// --------------------------------------------
+.p-job__intro {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 96px 32px 64px;
+  text-align: center;
+}
+
+.p-job__intro-text {
+  font-size: 16px;
+  line-height: 2;
+  color: var(--color-text-primary);
+  letter-spacing: 0.04em;
+}
+
+// --------------------------------------------
+// Section wrapper
+// --------------------------------------------
+.p-job__section {
+  position: relative;
+  padding: 80px 32px 120px;
+}
+
+// --------------------------------------------
+// Org diagram
+// --------------------------------------------
+.p-job-diagram {
+  position: relative;
+  max-width: 1040px;
+  margin: 64px auto 96px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "create spread"
+    "support support";
+  gap: 56px 120px;
+  justify-items: center;
+  align-items: center;
+}
+
+.p-job-diagram__box {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: 32px 28px;
+  background: var(--color-brand-blue-50);
+  border: 2px solid var(--color-brand-blue-300);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.p-job-diagram__box--create {
+  grid-area: create;
+}
+
+.p-job-diagram__box--spread {
+  grid-area: spread;
+}
+
+.p-job-diagram__box--support {
+  grid-area: support;
+  max-width: 560px;
+  background: var(--color-brand-blue-100);
+}
+
+.p-job-diagram__title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-brand-navy);
+  margin-bottom: 12px;
+  letter-spacing: 0.06em;
+}
+
+.p-job-diagram__sub {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+}
+
+// Arrows between boxes
+.p-job-diagram__arrow {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: var(--color-brand-primary);
+  font-weight: 700;
+}
+
+.p-job-diagram__arrow-label {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--color-white);
+  border: 1px solid var(--color-brand-blue-300);
+  border-radius: var(--border-radius-pill);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--color-brand-primary);
+  white-space: nowrap;
+}
+
+// Top arrow (between create and spread)
+.p-job-diagram__arrow--top {
+  top: 50px;
+  left: 50%;
+  width: 120px;
+  height: 40px;
+  transform: translateX(-50%);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 50% 0 auto 0;
+    height: 2px;
+    background: var(--color-brand-blue-300);
+    transform: translateY(-50%);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid var(--color-brand-blue-300);
+    border-right: 2px solid var(--color-brand-blue-300);
+    transform: translateY(-50%) rotate(45deg);
+  }
+}
+
+// Left arrow (from create -> support)
+.p-job-diagram__arrow--left {
+  left: 22%;
+  bottom: 38%;
+  width: 2px;
+  height: 80px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--color-brand-blue-300);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--color-brand-blue-300);
+    border-bottom: 2px solid var(--color-brand-blue-300);
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .p-job-diagram__arrow-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// Right arrow (from spread -> support)
+.p-job-diagram__arrow--right {
+  right: 22%;
+  bottom: 38%;
+  width: 2px;
+  height: 80px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--color-brand-blue-300);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--color-brand-blue-300);
+    border-bottom: 2px solid var(--color-brand-blue-300);
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .p-job-diagram__arrow-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// --------------------------------------------
+// Job card list
+// --------------------------------------------
+.p-job__list {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  list-style: none;
+  padding: 0;
+}
+
+.p-job__item {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 48px;
+  align-items: center;
+  padding: 40px;
+  background: var(--color-bg-light);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.p-job__item--reverse {
+  grid-template-columns: 420px 1fr;
+
+  .p-job__item-body {
+    order: 2;
+  }
+
+  .p-job__item-figure {
+    order: 1;
+  }
+}
+
+.p-job__item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.p-job__item-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-brand-navy);
+  letter-spacing: 0.04em;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--color-brand-cyan);
+}
+
+.p-job__item-text {
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.p-job__item-figure {
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--border-radius-md);
+  background: var(--color-brand-blue-100);
+}
+
+.p-job__item-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+// --------------------------------------------
+// Decorative penguins
+// --------------------------------------------
+.p-job__penguins {
+  position: relative;
+  max-width: 1120px;
+  margin: 72px auto 0;
+  height: 120px;
+  pointer-events: none;
+}
+
+.p-job__penguin {
+  position: absolute;
+  width: 96px;
+  height: auto;
+  bottom: 0;
+}
+
+.p-job__penguin--01 {
+  left: 8%;
+}
+
+.p-job__penguin--02 {
+  left: 48%;
+  transform: translateX(-50%);
+  width: 110px;
+}
+
+.p-job__penguin--03 {
+  right: 10%;
+}

@@ -1,0 +1,30 @@
+---
+interface Props {
+  basePath?: string;
+}
+
+const { basePath = "./" } = Astro.props;
+---
+
+<section class="c-bottom-cta" aria-label="採用CTA">
+  <div class="c-bottom-cta__inner">
+    <a class="c-bottom-cta__item" href={`${basePath}internship/`} aria-label="インターンシップ情報">
+      <img
+        class="c-bottom-cta__image"
+        src={`${basePath}images/common/bnr_internship.png`}
+        alt="INTERNSHIP インターンシップ情報"
+        width="1920"
+        height="540"
+      />
+    </a>
+    <a class="c-bottom-cta__item" href={`${basePath}requirement/`} aria-label="採用エントリーはこちら">
+      <img
+        class="c-bottom-cta__image"
+        src={`${basePath}images/common/bnr_entry.png`}
+        alt="ENTRY 採用エントリーはこちら"
+        width="1920"
+        height="540"
+      />
+    </a>
+  </div>
+</section>

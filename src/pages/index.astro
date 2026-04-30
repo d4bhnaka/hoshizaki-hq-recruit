@@ -1,11 +1,322 @@
 ---
-import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BottomCta from "../components/BottomCta.astro";
+import { specialStories } from "../data/specialStories";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const basePath = "./";
+
+const taglineLines = [
+  "ホシザキを、",
+  "厨房機器だけのメーカーと思っていないか。",
+  "国内のフードサービス機器でトップクラスのシェア。",
+  "でも、それだけではない。",
+  "世界75カ国以上に広がるネットワーク、",
+  "海外売上比率50%にも迫るグローバル企業。",
+  "食材ロス削減、環境負荷軽減、",
+  "そして医療や食品加工といった分野への挑戦。",
+  "常識や思い込みに縛られない、",
+  "これからも、ホシザキは進化を止めない。",
+];
+
+const trioCards = [
+  {
+    href: `${basePath}fact/`,
+    en: "What's HOSHIZAKI",
+    ja: "キーワードで見る",
+    desc: "数字とキーワードから紐解く、ホシザキという会社のほんとうの姿。",
+    img: `${basePath}images/top/ap_02.png`,
+    num: "01",
+  },
+  {
+    href: `${basePath}strategy/`,
+    en: "Beyond HOSHIZAKI",
+    ja: "ホシザキの海外展開",
+    desc: "世界75カ国以上へ広がるネットワーク。グローバル企業としての戦略。",
+    img: `${basePath}images/top/ap_03.png`,
+    num: "02",
+  },
+  {
+    href: `${basePath}job/`,
+    en: "Team HOSHIZAKI",
+    ja: "グループの役割",
+    desc: "ひとつの製品は、多くの仲間の手でかたちになる。グループ会社と職種。",
+    img: `${basePath}images/top/ap_04.png`,
+    num: "03",
+  },
+];
+
+const specialCards = specialStories.map((story) => ({
+  href: `${basePath}special/${story.slug}/`,
+  tag: story.category,
+  title: story.title,
+  sub: story.sub,
+  num: story.num,
+}));
 ---
 
-<Layout>
-  <Welcome />
+<Layout basePath={basePath} title="ホシザキ本社採用サイト | 常識の先へ、跳べ。">
+  <Header basePath={basePath} />
+
+  <main class="p-top">
+    {/* ============================================ */}
+    {/* 1. Hero */}
+    {/* ============================================ */}
+    <section class="p-top-hero" aria-label="メインビジュアル">
+      <div class="p-top-hero__sky">
+        <img class="p-top-hero__cloud p-top-hero__cloud--1" src={`${basePath}images/top/cloud01.png`} alt="" aria-hidden="true" />
+        <img class="p-top-hero__cloud p-top-hero__cloud--2" src={`${basePath}images/top/cloud02.png`} alt="" aria-hidden="true" />
+        <img class="p-top-hero__cloud p-top-hero__cloud--3" src={`${basePath}images/top/cloud03.png`} alt="" aria-hidden="true" />
+
+        <div class="p-top-hero__inner">
+          <div class="p-top-hero__copy">
+            <h1 class="p-top-hero__catch">
+              <span class="p-top-hero__catch-line">常識の</span>
+              <span class="p-top-hero__catch-line">先へ、</span>
+              <span class="p-top-hero__catch-line">跳べ。</span>
+            </h1>
+            <p class="p-top-hero__lead">
+              HOSHIZAKI RECRUIT 2026
+            </p>
+          </div>
+
+          <aside class="p-top-hero__movie" aria-label="CONCEPT MOVIE">
+            <div class="p-top-hero__movie-thumb" aria-hidden="true">
+              <span class="p-top-hero__movie-play">
+                <span class="p-top-hero__movie-triangle" aria-hidden="true"></span>
+              </span>
+            </div>
+            <p class="p-top-hero__movie-label">
+              <span class="p-top-hero__movie-en">CONCEPT MOVIE</span>
+              <span class="p-top-hero__movie-ja">コンセプトムービー</span>
+            </p>
+          </aside>
+        </div>
+
+        <div class="p-top-hero__penguins" aria-hidden="true">
+          <img class="p-top-hero__penguin p-top-hero__penguin--1" src={`${basePath}images/top/ap_01.png`} alt="" />
+          <img class="p-top-hero__penguin p-top-hero__penguin--2" src={`${basePath}images/top/ap_02.png`} alt="" />
+          <img class="p-top-hero__penguin p-top-hero__penguin--3" src={`${basePath}images/top/ap_03.png`} alt="" />
+          <img class="p-top-hero__penguin p-top-hero__penguin--4" src={`${basePath}images/top/ap_04.png`} alt="" />
+          <img class="p-top-hero__penguin p-top-hero__penguin--5" src={`${basePath}images/top/ap_05.png`} alt="" />
+        </div>
+
+        <img class="p-top-hero__city" src={`${basePath}images/top/bg-city.png`} alt="" aria-hidden="true" />
+      </div>
+
+      <div class="p-top-hero__message">
+        <div class="p-top-hero__message-inner">
+          <ol class="p-top-hero__message-list">
+            {taglineLines.map((line) => (
+              <li class="p-top-hero__message-line">{line}</li>
+            ))}
+          </ol>
+          <p class="p-top-hero__message-outro">さあ、その想いを翼に変えて。</p>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================ */}
+    {/* 2. PIONEER SPIRIT */}
+    {/* ============================================ */}
+    <section class="p-top-pioneer" aria-label="採用メッセージ">
+      <img class="p-top-pioneer__ice p-top-pioneer__ice--1" src={`${basePath}images/top/ice_cubes_01.png`} alt="" aria-hidden="true" />
+      <img class="p-top-pioneer__ice p-top-pioneer__ice--2" src={`${basePath}images/top/ice_cubes_02.png`} alt="" aria-hidden="true" />
+      <img class="p-top-pioneer__ice p-top-pioneer__ice--3" src={`${basePath}images/top/ice_cubes_03.png`} alt="" aria-hidden="true" />
+
+      <header class="p-top-pioneer__heading">
+        <p class="p-top-pioneer__ja">
+          <span class="p-top-pioneer__ja-icon" aria-hidden="true"></span>
+          採用メッセージ
+        </p>
+        <h2 class="p-top-pioneer__en">PIONEER SPIRIT</h2>
+        <p class="p-top-pioneer__sub">
+          まだ誰も見たことのない景色へ。開拓者として挑み続けるホシザキの想い。
+        </p>
+      </header>
+
+      <a class="p-top-pioneer__card" href={`${basePath}message/`}>
+        <div class="p-top-pioneer__card-visual">
+          <img class="p-top-pioneer__pioneer" src={`${basePath}images/top/pioneer.png`} alt="" aria-hidden="true" />
+          <img class="p-top-pioneer__card-ice p-top-pioneer__card-ice--a" src={`${basePath}images/top/ice_cubes_04.png`} alt="" aria-hidden="true" />
+          <img class="p-top-pioneer__card-ice p-top-pioneer__card-ice--b" src={`${basePath}images/top/ice_cubes_02.png`} alt="" aria-hidden="true" />
+        </div>
+        <div class="p-top-pioneer__card-body">
+          <p class="p-top-pioneer__card-ja">採用メッセージ</p>
+          <p class="p-top-pioneer__card-en">Pioneer Spirit.</p>
+          <p class="p-top-pioneer__card-desc">
+            誰かの当たり前を、誰もが驚く未来へ。ホシザキが大切にしてきた開拓者精神を、代表からのメッセージでお伝えします。
+          </p>
+          <span class="p-top-pioneer__card-more">
+            READ MORE <span class="p-top-pioneer__card-arrow" aria-hidden="true">→</span>
+          </span>
+        </div>
+      </a>
+    </section>
+
+    {/* ============================================ */}
+    {/* 3. Trio: What's / Beyond / Team HOSHIZAKI */}
+    {/* ============================================ */}
+    <section class="p-top-trio" aria-label="ホシザキを知る3つの入り口">
+      <div class="p-top-trio__bg" aria-hidden="true">
+        <img class="p-top-trio__bg-ice p-top-trio__bg-ice--1" src={`${basePath}images/top/ice_cubes_01.png`} alt="" />
+        <img class="p-top-trio__bg-ice p-top-trio__bg-ice--2" src={`${basePath}images/top/ice_cubes_03.png`} alt="" />
+        <img class="p-top-trio__bg-ice p-top-trio__bg-ice--3" src={`${basePath}images/top/ice_cubes_04.png`} alt="" />
+        <img class="p-top-trio__bg-ice p-top-trio__bg-ice--4" src={`${basePath}images/top/ice_cubes_02.png`} alt="" />
+      </div>
+
+      <header class="p-top-trio__heading">
+        <p class="p-top-trio__heading-ja">
+          <span class="p-top-trio__heading-icon" aria-hidden="true"></span>
+          ホシザキを知る3つの視点
+        </p>
+        <h2 class="p-top-trio__heading-en">KNOW HOSHIZAKI</h2>
+      </header>
+
+      <ul class="p-top-trio__list">
+        {trioCards.map((card, i) => (
+          <li class={`p-top-trio__item p-top-trio__item--${i + 1}`}>
+            <a class="p-top-trio__card" href={card.href}>
+              <span class="p-top-trio__card-num" aria-hidden="true">{card.num}</span>
+              <span class="p-top-trio__card-visual">
+                <img class="p-top-trio__card-penguin" src={card.img} alt="" aria-hidden="true" />
+              </span>
+              <span class="p-top-trio__card-body">
+                <span class="p-top-trio__card-en">{card.en}</span>
+                <span class="p-top-trio__card-ja">{card.ja}</span>
+                <span class="p-top-trio__card-desc">{card.desc}</span>
+                <span class="p-top-trio__card-more">
+                  READ MORE <span class="p-top-trio__card-arrow" aria-hidden="true">→</span>
+                </span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {/* ============================================ */}
+    {/* 4. 先輩たちの「ここに決めた！」 */}
+    {/* ============================================ */}
+    <section class="p-top-decided" aria-label="先輩たちの「ここに決めた！」">
+      <div class="p-top-decided__stars" aria-hidden="true">
+        <span class="p-top-decided__star p-top-decided__star--1"></span>
+        <span class="p-top-decided__star p-top-decided__star--2"></span>
+        <span class="p-top-decided__star p-top-decided__star--3"></span>
+        <span class="p-top-decided__star p-top-decided__star--4"></span>
+      </div>
+
+      <div class="p-top-decided__inner">
+        <header class="p-top-decided__heading">
+          <p class="p-top-decided__ja">先輩たちの</p>
+          <h2 class="p-top-decided__en">「ここに決めた！」</h2>
+          <p class="p-top-decided__sub">
+            なぜホシザキを選んだのか。入社の決め手は、人それぞれ。
+          </p>
+        </header>
+
+        <div class="p-top-decided__stage">
+          <div class="p-top-decided__person p-top-decided__person--1">
+            <span class="p-top-decided__badge" aria-hidden="true"></span>
+            <p class="p-top-decided__name">T.K.</p>
+            <p class="p-top-decided__role">営業職／2022年入社</p>
+            <p class="p-top-decided__quote">「ものづくりの自由度が、思っていた以上に高かった。」</p>
+          </div>
+          <div class="p-top-decided__person p-top-decided__person--2">
+            <span class="p-top-decided__badge" aria-hidden="true"></span>
+            <p class="p-top-decided__name">M.S.</p>
+            <p class="p-top-decided__role">技術職／2021年入社</p>
+            <p class="p-top-decided__quote">「グローバルに挑めるフィールドに惹かれた。」</p>
+          </div>
+          <div class="p-top-decided__person p-top-decided__person--3">
+            <span class="p-top-decided__badge" aria-hidden="true"></span>
+            <p class="p-top-decided__name">Y.H.</p>
+            <p class="p-top-decided__role">開発職／2023年入社</p>
+            <p class="p-top-decided__quote">「人の温かさ、社風の風通しに決め手を感じた。」</p>
+          </div>
+
+          <img class="p-top-decided__penguin p-top-decided__penguin--a" src={`${basePath}images/top/ap_02.png`} alt="" aria-hidden="true" />
+          <img class="p-top-decided__penguin p-top-decided__penguin--b" src={`${basePath}images/top/ap_05.png`} alt="" aria-hidden="true" />
+        </div>
+
+        <a class="p-top-decided__button" href={`${basePath}person/`}>
+          <span class="p-top-decided__button-ja">はたらく人を知る</span>
+          <span class="p-top-decided__button-en">READ MORE <span aria-hidden="true">→</span></span>
+        </a>
+      </div>
+    </section>
+
+    {/* ============================================ */}
+    {/* 5. はたらく環境を知る */}
+    {/* ============================================ */}
+    <section class="p-top-env" aria-label="はたらく環境を知る">
+      <div class="p-top-env__inner">
+        <div class="p-top-env__body">
+          <header class="p-top-env__heading">
+            <p class="p-top-env__ja">
+              <span class="p-top-env__ja-icon" aria-hidden="true"></span>
+              はたらく環境を知る
+            </p>
+            <h2 class="p-top-env__en">ENVIRONMENT</h2>
+            <p class="p-top-env__sub">制度も環境も、安心して整えてきました。</p>
+          </header>
+          <p class="p-top-env__desc">
+            一人ひとりの挑戦を支えるために、研修制度・福利厚生・働き方をアップデートし続けています。長く、自分らしく働ける環境が、ここにあります。
+          </p>
+          <a class="p-top-env__button" href={`${basePath}environment/`}>
+            <span class="p-top-env__button-ja">はたらく環境を知る</span>
+            <span class="p-top-env__button-en">READ MORE <span aria-hidden="true">→</span></span>
+          </a>
+        </div>
+
+        <div class="p-top-env__visual" aria-hidden="true">
+          <div class="p-top-env__photo">
+            <span class="p-top-env__photo-window p-top-env__photo-window--1"></span>
+            <span class="p-top-env__photo-window p-top-env__photo-window--2"></span>
+            <span class="p-top-env__photo-window p-top-env__photo-window--3"></span>
+            <span class="p-top-env__photo-floor"></span>
+          </div>
+          <img class="p-top-env__penguin p-top-env__penguin--1" src={`${basePath}images/top/ap_01.png`} alt="" />
+          <img class="p-top-env__penguin p-top-env__penguin--2" src={`${basePath}images/top/ap_03.png`} alt="" />
+          <img class="p-top-env__penguin p-top-env__penguin--3" src={`${basePath}images/top/ap_04.png`} alt="" />
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================ */}
+    {/* 6. SPECIAL CONTENTS */}
+    {/* ============================================ */}
+    <section class="p-top-special" aria-label="SPECIAL CONTENTS">
+      <header class="p-top-special__heading">
+        <p class="p-top-special__ja">
+          <span class="p-top-special__ja-icon" aria-hidden="true"></span>
+          ホシザキではたらくリアル
+        </p>
+        <h2 class="p-top-special__en">SPECIAL CONTENTS</h2>
+      </header>
+
+      <ul class="p-top-special__list">
+        {specialCards.map((card) => (
+          <li class="p-top-special__item">
+            <a class="p-top-special__card" href={card.href}>
+              <span class="p-top-special__card-num" aria-hidden="true">{card.num}</span>
+              <span class="p-top-special__card-body">
+                <span class="p-top-special__card-tag">{card.tag}</span>
+                <span class="p-top-special__card-title">{card.title}</span>
+                <span class="p-top-special__card-sub">{card.sub}</span>
+              </span>
+              <span class="p-top-special__card-more">
+                READ MORE <span aria-hidden="true">→</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <BottomCta basePath={basePath} />
+  </main>
+
+  <Footer basePath={basePath} />
 </Layout>

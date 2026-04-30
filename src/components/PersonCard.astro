@@ -1,0 +1,49 @@
+---
+interface Props {
+  image: string;
+  quote: string;
+  body: string;
+  department: string;
+  href?: string;
+}
+
+const { image, quote, body, department, href = "./detail/" } = Astro.props;
+
+const bodyLines = body.split("／");
+---
+
+<a class="c-person-card" href={href}>
+  <figure class="c-person-card__photo">
+    <div
+      class="c-person-card__photo-bg"
+      style={`background-image: url('${image}');`}
+      aria-hidden="true"
+    >
+    </div>
+    <img
+      class="c-person-card__photo-img"
+      src={image}
+      alt=""
+      loading="lazy"
+    />
+    <figcaption class="c-person-card__bubble">
+      <span class="c-person-card__bubble-text">{quote}</span>
+    </figcaption>
+  </figure>
+  <div class="c-person-card__body">
+    <p class="c-person-card__text">
+      {
+        bodyLines.map((line, i) => (
+          <>
+            {line}
+            {i < bodyLines.length - 1 && <br />}
+          </>
+        ))
+      }
+    </p>
+    <div class="c-person-card__footer">
+      <span class="c-person-card__tag">{department}</span>
+      <span class="c-person-card__chevron" aria-hidden="true">›</span>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,40 @@
+// ============================================
+// Component: Bottom CTA (INTERNSHIP + ENTRY)
+// 全下層ページ末尾・トップ末尾で使用する縦並びバナー画像
+// ============================================
+
+.c-bottom-cta {
+  padding: 80px 64px;
+  background: transparent;
+}
+
+.c-bottom-cta__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.c-bottom-cta__item {
+  display: block;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform var(--transition-base);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.c-bottom-cta__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .c-bottom-cta {
+    padding: 48px 16px;
+  }
+}

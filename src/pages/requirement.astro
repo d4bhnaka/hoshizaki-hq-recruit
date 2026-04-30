@@ -1,0 +1,113 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import BottomCta from "../components/BottomCta.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+
+const base = "../";
+
+interface Row {
+  label: string;
+  value: string;
+}
+
+const generalRows: Row[] = [
+  { label: "初任給", value: "270,000円" },
+  {
+    label: "諸手当",
+    value: "時間外・休日・深夜勤務手当、住宅手当、通勤手当、家族手当、役付手当 他",
+  },
+  {
+    label: "昇給",
+    value: "年1回（4月）2025年度実績 平均18,197円 5.320%",
+  },
+  {
+    label: "賞与",
+    value: "年2回（7月、12月） ※2024年度実績 年間6.7カ月",
+  },
+  { label: "勤務地", value: "愛知、島根" },
+  {
+    label: "勤務時間",
+    value:
+      "8:05〜17:00／実働7.83時間／1日／休憩時間：65分／※国内営業部門 9:00〜17:50（実働7.83時間）",
+  },
+  { label: "年間休日数", value: "122日" },
+  {
+    label: "休日・休暇",
+    value:
+      "完全週休2日制（企業カレンダーに基づく）／ゴールデンウィーク・夏季・年末年始休暇、産前産後・育児・介護休暇、慶弔等各種特別休暇、年次有給休暇（半日・時間単位制度含む）",
+  },
+  {
+    label: "待遇・福利厚生・社内制度",
+    value:
+      "福利厚生倶楽部（リロクラブ）、退職金制度、財形貯蓄制度、社員持株会制度、資格取得補助制度、独身寮制度（入寮要件あり）、社宅制度、会社保養施設（山荘）、クラブ活動補助（野球、バスケット、テニス、卓球、茶華道等）、慶弔見舞金、食事補助 他",
+  },
+];
+---
+
+<Layout
+  basePath={base}
+  title="Requirement｜ホシザキ本社採用サイト"
+  description="ホシザキ本社 総合職の募集要項。初任給・諸手当・勤務地・勤務時間・休日・福利厚生などの採用条件をご案内します。"
+>
+  <div class="l-container">
+    <Header basePath={base} />
+    <main class="l-main">
+      <article class="p-req">
+        <PageHero en="Requirement" ja="募集要項" variant="cloud" />
+
+        <!-- Intro -->
+        <section class="p-req__intro">
+          <p class="p-req__intro-text">
+            ホシザキは厨房機器の枠を超え、医療や農業など新たな分野への挑戦を続けています。食材ロスや環境負荷といった社会課題の解決を通じ、世界中の「食」の未来を創ることが私たちの使命です。現状に満足せず、グローバルな舞台で「常識の先へ」跳躍したいと願う、情熱ある皆さんのエントリーをお待ちしています。
+          </p>
+        </section>
+
+        <!-- General course -->
+        <section class="p-req__section" aria-labelledby="req-general-title">
+          <p class="p-req__label" id="req-general-title">
+            <span class="p-req__icon" aria-hidden="true"></span>
+            <span class="p-req__label-text">総合職</span>
+          </p>
+          <div class="p-req__card">
+            <dl class="p-req__table">
+              {
+                generalRows.map((row) => (
+                  <div class="p-req__row">
+                    <dt class="p-req__term">{row.label}</dt>
+                    <dd class="p-req__desc">{row.value}</dd>
+                  </div>
+                ))
+              }
+            </dl>
+          </div>
+        </section>
+
+        <!-- Initial assignment -->
+        <section class="p-req__section" aria-labelledby="req-assignment-title">
+          <p class="p-req__label" id="req-assignment-title">
+            <span class="p-req__icon" aria-hidden="true"></span>
+            <span class="p-req__label-text">初期配属について</span>
+          </p>
+          <div class="p-req__card p-req__card--note">
+            <p class="p-req__note">
+              内定通知の際に初期配属（職種・勤務地）をお知らせします<br />
+              勤務地については、3年間固定です。
+            </p>
+          </div>
+        </section>
+
+        <!-- Bottom CTA -->
+        <BottomCta basePath={base} />
+
+        <!-- Breadcrumb -->
+        <div class="p-req__breadcrumb">
+          <Breadcrumb basePath={base} items={[{ label: "募集要項" }]} />
+        </div>
+      </article>
+    </main>
+    <Footer basePath={base} />
+  </div>
+</Layout>

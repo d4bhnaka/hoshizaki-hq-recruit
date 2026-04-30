@@ -1,0 +1,92 @@
+---
+interface Props {
+  basePath?: string;
+}
+
+const { basePath = "./" } = Astro.props;
+
+type FooterItem = { href: string; label: string; external?: boolean };
+type FooterColumn = {
+  heading: string | { href: string; label: string } | null;
+  href?: string;
+  items: FooterItem[];
+};
+
+const columns: FooterColumn[] = [
+  {
+    heading: "採用TOP",
+    href: basePath,
+    items: [],
+  },
+  {
+    heading: null,
+    items: [
+      { href: `${basePath}message/`, label: "採用メッセージ" },
+      { href: `${basePath}fact/`, label: "What's HOSHIZAKI" },
+      { href: `${basePath}strategy/`, label: "Beyond HOSHIZAKI" },
+      { href: `${basePath}job/`, label: "Team HOSHIZAKI" },
+      { href: `${basePath}person/`, label: "先輩たちの「ここに決めた」" },
+    ],
+  },
+  {
+    heading: { href: `${basePath}special/`, label: "SPECIAL CONTENTS" },
+    items: [
+      { href: `${basePath}special/crosstalk/`, label: "入社3年目の挑戦" },
+      { href: `${basePath}special/talk/`, label: "社内SE職の挑戦" },
+      { href: `${basePath}special/project/`, label: "ホシザキ 暮らしのクロストーク" },
+    ],
+  },
+  {
+    heading: null,
+    items: [
+      { href: `${basePath}environment/`, label: "はたらく環境を知る" },
+      { href: `${basePath}requirement/`, label: "募集要項" },
+      { href: `${basePath}internship/`, label: "インターンシップ情報" },
+      { href: "https://www.hoshizaki.co.jp/", label: "ホシザキ企業サイト", external: true },
+    ],
+  },
+];
+---
+
+<footer class="l-footer">
+  <div class="l-footer__inner">
+    <nav class="l-footer__nav" aria-label="フッターナビゲーション">
+      {
+        columns.map((column) => (
+          <div class="l-footer__col">
+            {column.heading && typeof column.heading === "string" && (
+              <p class="l-footer__heading">
+                <a class="l-footer__heading-link" href={column.href}>
+                  {column.heading}
+                </a>
+              </p>
+            )}
+            {column.heading && typeof column.heading === "object" && (
+              <p class="l-footer__heading">
+                <a class="l-footer__heading-link" href={column.heading.href}>
+                  {column.heading.label}
+                </a>
+              </p>
+            )}
+            {column.items.length > 0 && (
+              <ul class="l-footer__list">
+                {column.items.map((item) => (
+                  <li>
+                    <a
+                      class="l-footer__link"
+                      href={item.href}
+                      {...(item.external ? { target: "_blank", rel: "noopener" } : {})}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
+    </nav>
+  </div>
+  <p class="l-footer__wordmark" aria-hidden="true">HOSHIZAKI</p>
+</footer>

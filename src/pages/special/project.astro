@@ -1,0 +1,116 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import BottomCta from "../../components/BottomCta.astro";
+
+const base = "../../";
+
+const members = [
+  { name: "Takahiro N.", role: "開発設計部 / 2022年入社", image: `${base}images/special/project-member-01.jpg` },
+  { name: "Miho S.", role: "開発設計部 / 2017年入社", image: `${base}images/special/project-member-02.jpg` },
+];
+
+const qa = [
+  {
+    q: "今回のプロジェクトの概要と、担当された役割を教えてください。",
+    who: "Takahiro",
+    body: "自然冷媒を用いた次世代冷蔵機器の量産化プロジェクトです。従来の冷媒から環境負荷の低い自然冷媒に切り替えるにあたり、効率を落とさずに温度を保つ新機構の開発を担当しました。",
+    image: `${base}images/special/project-scene-01.jpg`,
+  },
+  {
+    q: "『妥協なき、食の未来への挑戦』と言われる理由は？",
+    who: "Miho",
+    body: "冷媒の変更は環境面ではプラスでも、性能とコストを両立させるのが非常に難しい挑戦です。私たちは『どこで妥協するか』ではなく『どうすれば妥協しないで済むか』を突き詰める文化があります。",
+    image: `${base}images/special/project-scene-02.jpg`,
+  },
+  {
+    q: "印象に残っている壁と、それを乗り越えた経験を教えてください。",
+    who: "Takahiro",
+    body: "試作機が想定の温度に下がらず、量産までのスケジュールが危うくなった時期がありました。先輩と一緒にデータを徹底的に洗い直し、冷却回路の根本構造を見直したことが突破口になりました。",
+    image: `${base}images/special/project-scene-03.jpg`,
+  },
+  {
+    q: "最後に学生の皆様へ、ホシザキでの仕事の『面白さ』を教えてください。",
+    who: "Miho",
+    body: "『食』を支える仕事は社会の土台そのもの。目立つ仕事ではないからこそ、本物の技術力が試されます。未来に残る仕事をしたい方には、最高のフィールドです。",
+    image: `${base}images/special/project-scene-04.jpg`,
+  },
+];
+---
+
+<Layout
+  basePath={base}
+  title="妥協なき、食の未来への挑戦｜プロジェクトストーリー｜ホシザキ本社採用サイト"
+  description="開発部若手社員と中堅先輩社員が語る、自然冷媒を用いた次世代冷蔵機器プロジェクトのストーリー。"
+>
+  <div class="l-container">
+    <Header basePath={base} />
+    <main class="l-main">
+      <article class="p-project-story">
+        <section class="p-project-story__hero">
+          <figure class="p-project-story__hero-image">
+            <img src={`${base}images/special/project-hero.jpg`} alt="" loading="eager" />
+          </figure>
+          <div class="p-project-story__hero-body">
+            <p class="p-project-story__kicker">プロジェクトストーリー</p>
+            <h1 class="p-project-story__title">妥協なき、食の未来への挑戦</h1>
+            <p class="p-project-story__lead">
+              自然冷媒を用いた次世代冷蔵機器の量産化プロジェクトに挑んだ、若手社員と中堅先輩社員の物語。
+            </p>
+          </div>
+        </section>
+
+        <section class="p-project-story__members">
+          <p class="p-project-story__members-label">参加メンバー</p>
+          <ul class="p-project-story__members-list">
+            {
+              members.map((m) => (
+                <li class="p-project-story__member">
+                  <figure class="p-project-story__member-image">
+                    <img src={m.image} alt="" loading="lazy" />
+                  </figure>
+                  <p class="p-project-story__member-name">{m.name}</p>
+                  <p class="p-project-story__member-role">{m.role}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <div class="p-project-story__body">
+          {
+            qa.map((block) => (
+              <section class="p-project-story__qa">
+                <h2 class="p-project-story__q">— {block.q}</h2>
+                <p class="p-project-story__answer-who">{block.who}</p>
+                <p class="p-project-story__answer-body">{block.body}</p>
+                <figure class="p-project-story__scene">
+                  <img src={block.image} alt="" loading="lazy" />
+                </figure>
+              </section>
+            ))
+          }
+        </div>
+
+        <p class="p-project-story__back">
+          <a href={`${base}special/`} class="p-project-story__back-link">
+            SPECIAL CONTENTS 一覧へ
+            <span aria-hidden="true">›</span>
+          </a>
+        </p>
+
+        <BottomCta basePath={base} />
+        <Breadcrumb
+          basePath={base}
+          items={[
+            { href: `${base}special/`, label: "スペシャルコンテンツ" },
+            { label: "妥協なき、食の未来への挑戦" },
+          ]}
+        />
+      </article>
+    </main>
+    <Footer basePath={base} />
+  </div>
+</Layout>

@@ -1,0 +1,184 @@
+// ============================================
+// p-person-detail : Person detail page
+// Two-column split layout with a sticky right photo.
+// ============================================
+
+.p-person-detail {
+  display: block;
+  width: 100%;
+  background: var(--color-bg-page);
+}
+
+// --------------------------------------------
+// Split layout
+// --------------------------------------------
+.p-person-detail__split {
+  display: grid;
+  grid-template-columns: minmax(0, 55%) minmax(0, 45%);
+  gap: 64px;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 72px 80px 96px;
+  align-items: flex-start;
+}
+
+// --------------------------------------------
+// Left column (scrollable content)
+// --------------------------------------------
+.p-person-detail__left {
+  min-width: 0;
+}
+
+.p-person-detail__label {
+  margin: 0 0 18px;
+  font-family: var(--font-family-en);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--color-brand-primary);
+  text-transform: uppercase;
+}
+
+.p-person-detail__title {
+  margin: 0 0 28px;
+  font-family: var(--font-family-base);
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.55;
+  color: var(--color-brand-navy);
+  letter-spacing: 0.02em;
+}
+
+.p-person-detail__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 48px;
+  padding: 16px 20px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-card);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+}
+
+.p-person-detail__meta-name {
+  font-family: var(--font-family-en);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--color-brand-navy);
+  letter-spacing: 0.08em;
+}
+
+.p-person-detail__meta-item {
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.p-person-detail__meta-sep {
+  color: var(--color-brand-blue-300);
+}
+
+.p-person-detail__interviews {
+  display: flex;
+  flex-direction: column;
+}
+
+// --------------------------------------------
+// Right column (sticky photo)
+// --------------------------------------------
+.p-person-detail__right {
+  min-width: 0;
+}
+
+.p-person-detail__sticky {
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.p-person-detail__photo {
+  margin: 0;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-card);
+  background: var(--color-brand-blue-100);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.p-person-detail__annotation {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--color-accent-red);
+  text-align: center;
+}
+
+// --------------------------------------------
+// Back-to-list button
+// --------------------------------------------
+.p-person-detail__back {
+  display: flex;
+  justify-content: center;
+  padding: 0 40px 72px;
+}
+
+.p-person-detail__back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-width: 360px;
+  padding: 20px 40px;
+  background: var(--color-brand-primary);
+  color: var(--color-white);
+  border-radius: var(--border-radius-pill);
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+  transition: background var(--transition-base), transform var(--transition-base);
+
+  &:hover {
+    background: var(--color-brand-navy);
+    transform: translateY(-2px);
+  }
+}
+
+.p-person-detail__back-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--border-radius-pill);
+  background: var(--color-white);
+  color: var(--color-brand-primary);
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+// --------------------------------------------
+// Breadcrumb wrapper
+// --------------------------------------------
+.p-person-detail__breadcrumb {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 24px 40px 56px;
+}

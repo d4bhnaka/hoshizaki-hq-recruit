@@ -1,0 +1,130 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import BottomCta from "../../components/BottomCta.astro";
+
+const base = "../../";
+
+const members = [
+  { name: "Yuta S.", role: "開発設計 / 2023年入社", image: `${base}images/special/crosstalk-member-01.jpg` },
+  { name: "Saki M.", role: "品質保証 / 2022年入社", image: `${base}images/special/crosstalk-member-02.jpg` },
+  { name: "Ryota K.", role: "国内営業 / 2022年入社", image: `${base}images/special/crosstalk-member-03.jpg` },
+  { name: "Aoi T.", role: "海外事業 / 2023年入社", image: `${base}images/special/crosstalk-member-04.jpg` },
+];
+
+const qa = [
+  {
+    q: "入社して感じた、ホシザキのリアルは？",
+    answers: [
+      { who: "Yuta", body: "若手でも製品全体に携われるスケール感に驚きました。1台を丸ごと任せてくれる文化は、想像以上でした。" },
+      { who: "Saki", body: "『堅い会社』と思っていたら、ものすごくフラット。新人が堂々と意見を言える雰囲気があります。" },
+      { who: "Ryota", body: "先輩との距離が近く、『さん付け』で話せる文化が心地よいです。" },
+      { who: "Aoi", body: "グローバル案件の最前線に、2年目から携われるとは思っていませんでした。" },
+    ],
+    image: `${base}images/special/crosstalk-scene-01.jpg`,
+  },
+  {
+    q: "印象に残っている仕事は？",
+    answers: [
+      { who: "Yuta", body: "新製品の試作・評価を丸ごと担当し、自分の設計が工場に流れる瞬間は感動しました。" },
+      { who: "Saki", body: "海外拠点へ出張し、現地メーカーと品質議論をしたこと。現場の熱量を感じました。" },
+      { who: "Ryota", body: "大手チェーンへの一括提案を先輩と二人で攻略したプロジェクト。一番成長した仕事です。" },
+      { who: "Aoi", body: "現地法人との合同会議で、自分の提案が採用されたのがうれしかったです。" },
+    ],
+    image: `${base}images/special/crosstalk-scene-02.jpg`,
+  },
+  {
+    q: "これからホシザキで叶えたいことは？",
+    answers: [
+      { who: "Yuta", body: "自分が設計した製品が世界のどこかで当たり前に使われる、そんな瞬間を見届けたいです。" },
+      { who: "Saki", body: "グローバル品質基準を自分たちで作り、世界を牽引する立場を目指します。" },
+      { who: "Ryota", body: "営業企画へ挑戦し、マーケット全体を動かす提案に関わりたい。" },
+      { who: "Aoi", body: "海外駐在を経て、事業を丸ごと任せてもらえる存在になりたい。" },
+    ],
+    image: `${base}images/special/crosstalk-scene-03.jpg`,
+  },
+];
+---
+
+<Layout
+  basePath={base}
+  title="若手が語る はたらく環境｜クロストーク｜ホシザキ本社採用サイト"
+  description="入社3年目までの若手社員4名によるクロストーク。入社のきっかけ、現場のリアル、これから叶えたい夢を赤裸々に語ります。"
+>
+  <div class="l-container">
+    <Header basePath={base} />
+    <main class="l-main">
+      <article class="p-crosstalk">
+        <section class="p-crosstalk__hero">
+          <figure class="p-crosstalk__hero-image">
+            <img src={`${base}images/special/crosstalk-hero.jpg`} alt="" loading="eager" />
+          </figure>
+          <div class="p-crosstalk__hero-body">
+            <p class="p-crosstalk__kicker">クロストーク</p>
+            <h1 class="p-crosstalk__title">若手が語る はたらく環境</h1>
+            <p class="p-crosstalk__lead">
+              若手4名による本音トーク。入社3年目までの仲間たちが、リアルな『はたらく環境』を語ります。
+            </p>
+          </div>
+        </section>
+
+        <section class="p-crosstalk__members">
+          <p class="p-crosstalk__members-label">参加メンバー</p>
+          <ul class="p-crosstalk__members-list">
+            {
+              members.map((m) => (
+                <li class="p-crosstalk__member">
+                  <figure class="p-crosstalk__member-image">
+                    <img src={m.image} alt="" loading="lazy" />
+                  </figure>
+                  <p class="p-crosstalk__member-name">{m.name}</p>
+                  <p class="p-crosstalk__member-role">{m.role}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <div class="p-crosstalk__body">
+          {
+            qa.map((block, i) => (
+              <section class="p-crosstalk__qa">
+                <h2 class="p-crosstalk__q">— {block.q}</h2>
+                <ul class="p-crosstalk__answers">
+                  {block.answers.map((a) => (
+                    <li>
+                      <p class="p-crosstalk__answer-who">{a.who}</p>
+                      <p class="p-crosstalk__answer-body">{a.body}</p>
+                    </li>
+                  ))}
+                </ul>
+                <figure class="p-crosstalk__scene">
+                  <img src={block.image} alt="" loading="lazy" />
+                </figure>
+              </section>
+            ))
+          }
+        </div>
+
+        <p class="p-crosstalk__back">
+          <a href={`${base}special/`} class="p-crosstalk__back-link">
+            SPECIAL CONTENTS 一覧へ
+            <span aria-hidden="true">›</span>
+          </a>
+        </p>
+
+        <BottomCta basePath={base} />
+        <Breadcrumb
+          basePath={base}
+          items={[
+            { href: `${base}special/`, label: "スペシャルコンテンツ" },
+            { label: "若手が語る はたらく環境" },
+          ]}
+        />
+      </article>
+    </main>
+    <Footer basePath={base} />
+  </div>
+</Layout>

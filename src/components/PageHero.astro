@@ -1,0 +1,35 @@
+---
+interface Props {
+  en: string;
+  ja?: string;
+  variant?: "light" | "blue" | "cloud";
+  compact?: boolean;
+  align?: "left" | "center";
+  bg?: string;
+}
+
+const {
+  en,
+  ja,
+  variant = "light",
+  compact = false,
+  align = "left",
+  bg,
+} = Astro.props;
+
+const style = bg ? `--page-hero-bg: url('${bg}');` : undefined;
+---
+
+<section
+  class={`c-page-hero c-page-hero--${variant} c-page-hero--${align}${compact ? " c-page-hero--compact" : ""}${bg ? " c-page-hero--has-bg" : ""}`}
+  style={style}
+>
+  <div class="c-page-hero__inner">
+    <h1 class="c-page-hero__title">
+      <span class="c-page-hero__en">{en}</span>
+      {ja && <span class="c-page-hero__ja">{ja}</span>}
+    </h1>
+    <slot />
+  </div>
+  <slot name="decoration" />
+</section>

@@ -1,0 +1,101 @@
+// ============================================
+// Component: Page Hero
+// 各下層ページ上部の英語タイトル + 日本語サブ
+// ============================================
+
+.c-page-hero {
+  position: relative;
+  padding: 180px 64px 96px;
+  background: var(--color-brand-blue-100);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.c-page-hero--compact {
+  padding: 140px 64px 72px;
+}
+
+.c-page-hero__inner {
+  position: relative;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  z-index: 1;
+}
+
+.c-page-hero--center .c-page-hero__inner {
+  text-align: center;
+}
+
+.c-page-hero__title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+}
+
+.c-page-hero__en {
+  font-family: var(--font-family-en);
+  font-size: clamp(48px, 6vw, 96px);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  color: var(--color-text-primary);
+}
+
+.c-page-hero__ja {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  letter-spacing: 0.08em;
+}
+
+// Variants
+.c-page-hero--light {
+  background:
+    linear-gradient(180deg, #f3faff 0%, var(--color-brand-blue-100) 100%);
+}
+
+.c-page-hero--blue {
+  background:
+    linear-gradient(180deg, var(--color-brand-primary) 0%, var(--color-brand-navy) 100%);
+
+  .c-page-hero__en,
+  .c-page-hero__ja {
+    color: var(--color-text-inverse);
+  }
+}
+
+.c-page-hero--cloud {
+  background-color: #eaf4fc;
+  background-image:
+    linear-gradient(180deg, rgba(234, 244, 252, 0.3) 0%, rgba(234, 244, 252, 0.9) 100%),
+    url("../images/top/cloud01.png"),
+    url("../images/top/cloud02.png");
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: center, right -120px top 40px, left -80px bottom 20px;
+  background-size: cover, 600px auto, 500px auto;
+}
+
+.c-page-hero--has-bg {
+  background-image: var(--page-hero-bg);
+  background-size: cover;
+  background-position: center;
+}
+
+@media screen and (max-width: 960px) {
+  .c-page-hero {
+    padding: 120px 20px 64px;
+  }
+
+  .c-page-hero--compact {
+    padding: 100px 20px 48px;
+  }
+
+  .c-page-hero__en {
+    font-size: 40px;
+  }
+
+  .c-page-hero__ja {
+    font-size: 15px;
+  }
+}

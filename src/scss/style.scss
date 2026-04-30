@@ -16,20 +16,38 @@
 @use "layout/l-container";
 @use "layout/l-main";
 @use "layout/l-background";
+@use "layout/l-header";
+@use "layout/l-footer";
 
 // --------------------------------------------
 // Object - Component
 // --------------------------------------------
-@use "object/component/c-box";
-@use "object/component/c-button";
+@use "object/component/c-entry-button";
+@use "object/component/c-page-hero";
+@use "object/component/c-bottom-cta";
+@use "object/component/c-breadcrumb";
+@use "object/component/c-section-heading";
+@use "object/component/c-stat-card";
+@use "object/component/c-person-card";
+@use "object/component/c-interview-block";
 
 // --------------------------------------------
 // Object - Project
 // --------------------------------------------
-@use "object/project/p-hero";
-@use "object/project/p-links";
-@use "object/project/p-news";
-@use "object/project/p-about";
+@use "object/project/p-internship";
+@use "object/project/p-top";
+@use "object/project/p-message";
+@use "object/project/p-fact";
+@use "object/project/p-strategy";
+@use "object/project/p-job";
+@use "object/project/p-person";
+@use "object/project/p-person-detail";
+@use "object/project/p-environment";
+@use "object/project/p-requirement";
+@use "object/project/p-special";
+@use "object/project/p-crosstalk";
+@use "object/project/p-project-story";
+@use "object/project/p-special-talk";
 
 // --------------------------------------------
 // Object - Utility

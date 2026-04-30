@@ -1,0 +1,56 @@
+// ============================================
+// c-interview-block : Reusable Q+A interview block
+// Used on person detail and special pages.
+// ============================================
+
+.c-interview-block {
+  display: block;
+  padding: 48px 0;
+  border-top: 1px solid var(--color-brand-blue-200);
+
+  &:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+
+.c-interview-block__question {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 18px;
+  font-family: var(--font-family-base);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-brand-primary);
+}
+
+.c-interview-block__dash {
+  display: inline-block;
+  color: var(--color-brand-primary);
+  letter-spacing: -0.1em;
+}
+
+.c-interview-block__answer {
+  margin: 0 0 24px;
+  font-family: var(--font-family-base);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--color-brand-navy);
+  letter-spacing: 0.02em;
+}
+
+.c-interview-block__body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.c-interview-block__paragraph {
+  margin: 0;
+  font-size: 15px;
+  line-height: 2;
+  color: var(--color-text-secondary);
+}

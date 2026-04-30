@@ -1,0 +1,42 @@
+// ============================================
+// Component: Entry Button
+// ============================================
+
+.c-entry-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 344px;
+  height: 90px;
+  padding: 0 32px;
+  border-radius: var(--border-radius-pill);
+  background: linear-gradient(135deg, var(--color-brand-cyan) 0%, var(--color-brand-primary) 100%);
+  color: var(--color-text-inverse);
+  font-family: var(--font-family-en);
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-align: center;
+  box-shadow: 0 12px 24px rgba(0, 160, 233, 0.25);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(0, 160, 233, 0.3);
+  }
+
+  &::after {
+    content: "›";
+    margin-left: 16px;
+    font-weight: 400;
+    font-size: 0.9em;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .c-entry-button {
+    min-width: 240px;
+    height: 72px;
+    font-size: 28px;
+  }
+}
