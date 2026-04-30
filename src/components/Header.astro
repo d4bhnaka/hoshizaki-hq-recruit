@@ -6,25 +6,28 @@ interface Props {
 
 const { basePath = "./", variant = "light" } = Astro.props;
 
+// Figma 518:1195 (Navigation) — 8 項目 + 先頭にアイスキューブアイコン
 const drawerLinks = [
-  { href: `${basePath}`, label: "採用TOP" },
+  { href: `${basePath}`, label: "トップページ", icon: true },
   { href: `${basePath}message/`, label: "採用メッセージ" },
-  { href: `${basePath}fact/`, label: "What's HOSHIZAKI" },
-  { href: `${basePath}strategy/`, label: "Beyond HOSHIZAKI" },
-  { href: `${basePath}job/`, label: "Team HOSHIZAKI" },
-  { href: `${basePath}person/`, label: "先輩たちの「ここに決めた」" },
+  { href: `${basePath}fact/`, label: "数字で見るホシザキ" },
+  { href: `${basePath}strategy/`, label: "ホシザキの事業戦略" },
+  { href: `${basePath}job/`, label: "ホシザキの職種紹介" },
+  { href: `${basePath}person/`, label: "はたらく人を知る" },
   { href: `${basePath}environment/`, label: "はたらく環境を知る" },
   { href: `${basePath}requirement/`, label: "募集要項" },
-  { href: `${basePath}special/`, label: "SPECIAL CONTENTS" },
-  { href: `${basePath}internship/`, label: "インターンシップ" },
 ];
 ---
 
 <header class={`l-header l-header--${variant}`} data-variant={variant}>
   <div class="l-header__inner">
     <a class="l-header__logo" href={basePath} aria-label="ホシザキ採用サイト トップ">
-      <img src={`${basePath}images/common/logo-hoshizaki.svg`} alt="HOSHIZAKI" onerror="this.style.display='none'" />
-      <span class="l-header__logo-fallback">HOSHIZAKI</span>
+      <img
+        src={`${basePath}images/common/hoshizaki-logo.png`}
+        alt="HOSHIZAKI"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='inline';"
+      />
+      <span class="l-header__logo-fallback" style="display:none;">HOSHIZAKI</span>
     </a>
     <div class="l-header__actions">
       <a class="l-header__cta" href={`${basePath}internship/`}>
@@ -51,18 +54,48 @@ const drawerLinks = [
   </div>
 
   <div class="l-drawer" id="l-drawer" hidden>
-    <nav class="l-drawer__nav" aria-label="メインナビゲーション">
-      <ul class="l-drawer__list">
-        {
-          drawerLinks.map((item) => (
-            <li class="l-drawer__item">
-              <a class="l-drawer__link" href={item.href}>
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+    <button
+      class="l-drawer__backdrop"
+      type="button"
+      aria-label="メニューを閉じる"
+      data-drawer-close
+      tabindex="-1"></button>
+    <aside class="l-drawer__panel" aria-label="メインナビゲーション">
+      <button
+        class="l-drawer__close"
+        type="button"
+        aria-label="メニューを閉じる"
+        data-drawer-close>
+        <span class="l-drawer__close-x" aria-hidden="true"></span>
+      </button>
+      <nav class="l-drawer__nav">
+        <ul class="l-drawer__list">
+          {
+            drawerLinks.map((item) => (
+              <li class="l-drawer__item">
+                <a class="l-drawer__link" href={item.href}>
+                  {item.icon && (
+                    <span class="l-drawer__link-icon" aria-hidden="true">
+                      <img
+                        src={`${basePath}images/common/ice-01.png`}
+                        alt=""
+                        onerror="this.style.display='none'"
+                      />
+                    </span>
+                  )}
+                  <span class="l-drawer__link-label">{item.label}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <img
+        class="l-drawer__bg"
+        src={`${basePath}images/common/nav_bg.png`}
+        alt=""
+        aria-hidden="true"
+      />
+    </aside>
   </div>
 </header>

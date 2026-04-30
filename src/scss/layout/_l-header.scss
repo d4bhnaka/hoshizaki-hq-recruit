@@ -73,8 +73,7 @@
   display: inline-block;
   width: 14px;
   height: 14px;
-  background: var(--color-brand-cyan);
-  transform: rotate(45deg);
+  background: url("../images/common/ice-01.png") center / contain no-repeat;
   flex-shrink: 0;
 }
 
@@ -136,48 +135,204 @@
 }
 
 // --------------------------------------------
-// Drawer
+// Drawer (Figma 518:1195 — 572×1136)
+//   背景: 白、右下に nav_bg.png (氷の三角パターン) を fixed 配置
+//   閉じるボタン: 右上 50×50 ネイビー四角 + 白 X
+//   メニュー項目: 8 件、先頭「トップページ」にアイスキューブアイコン
 // --------------------------------------------
 .l-drawer {
   position: fixed;
-  top: 0;
-  right: 0;
-  width: min(360px, 88vw);
-  height: 100vh;
-  background: var(--color-brand-navy);
-  color: var(--color-text-inverse);
-  padding: 96px 32px 32px;
-  z-index: 30;
-  overflow-y: auto;
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
 }
 
+// オープン状態 = backdrop / panel が反応する
 .l-drawer[data-open="true"] {
+  pointer-events: auto;
+}
+
+// 背景マスク (クリックで閉じる)
+.l-drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: rgba(10, 23, 47, 0.35);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.l-drawer[data-open="true"] .l-drawer__backdrop {
+  opacity: 1;
+}
+
+// ドロワー本体 (右側からスライドイン)
+.l-drawer__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(572px, 92vw);
+  height: 100vh;
+  height: 100dvh;
+  background: var(--color-white);
+  color: var(--color-brand-navy);
+  padding: 120px 64px 64px 81px;
+  overflow: hidden;
+  transform: translateX(100%);
+  transition: transform 0.36s cubic-bezier(0.22, 0.61, 0.36, 1);
+  box-shadow: -12px 0 32px rgba(0, 47, 95, 0.18);
+  display: flex;
+  flex-direction: column;
+}
+
+.l-drawer[data-open="true"] .l-drawer__panel {
   transform: translateX(0);
 }
 
-.l-drawer__list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  list-style: none;
-  margin: 0;
+// 閉じるボタン (Figma 518:1221 — 50×50, ネイビー square)
+.l-drawer__close {
+  position: absolute;
+  top: 15px;
+  right: 16px;
+  width: 50px;
+  height: 50px;
+  border: 0;
   padding: 0;
-}
-
-.l-drawer__link {
-  display: block;
-  padding: 14px 16px;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--color-text-inverse);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--color-brand-navy);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background var(--transition-fast);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--color-brand-navy-deep);
+  }
+}
+
+.l-drawer__close-x {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 22px;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color-white);
+  }
+
+  &::before {
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  &::after {
+    transform: translateY(-50%) rotate(-45deg);
+  }
+}
+
+// 右下固定の背景画像 (Figma 518:1196: x=47 y=369 w=778 h=945)
+//   nav_bg.png (1050×1534) を panel の右下にアンカー固定
+.l-drawer__bg {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 80%;
+  max-width: 460px;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  opacity: 0.92;
+}
+
+.l-drawer__nav {
+  position: relative;
+  z-index: 1;
+}
+
+.l-drawer__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  // Figma の項目間 y 差分 = 98px → 余白も含めて 98px
+  gap: 32px;
+}
+
+.l-drawer__item {
+  position: relative;
+}
+
+.l-drawer__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  font-family: var(--font-family-base);
+  // Figma height ≈ 68 / 1.7 → 約 32px
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  color: var(--color-brand-navy);
+  text-decoration: none;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+
+  &:hover {
+    color: var(--color-brand-cyan);
+    transform: translateX(4px);
+  }
+}
+
+// アイスキューブアイコン (Figma 539:1252 — 47×46)
+.l-drawer__link-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+
+  > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.l-drawer__link-label {
+  position: relative;
+}
+
+@media screen and (max-width: 600px) {
+  .l-drawer__panel {
+    padding: 96px 32px 48px 40px;
+  }
+
+  .l-drawer__list {
+    gap: 24px;
+  }
+
+  .l-drawer__link {
+    font-size: 22px;
+    gap: 14px;
+  }
+
+  .l-drawer__close {
+    top: 12px;
+    right: 12px;
+    width: 42px;
+    height: 42px;
   }
 }
 

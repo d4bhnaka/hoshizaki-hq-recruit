@@ -1,6 +1,6 @@
 // ============================================
 // Component: Bottom CTA (INTERNSHIP + ENTRY)
-// 全下層ページ末尾・トップ末尾で使用する縦並びバナー画像
+// 全下層ページ末尾・トップ末尾で使用する2カラム横並びバナー画像（モバイルでは縦並び）
 // ============================================
 
 .c-bottom-cta {
@@ -9,8 +9,8 @@
 }
 
 .c-bottom-cta__inner {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   max-width: var(--content-max-width);
   margin: 0 auto;
@@ -36,5 +36,9 @@
 @media screen and (max-width: 768px) {
   .c-bottom-cta {
     padding: 48px 16px;
+  }
+
+  .c-bottom-cta__inner {
+    grid-template-columns: 1fr;
   }
 }

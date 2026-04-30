@@ -1,0 +1,3 @@
+[      72ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8088/images/common/logo-hoshizaki.svg:0
+[     528ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8088/favicon.ico:0
+[     530ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8088/favicon.svg:0

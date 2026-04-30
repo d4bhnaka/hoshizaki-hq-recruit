@@ -1,0 +1,223 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "ホシザキ採用サイト トップ" [ref=e4] [cursor=pointer]:
+        - /url: ./
+        - generic [ref=e5]: HOSHIZAKI
+      - generic [ref=e6]:
+        - link "インターンシップ" [ref=e7] [cursor=pointer]:
+          - /url: ./internship/
+          - generic [ref=e9]: インターンシップ
+        - link "応募はこちら" [ref=e10] [cursor=pointer]:
+          - /url: ./requirement/
+          - generic [ref=e12]: 応募はこちら
+        - button "メニューを開く" [ref=e13] [cursor=pointer]
+  - main [ref=e17]:
+    - region "メインビジュアル" [ref=e18]:
+      - generic [ref=e19]:
+        - img
+        - img
+        - img
+        - img
+        - img
+        - img
+        - img
+        - img
+        - generic [ref=e20]:
+          - heading "常識の 先へ、 跳べ。" [level=1] [ref=e21]:
+            - generic [ref=e22]: 常識の
+            - generic [ref=e23]: 先へ、
+            - generic [ref=e24]: 跳べ。
+          - complementary "CONCEPT MOVIE" [ref=e25]:
+            - paragraph [ref=e26]: CONCEPT MOVIE
+            - button "コンセプトムービーを再生" [ref=e27] [cursor=pointer]
+          - generic [ref=e30]:
+            - list [ref=e31]:
+              - listitem [ref=e32]: ホシザキを、
+              - listitem [ref=e33]: 厨房機器だけのメーカーと思っていないか。
+              - listitem [ref=e34]: 国内のフードサービス機器でトップクラスのシェア。
+              - listitem [ref=e35]: でも、それだけではない。
+              - listitem [ref=e36]: 世界60カ国以上に広がるネットワーク、
+              - listitem [ref=e37]: 海外売上比率50％にも迫るグローバル企業。
+              - listitem [ref=e38]: 食材ロス削減、環境負荷軽減、
+              - listitem [ref=e39]: そして医療や食品加工といった新分野への挑戦。
+              - listitem [ref=e40]: 常識や思い込みに縛られるな。
+              - listitem [ref=e41]: これからも、ホシザキは進化を止めない。
+            - paragraph [ref=e42]: さあ、その想いを翼に変えて。
+        - img
+    - region "採用メッセージ" [ref=e43]:
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - heading "PIONEER SPIRIT" [level=2] [ref=e46]
+          - paragraph [ref=e47]: 採用メッセージ
+        - link "採用メッセージを読む" [ref=e48] [cursor=pointer]:
+          - /url: ./message/
+          - img
+          - generic [ref=e49]:
+            - generic [ref=e50]: 採用メッセージ
+            - generic [ref=e51]: READ MORE
+    - region "ホシザキを知る3つの視点" [ref=e52]:
+      - generic [ref=e53]:
+        - img
+        - img
+        - img
+        - img
+        - link "ジャンプするペンギン What's HOSHIZAKI キーワードで見る READ MORE" [ref=e54] [cursor=pointer]:
+          - /url: ./fact/
+          - img "ジャンプするペンギン" [ref=e55]
+          - generic [ref=e56]:
+            - generic [ref=e57]: What's
+            - generic [ref=e58]: HOSHIZAKI
+          - generic [ref=e59]:
+            - img
+            - generic [ref=e60]:
+              - generic [ref=e61]: キーワードで見る
+              - generic [ref=e62]: READ MORE
+        - link "地球儀の中で泳ぐペンギン Beyond HOSHIZAKI ホシザキの海外展開 READ MORE" [ref=e63] [cursor=pointer]:
+          - /url: ./strategy/
+          - img "地球儀の中で泳ぐペンギン" [ref=e64]
+          - generic [ref=e65]:
+            - generic [ref=e66]: Beyond
+            - generic [ref=e67]: HOSHIZAKI
+          - generic [ref=e68]:
+            - img
+            - generic [ref=e69]:
+              - generic [ref=e70]: ホシザキの海外展開
+              - generic [ref=e71]: READ MORE
+        - link "並ぶ3羽のペンギン Team HOSHIZAKI グループの役割 READ MORE" [ref=e72] [cursor=pointer]:
+          - /url: ./job/
+          - img "並ぶ3羽のペンギン" [ref=e73]
+          - generic [ref=e74]:
+            - generic [ref=e75]: Team
+            - generic [ref=e76]: HOSHIZAKI
+          - generic [ref=e77]:
+            - img
+            - generic [ref=e78]:
+              - generic [ref=e79]: グループの役割
+              - generic [ref=e80]: READ MORE
+    - region "先輩たちの「ここに決めた！」" [ref=e81]:
+      - generic [ref=e82]:
+        - heading "先輩たちの 「ここに決めた！」" [level=2] [ref=e88]:
+          - generic [ref=e89]: 先輩たちの
+          - generic [ref=e90]: 「ここに決めた！」
+        - link "はたらく人を知る" [ref=e91] [cursor=pointer]:
+          - /url: ./person/
+          - img
+          - generic [ref=e92]:
+            - generic [ref=e93]: はたらく人を知る
+            - generic [ref=e94]: READ MORE
+    - region "はたらく環境を知る" [ref=e95]:
+      - img [ref=e96]
+      - generic [ref=e97]:
+        - generic [ref=e98]:
+          - heading "はたらく環境を知る" [level=2] [ref=e99]
+          - paragraph [ref=e100]: 制度も環境も、妥協せずに整えてきました。
+        - link "はたらく環境を知る" [ref=e101] [cursor=pointer]:
+          - /url: ./environment/
+          - img
+          - generic [ref=e102]:
+            - generic [ref=e103]: はたらく環境を知る
+            - generic [ref=e104]: READ MORE
+    - region "SPECIAL CONTENTS" [ref=e105]:
+      - generic [ref=e106]:
+        - heading "SPECIAL CONTENTS" [level=2] [ref=e107]:
+          - generic [ref=e108]: SPECIAL
+          - generic [ref=e109]: CONTENTS
+        - paragraph [ref=e110]: ホシザキではたらくリアル
+      - list [ref=e111]:
+        - listitem [ref=e112]:
+          - link "クロストーク 若手が語る はたらく環境 入社3年目社員に聞いてみた！会社のリアル" [ref=e113] [cursor=pointer]:
+            - /url: ./special/crosstalk/
+            - generic [ref=e115]:
+              - paragraph [ref=e116]: クロストーク
+              - paragraph [ref=e117]:
+                - generic [ref=e118]: 若手が語る
+                - generic [ref=e119]: はたらく環境
+              - paragraph [ref=e120]: 入社3年目社員に聞いてみた！会社のリアル
+              - list [ref=e121]:
+                - listitem [ref=e122]
+                - listitem [ref=e123]
+                - listitem [ref=e124]
+            - generic [ref=e126]: READ MORE
+        - listitem [ref=e128]:
+          - link "プロジェクトストーリー 妥協なき、 食の未来への挑戦 開発若手社員×中堅先輩社員" [ref=e129] [cursor=pointer]:
+            - /url: ./special/project/
+            - generic [ref=e131]:
+              - paragraph [ref=e132]: プロジェクトストーリー
+              - paragraph [ref=e133]:
+                - generic [ref=e134]: 妥協なき、
+                - generic [ref=e135]: 食の未来への挑戦
+              - paragraph [ref=e136]: 開発若手社員×中堅先輩社員
+              - list [ref=e137]:
+                - listitem [ref=e138]
+                - listitem [ref=e139]
+            - generic [ref=e141]: READ MORE
+        - listitem [ref=e143]:
+          - link "スペシャルトーク ホシザキの技術が 作る未来 ホシザキの開発責任者による特別トーク" [ref=e144] [cursor=pointer]:
+            - /url: ./special/talk/
+            - generic [ref=e146]:
+              - paragraph [ref=e147]: スペシャルトーク
+              - paragraph [ref=e148]:
+                - generic [ref=e149]: ホシザキの技術が
+                - generic [ref=e150]: 作る未来
+              - paragraph [ref=e151]: ホシザキの開発責任者による特別トーク
+              - list [ref=e152]:
+                - listitem [ref=e153]
+            - generic [ref=e155]: READ MORE
+    - region "採用CTA" [ref=e157]:
+      - generic [ref=e158]:
+        - link "インターンシップ情報" [ref=e159] [cursor=pointer]:
+          - /url: ./internship/
+          - img "INTERNSHIP インターンシップ情報" [ref=e160]
+        - link "採用エントリーはこちら" [ref=e161] [cursor=pointer]:
+          - /url: ./requirement/
+          - img "ENTRY 採用エントリーはこちら" [ref=e162]
+  - contentinfo [ref=e163]:
+    - navigation "フッターナビゲーション" [ref=e165]:
+      - paragraph [ref=e167]:
+        - link "採用TOP" [ref=e168] [cursor=pointer]:
+          - /url: ./
+      - list [ref=e170]:
+        - listitem [ref=e171]:
+          - link "採用メッセージ" [ref=e172] [cursor=pointer]:
+            - /url: ./message/
+        - listitem [ref=e173]:
+          - link "What's HOSHIZAKI" [ref=e174] [cursor=pointer]:
+            - /url: ./fact/
+        - listitem [ref=e175]:
+          - link "Beyond HOSHIZAKI" [ref=e176] [cursor=pointer]:
+            - /url: ./strategy/
+        - listitem [ref=e177]:
+          - link "Team HOSHIZAKI" [ref=e178] [cursor=pointer]:
+            - /url: ./job/
+        - listitem [ref=e179]:
+          - link "先輩たちの「ここに決めた」" [ref=e180] [cursor=pointer]:
+            - /url: ./person/
+      - generic [ref=e181]:
+        - paragraph [ref=e182]:
+          - link "SPECIAL CONTENTS" [ref=e183] [cursor=pointer]:
+            - /url: ./special/
+        - list [ref=e184]:
+          - listitem [ref=e185]:
+            - link "入社3年目の挑戦" [ref=e186] [cursor=pointer]:
+              - /url: ./special/crosstalk/
+          - listitem [ref=e187]:
+            - link "社内SE職の挑戦" [ref=e188] [cursor=pointer]:
+              - /url: ./special/talk/
+          - listitem [ref=e189]:
+            - link "ホシザキ 暮らしのクロストーク" [ref=e190] [cursor=pointer]:
+              - /url: ./special/project/
+      - list [ref=e192]:
+        - listitem [ref=e193]:
+          - link "はたらく環境を知る" [ref=e194] [cursor=pointer]:
+            - /url: ./environment/
+        - listitem [ref=e195]:
+          - link "募集要項" [ref=e196] [cursor=pointer]:
+            - /url: ./requirement/
+        - listitem [ref=e197]:
+          - link "インターンシップ情報" [ref=e198] [cursor=pointer]:
+            - /url: ./internship/
+        - listitem [ref=e199]:
+          - link "ホシザキ企業サイト" [ref=e200] [cursor=pointer]:
+            - /url: https://www.hoshizaki.co.jp/
+    - paragraph [ref=e201]: HOSHIZAKI

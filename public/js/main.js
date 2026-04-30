@@ -43,6 +43,22 @@
       setOpen(!isOpen);
     });
 
+    // close button + backdrop click — どちらも data-drawer-close で拾う
+    var closeTargets = drawer.querySelectorAll("[data-drawer-close]");
+    closeTargets.forEach(function (el) {
+      el.addEventListener("click", function () {
+        setOpen(false);
+      });
+    });
+
+    // メニュー内リンクをクリックしたら自動で閉じる
+    var links = drawer.querySelectorAll("a[href]");
+    links.forEach(function (link) {
+      link.addEventListener("click", function () {
+        setOpen(false);
+      });
+    });
+
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
         setOpen(false);

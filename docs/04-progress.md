@@ -70,12 +70,12 @@
 ### セクション（[03-spec-top-page.md](./03-spec-top-page.md) のセクション番号に対応）
 
 - [r] M3-0 [src/pages/index.astro](../src/pages/index.astro) に Header／Footer 配置、ビルド成功確認（2026-04-24）。
-- [r] M3-S1 Hero（`.p-top-hero`）— タグライン／ペンギン／コンセプトムービー／背景ビジュアル。
-- [r] M3-S2 PIONEER SPIRIT（`.p-top-pioneer`）— 採用メッセージ氷カード＋斜面背景。
-- [r] M3-S3 コーポレートナビ（`.p-top-trio`）— What's / Beyond / Team の 3 ページ導線（階段状レイアウト）。
-- [r] M3-S4 先輩たちの「ここに決めた！」（`.p-top-decided`）— 星型マスク＋人物写真。
-- [r] M3-S5 はたらく環境を知る（`.p-top-env`）— オフィス写真＋ペンギン。
-- [r] M3-S6 SPECIAL CONTENTS（`.p-top-special`）— ストーリーカード × 3。
+- [r] M3-S1 Hero（`.p-top-hero`）— タグライン／ペンギン／コンセプトムービー／背景ビジュアル。2026-04-30 Figma 296:7137 準拠で再構築。
+- [r] M3-S2 PIONEER SPIRIT（`.p-top-pioneer`）— pioneer.png (1600×729) を帯背景に。タイトル左上 / アイスリンクボタン左下。
+- [r] M3-S3 コーポレートナビ（`.p-top-trio`）— What's / Beyond / Team を Figma 座標 (% 換算) で階段配置。sec01/sec02/sec03_img.png + link-button-ice_02-04.png。
+- [r] M3-S4 先輩たちの「ここに決めた！」（`.p-top-decided`）— sec04_img.png (星型ICEフレーム入り集合写真) を直接利用。
+- [r] M3-S5 はたらく環境を知る（`.p-top-env`）— section-bg-environment.jpg をフルブリードで配置。ネイビーピル見出し + アイスリンクボタン。
+- [r] M3-S6 SPECIAL CONTENTS（`.p-top-special`）— ネイビー背景 + 3 カード (text 左 / 写真右 / READ MORE 右下)。
 - [r] M3-S7 Entry / Internship CTA（`BottomCta` コンポーネント）。
 
 ### アニメーション
@@ -239,6 +239,30 @@ dist/
 ├─ special/talk/index.html
 └─ strategy/index.html
 ```
+
+### 2026-04-30 セッション: トップページの Figma 忠実コーディング
+
+- **着手範囲**: トップページ (`/`) を Figma `296:7137` に忠実に再構築。
+- **修正ファイル**:
+  - [src/pages/index.astro](../src/pages/index.astro) — マークアップを Figma セクション構造 (S1〜S6) に合わせて全面リライト。
+  - [src/scss/object/project/_p-top.scss](../src/scss/object/project/_p-top.scss) — Figma 座標準拠で全面リライト (≈ 800 行)。`.c-ice-link` 共通クラスを定義し、6 つの ice-link button (Figma `LinkButtonIce` 207×200) を統一管理。
+  - [src/scss/foundation/_variables.scss](../src/scss/foundation/_variables.scss) — `--color-brand-sky` (鮮やか cyan) `--color-brand-sky-light` `--color-special-bg` `--color-special-card` `--font-family-display` (Barlow Condensed) を追加。
+- **アセット対応** ([../public/images/top/](../public/images/top/)):
+  - PIONEER SPIRIT 帯背景: `pioneer.png` (1600×729 = Figma node 296:7176 と完全一致)
+  - 飛ぶペンギン (Hero): `ap_01-05.png`
+  - 雲: `cloud01-03.png`
+  - 都市シルエット: `bg-city.png`
+  - 氷キューブ装飾: `ice_cubes_01-04.png`
+  - Trio 各画像: `sec01_img.png` (What's: 単独ペンギン) / `sec02_img.png` (Beyond: 地球儀) / `sec03_img.png` (Team: 3 羽)
+  - ここに決めた! 集合写真: `sec04_img.png` (星型氷フレーム入りの 3 名社員)
+  - アイスリンクボタン: `link-button-ice_01-06.png`
+  - 環境セクション背景: `section-bg-environment.jpg`
+- **SPECIAL CONTENTS カード**: [public/images/special/01-03.png](../public/images/special/) (Figma 各カード 1436×519) を photo として使用。アバター丸は `sp01_pic01-04.png` / `sp02_pic01-02.png` / `sp03_pic01.png`。
+- **検証**: `npm run build` 14 ページ クリーンビルド。`data-astro-cid=0`, インライン `<style>=0`, ルート絶対パス `=0`, ファイル名ハッシュ無し。Playwright で各セクションを 1600×900 ビューポート目視確認 (Hero / Pioneer / Trio / Decided / Env / Special)。
+- **既知の TODO**:
+  - CONCEPT MOVIE のサムネイル画像 (Figma 296:7295/12584 IM6_8107) と `concept-movie.mp4` 入稿待ち — 現状はダミーの青グラデ + 再生ボタンのみ。
+  - SP 版 (Figma `431:1181`) のレイアウト適用は未着手 (現状は @media 960px の暫定縦並び)。
+  - Hero / IceLink / SPECIAL カードの GSAP アニメーション (M3-A1〜A4) は未実装。
 
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 

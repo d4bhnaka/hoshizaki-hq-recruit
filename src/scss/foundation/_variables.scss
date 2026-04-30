@@ -4,12 +4,15 @@
 
 :root {
   // --------------------------------------------
-  // Brand Colors (Hoshizaki)
+  // Brand Colors (Hoshizaki) — Figma 296:7137 準拠
   // --------------------------------------------
   --color-brand-navy: #002f5f;
   --color-brand-navy-deep: #001f40;
   --color-brand-primary: #0a69d9;
   --color-brand-cyan: #00a0e9;
+  /* hero / display 用の鮮やかなシアン (Figma の空色) */
+  --color-brand-sky: #1ab4e5;
+  --color-brand-sky-light: #5dc5f2;
   --color-brand-blue-50: #f3f8fc;
   --color-brand-blue-100: #e5f0fa;
   --color-brand-blue-200: #cfe3f4;
@@ -17,6 +20,8 @@
   --color-brand-blue-400: #5a9bd1;
   --color-brand-ice: #b9d9ee;
   --color-brand-magenta: #ff2d9a;
+  --color-special-bg: #0a2540;
+  --color-special-card: #14233b;
   --color-bg-sky: #eaf4fc;
   --color-bg-cloud: #d4ebf8;
   --color-bg-page: #e8f3fb;
@@ -36,6 +41,8 @@
   // --------------------------------------------
   --font-family-base: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, system-ui, sans-serif;
   --font-family-en: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  /* display 用の縦長サンセリフ (PIONEER SPIRIT / SPECIAL CONTENTS / What's HOSHIZAKI 等) */
+  --font-family-display: "Barlow Condensed", "Roboto Condensed", "Helvetica Neue", Arial, sans-serif;
   --font-family-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
 
   --font-size-h1: 22px;

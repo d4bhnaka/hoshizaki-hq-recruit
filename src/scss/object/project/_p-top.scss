@@ -1,24 +1,91 @@
 // ============================================
 // Project: Top Page
-// Figma node: 296:7137 (1600 x 9488)
+// Figma node: 296:7137 (1600 × 9488 px) "00_top"
+//
+// 構造（Figma の y 座標帯ごとにセクション化）
+//   S1 Hero            y    0 – 1674
+//   S2 PIONEER SPIRIT  y 2562 – 3291
+//   S3 KNOW HOSHIZAKI  y 3283 – 5502
+//   S4 ここに決めた!  y 4783 – 5269 (S3 と重なる帯。独立セクションとして切り出し)
+//   S5 はたらく環境    y 5502 – 6162
+//   S6 SPECIAL CONTENTS y 6162 – 8450
 // ============================================
 
 .p-top {
   display: block;
   width: 100%;
-  max-width: var(--page-max-width);
-  margin: 0 auto;
   background: var(--color-white);
   overflow: hidden;
+  isolation: isolate;
 }
 
 // ============================================
-// 1. Hero
+// 共通: アイスリンクボタン (六角〜八角の氷塊画像 + ラベル)
+//   Figma: LinkButtonIce (207 × 200)。
+//   `link-button-ice_01.png` … _06.png を背景画像として読み込む。
+// ============================================
+.c-ice-link {
+  position: relative;
+  display: inline-block;
+  width: 207px;
+  height: 200px;
+  text-decoration: none;
+  color: inherit;
+  filter: drop-shadow(0 8px 16px rgba(0, 47, 95, 0.18));
+  transition: transform var(--transition-base);
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.c-ice-link__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.c-ice-link__inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.c-ice-link__label {
+  font-family: var(--font-family-base);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: var(--color-brand-navy-deep);
+  line-height: 1.4;
+}
+
+.c-ice-link__more {
+  font-family: var(--font-family-display), var(--font-family-en);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  color: var(--color-text-muted);
+}
+
+// ============================================
+// S1. Hero (Figma 0–1674)
+//   背景は鮮やかなシアンの空。タグライン左 / CONCEPT MOVIE 右上に配置。
+//   タグラインの下にホシザキの紹介本文。下部に都市シルエット + 飛ぶペンギン。
 // ============================================
 .p-top-hero {
   position: relative;
   width: 100%;
-  background: var(--color-bg-sky);
+  background: linear-gradient(180deg, var(--color-brand-sky) 0%, var(--color-brand-sky-light) 100%);
   overflow: hidden;
   isolation: isolate;
 }
@@ -26,37 +93,87 @@
 .p-top-hero__sky {
   position: relative;
   width: 100%;
-  min-height: 900px;
-  padding: 160px 64px 0;
-  background:
-    linear-gradient(180deg, #b6dcf5 0%, #dff0fa 48%, #f3faff 100%);
-  overflow: hidden;
+  // Figma: 1674 / 1600 ≒ 1.046 → 高さは画面幅の ~104.6%
+  min-height: clamp(720px, 104vw, 1674px);
+  padding: 200px 80px 0;
 }
 
+// 装飾の雲
 .p-top-hero__cloud {
   position: absolute;
-  opacity: 0.9;
   pointer-events: none;
-  filter: drop-shadow(0 12px 24px rgba(0, 47, 95, 0.08));
+  opacity: 0.92;
+  z-index: 1;
 
   &--1 {
-    top: 80px;
-    left: -60px;
-    width: 420px;
+    top: 11%;
+    left: -6%;
+    width: 28%;
+    max-width: 460px;
   }
 
   &--2 {
-    top: 260px;
-    right: -40px;
-    width: 500px;
+    top: 6%;
+    right: -4%;
+    width: 32%;
+    max-width: 520px;
     opacity: 0.85;
   }
 
   &--3 {
-    bottom: 220px;
-    left: 8%;
-    width: 360px;
+    top: 36%;
+    left: 38%;
+    width: 22%;
+    max-width: 360px;
     opacity: 0.75;
+  }
+}
+
+// 飛ぶペンギン (5 羽)
+.p-top-hero__penguin {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 12px 18px rgba(0, 47, 95, 0.22));
+
+  &--1 {
+    top: 5%;
+    right: 12%;
+    width: 11%;
+    max-width: 170px;
+    transform: rotate(-12deg);
+  }
+
+  &--2 {
+    top: 18%;
+    right: 4%;
+    width: 13%;
+    max-width: 200px;
+    transform: rotate(8deg);
+  }
+
+  &--3 {
+    top: 28%;
+    left: 48%;
+    width: 9%;
+    max-width: 140px;
+    transform: rotate(-6deg);
+  }
+
+  &--4 {
+    top: 42%;
+    left: 70%;
+    width: 11%;
+    max-width: 170px;
+    transform: rotate(10deg);
+  }
+
+  &--5 {
+    top: 56%;
+    left: 56%;
+    width: 8%;
+    max-width: 130px;
+    transform: rotate(-4deg);
   }
 }
 
@@ -66,162 +183,132 @@
   max-width: var(--page-max-width);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: 48px;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "catch movie"
+    "body  body";
+  gap: 64px 48px;
   align-items: start;
 }
 
-.p-top-hero__copy {
-  padding-top: 24px;
-}
-
+// タグライン「常識の／先へ、／跳べ。」(Figma 296:7296: x=146 y=132 w=600 h=690)
+// → 縦 3 行で 1 行あたり ~200-220px
 .p-top-hero__catch {
+  grid-area: catch;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   font-family: var(--font-family-base);
   font-weight: 900;
-  font-size: 108px;
-  line-height: 1.1;
-  letter-spacing: 0.06em;
-  color: var(--color-text-inverse);
-  text-shadow: 0 6px 28px rgba(0, 47, 95, 0.28);
-  margin: 0 0 32px;
+  font-size: clamp(72px, 13vw, 200px);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  color: var(--color-white);
 }
 
 .p-top-hero__catch-line {
   display: inline-block;
 }
 
-.p-top-hero__lead {
-  font-family: var(--font-family-en);
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: 0.24em;
-  color: var(--color-brand-navy);
-  background: var(--color-white-transparent);
-  padding: 6px 16px;
-  border-radius: var(--border-radius-pill);
-  display: inline-block;
-}
-
+// CONCEPT MOVIE (Figma 296:12581-12588: x=863 y=1144 w=640 h=440)
 .p-top-hero__movie {
-  position: relative;
-  z-index: 4;
-  background: var(--color-white);
-  border-radius: var(--border-radius-lg);
-  padding: 18px;
-  box-shadow: var(--shadow-card);
+  grid-area: movie;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  transition: transform var(--transition-base);
+  gap: 16px;
+  width: clamp(280px, 32vw, 460px);
+  margin-top: 20%;
+}
 
-  &:hover {
-    transform: translateY(-4px);
-  }
+.p-top-hero__movie-en {
+  margin: 0;
+  font-family: var(--font-family-display), var(--font-family-en);
+  font-weight: 400;
+  font-size: clamp(28px, 3.2vw, 48px);
+  letter-spacing: 0.08em;
+  color: var(--color-white);
+  line-height: 1;
 }
 
 .p-top-hero__movie-thumb {
   position: relative;
-  aspect-ratio: 16 / 9;
-  border-radius: var(--border-radius-md);
+  display: block;
+  width: 100%;
+  aspect-ratio: 640 / 360;
+  border: 0;
+  padding: 0;
+  border-radius: 4px;
   background:
-    linear-gradient(135deg, rgba(0, 47, 95, 0.6), rgba(10, 105, 217, 0.4)),
-    var(--color-brand-blue-200);
+    linear-gradient(135deg, rgba(0, 47, 95, 0.55), rgba(10, 105, 217, 0.35)),
+    var(--color-brand-blue-300);
+  cursor: pointer;
   overflow: hidden;
+  box-shadow: 0 12px 28px rgba(0, 47, 95, 0.25);
+  transition: transform var(--transition-base);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 }
 
 .p-top-hero__movie-play {
   position: absolute;
   inset: 0;
   margin: auto;
-  width: 72px;
-  height: 72px;
+  width: 91px;
+  height: 91px;
   border-radius: 50%;
-  background: var(--color-white);
-  display: inline-flex;
+  background: rgba(255, 255, 255, 0.92);
+  display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 20px rgba(0, 47, 95, 0.35);
+  box-shadow: 0 6px 18px rgba(0, 47, 95, 0.3);
 }
 
 .p-top-hero__movie-triangle {
   display: block;
   width: 0;
   height: 0;
-  border-left: 20px solid var(--color-brand-primary);
-  border-top: 12px solid transparent;
-  border-bottom: 12px solid transparent;
+  border-left: 22px solid var(--color-brand-sky);
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
   margin-left: 6px;
 }
 
-.p-top-hero__movie-label {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  text-align: center;
+// Hero 本文 (Figma 296:7298 + 296:7299)
+//   1600 × 1674 のうち下半分 (y=1015-1674) を占める白文字本文。
+.p-top-hero__body {
+  grid-area: body;
+  position: relative;
+  z-index: 4;
+  margin-top: 24px;
+  max-width: 720px;
+  color: var(--color-white);
 }
 
-.p-top-hero__movie-en {
-  font-family: var(--font-family-en);
-  font-weight: 900;
-  font-size: 16px;
-  letter-spacing: 0.16em;
-  color: var(--color-brand-navy);
+.p-top-hero__body-list {
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
 }
 
-.p-top-hero__movie-ja {
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  color: var(--color-text-secondary);
+.p-top-hero__body-line {
+  font-size: clamp(15px, 1.4vw, 22px);
+  line-height: 2.0;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  text-shadow: 0 2px 12px rgba(0, 47, 95, 0.45);
 }
 
-.p-top-hero__penguins {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.p-top-hero__penguin {
-  position: absolute;
-  filter: drop-shadow(0 16px 24px rgba(0, 47, 95, 0.22));
-
-  &--1 {
-    top: 42%;
-    left: 6%;
-    width: 140px;
-    transform: rotate(-8deg);
-  }
-
-  &--2 {
-    top: 58%;
-    left: 26%;
-    width: 160px;
-    transform: rotate(6deg);
-  }
-
-  &--3 {
-    top: 46%;
-    left: 44%;
-    width: 130px;
-    transform: rotate(-4deg);
-  }
-
-  &--4 {
-    top: 62%;
-    left: 58%;
-    width: 150px;
-    transform: rotate(10deg);
-  }
-
-  &--5 {
-    top: 50%;
-    left: 74%;
-    width: 140px;
-    transform: rotate(-6deg);
-  }
+.p-top-hero__body-outro {
+  margin: 0;
+  font-size: clamp(20px, 1.9vw, 30px);
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  color: var(--color-white);
+  text-shadow: 0 2px 14px rgba(0, 47, 95, 0.55);
 }
 
 .p-top-hero__city {
@@ -234,155 +321,149 @@
   z-index: 1;
   pointer-events: none;
   display: block;
-}
-
-.p-top-hero__message {
-  position: relative;
-  z-index: 4;
-  background: linear-gradient(180deg, var(--color-brand-navy) 0%, var(--color-brand-navy-deep) 100%);
-  color: var(--color-text-inverse);
-  padding: 120px 48px 140px;
-  overflow: hidden;
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 20% 20%, rgba(0, 160, 233, 0.18), transparent 60%),
-      radial-gradient(circle at 80% 80%, rgba(10, 105, 217, 0.2), transparent 55%);
-    pointer-events: none;
-  }
-}
-
-.p-top-hero__message-inner {
-  position: relative;
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.p-top-hero__message-list {
-  list-style: none;
-  margin: 0 0 48px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.p-top-hero__message-line {
-  font-size: 22px;
-  line-height: 1.9;
-  letter-spacing: 0.1em;
-  font-weight: 500;
-  color: var(--color-text-inverse);
-}
-
-.p-top-hero__message-outro {
-  font-size: 34px;
-  font-weight: 900;
-  letter-spacing: 0.14em;
-  color: var(--color-brand-cyan);
-  line-height: 1.6;
-  margin: 0;
+  user-select: none;
 }
 
 // ============================================
-// 2. PIONEER SPIRIT
+// S2. PIONEER SPIRIT (Figma 296:7176, 1600 × 729)
+//   pioneer.png (1600×729) を背景帯として全幅で配置。
+//   画像左半分は空白なので、そこに大型 "PIONEER SPIRIT" シアン文字 +
+//   サブ「採用メッセージ」+ アイスリンクボタンを重ねる。
 // ============================================
 .p-top-pioneer {
   position: relative;
-  padding: 140px 64px 160px;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(185, 217, 238, 0.6), transparent 50%),
-    radial-gradient(circle at 85% 70%, rgba(234, 244, 252, 0.9), transparent 55%),
-    var(--color-brand-blue-50);
+  width: 100%;
+  background: var(--color-white);
   overflow: hidden;
 }
 
-.p-top-pioneer__ice {
+.p-top-pioneer__inner {
+  position: relative;
+  width: 100%;
+  // Figma 1600 × 729
+  aspect-ratio: 1600 / 729;
+  min-height: 360px;
+}
+
+.p-top-pioneer__visual {
   position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  opacity: 0.75;
+  z-index: 1;
+}
 
-  &--1 {
-    top: 80px;
-    left: -40px;
-    width: 220px;
-    transform: rotate(-8deg);
-  }
-
-  &--2 {
-    top: 40px;
-    right: 4%;
-    width: 160px;
-    transform: rotate(12deg);
-  }
-
-  &--3 {
-    bottom: 60px;
-    left: 8%;
-    width: 180px;
-    transform: rotate(-4deg);
-    opacity: 0.6;
-  }
+.p-top-pioneer__penguins {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
 }
 
 .p-top-pioneer__heading {
-  position: relative;
-  text-align: center;
-  max-width: 900px;
-  margin: 0 auto 72px;
-}
-
-.p-top-pioneer__ja {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: var(--color-brand-primary);
-  margin: 0 0 16px;
-}
-
-.p-top-pioneer__ja-icon {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background: var(--color-brand-cyan);
-  transform: rotate(45deg);
+  position: absolute;
+  z-index: 2;
+  top: 16%;
+  left: 6%;
+  max-width: 60%;
 }
 
 .p-top-pioneer__en {
-  font-family: var(--font-family-en);
-  font-size: 96px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  color: var(--color-brand-navy);
-  line-height: 1;
-  margin: 0 0 24px;
-}
-
-.p-top-pioneer__sub {
-  font-size: 18px;
-  line-height: 1.9;
-  color: var(--color-text-secondary);
   margin: 0;
+  font-family: var(--font-family-display), var(--font-family-en);
+  font-weight: 400;
+  font-size: clamp(56px, 9vw, 156px);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--color-brand-sky);
 }
 
-.p-top-pioneer__card {
+.p-top-pioneer__ja {
+  margin: 24px 0 0;
+  font-size: clamp(14px, 1.3vw, 22px);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--color-text-muted);
+}
+
+.p-top-pioneer__button {
+  position: absolute;
+  z-index: 3;
+  left: 6%;
+  bottom: 12%;
+  display: inline-block;
+}
+
+// ============================================
+// S3. KNOW HOSHIZAKI / Trio (Figma 365:13388 帯, y 3283–5502)
+//   ふわっとした水色グラデの帯背景の中に、What's / Beyond / Team の 3 つを
+//   階段状にずらして配置。それぞれ:
+//     - 大きな英字ラベル (cyan, 2 行)
+//     - 関連画像 (sec02-04)
+//     - アイスリンクボタン
+//   Figma 座標 (1600 幅基準) を % 換算で再現。
+// ============================================
+.p-top-trio {
   position: relative;
-  display: grid;
-  grid-template-columns: 520px 1fr;
-  gap: 0;
-  max-width: 1200px;
-  margin: 0 auto;
-  background: var(--color-white);
-  border-radius: var(--border-radius-xl);
+  width: 100%;
+  background:
+    linear-gradient(180deg, var(--color-bg-sky) 0%, var(--color-bg-cloud) 50%, var(--color-bg-sky) 100%);
   overflow: hidden;
-  box-shadow: var(--shadow-card);
+}
+
+.p-top-trio__inner {
+  position: relative;
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  // Figma: y 3283-5502 = 2219 高 / 1600 幅 = 1.387
+  aspect-ratio: 1600 / 2219;
+}
+
+// 装飾の氷キューブ (Figma 543:6520-6523)
+.p-top-trio__cube {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+
+  // ice_cubes_01: x=1441 y=34 w=112 (band 内座標)
+  &--1 {
+    top: 1.5%;
+    left: 90%;
+    width: 7%;
+  }
+
+  // ice_cubes_02: x=147 y=551 w=104
+  &--2 {
+    top: 25%;
+    left: 9%;
+    width: 6.5%;
+  }
+
+  // ice_cubes_03: x=149 y=1449 w=110
+  &--3 {
+    top: 65%;
+    left: 9.3%;
+    width: 6.9%;
+  }
+
+  // ice_cubes_04: x=1383 y=1552 w=129
+  &--4 {
+    top: 70%;
+    left: 86%;
+    width: 8%;
+  }
+}
+
+// 各カード (What's / Beyond / Team) を絶対配置
+.p-top-trio__card {
+  position: absolute;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  z-index: 2;
   transition: transform var(--transition-base);
 
   &:hover {
@@ -390,1051 +471,639 @@
   }
 }
 
-.p-top-pioneer__card-visual {
-  position: relative;
-  aspect-ratio: 520 / 380;
-  background:
-    radial-gradient(circle at 60% 70%, rgba(185, 217, 238, 0.8), transparent 70%),
-    linear-gradient(160deg, var(--color-brand-blue-200) 0%, var(--color-brand-blue-300) 100%);
-  overflow: hidden;
+// What's HOSHIZAKI: 右上 (Figma 296:12560 x=725 y=335 / 296:7300 image / 365:16920 button x=1159 y=393)
+.p-top-trio__card--whats {
+  top: 8%;
+  left: 42%;
+  width: 50%;
 }
 
-.p-top-pioneer__pioneer {
-  position: absolute;
-  left: 50%;
+// Beyond HOSHIZAKI: 中央左 (Figma 460:6857 x=93 y=805 / 365:16924 button x=491 y=979)
+.p-top-trio__card--beyond {
+  top: 24%;
+  left: 0;
+  width: 50%;
+}
+
+// Team HOSHIZAKI: 中央右 (Figma 365:13370 x=793 y=1246 / 365:16928 button x=1232 y=1300)
+.p-top-trio__card--team {
   top: 50%;
-  transform: translate(-50%, -50%);
-  width: 78%;
-  max-width: 420px;
-  filter: drop-shadow(0 12px 20px rgba(0, 47, 95, 0.22));
+  left: 38%;
+  width: 56%;
 }
 
-.p-top-pioneer__card-ice {
-  position: absolute;
-  pointer-events: none;
-
-  &--a {
-    bottom: 8%;
-    left: 6%;
-    width: 120px;
-    transform: rotate(-10deg);
-  }
-
-  &--b {
-    top: 10%;
-    right: 8%;
-    width: 90px;
-    transform: rotate(18deg);
-  }
-}
-
-.p-top-pioneer__card-body {
-  padding: 64px 56px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 18px;
-}
-
-.p-top-pioneer__card-ja {
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  color: var(--color-brand-primary);
-  margin: 0;
-}
-
-.p-top-pioneer__card-en {
-  font-family: var(--font-family-en);
-  font-size: 44px;
-  font-weight: 900;
-  letter-spacing: 0.02em;
-  color: var(--color-brand-navy);
-  line-height: 1.1;
-  margin: 0;
-}
-
-.p-top-pioneer__card-desc {
-  font-size: 15px;
-  line-height: 1.9;
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
-.p-top-pioneer__card-more {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--font-family-en);
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  font-size: 14px;
-  color: var(--color-brand-primary);
-  margin-top: 8px;
-}
-
-.p-top-pioneer__card-arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--color-brand-primary);
-  color: var(--color-text-inverse);
-  font-size: 14px;
-  line-height: 1;
-}
-
-// ============================================
-// 3. Trio (What's / Beyond / Team)
-// ============================================
-.p-top-trio {
+.p-top-trio__card-img {
   position: relative;
-  padding: 140px 64px 180px;
-  background:
-    linear-gradient(180deg, var(--color-bg-page) 0%, var(--color-brand-ice) 100%);
-  overflow: hidden;
+  display: block;
+  width: 80%;
+  height: auto;
+  margin-bottom: -8%;
+  filter: drop-shadow(0 16px 24px rgba(0, 47, 95, 0.2));
 }
 
-.p-top-trio__bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+.p-top-trio__card-text {
+  display: block;
+  font-family: var(--font-family-display), var(--font-family-en);
+  font-weight: 400;
+  color: var(--color-brand-sky);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  margin-bottom: 24px;
 }
 
-.p-top-trio__bg-ice {
-  position: absolute;
-  opacity: 0.55;
-
-  &--1 {
-    top: 6%;
-    left: 4%;
-    width: 220px;
-    transform: rotate(-12deg);
-  }
-
-  &--2 {
-    top: 20%;
-    right: 6%;
-    width: 180px;
-    transform: rotate(14deg);
-  }
-
-  &--3 {
-    bottom: 18%;
-    left: 10%;
-    width: 200px;
-    transform: rotate(8deg);
-  }
-
-  &--4 {
-    bottom: 8%;
-    right: 4%;
-    width: 240px;
-    transform: rotate(-6deg);
-  }
+.p-top-trio__card--beyond .p-top-trio__card-img,
+.p-top-trio__card--beyond .p-top-trio__card-text {
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.p-top-trio__heading {
-  position: relative;
-  text-align: center;
-  margin-bottom: 80px;
+.p-top-trio__card-en1 {
+  display: block;
+  font-size: clamp(36px, 5.2vw, 96px);
+  font-style: italic;
+  font-weight: 500;
 }
 
-.p-top-trio__heading-ja {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: var(--color-brand-primary);
-  margin: 0 0 14px;
+.p-top-trio__card-en2 {
+  display: block;
+  font-size: clamp(40px, 5.6vw, 104px);
+  font-weight: 500;
 }
 
-.p-top-trio__heading-icon {
+.p-top-trio__card-button {
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  background: var(--color-brand-cyan);
-  transform: rotate(45deg);
-}
-
-.p-top-trio__heading-en {
-  font-family: var(--font-family-en);
-  font-size: 72px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  color: var(--color-brand-navy);
-  line-height: 1;
-  margin: 0;
-}
-
-.p-top-trio__list {
   position: relative;
-  list-style: none;
-  margin: 0 auto;
-  padding: 0;
-  max-width: 1280px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  z-index: 3;
 }
 
-.p-top-trio__item {
-  &--1 {
-    transform: translateY(0);
+// What's: ボタンを画像の右下に
+.p-top-trio__card--whats {
+  .p-top-trio__card-img {
+    width: 60%;
+    margin-left: 30%;
   }
-
-  &--2 {
-    transform: translateY(64px);
+  .p-top-trio__card-text {
+    margin-top: -8%;
+    margin-left: 4%;
   }
-
-  &--3 {
-    transform: translateY(128px);
-  }
-}
-
-.p-top-trio__card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  height: 100%;
-  padding: 40px 32px 36px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
-  backdrop-filter: blur(6px);
-  border: 2px solid var(--color-white);
-  border-radius: var(--border-radius-xl);
-  box-shadow: 0 16px 32px rgba(0, 47, 95, 0.14);
-  overflow: hidden;
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
-
-  &::before {
-    content: "";
+  .p-top-trio__card-button {
     position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 160px;
-    height: 160px;
-    background: var(--color-brand-blue-100);
-    border-radius: 50%;
-    z-index: 0;
-  }
-
-  &:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 24px 40px rgba(0, 47, 95, 0.18);
+    top: 18%;
+    right: 4%;
   }
 }
 
-.p-top-trio__card-num {
-  position: relative;
-  z-index: 1;
-  font-family: var(--font-family-en);
-  font-size: 20px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  color: var(--color-brand-primary);
+// Beyond: 画像中央、ボタンが画像下部
+.p-top-trio__card--beyond {
+  text-align: center;
+  .p-top-trio__card-img {
+    width: 56%;
+  }
+  .p-top-trio__card-text {
+    text-align: left;
+    width: max-content;
+    max-width: 60%;
+    margin-left: 12%;
+    margin-top: -16%;
+  }
+  .p-top-trio__card-button {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+  }
 }
 
-.p-top-trio__card-visual {
-  position: relative;
-  z-index: 1;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--border-radius-lg);
-  background:
-    radial-gradient(circle at 30% 40%, var(--color-brand-blue-200), var(--color-brand-blue-300));
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.p-top-trio__card-penguin {
-  width: 72%;
-  max-width: 240px;
-  margin-bottom: -10px;
-  filter: drop-shadow(0 8px 14px rgba(0, 47, 95, 0.3));
-}
-
-.p-top-trio__card-body {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.p-top-trio__card-en {
-  font-family: var(--font-family-en);
-  font-size: 28px;
-  font-weight: 900;
-  letter-spacing: 0.02em;
-  color: var(--color-brand-navy);
-  line-height: 1.2;
-}
-
-.p-top-trio__card-ja {
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--color-brand-primary);
-}
-
-.p-top-trio__card-desc {
-  font-size: 14px;
-  line-height: 1.9;
-  color: var(--color-text-secondary);
-}
-
-.p-top-trio__card-more {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: auto;
-  padding-top: 12px;
-  font-family: var(--font-family-en);
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  font-size: 13px;
-  color: var(--color-brand-primary);
-}
-
-.p-top-trio__card-arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--color-brand-primary);
-  color: var(--color-text-inverse);
-  font-size: 13px;
-  line-height: 1;
+// Team: 画像右、テキスト左、ボタン右下
+.p-top-trio__card--team {
+  .p-top-trio__card-img {
+    width: 50%;
+    margin-left: 30%;
+  }
+  .p-top-trio__card-text {
+    margin-top: -8%;
+    margin-left: 6%;
+  }
+  .p-top-trio__card-button {
+    position: absolute;
+    top: 30%;
+    right: 4%;
+  }
 }
 
 // ============================================
-// 4. 先輩たちの「ここに決めた！」
+// S4. 先輩たちの「ここに決めた！」 (Figma 367:857 / y 4783-5269)
+//   星型クリップで人物写真を 3-4 枚オーバーラップ表示し、
+//   その下に「先輩たちの／『ここに決めた！』」の見出し。
+//   Figma の S3 帯と重なるが、独立セクションとして切り出して扱う。
 // ============================================
 .p-top-decided {
   position: relative;
-  padding: 200px 64px 160px;
-  background:
-    linear-gradient(180deg, var(--color-brand-ice) 0%, var(--color-bg-sky) 100%);
+  width: 100%;
+  background: linear-gradient(180deg, var(--color-bg-sky) 0%, var(--color-white) 100%);
+  padding: 80px 0 120px;
   overflow: hidden;
-}
-
-.p-top-decided__stars {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.p-top-decided__star {
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  background: var(--color-brand-magenta);
-  clip-path: polygon(
-    50% 0%,
-    61% 35%,
-    98% 35%,
-    68% 57%,
-    79% 91%,
-    50% 70%,
-    21% 91%,
-    32% 57%,
-    2% 35%,
-    39% 35%
-  );
-  opacity: 0.85;
-
-  &--1 {
-    top: 10%;
-    left: 8%;
-    width: 64px;
-    height: 64px;
-    transform: rotate(-12deg);
-  }
-
-  &--2 {
-    top: 18%;
-    right: 12%;
-    width: 44px;
-    height: 44px;
-    transform: rotate(10deg);
-  }
-
-  &--3 {
-    bottom: 28%;
-    left: 4%;
-    width: 52px;
-    height: 52px;
-    transform: rotate(20deg);
-  }
-
-  &--4 {
-    bottom: 14%;
-    right: 8%;
-    width: 72px;
-    height: 72px;
-    transform: rotate(-6deg);
-  }
 }
 
 .p-top-decided__inner {
   position: relative;
-  max-width: 1200px;
+  max-width: var(--page-max-width);
   margin: 0 auto;
-  text-align: center;
-}
-
-.p-top-decided__heading {
-  margin-bottom: 72px;
-}
-
-.p-top-decided__ja {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--color-brand-navy);
-  letter-spacing: 0.14em;
-  margin: 0 0 16px;
-}
-
-.p-top-decided__en {
-  font-size: 56px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  color: var(--color-brand-primary);
-  line-height: 1.3;
-  margin: 0 0 20px;
-}
-
-.p-top-decided__sub {
-  font-size: 16px;
-  line-height: 1.9;
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
-.p-top-decided__stage {
-  position: relative;
+  padding: 0 80px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin: 0 auto 64px;
-  padding: 64px 24px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "photo title" "photo button";
+  gap: 32px 48px;
+  align-items: center;
 }
 
-.p-top-decided__person {
-  position: relative;
-  padding: 40px 24px 32px;
-  background: var(--color-white);
-  border-radius: var(--border-radius-xl);
-  box-shadow: 0 12px 28px rgba(0, 47, 95, 0.14);
-  text-align: center;
+.p-top-decided__photo {
+  grid-area: photo;
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  filter: drop-shadow(0 24px 40px rgba(0, 47, 95, 0.22));
 }
 
-.p-top-decided__badge {
-  position: absolute;
-  top: -36px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 72px;
-  height: 72px;
-  background: var(--color-brand-magenta);
-  clip-path: polygon(
-    50% 0%,
-    61% 35%,
-    98% 35%,
-    68% 57%,
-    79% 91%,
-    50% 70%,
-    21% 91%,
-    32% 57%,
-    2% 35%,
-    39% 35%
-  );
-  filter: drop-shadow(0 6px 12px rgba(255, 45, 154, 0.35));
-}
-
-.p-top-decided__name {
-  font-family: var(--font-family-en);
-  font-size: 28px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-  color: var(--color-brand-navy);
-  margin: 16px 0 4px;
-}
-
-.p-top-decided__role {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--color-brand-primary);
-  letter-spacing: 0.1em;
-  margin: 0 0 16px;
-}
-
-.p-top-decided__quote {
-  font-size: 15px;
-  line-height: 1.8;
-  color: var(--color-text-primary);
-  font-weight: 500;
+.p-top-decided__title {
+  grid-area: title;
   margin: 0;
+  font-family: var(--font-family-base);
+  font-weight: 900;
+  line-height: 1.4;
+  color: var(--color-brand-navy);
+  align-self: end;
 }
 
-.p-top-decided__penguin {
-  position: absolute;
-  pointer-events: none;
+.p-top-decided__title-line1 {
+  display: block;
+  font-size: clamp(20px, 2.2vw, 36px);
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
 
-  &--a {
-    top: -40px;
-    left: -20px;
-    width: 110px;
-    transform: rotate(-10deg);
-  }
+.p-top-decided__title-line2 {
+  display: block;
+  font-size: clamp(28px, 3.6vw, 56px);
+  letter-spacing: 0.04em;
+  color: var(--color-brand-navy);
+}
 
-  &--b {
-    bottom: -40px;
-    right: -20px;
-    width: 120px;
-    transform: rotate(12deg);
-  }
+.p-top-decided__title-emph {
+  background:
+    linear-gradient(transparent 60%, rgba(255, 45, 154, 0.18) 60%);
+  padding: 0 4px;
+}
+
+.p-top-decided__title-bang {
+  color: var(--color-brand-magenta);
 }
 
 .p-top-decided__button {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 18px 48px;
-  background: var(--color-brand-navy);
-  color: var(--color-text-inverse);
-  border-radius: var(--border-radius-pill);
-  transition: background var(--transition-fast), transform var(--transition-fast);
-
-  &:hover {
-    background: var(--color-brand-primary);
-    transform: translateY(-2px);
-  }
-}
-
-.p-top-decided__button-ja {
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
-
-.p-top-decided__button-en {
-  font-family: var(--font-family-en);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  color: var(--color-brand-cyan);
-
-  span {
-    margin-left: 6px;
-  }
+  grid-area: button;
+  align-self: start;
+  justify-self: start;
 }
 
 // ============================================
-// 5. はたらく環境を知る
+// S5. はたらく環境を知る (Figma 296:7285, y 5502-6162, 1599×660)
+//   背景にオフィス写真。左上にネイビーピル "はたらく環境を知る"、
+//   その下にサブコピー。左下にアイスリンクボタン。歩くペンギン群は
+//   写真に既に含まれているのでオーバーレイは不要。
 // ============================================
 .p-top-env {
   position: relative;
-  padding: 120px 64px;
-  background:
-    linear-gradient(180deg, var(--color-bg-sky) 0%, var(--color-brand-blue-100) 100%);
+  width: 100%;
+  // Figma: 660 / 1600 = 0.4125
+  aspect-ratio: 1600 / 660;
+  min-height: 360px;
   overflow: hidden;
-}
-
-.p-top-env__inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  background: var(--color-white);
-  border-radius: var(--border-radius-xl);
-  box-shadow: 0 20px 40px rgba(0, 47, 95, 0.12);
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  overflow: hidden;
-}
-
-.p-top-env__body {
-  padding: 64px 56px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  justify-content: center;
-}
-
-.p-top-env__heading {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.p-top-env__ja {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  color: var(--color-brand-primary);
-  margin: 0;
-}
-
-.p-top-env__ja-icon {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background: var(--color-brand-cyan);
-  transform: rotate(45deg);
-}
-
-.p-top-env__en {
-  font-family: var(--font-family-en);
-  font-size: 56px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  color: var(--color-brand-navy);
-  line-height: 1;
-  margin: 0;
-}
-
-.p-top-env__sub {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--color-brand-navy);
-  letter-spacing: 0.06em;
-  margin: 0;
-}
-
-.p-top-env__desc {
-  font-size: 15px;
-  line-height: 1.9;
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
-.p-top-env__button {
-  align-self: flex-start;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 14px 40px;
-  background: var(--color-brand-navy);
-  color: var(--color-text-inverse);
-  border-radius: var(--border-radius-pill);
-  transition: background var(--transition-fast);
-
-  &:hover {
-    background: var(--color-brand-primary);
-  }
-}
-
-.p-top-env__button-ja {
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-}
-
-.p-top-env__button-en {
-  font-family: var(--font-family-en);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  color: var(--color-brand-cyan);
-
-  span {
-    margin-left: 6px;
-  }
-}
-
-.p-top-env__visual {
-  position: relative;
-  min-height: 400px;
-  background:
-    linear-gradient(180deg, var(--color-brand-blue-100) 0%, var(--color-brand-blue-200) 100%);
-  overflow: hidden;
+  isolation: isolate;
 }
 
 .p-top-env__photo {
   position: absolute;
-  inset: 10% 10% 30%;
-  background: var(--color-brand-blue-50);
-  border-radius: var(--border-radius-lg);
-  box-shadow: inset 0 0 0 2px var(--color-white);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.p-top-env__inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: clamp(40px, 6%, 96px) 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  height: 100%;
+}
+
+// 見出しはネイビーピル (Figma 296:12578: x=123 y=153 w=564 h=79)
+.p-top-env__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.p-top-env__title {
+  margin: 0;
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--color-brand-navy);
+  color: var(--color-white);
+  font-size: clamp(22px, 2.6vw, 40px);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  width: max-content;
+  max-width: 100%;
+}
+
+.p-top-env__sub {
+  margin: 0;
+  padding: 6px 16px;
+  background: rgba(0, 47, 95, 0.7);
+  color: var(--color-white);
+  font-size: clamp(13px, 1.1vw, 18px);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  width: max-content;
+  max-width: 100%;
+}
+
+.p-top-env__button {
+  margin-top: auto;
+}
+
+// ============================================
+// S6. SPECIAL CONTENTS (Figma 6162-8450)
+//   ネイビー背景。"SPECIAL CONTENTS" 大型 (2 行)。3 枚のカードを縦に並べる。
+//   各カード: 左 ~33% にダーク本文、右に写真。READ MORE は写真の右下にオーバーレイ。
+// ============================================
+.p-top-special {
+  position: relative;
+  width: 100%;
+  padding: 120px 0 140px;
+  background:
+    radial-gradient(ellipse at 80% 10%, rgba(26, 180, 229, 0.18), transparent 50%),
+    linear-gradient(180deg, var(--color-special-bg) 0%, #051a30 100%);
+  color: var(--color-white);
   overflow: hidden;
 }
 
-.p-top-env__photo-window {
-  position: absolute;
-  top: 15%;
-  width: 18%;
-  height: 40%;
-  background: linear-gradient(180deg, var(--color-brand-cyan), var(--color-brand-blue-300));
-  border-radius: 8px;
-  border: 3px solid var(--color-white);
-
-  &--1 {
-    left: 12%;
-  }
-
-  &--2 {
-    left: 41%;
-  }
-
-  &--3 {
-    left: 70%;
-  }
-}
-
-.p-top-env__photo-floor {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 28%;
-  background: linear-gradient(180deg, var(--color-brand-blue-200), var(--color-brand-blue-300));
-}
-
-.p-top-env__penguin {
-  position: absolute;
-  pointer-events: none;
-
-  &--1 {
-    bottom: 14%;
-    left: 8%;
-    width: 110px;
-    transform: rotate(-6deg);
-  }
-
-  &--2 {
-    bottom: 8%;
-    left: 38%;
-    width: 130px;
-  }
-
-  &--3 {
-    bottom: 12%;
-    right: 10%;
-    width: 120px;
-    transform: rotate(8deg);
-  }
-}
-
-// ============================================
-// 6. SPECIAL CONTENTS
-// ============================================
-.p-top-special {
-  padding: 140px 64px 160px;
-  background: var(--color-bg-light);
-}
-
 .p-top-special__heading {
-  text-align: center;
-  margin-bottom: 64px;
+  position: relative;
+  max-width: var(--page-max-width);
+  margin: 0 auto 64px;
+  padding: 0 80px;
+}
+
+// SPECIAL CONTENTS は 2 行で巨大表示 (Figma 296:12719: w=810 h=396 → 2 行縦積み)
+.p-top-special__en {
+  margin: 0;
+  font-family: var(--font-family-display), var(--font-family-en);
+  font-weight: 400;
+  font-size: clamp(72px, 12vw, 200px);
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .p-top-special__ja {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  font-weight: 700;
+  margin: 24px 0 0;
+  font-size: clamp(16px, 1.6vw, 24px);
+  font-weight: 500;
   letter-spacing: 0.16em;
-  color: var(--color-brand-primary);
-  margin: 0 0 16px;
-}
-
-.p-top-special__ja-icon {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background: var(--color-brand-cyan);
-  transform: rotate(45deg);
-}
-
-.p-top-special__en {
-  font-family: var(--font-family-en);
-  font-size: 80px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  color: var(--color-brand-navy);
-  line-height: 1;
-  margin: 0;
+  color: var(--color-brand-sky);
 }
 
 .p-top-special__list {
   list-style: none;
-  max-width: 1200px;
+  max-width: var(--page-max-width);
   margin: 0 auto;
-  padding: 0;
+  padding: 0 80px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 0;
 }
 
+.p-top-special__item {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  &:last-child {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+// 各カード: 左ダークボックス + 右写真。Figma 1 枚 1435×518。
 .p-top-special__card {
   position: relative;
   display: grid;
-  grid-template-columns: 120px 1fr auto;
-  gap: 32px;
-  align-items: center;
-  padding: 36px 48px;
-  background: var(--color-white);
-  border-radius: var(--border-radius-xl);
-  box-shadow: 0 8px 24px rgba(0, 47, 95, 0.1);
-  border-left: 14px solid var(--color-brand-primary);
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  grid-template-columns: minmax(380px, 33%) 1fr;
+  align-items: stretch;
+  min-height: clamp(280px, 32vw, 518px);
+  text-decoration: none;
+  color: var(--color-white);
+  background: transparent;
+  transition: transform var(--transition-base);
 
   &:hover {
-    transform: translateX(6px);
-    box-shadow: 0 12px 32px rgba(0, 47, 95, 0.18);
-  }
-}
+    transform: translateX(4px);
 
-.p-top-special__card-num {
-  font-family: var(--font-family-en);
-  font-size: 64px;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: 0.04em;
-  color: var(--color-brand-blue-200);
+    .p-top-special__card-photo img {
+      transform: scale(1.04);
+    }
+
+    .p-top-special__card-more {
+      background: var(--color-brand-sky);
+    }
+  }
 }
 
 .p-top-special__card-body {
+  position: relative;
+  z-index: 2;
+  background: var(--color-special-card);
+  padding: clamp(32px, 3.6vw, 56px) clamp(24px, 3vw, 48px);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16px;
+  justify-content: center;
 }
 
-.p-top-special__card-tag {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: var(--color-brand-primary);
+.p-top-special__card-cat {
+  margin: 0;
+  font-size: clamp(12px, 1vw, 14px);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--color-brand-sky);
 }
 
 .p-top-special__card-title {
-  font-size: 24px;
-  font-weight: 800;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: clamp(22px, 2.6vw, 40px);
+  font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--color-brand-navy);
-  line-height: 1.5;
+  line-height: 1.45;
+  color: var(--color-white);
 }
 
 .p-top-special__card-sub {
-  font-size: 14px;
-  line-height: 1.8;
-  color: var(--color-text-secondary);
+  margin: 0;
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
 }
 
+.p-top-special__card-avatars {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+}
+
+.p-top-special__card-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.p-top-special__card-photo {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  background: var(--color-special-bg);
+
+  > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+}
+
+// READ MORE ボタン: 写真の右下に重ねる (Figma 405:1194/1195/1196)
 .p-top-special__card-more {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--font-family-en);
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  font-size: 13px;
-  color: var(--color-brand-primary);
+  padding: 14px 28px;
+  background: var(--color-special-card);
+  color: var(--color-white);
+  font-family: var(--font-family-display), var(--font-family-en);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  transition: background var(--transition-base);
+}
 
-  span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: var(--color-brand-primary);
-    color: var(--color-text-inverse);
-    font-size: 14px;
-    line-height: 1;
+.p-top-special__card-more-arrow {
+  display: inline-block;
+  width: 36px;
+  height: 1px;
+  background: var(--color-white);
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 8px;
+    height: 8px;
+    border-top: 1px solid var(--color-white);
+    border-right: 1px solid var(--color-white);
+    transform: rotate(45deg);
   }
 }
 
 // ============================================
-// Responsive
+// レスポンシブ
 // ============================================
 @media screen and (max-width: 1280px) {
   .p-top-hero__sky {
-    padding: 140px 40px 0;
-    min-height: 800px;
-  }
-
-  .p-top-hero__catch {
-    font-size: 84px;
+    padding: 160px 48px 0;
   }
 
   .p-top-hero__inner {
-    grid-template-columns: 1fr 320px;
+    gap: 40px 32px;
   }
 
-  .p-top-pioneer,
-  .p-top-trio,
-  .p-top-decided,
-  .p-top-env,
-  .p-top-special {
-    padding-left: 40px;
-    padding-right: 40px;
+  .p-top-pioneer__inner,
+  .p-top-special__heading,
+  .p-top-special__list,
+  .p-top-decided__inner {
+    padding-left: 48px;
+    padding-right: 48px;
   }
 
-  .p-top-pioneer__en {
-    font-size: 72px;
-  }
-
-  .p-top-trio__heading-en {
-    font-size: 56px;
-  }
-
-  .p-top-special__en {
-    font-size: 60px;
-  }
-
-  .p-top-pioneer__card {
-    grid-template-columns: 420px 1fr;
+  .p-top-env__inner {
+    padding-left: 48px;
+    padding-right: 48px;
   }
 }
 
 @media screen and (max-width: 960px) {
   .p-top-hero__sky {
-    padding: 120px 20px 0;
-    min-height: 680px;
+    padding: 140px 24px 0;
+    min-height: clamp(640px, 130vw, 980px);
   }
 
   .p-top-hero__inner {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "catch"
+      "movie"
+      "body";
     gap: 32px;
-  }
-
-  .p-top-hero__catch {
-    font-size: 56px;
-    gap: 8px;
   }
 
   .p-top-hero__movie {
-    max-width: 320px;
+    width: 100%;
+    max-width: 420px;
+    margin-top: 0;
+  }
+
+  .p-top-hero__cloud--3 {
+    display: none;
+  }
+
+  .p-top-pioneer__inner {
+    aspect-ratio: 1600 / 920;
+  }
+
+  .p-top-pioneer__heading {
+    top: 8%;
+    left: 6%;
+    max-width: 80%;
+  }
+
+  .p-top-pioneer__button {
+    left: 6%;
+    bottom: 6%;
+  }
+
+  // Trio: 縦並びに切替
+  .p-top-trio__inner {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+    padding: 80px 24px 96px;
+  }
+
+  .p-top-trio__cube {
+    display: none;
+  }
+
+  .p-top-trio__card {
+    position: relative;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    text-align: center;
+  }
+
+  .p-top-trio__card-img {
+    width: 70% !important;
+    margin: 0 auto -8% !important;
+  }
+
+  .p-top-trio__card-text {
+    margin: 0 auto 16px !important;
+    text-align: center;
+    width: max-content;
+    max-width: 100%;
+  }
+
+  .p-top-trio__card-button {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    margin: 16px auto 0;
+    display: block;
+    width: 207px;
+  }
+
+  .p-top-decided__inner {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "photo"
+      "title"
+      "button";
+    text-align: center;
+    padding: 0 24px;
+  }
+
+  .p-top-decided__photo {
     margin: 0 auto;
   }
 
-  .p-top-hero__penguin {
-    &--1 { width: 80px; top: 46%; left: 4%; }
-    &--2 { width: 90px; top: 54%; left: 22%; }
-    &--3 { width: 78px; top: 50%; left: 44%; }
-    &--4 { width: 88px; top: 58%; left: 62%; }
-    &--5 { width: 80px; top: 52%; left: 80%; }
-  }
-
-  .p-top-hero__message {
-    padding: 80px 20px;
-  }
-
-  .p-top-hero__message-line {
-    font-size: 15px;
-  }
-
-  .p-top-hero__message-outro {
-    font-size: 22px;
-  }
-
-  .p-top-pioneer,
-  .p-top-trio,
-  .p-top-decided,
-  .p-top-special {
-    padding: 80px 20px;
+  .p-top-decided__button {
+    justify-self: center;
   }
 
   .p-top-env {
-    padding: 80px 20px;
-  }
-
-  .p-top-pioneer__en {
-    font-size: 52px;
-  }
-
-  .p-top-trio__heading-en {
-    font-size: 40px;
-  }
-
-  .p-top-decided__en {
-    font-size: 34px;
-  }
-
-  .p-top-env__en {
-    font-size: 40px;
-  }
-
-  .p-top-special__en {
-    font-size: 44px;
-  }
-
-  .p-top-pioneer__card {
-    grid-template-columns: 1fr;
-  }
-
-  .p-top-pioneer__card-body {
-    padding: 40px 28px;
-  }
-
-  .p-top-pioneer__card-en {
-    font-size: 32px;
-  }
-
-  .p-top-trio__list {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .p-top-trio__item {
-    &--1, &--2, &--3 {
-      transform: translateY(0);
-    }
-  }
-
-  .p-top-decided__stage {
-    grid-template-columns: 1fr;
-    gap: 56px;
-    padding: 48px 0;
-  }
-
-  .p-top-decided__penguin {
-    &--a, &--b { width: 80px; }
+    aspect-ratio: auto;
+    min-height: 480px;
   }
 
   .p-top-env__inner {
-    grid-template-columns: 1fr;
+    padding: 32px 24px;
   }
 
-  .p-top-env__body {
-    padding: 40px 28px;
+  .p-top-special {
+    padding: 80px 0 100px;
   }
 
-  .p-top-env__visual {
-    min-height: 280px;
+  .p-top-special__heading,
+  .p-top-special__list {
+    padding: 0 24px;
   }
 
   .p-top-special__card {
     grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 28px;
-    text-align: center;
-
-    &:hover {
-      transform: translateY(-4px);
-    }
+    min-height: 0;
   }
 
-  .p-top-special__card-num {
-    font-size: 44px;
+  .p-top-special__card-photo {
+    min-height: 200px;
+    aspect-ratio: 16 / 9;
   }
 
-  .p-top-special__card-title {
-    font-size: 19px;
+  .p-top-special__card-more {
+    padding: 10px 20px;
+    font-size: 12px;
   }
 }
