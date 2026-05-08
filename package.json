@@ -11,11 +11,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.17.1"
+    "astro": "^6.3.1"
   },
   "devDependencies": {
     "js-beautify": "^1.15.4",
-    "prettier": "^3.8.1",
-    "sass": "^1.97.3"
+    "prettier": "^3.8.3",
+    "sass": "^1.99.0"
   }
 }
