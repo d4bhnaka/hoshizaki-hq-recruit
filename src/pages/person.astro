@@ -75,7 +75,12 @@ const cards: PersonCard[] = [...firstRow, ...serviceCards];
     <Header basePath={base} />
     <main class="l-main">
       <article class="p-person">
-        <PageHero en="Person" ja="はたらく人を知る" variant="cloud">
+        <PageHero
+          en="Person"
+          ja="はたらく人を知る"
+          variant="cloud"
+          bg={`${base}images/person/page-fv.png`}
+        >
           <p class="p-person__catch">
             先輩たちの<img
               class="p-person__catch-img"

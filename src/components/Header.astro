@@ -2,9 +2,14 @@
 interface Props {
   basePath?: string;
   variant?: "light" | "solid";
+  logoSrc?: string;
 }
 
-const { basePath = "./", variant = "light" } = Astro.props;
+const {
+  basePath = "./",
+  variant = "light",
+  logoSrc = `${Astro.props.basePath ?? "./"}images/common/hoshizaki-logo.png`,
+} = Astro.props;
 
 // Figma 518:1195 (Navigation) — 8 項目 + 先頭にアイスキューブアイコン
 const drawerLinks = [
@@ -23,7 +28,7 @@ const drawerLinks = [
   <div class="l-header__inner">
     <a class="l-header__logo" href={basePath} aria-label="ホシザキ採用サイト トップ">
       <img
-        src={`${basePath}images/common/hoshizaki-logo.png`}
+        src={logoSrc}
         alt="HOSHIZAKI"
         onerror="this.style.display='none';this.nextElementSibling.style.display='inline';"
       />

@@ -22,7 +22,7 @@
 // ============================================
 // 共通: アイスリンクボタン (六角〜八角の氷塊画像 + ラベル)
 //   Figma: LinkButtonIce (207 × 200)。
-//   `link-button-ice_01.png` … _06.png を背景画像として読み込む。
+//   `images/common/link-button-ice.png` を背景画像として読み込む。
 // ============================================
 .c-ice-link {
   position: relative;
@@ -96,13 +96,30 @@
   // Figma: 1674 / 1600 ≒ 1.046 → 高さは画面幅の ~104.6%
   min-height: clamp(720px, 104vw, 1674px);
   padding: 200px 80px 0;
+
+  // TEMP — 旧リファレンス画像（1820×1620 で全幅展開された構成）は
+  // 実デザインの「右半分にクラスタを寄せる」構成と合わないため一旦無効化。
+  // 必要になったら再度有効化し、_layout-ref.png をデザインに合わせて差し替える。
+  // &::before {
+  //   content: "";
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   width: 100vw;
+  //   aspect-ratio: 1820 / 1620;
+  //   background: url("../images/top/_layout-ref.png") no-repeat top left / 100% 100%;
+  //   opacity: 0.35;
+  //   pointer-events: none;
+  //   z-index: 1;
+  // }
 }
 
 // 装飾の雲
 .p-top-hero__cloud {
   position: absolute;
   pointer-events: none;
-  opacity: 0.92;
+  mix-blend-mode: screen;
+  opacity: 0.8;
   z-index: 1;
 
   &--1 {
@@ -117,7 +134,6 @@
     right: -4%;
     width: 32%;
     max-width: 520px;
-    opacity: 0.85;
   }
 
   &--3 {
@@ -125,7 +141,6 @@
     left: 38%;
     width: 22%;
     max-width: 360px;
-    opacity: 0.75;
   }
 }
 
@@ -136,44 +151,42 @@
   z-index: 2;
   filter: drop-shadow(0 12px 18px rgba(0, 47, 95, 0.22));
 
+  // 全て vw 基準。実デザイン (top-full.jpeg 系) のヒーロー右半分に
+  // 配置されるペンギンクラスタの実測値。
+
+  // 上段左：中サイズ（キャッチコピー「常識の」の右隣）
   &--1 {
-    top: 5%;
-    right: 12%;
-    width: 11%;
-    max-width: 170px;
-    transform: rotate(-12deg);
+    top: 13.3vw;
+    left: 40.4vw;
+    width: 19.0vw;
   }
 
+  // 上段右：小サイズ
   &--2 {
-    top: 18%;
-    right: 4%;
-    width: 13%;
-    max-width: 200px;
-    transform: rotate(8deg);
+    top: 12.2vw;
+    left: 68.0vw;
+    width: 10.0vw;
   }
 
+  // 中央：最大サイズ（メインペンギン）
   &--3 {
-    top: 28%;
-    left: 48%;
-    width: 9%;
-    max-width: 140px;
-    transform: rotate(-6deg);
+    top: 25.5vw;
+    left: 39.8vw;
+    width: 43.4vw;
   }
 
+  // 右端：小サイズ
   &--4 {
-    top: 42%;
-    left: 70%;
-    width: 11%;
-    max-width: 170px;
-    transform: rotate(10deg);
+    top: 35.0vw;
+    right: 5.1vw;
+    width: 12.2vw;
   }
 
+  // 下段左：中サイズ
   &--5 {
-    top: 56%;
-    left: 56%;
-    width: 8%;
-    max-width: 130px;
-    transform: rotate(-4deg);
+    top: 45.8vw;
+    left: 33.1vw;
+    width: 19.0vw;
   }
 }
 
@@ -315,7 +328,8 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  // TEMP — ペンギン配置の確認中は都市シルエットを下方に退避（合わせ込み完了後に bottom: 0 に戻す）
+  bottom: -40vw;
   width: 100%;
   height: auto;
   z-index: 1;

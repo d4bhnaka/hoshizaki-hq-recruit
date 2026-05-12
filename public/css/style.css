@@ -18,9 +18,9 @@
   --color-special-card: #14233b;
   --color-bg-sky: #eaf4fc;
   --color-bg-cloud: #d4ebf8;
-  --color-bg-page: #e8f3fb;
+  --color-bg-page: #d8e5e8;
   --color-bg-light: #f3faff;
-  --color-text-primary: #111827;
+  --color-text-primary: #1d2527;
   --color-text-secondary: #4b5563;
   --color-text-muted: rgb(78, 80, 86);
   --color-text-inverse: #ffffff;
@@ -28,7 +28,7 @@
   --color-white-transparent: rgba(255, 255, 255, 0.55);
   --color-border: #d0d7de;
   --font-family-base: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, system-ui, sans-serif;
-  --font-family-en: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --font-family-en: "Barlow Condensed", "Helvetica Neue", Arial, sans-serif;
   /* display 用の縦長サンセリフ (PIONEER SPIRIT / SPECIAL CONTENTS / What's HOSHIZAKI 等) */
   --font-family-display: "Barlow Condensed", "Roboto Condensed", "Helvetica Neue", Arial, sans-serif;
   --font-family-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
@@ -72,7 +72,7 @@ body {
   min-height: 100vh;
   font-family: var(--font-family-base);
   color: var(--color-text-primary);
-  background: var(--color-white);
+  background: var(--color-bg-page);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -128,7 +128,7 @@ body {
   line-height: var(--line-height-base);
   letter-spacing: 0.02em;
   color: var(--color-text-primary);
-  background: var(--color-white);
+  background: var(--color-bg-page);
 }
 
 p {
@@ -1241,7 +1241,7 @@ img {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, rgba(0, 31, 64, 0.65) 0%, rgba(0, 47, 95, 0.45) 100%), url("../images/internship/hero-bg.jpg") center/cover no-repeat, linear-gradient(180deg, var(--color-brand-navy) 0%, var(--color-brand-primary) 100%);
+  background: linear-gradient(180deg, rgba(0, 31, 64, 0.65) 0%, rgba(0, 47, 95, 0.45) 100%), url("../images/internship/page-fv.png") center/cover no-repeat, linear-gradient(180deg, var(--color-brand-navy) 0%, var(--color-brand-primary) 100%);
 }
 
 .p-internship-hero__inner {
@@ -1717,7 +1717,8 @@ img {
 .p-top-hero__cloud {
   position: absolute;
   pointer-events: none;
-  opacity: 0.92;
+  mix-blend-mode: screen;
+  opacity: 0.8;
   z-index: 1;
 }
 .p-top-hero__cloud--1 {
@@ -1731,14 +1732,12 @@ img {
   right: -4%;
   width: 32%;
   max-width: 520px;
-  opacity: 0.85;
 }
 .p-top-hero__cloud--3 {
   top: 36%;
   left: 38%;
   width: 22%;
   max-width: 360px;
-  opacity: 0.75;
 }
 
 .p-top-hero__penguin {
@@ -1748,39 +1747,29 @@ img {
   filter: drop-shadow(0 12px 18px rgba(0, 47, 95, 0.22));
 }
 .p-top-hero__penguin--1 {
-  top: 5%;
-  right: 12%;
-  width: 11%;
-  max-width: 170px;
-  transform: rotate(-12deg);
+  top: 13.3vw;
+  left: 40.4vw;
+  width: 19vw;
 }
 .p-top-hero__penguin--2 {
-  top: 18%;
-  right: 4%;
-  width: 13%;
-  max-width: 200px;
-  transform: rotate(8deg);
+  top: 12.2vw;
+  left: 68vw;
+  width: 10vw;
 }
 .p-top-hero__penguin--3 {
-  top: 28%;
-  left: 48%;
-  width: 9%;
-  max-width: 140px;
-  transform: rotate(-6deg);
+  top: 25.5vw;
+  left: 39.8vw;
+  width: 43.4vw;
 }
 .p-top-hero__penguin--4 {
-  top: 42%;
-  left: 70%;
-  width: 11%;
-  max-width: 170px;
-  transform: rotate(10deg);
+  top: 35vw;
+  right: 5.1vw;
+  width: 12.2vw;
 }
 .p-top-hero__penguin--5 {
-  top: 56%;
-  left: 56%;
-  width: 8%;
-  max-width: 130px;
-  transform: rotate(-4deg);
+  top: 45.8vw;
+  left: 33.1vw;
+  width: 19vw;
 }
 
 .p-top-hero__inner {
@@ -1911,7 +1900,7 @@ img {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -40vw;
   width: 100%;
   height: auto;
   z-index: 1;
@@ -2618,7 +2607,7 @@ img {
   position: absolute;
   inset: 0;
   z-index: -2;
-  background: linear-gradient(180deg, #9cd0f2 0%, #c8e6f7 55%, #eaf4fc 100%);
+  background: linear-gradient(180deg, rgba(156, 208, 242, 0.4) 0%, rgba(234, 244, 252, 0.4) 100%), url("../images/message/page-fv.png") center/cover no-repeat, linear-gradient(180deg, #9cd0f2 0%, #c8e6f7 55%, #eaf4fc 100%);
 }
 
 .p-message-hero__clouds {

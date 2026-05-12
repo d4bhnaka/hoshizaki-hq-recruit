@@ -79,12 +79,12 @@ src/scss/
 
 ### 命名規則
 
-| プレフィックス | 用途 | 例 |
-|:--------------|:-----|:---|
-| `l-` | Layout（レイアウト） | `.l-container`, `.l-main` |
-| `c-` | Component（汎用コンポーネント） | `.c-box`, `.c-button` |
-| `p-` | Project（プロジェクト固有） | `.p-hero`, `.p-news`, `.p-about` |
-| `u-` | Utility（ユーティリティ） | `.u-hidden`, `.u-mt-10` |
+| プレフィックス | 用途                            | 例                               |
+| :------------- | :------------------------------ | :------------------------------- |
+| `l-`           | Layout（レイアウト）            | `.l-container`, `.l-main`        |
+| `c-`           | Component（汎用コンポーネント） | `.c-box`, `.c-button`            |
+| `p-`           | Project（プロジェクト固有）     | `.p-hero`, `.p-news`, `.p-about` |
+| `u-`           | Utility（ユーティリティ）       | `.u-hidden`, `.u-mt-10`          |
 
 ### CSSカスタムプロパティ
 
@@ -160,11 +160,11 @@ import Layout from "../layouts/Layout.astro";
 
 ## Commands
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | SCSS→CSS変換＋Astroビルド＋HTML整形              |
-| `npm run build:scss`      | SCSSをCSSにコンパイル                            |
-| `npm run watch:scss`      | SCSSの変更を監視して自動コンパイル               |
-| `npm run preview`         | Preview your build locally, before deploying     |
+| Command              | Action                                       |
+| :------------------- | :------------------------------------------- |
+| `npm install`        | Installs dependencies                        |
+| `npm run dev`        | Starts local dev server at `localhost:4321`  |
+| `npm run build`      | SCSS→CSS変換＋Astroビルド＋HTML整形          |
+| `npm run build:scss` | SCSSをCSSにコンパイル                        |
+| `npm run watch:scss` | SCSSの変更を監視して自動コンパイル           |
+| `npm run preview`    | Preview your build locally, before deploying |
