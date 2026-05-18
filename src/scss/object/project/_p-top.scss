@@ -85,7 +85,7 @@
 .p-top-hero {
   position: relative;
   width: 100%;
-  background: linear-gradient(180deg, var(--color-brand-sky) 0%, var(--color-brand-sky-light) 100%);
+  background: linear-gradient(90deg, #107af4 0%, #10aff4 100%);
   overflow: hidden;
   isolation: isolate;
 }
@@ -158,14 +158,14 @@
   &--1 {
     top: 13.3vw;
     left: 40.4vw;
-    width: 19.0vw;
+    width: 19vw;
   }
 
   // 上段右：小サイズ
   &--2 {
     top: 12.2vw;
-    left: 68.0vw;
-    width: 10.0vw;
+    left: 68vw;
+    width: 10vw;
   }
 
   // 中央：最大サイズ（メインペンギン）
@@ -177,7 +177,7 @@
 
   // 右端：小サイズ
   &--4 {
-    top: 35.0vw;
+    top: 35vw;
     right: 5.1vw;
     width: 12.2vw;
   }
@@ -186,7 +186,7 @@
   &--5 {
     top: 45.8vw;
     left: 33.1vw;
-    width: 19.0vw;
+    width: 19vw;
   }
 }
 
@@ -198,8 +198,8 @@
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-areas:
-    "catch movie"
-    "body  body";
+    "catch ."
+    "body  movie";
   gap: 64px 48px;
   align-items: start;
 }
@@ -213,7 +213,7 @@
   flex-direction: column;
   gap: 8px;
   font-family: var(--font-family-base);
-  font-weight: 900;
+  font-weight: 700;
   font-size: clamp(72px, 13vw, 200px);
   line-height: 1.05;
   letter-spacing: 0.02em;
@@ -227,11 +227,11 @@
 // CONCEPT MOVIE (Figma 296:12581-12588: x=863 y=1144 w=640 h=440)
 .p-top-hero__movie {
   grid-area: movie;
+  align-self: end;
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: clamp(280px, 32vw, 460px);
-  margin-top: 20%;
 }
 
 .p-top-hero__movie-en {
@@ -308,7 +308,7 @@
 
 .p-top-hero__body-line {
   font-size: clamp(15px, 1.4vw, 22px);
-  line-height: 2.0;
+  line-height: 2;
   letter-spacing: 0.06em;
   font-weight: 500;
   text-shadow: 0 2px 12px rgba(0, 47, 95, 0.45);
@@ -422,8 +422,12 @@
 .p-top-trio {
   position: relative;
   width: 100%;
-  background:
-    linear-gradient(180deg, var(--color-bg-sky) 0%, var(--color-bg-cloud) 50%, var(--color-bg-sky) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-sky) 0%,
+    var(--color-bg-cloud) 50%,
+    var(--color-bg-sky) 100%
+  );
   overflow: hidden;
 }
 
@@ -613,7 +617,11 @@
 .p-top-decided {
   position: relative;
   width: 100%;
-  background: linear-gradient(180deg, var(--color-bg-sky) 0%, var(--color-white) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-sky) 0%,
+    var(--color-white) 100%
+  );
   padding: 80px 0 120px;
   overflow: hidden;
 }
@@ -664,8 +672,7 @@
 }
 
 .p-top-decided__title-emph {
-  background:
-    linear-gradient(transparent 60%, rgba(255, 45, 154, 0.18) 60%);
+  background: linear-gradient(transparent 60%, rgba(255, 45, 154, 0.18) 60%);
   padding: 0 4px;
 }
 
@@ -764,7 +771,11 @@
   width: 100%;
   padding: 120px 0 140px;
   background:
-    radial-gradient(ellipse at 80% 10%, rgba(26, 180, 229, 0.18), transparent 50%),
+    radial-gradient(
+      ellipse at 80% 10%,
+      rgba(26, 180, 229, 0.18),
+      transparent 50%
+    ),
     linear-gradient(180deg, var(--color-special-bg) 0%, #051a30 100%);
   color: var(--color-white);
   overflow: hidden;

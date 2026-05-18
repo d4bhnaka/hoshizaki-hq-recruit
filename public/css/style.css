@@ -239,17 +239,17 @@ img {
 .l-header__cta {
   display: inline-flex;
   align-items: center;
+  text-align: center;
   gap: 10px;
   min-width: 180px;
   height: 44px;
   padding: 0 20px;
-  border-radius: 6px;
-  background: var(--color-brand-navy-deep);
+  background-color: var(--color-brand-navy-deep);
   color: var(--color-text-inverse);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  transition: background var(--transition-fast);
+  transition: background-color var(--transition-fast);
 }
 .l-header__cta:hover {
   background: var(--color-brand-navy);
@@ -1702,7 +1702,7 @@ img {
 .p-top-hero {
   position: relative;
   width: 100%;
-  background: linear-gradient(180deg, var(--color-brand-sky) 0%, var(--color-brand-sky-light) 100%);
+  background: linear-gradient(90deg, #107af4 0%, #10aff4 100%);
   overflow: hidden;
   isolation: isolate;
 }
@@ -1779,7 +1779,7 @@ img {
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-areas: "catch movie" "body  body";
+  grid-template-areas: "catch ." "body  movie";
   gap: 64px 48px;
   align-items: start;
 }
@@ -1791,7 +1791,7 @@ img {
   flex-direction: column;
   gap: 8px;
   font-family: var(--font-family-base);
-  font-weight: 900;
+  font-weight: 700;
   font-size: clamp(72px, 13vw, 200px);
   line-height: 1.05;
   letter-spacing: 0.02em;
@@ -1804,11 +1804,11 @@ img {
 
 .p-top-hero__movie {
   grid-area: movie;
+  align-self: end;
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: clamp(280px, 32vw, 460px);
-  margin-top: 20%;
 }
 
 .p-top-hero__movie-en {

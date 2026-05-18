@@ -49,6 +49,9 @@ export default defineConfig({
   ...(isProduction && siteUrl ? { site: siteUrl } : {}),
   // 相対パスで出力（サブディレクトリ配置対応）
   base: "./",
+  server: {
+    port: 4750,
+  },
   integrations:
     isProduction && siteUrl
       ? [
