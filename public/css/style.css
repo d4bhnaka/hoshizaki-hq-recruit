@@ -376,15 +376,15 @@ img {
   height: 50px;
   border: 0;
   padding: 0;
-  background: var(--color-brand-navy);
+  background-color: var(--color-brand-navy);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background var(--transition-fast);
+  transition: background-color var(--transition-fast);
 }
 .l-drawer__close:hover {
-  background: var(--color-brand-navy-deep);
+  background-color: var(--color-brand-navy-deep);
 }
 
 .l-drawer__close-x {
@@ -663,13 +663,12 @@ img {
   font-family: var(--font-family-display);
   font-size: 136px;
   font-weight: 400;
-  letter-spacing: 0.01em;
   line-height: 1;
   color: #1d2527;
 }
 
 .c-page-hero__ja {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 500;
   color: var(--color-text-primary);
   letter-spacing: 0.08em;

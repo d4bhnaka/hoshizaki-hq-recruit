@@ -37,13 +37,12 @@
   font-family: var(--font-family-display);
   font-size: 136px;
   font-weight: 400;
-  letter-spacing: 0.01em;
   line-height: 1;
   color: #1d2527;
 }
 
 .c-page-hero__ja {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 500;
   color: var(--color-text-primary);
   letter-spacing: 0.08em;
@@ -51,13 +50,19 @@
 
 // Variants
 .c-page-hero--light {
-  background:
-    linear-gradient(180deg, #f3faff 0%, var(--color-brand-blue-100) 100%);
+  background: linear-gradient(
+    180deg,
+    #f3faff 0%,
+    var(--color-brand-blue-100) 100%
+  );
 }
 
 .c-page-hero--blue {
-  background:
-    linear-gradient(180deg, var(--color-brand-primary) 0%, var(--color-brand-navy) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-brand-primary) 0%,
+    var(--color-brand-navy) 100%
+  );
 
   .c-page-hero__en,
   .c-page-hero__ja {
@@ -68,12 +73,21 @@
 .c-page-hero--cloud {
   background-color: #eaf4fc;
   background-image:
-    linear-gradient(180deg, rgba(234, 244, 252, 0.3) 0%, rgba(234, 244, 252, 0.9) 100%),
-    url("../images/top/cloud01.png"),
-    url("../images/top/cloud02.png");
+    linear-gradient(
+      180deg,
+      rgba(234, 244, 252, 0.3) 0%,
+      rgba(234, 244, 252, 0.9) 100%
+    ),
+    url("../images/top/cloud01.png"), url("../images/top/cloud02.png");
   background-repeat: no-repeat, no-repeat, no-repeat;
-  background-position: center, right -120px top 40px, left -80px bottom 20px;
-  background-size: cover, 600px auto, 500px auto;
+  background-position:
+    center,
+    right -120px top 40px,
+    left -80px bottom 20px;
+  background-size:
+    cover,
+    600px auto,
+    500px auto;
 }
 
 .c-page-hero--has-bg {
