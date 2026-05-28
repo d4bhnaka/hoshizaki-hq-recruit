@@ -1,0 +1,142 @@
+---
+import InternshipHeading from "./InternshipHeading.astro";
+
+interface Point {
+  num: string;
+  title: string;
+  body: string;
+}
+interface ProgramDay {
+  day: string;
+  title: string;
+  body: string;
+}
+interface Requirement {
+  label: string;
+  value: string[];
+}
+interface Voice {
+  avatar: string;
+  text: string;
+}
+export interface Course {
+  id: string;
+  title: string;
+  image: string;
+  points: Point[];
+  program: ProgramDay[];
+  requirements: Requirement[];
+  voices: Voice[];
+}
+
+interface Props {
+  course: Course;
+  index: number;
+  basePath?: string;
+}
+
+const { course, index, basePath = "./" } = Astro.props;
+const penguins = ["penguin-03.png", "penguin-02.png", "penguin-01.png"];
+---
+
+<div
+  class="p-course-detail"
+  data-course-panel={course.id}
+  hidden={index !== 0 ? true : undefined}
+>
+  <!-- 選択中コースのラベル -->
+  <div class="p-course-detail__pillwrap">
+    <p class="p-course-detail__pill">{course.title}</p>
+  </div>
+
+  <!-- POINT -->
+  <section class="p-internship-section p-point" aria-labelledby={`point-${course.id}`}>
+    <InternshipHeading ja="ポイント" en="POINT" />
+    <ul class="p-point__list">
+      {
+        course.points.map((point) => (
+          <li class="p-point__item">
+            <p class="p-point__num">{point.num}</p>
+            <h3 class="p-point__title">{point.title}</h3>
+            <p class="p-point__body">{point.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- PROGRAM -->
+  <section class="p-internship-section p-program" aria-labelledby={`program-${course.id}`}>
+    <InternshipHeading ja="プログラム" en="PROGRAM" />
+    <div class="p-program__card">
+      <ol class="p-program__list">
+        {
+          course.program.map((day) => (
+            <li class="p-program__row">
+              <p class="p-program__day">{day.day}</p>
+              <div class="p-program__body">
+                <h3 class="p-program__title">{day.title}</h3>
+                <p class="p-program__desc">{day.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+    <ul class="p-program__penguins" aria-hidden="true">
+      {
+        penguins.map((src) => (
+          <li>
+            <img src={`${basePath}images/internship/${src}`} alt="" loading="lazy" />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- REQUIREMENTS -->
+  <section
+    class="p-internship-section p-requirements"
+    aria-labelledby={`req-${course.id}`}
+  >
+    <InternshipHeading ja="募集要項" en="REQUIREMENTS" />
+    <dl class="p-requirements__card">
+      {
+        course.requirements.map((req) => (
+          <div class="p-requirements__row">
+            <dt class="p-requirements__label">{req.label}</dt>
+            <dd class="p-requirements__value">
+              {req.value.map((line, i) => (
+                <Fragment>
+                  {i > 0 && <br />}
+                  {line}
+                </Fragment>
+              ))}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <!-- VOICES -->
+  <section class="p-internship-section p-voices" aria-labelledby={`voices-${course.id}`}>
+    <InternshipHeading ja="体験者の声" en="VOICES" />
+    <ul class="p-voices__list">
+      {
+        course.voices.map((voice) => (
+          <li class="p-voices__item">
+            <span class="p-voices__avatar">
+              <img
+                src={`${basePath}images/internship/${voice.avatar}`}
+                alt=""
+                loading="lazy"
+              />
+            </span>
+            <p class="p-voices__bubble">{voice.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</div>

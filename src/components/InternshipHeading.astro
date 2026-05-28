@@ -1,0 +1,13 @@
+---
+interface Props {
+  ja: string;
+  en: string;
+}
+
+const { ja, en } = Astro.props;
+---
+
+<header class="p-internship-head">
+  <p class="p-internship-head__ja">{ja}</p>
+  <h2 class="p-internship-head__en">{en}</h2>
+</header>
