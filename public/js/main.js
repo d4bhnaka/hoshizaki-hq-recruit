@@ -93,13 +93,65 @@
     });
   }
 
+  // --------------------------------------------
+  // Internship: course carousel (Swiper) + tab content switching
+  // --------------------------------------------
+  function initInternship() {
+    var swiperEl = document.querySelector("[data-course-swiper]");
+    if (!swiperEl) return;
+
+    var cards = document.querySelectorAll("[data-course-tab]");
+    var panels = document.querySelectorAll("[data-course-panel]");
+
+    function selectCourse(id) {
+      cards.forEach(function (card) {
+        card.setAttribute(
+          "aria-pressed",
+          card.getAttribute("data-course-tab") === id ? "true" : "false"
+        );
+      });
+      panels.forEach(function (panel) {
+        if (panel.getAttribute("data-course-panel") === id) {
+          panel.removeAttribute("hidden");
+        } else {
+          panel.setAttribute("hidden", "");
+        }
+      });
+    }
+
+    cards.forEach(function (card) {
+      card.addEventListener("click", function () {
+        selectCourse(card.getAttribute("data-course-tab"));
+      });
+    });
+
+    if (typeof Swiper !== "undefined") {
+      new Swiper(swiperEl, {
+        slidesPerView: 1.15,
+        spaceBetween: 16,
+        watchOverflow: true,
+        breakpoints: {
+          600: { slidesPerView: 2.2, spaceBetween: 20 },
+          900: { slidesPerView: 3, spaceBetween: 24 },
+          1200: { slidesPerView: 3.4, spaceBetween: 28 },
+        },
+        navigation: {
+          nextEl: "[data-course-next]",
+          prevEl: "[data-course-prev]",
+        },
+      });
+    }
+  }
+
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", function () {
       initDrawer();
       initPersonFilter();
+      initInternship();
     });
   } else {
     initDrawer();
     initPersonFilter();
+    initInternship();
   }
 })();

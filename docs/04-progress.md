@@ -112,7 +112,7 @@
 - [r] M5-2 [01-project-plan.md](./01-project-plan.md) のページ構成表を更新（14 行）。
 - [r] M5-3 [06-spec-common.md](./06-spec-common.md) ＆ [07-spec-subpages.md](./07-spec-subpages.md) 作成。
 - [ ] M5-4 Footer サイトマップの SPECIAL CONTENTS 3 タイトルの正式名称をクライアント確認。
-- [ ] M5-5 Internship v1 (`246:815`) と v2 (`446:5278`) の正版確認。
+- [r] M5-5 Internship v1 (`246:815`) と v2 (`446:5278`) の正版確認 → **v2 (`446:5278`) を正版として採用・忠実実装済み**（2026-05-28）。
 - [ ] M5-6 採用メッセージの「人の写真は使わない／採用ペンギン」の最終方針確認。
 - [ ] M5-7 Strategy ページの「飲食市場」「飲食外市場」サブセクション本文の入稿確認。
 
@@ -132,9 +132,9 @@
 - [r] M6a-4 [`_p-internship.scss`](../src/scss/object/project/_p-internship.scss) 一式＋ `style.scss` への `@use` 登録。
 - [r] M6a-5 `foundation/_variables.scss` にトークン追加、`_reset.scss` / `_base.scss` 整備。
 - [r] M6a-6 [Layout.astro](../src/layouts/Layout.astro) に `title` / `description` プロップ追加。
-- [ ] M6a-7 アセット（hero-bg / course-*.jpg / voice-*.png / logo-hoshizaki-white.svg 等）を Figma から書き出して [../public/images/](../public/images/) 配下に配置。
-- [ ] M6a-8 Figma `446:5278`（v2）との見比べ＆差分修正（ヒーローのチーム写真 5 枚タイル／PROGRAM のペンギンイラスト等）。
-- [ ] M6a-9 クライアント／ユーザーレビュー。
+- [r] M6a-7 アセットを Figma Dev Mode MCP から 2倍 PNG で書き出し、[../public/images/internship/](../public/images/internship/) に配置（hero-collage-01〜03 / course-01〜04 / voice-01〜04 / penguin-hero / penguin-01〜03 / ice / point-bg）（2026-05-28）。
+- [r] M6a-8 Figma `446:5278`（v2）に忠実に全面再実装。ヒーローのチーム写真タイル＋ペンギン＋アイス、COURSE の Swiper カルーセル（タップでコース選択→色付き）、選択コースごとに POINT〜VOICES を切り替えるタブコンテンツ、PROGRAM のペンギンイラスト等を再現（2026-05-28）。
+- [ ] M6a-9 クライアント／ユーザーレビュー。コース 2〜4 の POINT/PROGRAM/募集要項/体験者の声は仮文面（Figma 未デザイン）のため要差し替え。
 
 ### M6b. その他 12 ページ（並列実装）
 
@@ -280,6 +280,27 @@ dist/
 - **未確認 / TODO**:
   - 先輩インタビューのリンク先・アバターの正式指定（暫定で `/person/` ＋ `thumb01.png`）。
   - SP（モバイル）レイアウトは `@media 768px` で暫定縦並び。Figma の SP デザイン確認後に再調整。
+
+### 2026-05-28 セッション: インターンシップページ（/internship/）の Figma 忠実コーディング（v2 全面再実装）
+
+- **着手範囲**: `/internship/`（Figma `446:5278`「09_internship」1600×8277、v2 を正版採用）を忠実に全面リライト。Footer は共通、Header はロゴのみ差し替え（白ロゴ `internship-logo.png`）、パンくずは共通構造で白文字。
+- **コア機能（ユーザー要件）**: COURSE を **Swiper カルーセル**で表示。コースをタップすると色付き（`#cbfbff`＋`#00a0e9` ボーダー）になり、その下の **POINT→PROGRAM→募集要項→VOICES** が選択コース専用のタブコンテンツとして切り替わる。コースごとに 4 セクションを個別設定可能。
+- **作成ファイル**:
+  - [src/components/CourseCard.astro](../src/components/CourseCard.astro) — カルーセルのスライド（コース選択ボタン、`data-course-tab`）。
+  - [src/components/CourseDetail.astro](../src/components/CourseDetail.astro) — 選択コースのタブパネル（ピル＋POINT〜VOICES、`data-course-panel`、`Course` 型を export）。
+  - [src/components/InternshipHeading.astro](../src/components/InternshipHeading.astro) — ja 小＋en 特大（Barlow Condensed 100px）の見出し。
+- **修正ファイル**:
+  - [src/pages/internship.astro](../src/pages/internship.astro) — 全面リライト。`courses` データ配列（コース1＝Figma 実コンテンツ、コース2〜4＝仮文面）＋ ヒーロー／イントロ／COURSE カルーセル／コース詳細パネル群／MESSAGE。
+  - [src/scss/object/project/_p-internship.scss](../src/scss/object/project/_p-internship.scss) — 全面リライト（`p-internship-*` / `p-course*` / `p-point` / `p-program` / `p-requirements` / `p-voices` / `p-internship-message`）。`clamp()` でフルイド対応。**注意**: 当初 `.p-message` を使い `_p-message.scss`（白背景）と衝突→白地に白文字で不可視化したため `.p-internship-message` に改名済み。
+  - [public/js/main.js](../public/js/main.js) — `initInternship()` 追加（Swiper 初期化＋コードのタブ切替）。
+  - [src/layouts/Layout.astro](../src/layouts/Layout.astro) — `<slot name="head" />` 追加（ページ個別の head 注入用）。
+- **Swiper の扱い**: CDN ではなく `node_modules/swiper/swiper-bundle.min.{js,css}` を [public/js/](../public/js/) ／ [public/css/](../public/css/) に**ベンダリング**（FTP 納品でオフラインでも動くように）。internship ページの head slot で読込み。
+- **アセット書き出し**: Figma Dev Mode MCP（`127.0.0.1:3845`、許可ディレクトリにプロジェクトルートを追加してもらい `get_design_context` の `dirForAssetWrites` で 2倍 PNG を取得）。[../public/images/internship/](../public/images/internship/) に配置（hero-collage-01〜03 / course-01〜04 / voice-01〜04 / penguin-hero / penguin-01〜03 / ice / point-bg）。旧 `p01〜p04.png`（未使用）は削除。
+- **検証**: `npm run build` 14 ページ成功。`data-astro-cid=0`、`/internship/` のインライン `<style>=0`、ルート絶対パス `=0`、ハッシュ無し。dist を `python3 -m http.server` で配信し Chrome ヘッドレス（1440 幅／390 幅）で全セクション目視→ Figma と一致。Swiper の `swiper-initialized` 付与・先頭で prev ボタン disabled も確認。
+- **未確認 / TODO**:
+  - **コース 2〜4 の POINT/PROGRAM/募集要項/体験者の声は仮文面**（Figma 未デザイン）。クライアント入稿で差し替え。
+  - 「冒険を始める ENTRY」ボタンの**外部リンク URL が未定**（現状 `href="#"`）。決定後に差し替え。
+  - SP レイアウトは `@media 768px` で暫定。Figma の SP デザイン確認後に再調整。
 
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 

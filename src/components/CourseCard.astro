@@ -1,0 +1,26 @@
+---
+interface Props {
+  id: string;
+  index: number;
+  title: string;
+  image: string;
+  basePath?: string;
+}
+
+const { id, index, title, image, basePath = "./" } = Astro.props;
+---
+
+<button
+  class="p-course-card swiper-slide"
+  type="button"
+  data-course-tab={id}
+  aria-pressed={index === 0 ? "true" : "false"}
+>
+  <span class="p-course-card__thumb">
+    <img src={`${basePath}images/internship/${image}`} alt="" loading="lazy" />
+  </span>
+  <span class="p-course-card__title">{title}</span>
+  <span class="p-course-card__more">
+    詳細を見る<span class="p-course-card__chevron" aria-hidden="true"></span>
+  </span>
+</button>
