@@ -8,13 +8,31 @@ import Breadcrumb from "../components/Breadcrumb.astro";
 
 const base = "../";
 
-interface Row {
-  label: string;
-  value: string;
+interface Tier {
+  target: string;
+  amount: string;
 }
 
+interface Row {
+  label: string;
+  value?: string;
+  note?: string;
+  tiers?: Tier[];
+}
+
+// 総合職の募集要項テーブル。値はこの配列を編集するだけで差し替え可能。
+// 出典: マイナビ前年度採用データ（2025年04月実績）corp2913 / recruitingCourseId=27044419
 const generalRows: Row[] = [
-  { label: "初任給", value: "270,000円" },
+  {
+    label: "初任給",
+    note: "（2025年4月実績）",
+    tiers: [
+      { target: "総合職 修士了（愛知本社勤務）", amount: "月給 270,000円" },
+      { target: "総合職 学部卒（愛知本社勤務）", amount: "月給 248,400円" },
+      { target: "総合職 修士了（島根勤務）", amount: "月給 240,100円" },
+      { target: "総合職 学部卒（島根勤務）", amount: "月給 219,900円" },
+    ],
+  },
   {
     label: "諸手当",
     value: "時間外・休日・深夜勤務手当、住宅手当、通勤手当、家族手当、役付手当 他",
@@ -45,6 +63,8 @@ const generalRows: Row[] = [
       "福利厚生倶楽部（リロクラブ）、退職金制度、財形貯蓄制度、社員持株会制度、資格取得補助制度、独身寮制度（入寮要件あり）、社宅制度、会社保養施設（山荘）、クラブ活動補助（野球、バスケット、テニス、卓球、茶華道等）、慶弔見舞金、食事補助 他",
   },
 ];
+
+const iceIcon = `${base}images/requirement/icon-ice.png`;
 ---
 
 <Layout
@@ -56,33 +76,55 @@ const generalRows: Row[] = [
     <Header basePath={base} />
     <main class="l-main">
       <article class="p-req">
-        <PageHero
-          en="Requirement"
-          ja="募集要項"
-          variant="cloud"
-          bg={`${base}images/requirement/page-fv.png`}
-        />
+        <PageHero en="Requirement" ja="募集要項" variant="cloud" />
 
         <!-- Intro -->
         <section class="p-req__intro">
-          <p class="p-req__intro-text">
+          <p class="p-req__lead">
             ホシザキは厨房機器の枠を超え、医療や農業など新たな分野への挑戦を続けています。食材ロスや環境負荷といった社会課題の解決を通じ、世界中の「食」の未来を創ることが私たちの使命です。現状に満足せず、グローバルな舞台で「常識の先へ」跳躍したいと願う、情熱ある皆さんのエントリーをお待ちしています。
           </p>
         </section>
 
-        <!-- General course -->
-        <section class="p-req__section" aria-labelledby="req-general-title">
-          <p class="p-req__label" id="req-general-title">
-            <span class="p-req__icon" aria-hidden="true"></span>
+        <!-- General course: heading (left) + table card (right) -->
+        <section
+          class="p-req__section p-req__section--table"
+          aria-labelledby="req-general-title"
+        >
+          <h2 class="p-req__label" id="req-general-title">
+            <span class="p-req__icon" aria-hidden="true">
+              <img src={iceIcon} alt="" width="48" height="48" />
+            </span>
             <span class="p-req__label-text">総合職</span>
-          </p>
+          </h2>
           <div class="p-req__card">
             <dl class="p-req__table">
               {
                 generalRows.map((row) => (
                   <div class="p-req__row">
                     <dt class="p-req__term">{row.label}</dt>
-                    <dd class="p-req__desc">{row.value}</dd>
+                    <dd class="p-req__desc">
+                      {row.tiers ? (
+                        <>
+                          {row.note && (
+                            <span class="p-req__desc-note">{row.note}</span>
+                          )}
+                          <span class="p-req__tiers">
+                            {row.tiers.map((tier) => (
+                              <span class="p-req__tier">
+                                <span class="p-req__tier-target">
+                                  {tier.target}
+                                </span>
+                                <span class="p-req__tier-amount">
+                                  {tier.amount}
+                                </span>
+                              </span>
+                            ))}
+                          </span>
+                        </>
+                      ) : (
+                        row.value
+                      )}
+                    </dd>
                   </div>
                 ))
               }
@@ -90,17 +132,20 @@ const generalRows: Row[] = [
           </div>
         </section>
 
-        <!-- Initial assignment -->
-        <section class="p-req__section" aria-labelledby="req-assignment-title">
-          <p class="p-req__label" id="req-assignment-title">
-            <span class="p-req__icon" aria-hidden="true"></span>
+        <!-- Initial assignment: heading + note (no card) -->
+        <section
+          class="p-req__section p-req__section--note"
+          aria-labelledby="req-assignment-title"
+        >
+          <h2 class="p-req__label" id="req-assignment-title">
+            <span class="p-req__icon" aria-hidden="true">
+              <img src={iceIcon} alt="" width="48" height="48" />
+            </span>
             <span class="p-req__label-text">初期配属について</span>
-          </p>
-          <div class="p-req__card p-req__card--note">
-            <p class="p-req__note">
-              内定通知の際に初期配属（職種・勤務地）をお知らせします<br />
-              勤務地については、3年間固定です。
-            </p>
+          </h2>
+          <div class="p-req__note">
+            <p>内定通知の際に初期配属（職種・勤務地）をお知らせします</p>
+            <p>勤務地については、3年間固定です。</p>
           </div>
         </section>
 

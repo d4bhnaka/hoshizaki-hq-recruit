@@ -281,6 +281,17 @@ dist/
   - 先輩インタビューのリンク先・アバターの正式指定（暫定で `/person/` ＋ `thumb01.png`）。
   - SP（モバイル）レイアウトは `@media 768px` で暫定縦並び。Figma の SP デザイン確認後に再調整。
 
+### 2026-05-28 セッション: 募集要項ページ（/requirement/）の Figma 忠実コーディング
+
+- **着手範囲**: `/requirement/`（Figma `242:71`「07_requirement」1600×2908）を Figma に忠実に再構築。
+- **修正ファイル**:
+  - [src/pages/requirement.astro](../src/pages/requirement.astro) — マークアップ全面リライト。①リードを左寄せ 18px に。②総合職セクションを「見出し（左）＋白カード（右）」の横並びレイアウトに（旧：見出し上・カード下の縦積み）。③初期配属を白カード無しのプレーンテキストに修正（Figma は note にカード無し）。④見出しの装飾を「平面シアン四角」→ Figma の 3D アイスキューブアイコン画像に差し替え。⑤見出しを `<p>` → `<h2>`（アクセシビリティ）。
+  - [src/scss/object/project/_p-requirement.scss](../src/scss/object/project/_p-requirement.scss) — 全面リライト。カード=白・角丸 **12px**・影 `0 4px 4px rgba(0,0,0,.15)`・幅 800px 右寄せ（`flex` + `justify-content:space-between`）。テーブル行=`grid 210px 1fr`、区切り線 `1px solid #e4e9ec`、dt=Noto Bold 15px・dd=Noto 15px（共に `--color-text-primary`、旧実装の dt シアンは Figma 準拠で黒に修正）。見出し=Noto Bold 28px、リード/note=18px/行間2。コンテンツ帯 max-width 1300px。
+- **アセット** ([../public/images/requirement/](../public/images/requirement/)): `icon-ice.png`（Figma node `485:1193` の ice キューブを 512→96px 2x 化）。ヒーローは `PageHero variant="cloud"`（`bg` 無し＝雲スカイ）で再現。当初 environment の `page-fv.png` を流用したが**建物写真**で誤りのため削除し cloud バリアントに変更。
+- **テーブルデータ（Mynavi 最新反映済み）**: 当初指定の `corp2913/outline.html` は会社概要（2028卒の募集要項は無し）だったが、ユーザー追加提示の **`displayPrevEmployment`（前年度採用データ / 2025年4月実績）** `https://job.mynavi.jp/28/pc/corpinfo/displayPrevEmployment/index/?corpId=2913&recruitingCourseId=27044419` に募集要項全項目が掲載。比較の結果、諸手当・昇給・賞与・勤務地・勤務時間・年間休日・休日・待遇は Figma 値と**完全一致**、**初任給のみ差分**（Figma は 270,000円 単一→Mynavi は4区分: 修士了愛知270,000／学部卒愛知248,400／修士了島根240,100／学部卒島根219,900）。`generalRows` の初任給を `tiers[]`（対象＋月給）構造に変更し4区分＋「（2025年4月実績）」注記を表示。データ出典コメントを astro 冒頭に記載。
+- **検証**: `npm run build` 14 ページ成功。`/requirement/` の `data-astro-cid=0`／インライン `<style>=0`／ルート絶対パス `=0`。静的サーバ（dist/ を `python3 -m http.server`）＋ Playwright 1440 幅で全体目視し Figma と一致＋初任給4区分の表示を確認。
+- **TODO**: SP（モバイル）は `@media 960px`（カード縦積み）＋`600px` で暫定。Figma の SP デザイン確認後に再調整。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。
