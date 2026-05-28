@@ -5,10 +5,10 @@
 .p-special {
   display: block;
   width: 100%;
-  max-width: var(--page-max-width);
   margin: 0 auto;
-  background: linear-gradient(180deg, #d9ecf7 0%, #eef6fb 100%);
-  overflow: hidden;
+  // 横方向のはみ出しのみクリップ。overflow:hidden はスクロールコンテナを生成して
+  // 子カードの position:sticky の基準をビューポートから奪うため使えない（clip はコンテナを作らない）。
+  overflow-x: clip;
 }
 
 // --------------------------------------------
@@ -16,57 +16,106 @@
 // --------------------------------------------
 .p-special__hero {
   position: relative;
-  padding: 160px 64px 120px;
-  background: linear-gradient(180deg, #0d3d7a 0%, #0a69d9 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: clamp(520px, 50vw, 860px);
+  padding: 150px 64px 180px;
+  background: linear-gradient(180deg, #00a0e9 0%, #005a83 100%);
   color: var(--color-text-inverse);
   overflow: hidden;
   isolation: isolate;
 }
 
-.p-special__hero-bg {
+.p-special__hero-video {
   position: absolute;
   inset: 0;
-  z-index: -1;
-  background-size: cover;
-  background-position: center right;
-  background-repeat: no-repeat;
-  opacity: 0.25;
-  filter: blur(1px);
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.15;
+}
+
+.p-special__hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.2;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(8, 38, 84, 0.7) 0%,
+      rgba(11, 78, 158, 0.5) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(5, 22, 50, 0.55) 0%,
+      rgba(5, 22, 50, 0.1) 52%,
+      rgba(5, 22, 50, 0.18) 100%
+    );
+}
+
+// ペンギンシルエット（中央右・縦中央）。Figma の Layer 3 配置に準拠。
+// 薄グレー画像を brightness(0) で黒化し、低不透明度で重ねて背景を均一に暗くする
+// （動画のテクスチャは透けて残り、Figma の translucent シルエットに一致）。
+.p-special__hero-silhouette {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: 1.5%;
+  width: min(64%, 1000px);
+  height: auto;
+  transform: translateY(-50%);
+  filter: brightness(0);
+  opacity: 0.9;
+  pointer-events: none;
 }
 
 .p-special__hero-inner {
   position: relative;
+  z-index: 3;
+  width: 100%;
   max-width: var(--page-max-width);
   margin: 0 auto;
 }
 
 .p-special__hero-title {
   font-family: var(--font-family-en);
-  font-size: clamp(80px, 10vw, 168px);
-  font-weight: 900;
-  letter-spacing: 0.02em;
+  font-size: clamp(90px, 12vw, 198px);
+  font-weight: 100;
+  letter-spacing: 0;
   line-height: 0.9;
   margin: 0;
 }
 
 .p-special__hero-sub {
   margin-top: 24px;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  // 見出しと同比率（×28/198）でスケールした値の 1.2 倍
+  font-size: clamp(15.24px, 2.04vw, 33.6px);
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
 // --------------------------------------------
 // Cards
 // --------------------------------------------
 .p-special__cards {
-  padding: 80px 64px;
+  position: relative;
+  z-index: 1;
+  margin-top: -96px; // ヒーロー下端にカードを少し重ねる（Figma 準拠）
+  padding: 0 64px 80px;
+
+  // sticky スタック用のトークン（子の .p-special__card に継承させる）
+  --special-stack-base: 88px; // 先頭カードがビューポート上端から離れる距離
+  --special-stack-step: 0px; // カードごとの段差（0 = 同じ位置に固定し、後のカードで前を完全に覆う）
 }
 
 .p-special__list {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 0;
   max-width: var(--page-max-width);
   margin: 0 auto;
   list-style: none;
@@ -74,90 +123,133 @@
 }
 
 .p-special__card {
-  border-radius: var(--border-radius-md);
+  // スクロールに合わせてビューポート上部に固定し、次のカードが上に重なっていく。
+  // top は nth-child ごとに段差を付け、後ろのカードの上端が少しずつ覗くようにする。
+  position: sticky;
+  top: var(--special-stack-top, var(--special-stack-base));
   overflow: hidden;
-  box-shadow: var(--shadow-card);
   background: var(--color-brand-navy-deep);
+}
+
+// カードごとに sticky の top を段階的に下げてスタック段差を作る。
+// DOM 後方のカードほど上に描画されるため、後のカードが前のカードを覆って重なる。
+@for $i from 1 through 6 {
+  .p-special__card:nth-child(#{$i}) {
+    --special-stack-top: calc(
+      var(--special-stack-base) + var(--special-stack-step) * #{$i - 1}
+    );
+  }
 }
 
 .p-special__card-link {
   position: relative;
-  display: grid;
-  grid-template-columns: 420px 1fr;
-  min-height: 260px;
+  display: flex;
+  align-items: center;
+  min-height: 460px;
+  padding: 0 64px;
   color: var(--color-text-inverse);
+  isolation: isolate;
+}
+
+// 写真をカード全面に敷く（パネルはこの上に重なる）
+.p-special__card-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--color-brand-blue-300);
   transition: transform var(--transition-base);
 
-  &:hover {
-    transform: translateY(-2px);
+  .p-special__card-link:hover & {
+    transform: scale(1.035);
   }
 }
 
+// 左に浮かぶ半透明の濃紺パネル
 .p-special__card-panel {
   position: relative;
-  padding: 40px 36px;
-  background: rgba(10, 20, 40, 0.92);
+  z-index: 1;
+  width: min(44%, 540px);
+  padding: 38px 42px;
+  background: rgba(8, 18, 36, 0.82);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 12px;
-  z-index: 1;
+  gap: 14px;
 }
 
 .p-special__card-category {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--color-brand-blue-200);
   margin: 0;
 }
 
 .p-special__card-title {
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 1.5;
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 1.45;
   margin: 0;
   color: var(--color-text-inverse);
 }
 
 .p-special__card-sub {
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 500;
-  color: var(--color-brand-blue-200);
+  letter-spacing: 0.02em;
+  color: var(--color-brand-blue-100);
   margin: 0;
 }
 
 .p-special__card-avatars {
-  display: inline-flex;
-  gap: 8px;
+  display: flex;
+  gap: 12px;
   margin-top: 8px;
+  padding: 0;
+  list-style: none;
 }
 
 .p-special__card-avatar {
-  width: 28px;
-  height: 28px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.85);
   background: var(--color-brand-blue-300);
-  border: 2px solid var(--color-brand-navy-deep);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .p-special__card-more {
   position: absolute;
-  right: 24px;
-  bottom: 20px;
+  right: 32px;
+  bottom: 28px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 13px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background-color: rgba(8, 18, 36, 0.32);
   font-family: var(--font-family-en);
-  font-size: 12px;
-  letter-spacing: 0.08em;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   color: var(--color-text-inverse);
+  transition: background-color var(--transition-base);
+
+  .p-special__card-link:hover & {
+    background-color: rgba(8, 18, 36, 0.55);
+  }
 }
 
-.p-special__card-photo {
-  background-size: cover;
-  background-position: center;
-  background-color: var(--color-brand-blue-300);
-  filter: brightness(0.9);
-}
-
+// 画像読み込み前のフォールバック色（実写真が乗ると見えなくなる）
 .p-special__card--crosstalk .p-special__card-photo {
   background-color: #3d6aa0;
 }
@@ -166,24 +258,60 @@
   background-color: #244168;
 }
 
-.p-special__card--talk .p-special__card-photo {
+.p-special__card--special-talk .p-special__card-photo {
   background-color: #2f4766;
 }
 
 @media screen and (max-width: 960px) {
   .p-special__hero {
-    padding: 120px 20px 80px;
+    min-height: clamp(420px, 78vw, 620px);
+    padding: 120px 20px 110px;
+  }
+
+  .p-special__hero-silhouette {
+    width: 96%;
+    right: -6%;
+    opacity: 0.26;
   }
 
   .p-special__cards {
-    padding: 48px 16px;
+    margin-top: -56px;
+    padding: 0 16px 48px;
+    --special-stack-base: 64px;
+    --special-stack-step: 0px;
   }
 
   .p-special__card-link {
-    grid-template-columns: 1fr;
+    min-height: 320px;
+    padding: 20px 16px;
   }
 
-  .p-special__card-photo {
-    min-height: 180px;
+  .p-special__card-panel {
+    width: 100%;
+    padding: 28px 24px;
+  }
+
+  .p-special__card-title {
+    font-size: 24px;
+  }
+
+  .p-special__card-more {
+    right: 16px;
+    bottom: 16px;
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+}
+
+// モーション抑制設定の利用者には背景動画を非表示にし、
+// 下地グラデーション＋ペンギンシルエットのみのファーストビューにする。
+@media (prefers-reduced-motion: reduce) {
+  .p-special__hero-video {
+    display: none;
+  }
+
+  // スクロール連動の重なり演出を避け、通常の縦並びカードに戻す。
+  .p-special__card {
+    position: static;
   }
 }
