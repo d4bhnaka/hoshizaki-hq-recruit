@@ -13,12 +13,6 @@ const bodyLines = body.split("／");
 
 <a class="c-person-card" href={href}>
   <figure class="c-person-card__photo">
-    <div
-      class="c-person-card__photo-bg"
-      style={`background-image: url('${image}');`}
-      aria-hidden="true"
-    >
-    </div>
     <img
       class="c-person-card__photo-img"
       src={image}
@@ -39,7 +33,17 @@ const bodyLines = body.split("／");
     </p>
     <div class="c-person-card__footer">
       <span class="c-person-card__tag">{department}</span>
-      <span class="c-person-card__chevron" aria-hidden="true">›</span>
+      <svg
+        class="c-person-card__chevron"
+        viewBox="0 0 320 512"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          fill="currentColor"
+          d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+        ></path>
+      </svg>
     </div>
   </div>
 </a>
