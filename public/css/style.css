@@ -5405,7 +5405,7 @@ img {
   margin: 0 0 40px;
   font-size: 18px;
   font-weight: 700;
-  line-height: 2;
+  line-height: 1.7;
   color: #000;
 }
 .p-crosstalk__q::before {
@@ -5480,16 +5480,16 @@ img {
   min-width: 382px;
   height: 64px;
   padding: 0 36px;
-  background: #00c8ff;
+  background-color: #00c8ff;
   color: #1d2527;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.02em;
   border-radius: 4px;
-  transition: background var(--transition-fast);
+  transition: background-color var(--transition-fast);
 }
 .p-crosstalk__cta-link:hover {
-  background: #00a0e9;
+  background-color: #00a0e9;
 }
 
 .p-crosstalk__cta-icon {
@@ -5539,105 +5539,114 @@ img {
   }
 }
 @media screen and (max-width: 600px) {
+  .p-crosstalk {
+    font-size: 3.5vw;
+  }
   .p-crosstalk__hero {
-    padding-top: 92px;
+    padding-top: 6.13em;
   }
   .p-crosstalk__kv {
-    width: 100%;
+    width: 95%;
+    margin: 0 0 0 10%;
   }
   .p-crosstalk__hero-head {
-    margin-top: -28px;
-    padding-left: 16px;
+    margin-top: -3.47em;
+    padding-left: 1.07em;
   }
   .p-crosstalk__title {
-    padding: 6px 18px;
+    padding: 0 0.8em;
   }
   .p-crosstalk__title-text {
-    font-size: 26px;
+    font-size: 6.07vw;
     white-space: normal;
   }
   .p-crosstalk__kicker {
-    margin: 0 0 -6px;
+    margin: 0 0 -0.4em;
+    padding: 0 1em;
   }
   .p-crosstalk__kicker > span {
-    font-size: 15px;
+    font-size: 3.5vw;
+    line-height: 1;
   }
   .p-crosstalk__hero-body {
-    margin-top: 24px;
-    padding-left: 16px;
-    padding-right: 16px;
+    margin-top: 1.6em;
+    padding-left: 1.07em;
+    padding-right: 1.07em;
   }
   .p-crosstalk__subtitle {
-    font-size: 16px;
+    font-size: 3.73vw;
   }
   .p-crosstalk__lead {
-    font-size: 15px;
+    font-size: 3.5vw;
   }
   .p-crosstalk__members {
-    padding: 0 10px;
+    padding: 0 0.67em;
   }
   .p-crosstalk__members-panel {
-    padding: 64px 10px 32px;
+    padding: 4.27em 0.67em 2.13em;
   }
   .p-crosstalk__members-badge-shadow,
   .p-crosstalk__members-badge-face {
-    min-width: 200px;
-    height: 46px;
+    min-width: 13.33em;
+    height: 3.07em;
   }
   .p-crosstalk__members-badge-text {
-    font-size: 24px;
+    font-size: 5.6vw;
   }
   .p-crosstalk__members-list {
-    column-gap: 8px;
-    row-gap: 44px;
+    column-gap: 0.53em;
+    row-gap: 2.93em;
   }
   .p-crosstalk__member {
-    padding: 0 6px 18px;
+    padding: 0 0.4em 1.2em;
   }
   .p-crosstalk__member-name,
   .p-crosstalk__member-dept,
   .p-crosstalk__member-meta {
-    font-size: 13px;
+    font-size: 3.03vw;
   }
   .p-crosstalk__member-meta {
     flex-wrap: wrap;
-    gap: 4px 8px;
+    gap: 0.31em 0.62em;
   }
   .p-crosstalk__body {
-    padding: 56px 16px 0;
-    gap: 56px;
+    padding: 3.73em 1.07em 0;
+    gap: 3.73em;
   }
   .p-crosstalk__q {
-    gap: 14px;
-    font-size: 16px;
-    margin-bottom: 28px;
+    gap: 0.88em;
+    font-size: 3.73vw;
+    margin-bottom: 1.75em;
   }
   .p-crosstalk__q::before {
-    flex-basis: 32px;
-    width: 32px;
-    margin-top: 15px;
+    flex-basis: 2em;
+    width: 2em;
+    margin-top: 0.94em;
   }
   .p-crosstalk__comment {
-    gap: 16px;
+    gap: 1.07em;
     padding-left: 0;
   }
   .p-crosstalk__comment-avatar {
-    flex-basis: 48px;
-    width: 48px;
-    height: 48px;
+    flex-basis: 3.2em;
+    width: 3.2em;
+    height: 3.2em;
   }
   .p-crosstalk__comment-body {
-    font-size: 15px;
+    font-size: 3.5vw;
+  }
+  .p-crosstalk__scene {
+    border-radius: 1.2em;
   }
   .p-crosstalk__cta {
-    padding-bottom: 64px;
+    padding-bottom: 4.27em;
   }
   .p-crosstalk__cta-link {
     min-width: 0;
     width: 100%;
-    height: 60px;
-    font-size: 16px;
-    gap: 16px;
+    height: 3.75em;
+    font-size: 3.73vw;
+    gap: 1em;
   }
 }
 .p-project-story {
