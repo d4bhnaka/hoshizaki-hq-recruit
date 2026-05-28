@@ -1046,10 +1046,15 @@ img {
 .c-person-card {
   position: relative;
   display: flex;
+  flex: 1;
   flex-direction: column;
   width: 100%;
-  background: var(--color-white);
-  border-radius: var(--border-radius-lg);
+  background-color: var(--color-white);
+  background-image: linear-gradient(to bottom, var(--color-white) 38%, rgba(255, 255, 255, 0.86) 100%), url("../images/job/diagram-bg.png");
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, bottom center;
+  background-size: cover, 130% auto;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--shadow-card);
   color: var(--color-text-primary);
@@ -1063,44 +1068,33 @@ img {
 
 .c-person-card__photo {
   position: relative;
-  margin: 0;
-  width: 100%;
-  aspect-ratio: 4/3;
+  margin: 7px 7px 0;
+  aspect-ratio: 304/188;
   overflow: hidden;
+  border-radius: 8px;
   background: var(--color-brand-blue-100);
 }
 
-.c-person-card__photo-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: blur(14px) brightness(0.9);
-  transform: scale(1.15);
-}
-
 .c-person-card__photo-img {
-  position: relative;
   display: block;
-  width: 70%;
+  width: 100%;
   height: 100%;
-  margin: 0 auto;
   object-fit: cover;
 }
 
 .c-person-card__body {
   display: flex;
-  flex-direction: column;
   flex: 1;
-  padding: 20px 20px 18px;
-  gap: 14px;
+  flex-direction: column;
+  padding: 19px 18px 24px;
 }
 
 .c-person-card__text {
   margin: 0;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
-  line-height: 1.7;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
   color: var(--color-text-primary);
 }
 
@@ -1110,34 +1104,22 @@ img {
   justify-content: space-between;
   gap: 12px;
   margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid var(--color-brand-blue-100);
+  padding-top: 44px;
 }
 
 .c-person-card__tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 12px;
-  background: var(--color-brand-blue-100);
-  color: var(--color-brand-primary);
-  border-radius: var(--border-radius-pill);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   line-height: 1.3;
+  letter-spacing: 0.02em;
+  color: var(--color-brand-cyan);
 }
 
 .c-person-card__chevron {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--border-radius-pill);
-  background: var(--color-brand-primary);
-  color: var(--color-white);
-  font-size: 18px;
-  line-height: 1;
-  font-weight: 700;
+  flex: 0 0 auto;
+  width: 12px;
+  height: 22px;
+  color: var(--color-text-primary);
 }
 
 .c-interview-block {
@@ -3957,30 +3939,28 @@ img {
   background: var(--color-bg-page);
 }
 
+.p-person .c-page-hero {
+  background-color: var(--color-bg-page);
+  background-image: linear-gradient(180deg, #eef6fc 0%, var(--color-bg-page) 100%);
+}
+
 .p-person__catch {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.4em;
-  margin: 20px 0 0;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--color-brand-navy);
-  letter-spacing: 0.04em;
+  justify-content: flex-start;
+  margin: 28px 0 0;
 }
 
 .p-person__catch-img {
-  display: inline-block;
-  width: auto;
-  height: 1.6em;
-  vertical-align: middle;
+  display: block;
+  width: 531px;
+  max-width: 100%;
+  height: auto;
 }
 
 .p-person__filter {
-  max-width: var(--content-max-width);
+  max-width: var(--page-max-width);
   margin: 0 auto;
-  padding: 48px 40px 24px;
+  padding: 44px 64px 20px;
 }
 
 .p-person__filter-list {
@@ -3990,7 +3970,7 @@ img {
   list-style: none;
   margin: 0;
   padding: 0;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .p-person__filter-item {
@@ -4001,35 +3981,41 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 110px;
-  padding: 10px 22px;
-  border: 1px solid var(--color-brand-primary);
+  min-width: 84px;
+  padding: 7px 20px;
+  border: 1px solid #dbdbdb;
   border-radius: var(--border-radius-pill);
   background: var(--color-white);
-  color: var(--color-brand-primary);
+  color: #373737;
   font-family: var(--font-family-base);
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.4;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  transition: background var(--transition-base), color var(--transition-base);
+  transition: background var(--transition-base), color var(--transition-base), border-color var(--transition-base);
 }
 .p-person__filter-btn:hover {
-  background: var(--color-brand-blue-100);
+  border-color: var(--color-brand-cyan);
+  color: var(--color-brand-cyan);
 }
 
 .p-person__filter-btn--active {
-  background: var(--color-brand-primary);
+  background: var(--color-brand-cyan);
+  border-color: var(--color-brand-cyan);
   color: var(--color-white);
+  font-weight: 700;
 }
 .p-person__filter-btn--active:hover {
-  background: var(--color-brand-primary);
+  background: var(--color-brand-cyan);
+  border-color: var(--color-brand-cyan);
+  color: var(--color-white);
 }
 
 .p-person__grid-section {
-  max-width: var(--content-max-width);
+  max-width: var(--page-max-width);
   margin: 0 auto;
-  padding: 32px 40px 96px;
+  padding: 20px 64px 96px;
 }
 
 .p-person__grid {
@@ -4038,7 +4024,8 @@ img {
   padding: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 28px 24px;
+  column-gap: clamp(16px, 1.6vw, 22px);
+  row-gap: clamp(40px, 4.2vw, 60px);
 }
 
 .p-person__grid-item {
@@ -4049,9 +4036,38 @@ img {
 .p-person__breadcrumb {
   max-width: var(--page-max-width);
   margin: 0 auto;
-  padding: 24px 40px 56px;
+  padding: 24px 64px 56px;
 }
 
+@media screen and (max-width: 1080px) {
+  .p-person__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (max-width: 960px) {
+  .p-person__filter,
+  .p-person__grid-section,
+  .p-person__breadcrumb {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .p-person__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .p-person__filter {
+    padding-top: 32px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .p-person__grid {
+    grid-template-columns: 1fr;
+  }
+  .c-person-card__text {
+    font-size: 16px;
+  }
+}
 .p-person-detail {
   display: block;
   width: 100%;
