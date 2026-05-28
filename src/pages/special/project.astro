@@ -8,34 +8,89 @@ import BottomCta from "../../components/BottomCta.astro";
 const base = "../../";
 
 const members = [
-  { name: "Takahiro N.", role: "開発設計部 / 2022年入社", image: `${base}images/special/project-member-01.jpg` },
-  { name: "Miho S.", role: "開発設計部 / 2017年入社", image: `${base}images/special/project-member-02.jpg` },
+  {
+    name: "O.Y",
+    dept: "生産技術部",
+    year: "1990年入社",
+    course: "理系卒",
+    photo: `${base}images/special/project/p01.png`,
+  },
+  {
+    name: "S.Y",
+    dept: "グローバル技術部",
+    year: "2016年入社",
+    course: "理系卒",
+    photo: `${base}images/special/project/p02.png`,
+  },
 ];
+
+// コメントのアバターは sp02_pic0{n}.png（1=O.Y / 2=S.Y）
+const avatarSrc = (n: number) => `${base}images/special/sp02_pic0${n}.png`;
 
 const qa = [
   {
-    q: "今回のプロジェクトの概要と、担当された役割を教えてください。",
-    who: "Takahiro",
-    body: "自然冷媒を用いた次世代冷蔵機器の量産化プロジェクトです。従来の冷媒から環境負荷の低い自然冷媒に切り替えるにあたり、効率を落とさずに温度を保つ新機構の開発を担当しました。",
-    image: `${base}images/special/project-scene-01.jpg`,
+    q: "今回の製品開発で直面した最大の難所は何でしたか？その際、お二人はそれぞれどのような役割やアプローチで課題に向き合いましたか？",
+    comments: [
+      {
+        avatar: 1,
+        body: "最大の難所は「解凍ムラの解消」でした。マイクロ波と真空冷却を組み合わせる新技術でしたが、最初は食材の端だけ煮えてしまって。私は長年培ってきた機構設計の観点から、庫内の真空状態をいかに均一に保ち、効率よくエネルギーを伝えるかというハード面のアプローチで課題に向き合いました。",
+      },
+      {
+        avatar: 2,
+        body: "私は制御プログラムを担当していました。先輩がハード面を極限まで調整してくださる一方で、私はマイクロ波の出力を食材の温度変化に合わせてミリ秒単位で可変させるソフト面のアプローチを模索しました。",
+      },
+    ],
+    image: `${base}images/special/project/01.png`,
   },
   {
-    q: "『妥協なき、食の未来への挑戦』と言われる理由は？",
-    who: "Miho",
-    body: "冷媒の変更は環境面ではプラスでも、性能とコストを両立させるのが非常に難しい挑戦です。私たちは『どこで妥協するか』ではなく『どうすれば妥協しないで済むか』を突き詰める文化があります。",
-    image: `${base}images/special/project-scene-02.jpg`,
+    q: "先輩の『長年の知見』と、若手の『新しい視点（発想）』が最も上手く掛け合わさったと感じた具体的なエピソードを教えてください。",
+    comments: [
+      {
+        avatar: 1,
+        body: "私が過去の別製品で経験した「庫内形状による気流のクセ」のデータを共有した時のことですね。「ここが物理的な限界かもしれない」と話したんです。",
+      },
+      {
+        avatar: 2,
+        body: "そのデータを見た時、ハードの限界をソフトの力で補えるのではないかと閃きました。これまでの定型的なプログラムではなく、センサーの温度変化を予測して出力を先回りして落とす新しい制御アルゴリズムを提案したんです。先輩の過去の緻密なデータがあったからこそ生まれた発想でした。",
+      },
+      {
+        avatar: 1,
+        body: "テキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト",
+      },
+      {
+        avatar: 2,
+        body: "テキストサンプルテキストサンプルテキスト",
+      },
+    ],
+    image: `${base}images/special/project/02.png`,
   },
   {
-    q: "印象に残っている壁と、それを乗り越えた経験を教えてください。",
-    who: "Takahiro",
-    body: "試作機が想定の温度に下がらず、量産までのスケジュールが危うくなった時期がありました。先輩と一緒にデータを徹底的に洗い直し、冷却回路の根本構造を見直したことが突破口になりました。",
-    image: `${base}images/special/project-scene-03.jpg`,
+    q: "共に困難を乗り越える中で再認識した、ホシザキの技術者に根付く『絶対に妥協しないこだわり』とは何だと思いますか？",
+    comments: [
+      {
+        avatar: 2,
+        body: "「使う人と食材へのやさしさ」への執念ですね。開発中、少し設定を変えれば解凍速度は上がるものの、食材の細胞がわずかに傷むというジレンマがありました。",
+      },
+      {
+        avatar: 1,
+        body: "そこで「速度のために品質を落とすなら、ホシザキが出す意味はない」とチーム全員が迷わず立ち止まりましたよね。現場の料理人が納得する鮮度を再現できなければ、製品化はしない。ユーザーの見えない利益まで守り抜くのが、私たちの哲学だと再認識しました。",
+      },
+    ],
+    image: `${base}images/special/project/03.png`,
   },
   {
-    q: "最後に学生の皆様へ、ホシザキでの仕事の『面白さ』を教えてください。",
-    who: "Miho",
-    body: "『食』を支える仕事は社会の土台そのもの。目立つ仕事ではないからこそ、本物の技術力が試されます。未来に残る仕事をしたい方には、最高のフィールドです。",
-    image: `${base}images/special/project-scene-04.jpg`,
+    q: "今回のプロジェクトを経て、お二人は今後どのような技術や製品開発に挑戦していきたいですか？未来の技術者（学生）へのメッセージとあわせてお願いします。",
+    comments: [
+      {
+        avatar: 2,
+        body: "私は今後、AIやIoTをさらに組み込み、厨房全体の機器が連携して自動で最適化されるようなスマート化に挑戦したいです。学生の皆さん、ホシザキには若手の突拍子もないアイデアを面白がり、真剣に聞いてくれる土壌があります。ぜひ恐れずに飛び込んできてください。",
+      },
+      {
+        avatar: 1,
+        body: "私は環境負荷を劇的に下げる自然冷媒技術などを、国内だけでなくグローバルに展開していく設計に挑み続けます。ホシザキを厨房機器だけのメーカーだと思い込まないでください。あなたの新しい視点が、社会課題を解決する鍵になります。一緒に「常識の先へ、跳ぶ」ものづくりをしましょう。",
+      },
+    ],
+    image: `${base}images/special/project/04.png`,
   },
 ];
 ---
@@ -43,49 +98,91 @@ const qa = [
 <Layout
   basePath={base}
   title="妥協なき、食の未来への挑戦｜プロジェクトストーリー｜ホシザキ本社採用サイト"
-  description="開発部若手社員と中堅先輩社員が語る、自然冷媒を用いた次世代冷蔵機器プロジェクトのストーリー。"
+  description="世代を超えた共創で挑んだ真空マイクロ波解凍機の開発ストーリー。業界の課題『食材ロス』解決に挑んだ若手社員とベテラン先輩社員が、開発の葛藤とものづくりへの妥協なきこだわり、未来の技術者へ向けた想いを語ります。"
 >
   <div class="l-container">
     <Header basePath={base} />
     <main class="l-main">
       <article class="p-project-story">
         <section class="p-project-story__hero">
-          <figure class="p-project-story__hero-image">
-            <img src={`${base}images/special/project-hero.jpg`} alt="" loading="eager" />
-          </figure>
-          <div class="p-project-story__hero-body">
-            <p class="p-project-story__kicker">プロジェクトストーリー</p>
-            <h1 class="p-project-story__title">妥協なき、食の未来への挑戦</h1>
-            <p class="p-project-story__lead">
-              自然冷媒を用いた次世代冷蔵機器の量産化プロジェクトに挑んだ、若手社員と中堅先輩社員の物語。
-            </p>
+          <div class="p-project-story__hero-inner">
+            <figure class="p-project-story__kv">
+              <img
+                src={`${base}images/special/project/kv.png`}
+                alt="開発の若手社員とベテラン先輩社員が対談する様子"
+                loading="eager"
+              />
+            </figure>
+            <div class="p-project-story__hero-head">
+              <p class="p-project-story__kicker"><span>プロジェクトストーリー</span></p>
+              <h1 class="p-project-story__title">
+                <span class="p-project-story__title-text"
+                  >妥協なき、<br />食の未来への挑戦</span
+                >
+              </h1>
+            </div>
+            <div class="p-project-story__hero-body">
+              <p class="p-project-story__subtitle">
+                世代を超えた共創。真空マイクロ波解凍機開発の裏側
+              </p>
+              <div class="p-project-story__lead">
+                <p>
+                  業界の課題「食材ロス」解決に挑んだ若手社員とベテラン先輩社員。最新機器開発の葛藤と、ホシザキに根付くものづくりへの妥協なきこだわり、そして未来の技術者へ向けた熱い想いを語り合います。
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section class="p-project-story__members">
-          <p class="p-project-story__members-label">参加メンバー</p>
-          <ul class="p-project-story__members-list">
-            {
-              members.map((m) => (
-                <li class="p-project-story__member">
-                  <figure class="p-project-story__member-image">
-                    <img src={m.image} alt="" loading="lazy" />
-                  </figure>
-                  <p class="p-project-story__member-name">{m.name}</p>
-                  <p class="p-project-story__member-role">{m.role}</p>
-                </li>
-              ))
-            }
-          </ul>
+        <section class="p-project-story__members" aria-label="参加メンバー">
+          <div class="p-project-story__members-panel">
+            <p class="p-project-story__members-badge">
+              <span class="p-project-story__members-badge-shadow" aria-hidden="true"
+              ></span>
+              <span class="p-project-story__members-badge-face">
+                <span class="p-project-story__members-badge-text">参加メンバー</span
+                >
+              </span>
+            </p>
+            <ul class="p-project-story__members-list">
+              {
+                members.map((m) => (
+                  <li class="p-project-story__member">
+                    <figure class="p-project-story__member-photo">
+                      <img
+                        src={m.photo}
+                        alt={`${m.name}さんの顔写真`}
+                        loading="lazy"
+                      />
+                    </figure>
+                    <p class="p-project-story__member-name">{m.name}</p>
+                    <p class="p-project-story__member-dept">{m.dept}</p>
+                    <p class="p-project-story__member-meta">
+                      <span>{m.year}</span>
+                      <span>{m.course}</span>
+                    </p>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
         </section>
 
         <div class="p-project-story__body">
           {
             qa.map((block) => (
               <section class="p-project-story__qa">
-                <h2 class="p-project-story__q">— {block.q}</h2>
-                <p class="p-project-story__answer-who">{block.who}</p>
-                <p class="p-project-story__answer-body">{block.body}</p>
+                <h2 class="p-project-story__q">{block.q}</h2>
+                <ul class="p-project-story__comments">
+                  {block.comments.map((c) => (
+                    <li class="p-project-story__comment">
+                      <figure class="p-project-story__comment-avatar">
+                        <img src={avatarSrc(c.avatar)} alt="" loading="lazy" />
+                      </figure>
+                      <p class="p-project-story__comment-body">{c.body}</p>
+                    </li>
+                  ))}
+                </ul>
                 <figure class="p-project-story__scene">
                   <img src={block.image} alt="" loading="lazy" />
                 </figure>
@@ -94,10 +191,21 @@ const qa = [
           }
         </div>
 
-        <p class="p-project-story__back">
-          <a href={`${base}special/`} class="p-project-story__back-link">
-            SPECIAL CONTENTS 一覧へ
-            <span aria-hidden="true">›</span>
+        <p class="p-project-story__cta">
+          <a href={`${base}special/`} class="p-project-story__cta-link">
+            スペシャルコンテンツ一覧を見る
+            <span class="p-project-story__cta-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="9 6 15 12 9 18"></polyline>
+              </svg>
+            </span>
           </a>
         </p>
 
