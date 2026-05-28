@@ -8,95 +8,215 @@ import BottomCta from "../../components/BottomCta.astro";
 const base = "../../";
 
 const members = [
-  { name: "Yuta S.", role: "開発設計 / 2023年入社", image: `${base}images/special/crosstalk-member-01.jpg` },
-  { name: "Saki M.", role: "品質保証 / 2022年入社", image: `${base}images/special/crosstalk-member-02.jpg` },
-  { name: "Ryota K.", role: "国内営業 / 2022年入社", image: `${base}images/special/crosstalk-member-03.jpg` },
-  { name: "Aoi T.", role: "海外事業 / 2023年入社", image: `${base}images/special/crosstalk-member-04.jpg` },
+  {
+    name: "M.J",
+    dept: "開発部 電子開発科",
+    year: "2023年入社",
+    course: "文系卒",
+    photo: `${base}images/special/crosstalk/p01.png`,
+  },
+  {
+    name: "Y.M",
+    dept: "生産技術部",
+    year: "2023年入社",
+    course: "理系卒",
+    photo: `${base}images/special/crosstalk/p02.png`,
+  },
+  {
+    name: "A.M",
+    dept: "人事部",
+    year: "2023年入社",
+    course: "文系卒",
+    photo: `${base}images/special/crosstalk/p03.png`,
+  },
+  {
+    name: "N.H",
+    dept: "製品販売促進部",
+    year: "2023年入社",
+    course: "理系卒",
+    photo: `${base}images/special/crosstalk/p04.png`,
+  },
 ];
+
+// コメントのアバターは sp01_pic0{n}.png（参加メンバー 1〜4 に対応）
+const avatarSrc = (n: number) => `${base}images/special/sp01_pic0${n}.png`;
 
 const qa = [
   {
-    q: "入社して感じた、ホシザキのリアルは？",
-    answers: [
-      { who: "Yuta", body: "若手でも製品全体に携われるスケール感に驚きました。1台を丸ごと任せてくれる文化は、想像以上でした。" },
-      { who: "Saki", body: "『堅い会社』と思っていたら、ものすごくフラット。新人が堂々と意見を言える雰囲気があります。" },
-      { who: "Ryota", body: "先輩との距離が近く、『さん付け』で話せる文化が心地よいです。" },
-      { who: "Aoi", body: "グローバル案件の最前線に、2年目から携われるとは思っていませんでした。" },
+    q: "就活時は『厨房機器のメーカー』というイメージだったと思いますが、実際に入社してみて、仕事内容や働く環境にギャップはありましたか？",
+    comments: [
+      {
+        avatar: 3,
+        body: "正直、入社前は「飲食店にある冷蔵庫や製氷機を作る会社」という、少し堅実で大人しいイメージを持っていました。でも実際は、医療現場や農業、水産業など、想像以上に「食」のインフラとしての幅が広くて驚きました。",
+      },
+      {
+        avatar: 4,
+        body: "分かります。私もペンギンマークのイメージから「街の飲食店を支える」イメージが強かったですが、最近は「食材ロスの削減」や「環境負荷の低い自然冷媒」といった、社会課題の解決を最前線で提案しているんだなと実感しています。",
+      },
+      {
+        avatar: 2,
+        body: "働く環境についても、メーカーだから工場にこもるのかと思いきや、私たちは常にお客様の現場にいます。地域に根ざした「430箇所以上の拠点」があるからこそ、お客様との距離がすごく近くて、単なる修理担当ではなく「一番身近なアドバイザー」として頼られるのは、良い意味でのギャップでしたね。",
+      },
     ],
-    image: `${base}images/special/crosstalk-scene-01.jpg`,
+    image: `${base}images/special/crosstalk/01.png`,
   },
   {
-    q: "印象に残っている仕事は？",
-    answers: [
-      { who: "Yuta", body: "新製品の試作・評価を丸ごと担当し、自分の設計が工場に流れる瞬間は感動しました。" },
-      { who: "Saki", body: "海外拠点へ出張し、現地メーカーと品質議論をしたこと。現場の熱量を感じました。" },
-      { who: "Ryota", body: "大手チェーンへの一括提案を先輩と二人で攻略したプロジェクト。一番成長した仕事です。" },
-      { who: "Aoi", body: "現地法人との合同会議で、自分の提案が採用されたのがうれしかったです。" },
+    q: "若手の意見は言いやすい環境ですか？上司や他部署との関わりで、ホシザキらしい『チームワーク』を感じたエピソードを教えてください。",
+    comments: [
+      {
+        avatar: 4,
+        body: "ホシザキには「ファーストペンギン（未知の海に飛び込む）」という文化があるので、若手の「やってみたい」という意見を否定せず、まずは背中を押してくれる空気があります。先日も、新しい業界へのアプローチを提案した際、上司が「まずは挑戦してみろ」と一緒に戦略を練ってくれました。",
+      },
+      {
+        avatar: 1,
+        body: "開発の現場でも、年次に関係なく議論に参加できます。特に「チームワーク」を感じるのは、設計で行き詰まった時にサービスエンジニア（Cさんたちの部署）から「現場ではこういう修理のしやすさが重要だ」とフィードバックをもらう時です。部署を越えて、一つの製品をより良くしようという一体感がありますね。",
+      },
+      {
+        avatar: 3,
+        body: "サービス側からも、現場の声を直接開発に届けられるのはホシザキの強みですよね。大きなトラブルがあった時も、一人で抱え込まずに先輩や他部署が「どうすれば最速でお客様の困りごとを解決できるか」と一丸となって動く姿は、まさに『Team HOSHIZAKI』だなと感じます。",
+      },
+      {
+        avatar: 2,
+        body: "テキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト",
+      },
+      {
+        avatar: 1,
+        body: "テキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプル",
+      },
     ],
-    image: `${base}images/special/crosstalk-scene-02.jpg`,
+    image: `${base}images/special/crosstalk/02.png`,
   },
   {
-    q: "これからホシザキで叶えたいことは？",
-    answers: [
-      { who: "Yuta", body: "自分が設計した製品が世界のどこかで当たり前に使われる、そんな瞬間を見届けたいです。" },
-      { who: "Saki", body: "グローバル品質基準を自分たちで作り、世界を牽引する立場を目指します。" },
-      { who: "Ryota", body: "営業企画へ挑戦し、マーケット全体を動かす提案に関わりたい。" },
-      { who: "Aoi", body: "海外駐在を経て、事業を丸ごと任せてもらえる存在になりたい。" },
+    q: "この3年間で、一番『自分が成長した』『新しいことに挑戦できた』と感じた仕事は何ですか？",
+    comments: [
+      {
+        avatar: 1,
+        body: "入社2年目の終わりに、小規模な製品改良のメイン担当を任されたことです。構想から試作、評価まで一通り経験させてもらえたことで、製品を丸ごと開発する面白さを知りました。失敗も多かったですが、その分「自分で形にした」という手応えは大きかったです。",
+      },
+      {
+        avatar: 2,
+        body: "私は、大規模な宿泊施設の厨房システム全体のメンテナンスを統括した時です。これまでは「一台の機械」を直すことに集中していましたが、施設全体のオペレーションを考えて優先順位をつける視点が身につき、一歩上の技術者に成長できたと感じています。",
+      },
+      {
+        avatar: 4,
+        body: "私は新規市場の開拓で、医療・福祉施設向けのソリューション提案に挑戦したことです。飲食業界とは異なるニーズを汲み取るのは難しかったですが、結果として「ホシザキにお願いして良かった」と言っていただけた時は、自分の提案が社会に貢献している実感が湧きました。",
+      },
     ],
-    image: `${base}images/special/crosstalk-scene-03.jpg`,
+    image: `${base}images/special/crosstalk/03.png`,
+  },
+  {
+    q: "今後、ホシザキでどんなキャリアを築いていきたいですか？ また、これから選考を受ける学生へ向けてメッセージをお願いします。",
+    comments: [
+      {
+        avatar: 2,
+        body: "将来的には、海外拠点の技術支援にも関わりたいと思っています。ホシザキはグローバル展開も加速しているので、日本で培った「迅速で丁寧なサービス」を世界に広めていきたいです。",
+      },
+      {
+        avatar: 1,
+        body: "私は、環境負荷を最小限に抑えた「次世代のスタンダード」となる製品を作りたいです。学生の皆さんには、ホシザキを「単なるメーカー」だと思わず、「世界中の食の未来を変える場所」だと思って飛び込んできてほしいですね。",
+      },
+      {
+        avatar: 3,
+        body: "変化を恐れず、新しい分野にどんどん挑戦していける人と一緒に働きたいです。「常識の先へ、跳べ」というメッセージ通り、自分の枠を決めずにチャレンジできる環境がここにはあります。皆さんと一緒に、新しい海に飛び込める日を楽しみにしています！",
+      },
+    ],
+    image: `${base}images/special/crosstalk/04.png`,
   },
 ];
 ---
 
 <Layout
   basePath={base}
-  title="若手が語る はたらく環境｜クロストーク｜ホシザキ本社採用サイト"
-  description="入社3年目までの若手社員4名によるクロストーク。入社のきっかけ、現場のリアル、これから叶えたい夢を赤裸々に語ります。"
+  title="若手が語るはたらく環境｜クロストーク｜ホシザキ本社採用サイト"
+  description="入社3年目を迎えた若手社員によるクロストーク。入社前後のギャップ、若手の意見が尊重される風土、チームワーク、そしてこれから叶えたいキャリアを語ります。"
 >
   <div class="l-container">
     <Header basePath={base} />
     <main class="l-main">
       <article class="p-crosstalk">
         <section class="p-crosstalk__hero">
-          <figure class="p-crosstalk__hero-image">
-            <img src={`${base}images/special/crosstalk-hero.jpg`} alt="" loading="eager" />
-          </figure>
-          <div class="p-crosstalk__hero-body">
-            <p class="p-crosstalk__kicker">クロストーク</p>
-            <h1 class="p-crosstalk__title">若手が語る はたらく環境</h1>
-            <p class="p-crosstalk__lead">
-              若手4名による本音トーク。入社3年目までの仲間たちが、リアルな『はたらく環境』を語ります。
-            </p>
+          <div class="p-crosstalk__hero-inner">
+            <figure class="p-crosstalk__kv">
+              <img
+                src={`${base}images/special/crosstalk/kv.png`}
+                alt="社員4名がテーブルを囲んで談笑するクロストークの様子"
+                loading="eager"
+              />
+            </figure>
+            <div class="p-crosstalk__hero-head">
+              <p class="p-crosstalk__kicker"><span>クロストーク</span></p>
+              <h1 class="p-crosstalk__title">
+                <span class="p-crosstalk__title-text">若手が語るはたらく環境</span>
+              </h1>
+            </div>
+            <div class="p-crosstalk__hero-body">
+              <p class="p-crosstalk__subtitle">
+                常識を跳び越え、高め合う。入社3年目が語るホシザキの『リアル』と『チームワーク』
+              </p>
+              <div class="p-crosstalk__lead">
+                <p>
+                  「厨房機器メーカー」という枠組みを跳び越え、世界中の「食」を支えるインフラ企業へと進化を続けるホシザキ。<br
+                  />そこでは一体どんな人たちが、どのような想いで働いているのでしょうか？
+                </p>
+                <p>
+                  今回は入社3年目を迎えた若手社員4名が集結。入社前に抱いていたイメージと現実のギャップ、若手の意見が尊重される風土、<br
+                  />そして壁を乗り越えて実感した自らの成長まで、等身大の言葉で語り合います。
+                </p>
+                <p>
+                  「常識の先へ、跳べ」――。未知の海へ漕ぎ出す“ファーストペンギン”たちのリアルな日常と、支え合うチームの絆を覗いてみてください。<br
+                  />あなたの未来を切り拓くヒントが、ここにあるはずです。
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section class="p-crosstalk__members">
-          <p class="p-crosstalk__members-label">参加メンバー</p>
-          <ul class="p-crosstalk__members-list">
-            {
-              members.map((m) => (
-                <li class="p-crosstalk__member">
-                  <figure class="p-crosstalk__member-image">
-                    <img src={m.image} alt="" loading="lazy" />
-                  </figure>
-                  <p class="p-crosstalk__member-name">{m.name}</p>
-                  <p class="p-crosstalk__member-role">{m.role}</p>
-                </li>
-              ))
-            }
-          </ul>
+        <section class="p-crosstalk__members" aria-label="参加メンバー">
+          <div class="p-crosstalk__members-panel">
+            <p class="p-crosstalk__members-badge">
+              <span class="p-crosstalk__members-badge-shadow" aria-hidden="true"
+              ></span>
+              <span class="p-crosstalk__members-badge-face">
+                <span class="p-crosstalk__members-badge-text">参加メンバー</span
+                >
+              </span>
+            </p>
+            <ul class="p-crosstalk__members-list">
+              {
+                members.map((m) => (
+                  <li class="p-crosstalk__member">
+                    <figure class="p-crosstalk__member-photo">
+                      <img
+                        src={m.photo}
+                        alt={`${m.name}さんの顔写真`}
+                        loading="lazy"
+                      />
+                    </figure>
+                    <p class="p-crosstalk__member-name">{m.name}</p>
+                    <p class="p-crosstalk__member-dept">{m.dept}</p>
+                    <p class="p-crosstalk__member-meta">
+                      <span>{m.year}</span>
+                      <span>{m.course}</span>
+                    </p>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
         </section>
 
         <div class="p-crosstalk__body">
           {
-            qa.map((block, i) => (
+            qa.map((block) => (
               <section class="p-crosstalk__qa">
-                <h2 class="p-crosstalk__q">— {block.q}</h2>
-                <ul class="p-crosstalk__answers">
-                  {block.answers.map((a) => (
-                    <li>
-                      <p class="p-crosstalk__answer-who">{a.who}</p>
-                      <p class="p-crosstalk__answer-body">{a.body}</p>
+                <h2 class="p-crosstalk__q">{block.q}</h2>
+                <ul class="p-crosstalk__comments">
+                  {block.comments.map((c) => (
+                    <li class="p-crosstalk__comment">
+                      <figure class="p-crosstalk__comment-avatar">
+                        <img src={avatarSrc(c.avatar)} alt="" loading="lazy" />
+                      </figure>
+                      <p class="p-crosstalk__comment-body">{c.body}</p>
                     </li>
                   ))}
                 </ul>
@@ -108,10 +228,21 @@ const qa = [
           }
         </div>
 
-        <p class="p-crosstalk__back">
-          <a href={`${base}special/`} class="p-crosstalk__back-link">
-            SPECIAL CONTENTS 一覧へ
-            <span aria-hidden="true">›</span>
+        <p class="p-crosstalk__cta">
+          <a href={`${base}special/`} class="p-crosstalk__cta-link">
+            スペシャルコンテンツ一覧を見る
+            <span class="p-crosstalk__cta-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="9 6 15 12 9 18"></polyline>
+              </svg>
+            </span>
           </a>
         </p>
 
@@ -120,7 +251,7 @@ const qa = [
           basePath={base}
           items={[
             { href: `${base}special/`, label: "スペシャルコンテンツ" },
-            { label: "若手が語る はたらく環境" },
+            { label: "若手が語るはたらく環境" },
           ]}
         />
       </article>
