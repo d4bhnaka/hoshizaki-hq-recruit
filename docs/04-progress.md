@@ -144,7 +144,7 @@
 - [r] M6b-P01 採用メッセージ `/message/`（node `162:53`）— [07 の 01 節](./07-spec-subpages.md#01-採用メッセージpioneer-spirit--message)
 - [r] M6b-P02 What's HOSHIZAKI `/fact/`（node `238:6058`）— [07 の 02 節](./07-spec-subpages.md#02-whats-hoshizaki数字で見るホシザキ--fact)
 - [r] M6b-P03 Beyond HOSHIZAKI `/strategy/`（node `245:557`）— [07 の 03 節](./07-spec-subpages.md#03-beyond-hoshizaki事業領域海外展開--strategy)
-- [r] M6b-P04 Team HOSHIZAKI `/job/`（node `245:287`）— [07 の 04 節](./07-spec-subpages.md#04-team-hoshizaki職種紹介--job)
+- [r] M6b-P04 Team HOSHIZAKI `/job/`（node `245:287`）— [07 の 04 節](./07-spec-subpages.md#04-team-hoshizaki職種紹介--job)。2026-05-28 に Figma 忠実コーディング＋実アセット書き出し済み（後述セッションログ参照）。
 - [r] M6b-P05 Person 一覧 `/person/`（node `246:1055`）— [07 の 05 節](./07-spec-subpages.md#05-先輩たちのここに決めた一覧--person)
 - [r] M6b-P05s Person 詳細 `/person/detail/`（node `360:58`）— [07 の 05s 節](./07-spec-subpages.md#05s-person-詳細--personslug)
 - [r] M6b-P06 はたらく環境 `/environment/`（node `242:446`）— [07 の 06 節](./07-spec-subpages.md#06-はたらく環境environment--environment)
@@ -263,6 +263,23 @@ dist/
   - CONCEPT MOVIE のサムネイル画像 (Figma 296:7295/12584 IM6_8107) と `concept-movie.mp4` 入稿待ち — 現状はダミーの青グラデ + 再生ボタンのみ。
   - SP 版 (Figma `431:1181`) のレイアウト適用は未着手 (現状は @media 960px の暫定縦並び)。
   - Hero / IceLink / SPECIAL カードの GSAP アニメーション (M3-A1〜A4) は未実装。
+
+### 2026-05-28 セッション: 職種紹介ページ（/job/）の Figma 忠実コーディング
+
+- **着手範囲**: `/job/`（Figma `245:287`「04_job」1600×6226）を Figma に忠実に再構築＋実アセットを Figma から書き出し。
+- **修正ファイル**:
+  - [src/pages/job.astro](../src/pages/job.astro) — フラットなカード一覧から **3 グループ構成**（製品を生み出す／製品を広める／会社を管理・サポートする）に全面リライト。各グループ＝シアンのラベルバー＋ペンギン装飾＋カード。組織図（チャート）も Figma 構造に刷新。
+  - [src/scss/object/project/_p-job.scss](../src/scss/object/project/_p-job.scss) — 全面リライト。カードは白・角丸 10px・タイトル左に縦ティック（`--color-brand-primary`）。本文 18px/行間 2。組織図ボックスは白・角丸 25px＋アイステクスチャ（32%）、見出し `#00a0e9`（`--color-brand-cyan`）、項目ネイビー。連携／サポートは矢印付きピルで表現。先輩インタビュー導線（カード 01 のみ）。
+- **アセット書き出し**（[../public/images/job/](../public/images/job/)、全て Figma から MCP で書き出し→ 2 倍解像度に加工）:
+  - 職種カード写真 8 枚 `card-01.jpg`〜`card-08.jpg`（720×455、Figma マスク比 ≈315:199 で中央クロップ、JPEG q80、各 52〜76KB）。元写真は全解像度（4096px 級）で書き出されるため中央クロップ＋縮小で生成。card-01=IM6_8959 / card-08=IM6_8735（別写真）。
+  - 組織図テクスチャ `diagram-bg.png`（760×922、低ポリのアイス）。
+  - グループ見出し脇のペンギン切り抜き 3 種 `penguin-create.png`（レンチ持ち）/ `penguin-spread.png` / `penguin-support.png`。
+  - ヒーローは既存 `page-fv.png` を継続利用。
+- **判断（ユーザー確認済み）**: ①カード写真=中央クロップ＋2x、②先輩インタビューはカード 01 のみ、③組織図は忠実再現。先輩インタビューのリンク先は既存 `/person/`、丸アバターは既存 `images/person/thumb01.png`（開発設計職の人物）を流用 ← 要確認なら差し替え可。
+- **検証**: `npm run build` 14 ページ成功。`data-astro-cid=0`、`/job/` のインライン `<style>=0`、ルート絶対パス `=0`、アセットハッシュ無し。静的サーバ（dist/ を `python3 -m http.server`）＋ Playwright 1440 幅で全体・組織図を目視確認し Figma と一致。
+- **未確認 / TODO**:
+  - 先輩インタビューのリンク先・アバターの正式指定（暫定で `/person/` ＋ `thumb01.png`）。
+  - SP（モバイル）レイアウトは `@media 768px` で暫定縦並び。Figma の SP デザイン確認後に再調整。
 
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
