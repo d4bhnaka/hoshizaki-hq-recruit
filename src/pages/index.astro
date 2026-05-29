@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BottomCta from "../components/BottomCta.astro";
-import { specialStories } from "../data/specialStories";
+import SpecialContents from "../components/SpecialContents.astro";
 
 const basePath = "./";
 
@@ -55,19 +55,6 @@ const trioCards = [
     button: `${basePath}images/common/link-button-ice.png`,
   },
 ];
-
-const specialCards = specialStories.map((story, i) => ({
-  href: `${basePath}special/${story.slug}/`,
-  num: story.num,
-  category: story.category,
-  titleLines: story.titleLines,
-  sub: story.sub,
-  bg: `${basePath}images/special/${String(i + 1).padStart(2, "0")}.png`,
-  avatars: Array.from({ length: story.avatars }).map((_, a) => ({
-    src: `${basePath}images/special/sp${String(i + 1).padStart(2, "0")}_pic${String(a + 1).padStart(2, "0")}.png`,
-    alt: `${story.category} 出演者 ${a + 1}`,
-  })),
-}));
 ---
 
 <Layout basePath={basePath} title="ホシザキ本社採用サイト | 常識の先へ、跳べ。">
@@ -349,49 +336,16 @@ const specialCards = specialStories.map((story, i) => ({
 
     {/* ============================================ */}
     {/* S6. SPECIAL CONTENTS (Figma y: 6162–8450) */}
+    {/* 見出し・カード・スクロール連動スタック演出は特集ページ（/special/）と */}
+    {/* 共通の SpecialContents コンポーネントを使用する。 */}
     {/* ============================================ */}
-    <section class="p-top-special" aria-label="SPECIAL CONTENTS">
-      <header class="p-top-special__heading">
-        <h2 class="p-top-special__en">
-          <span>SPECIAL</span>
-          <span>CONTENTS</span>
-        </h2>
-        <p class="p-top-special__ja">ホシザキではたらくリアル</p>
-      </header>
-
-      <ul class="p-top-special__list">
-        {
-          specialCards.map((card) => (
-            <li class="p-top-special__item">
-              <a class="p-top-special__card" href={card.href}>
-                <div class="p-top-special__card-body">
-                  <p class="p-top-special__card-cat">{card.category}</p>
-                  <p class="p-top-special__card-title">
-                    <span>{card.titleLines[0]}</span>
-                    <span>{card.titleLines[1]}</span>
-                  </p>
-                  <p class="p-top-special__card-sub">{card.sub}</p>
-                  <ul class="p-top-special__card-avatars" aria-hidden="true">
-                    {card.avatars.map((a) => (
-                      <li class="p-top-special__card-avatar">
-                        <img src={a.src} alt="" loading="lazy" />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div class="p-top-special__card-photo" aria-hidden="true">
-                  <img src={card.bg} alt="" loading="lazy" />
-                </div>
-                <span class="p-top-special__card-more" aria-hidden="true">
-                  <span class="p-top-special__card-more-text">READ MORE</span>
-                  <span class="p-top-special__card-more-arrow" />
-                </span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
+    <div class="p-special">
+      <SpecialContents
+        basePath={basePath}
+        storyBase={`${basePath}special/`}
+        headingTag="h2"
+      />
+    </div>
 
     <BottomCta basePath={basePath} />
   </main>

@@ -15,7 +15,10 @@
   display: block;
   width: 100%;
   background: var(--color-white);
-  overflow: hidden;
+  // overflow: clip は hidden と同じく両軸をクリップするが「スクロールコンテナを
+  // 生成しない」点が異なる。SPECIAL CONTENTS のカードが使う position: sticky の
+  // 基準を奪わないために hidden ではなく clip を使う（特集ページ .p-special と同方針）。
+  overflow: clip;
   isolation: isolate;
 }
 
@@ -762,216 +765,6 @@
 }
 
 // ============================================
-// S6. SPECIAL CONTENTS (Figma 6162-8450)
-//   ネイビー背景。"SPECIAL CONTENTS" 大型 (2 行)。3 枚のカードを縦に並べる。
-//   各カード: 左 ~33% にダーク本文、右に写真。READ MORE は写真の右下にオーバーレイ。
-// ============================================
-.p-top-special {
-  position: relative;
-  width: 100%;
-  padding: 120px 0 140px;
-  background:
-    radial-gradient(
-      ellipse at 80% 10%,
-      rgba(26, 180, 229, 0.18),
-      transparent 50%
-    ),
-    linear-gradient(180deg, var(--color-special-bg) 0%, #051a30 100%);
-  color: var(--color-white);
-  overflow: hidden;
-}
-
-.p-top-special__heading {
-  position: relative;
-  max-width: var(--page-max-width);
-  margin: 0 auto 64px;
-  padding: 0 80px;
-}
-
-// SPECIAL CONTENTS は 2 行で巨大表示 (Figma 296:12719: w=810 h=396 → 2 行縦積み)
-.p-top-special__en {
-  margin: 0;
-  font-family: var(--font-family-display), var(--font-family-en);
-  font-weight: 400;
-  font-size: clamp(72px, 12vw, 200px);
-  letter-spacing: 0.02em;
-  line-height: 0.95;
-  color: var(--color-white);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.p-top-special__ja {
-  margin: 24px 0 0;
-  font-size: clamp(16px, 1.6vw, 24px);
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  color: var(--color-brand-sky);
-}
-
-.p-top-special__list {
-  list-style: none;
-  max-width: var(--page-max-width);
-  margin: 0 auto;
-  padding: 0 80px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.p-top-special__item {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-
-  &:last-child {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-}
-
-// 各カード: 左ダークボックス + 右写真。Figma 1 枚 1435×518。
-.p-top-special__card {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(380px, 33%) 1fr;
-  align-items: stretch;
-  min-height: clamp(280px, 32vw, 518px);
-  text-decoration: none;
-  color: var(--color-white);
-  background: transparent;
-  transition: transform var(--transition-base);
-
-  &:hover {
-    transform: translateX(4px);
-
-    .p-top-special__card-photo img {
-      transform: scale(1.04);
-    }
-
-    .p-top-special__card-more {
-      background: var(--color-brand-sky);
-    }
-  }
-}
-
-.p-top-special__card-body {
-  position: relative;
-  z-index: 2;
-  background: var(--color-special-card);
-  padding: clamp(32px, 3.6vw, 56px) clamp(24px, 3vw, 48px);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  justify-content: center;
-}
-
-.p-top-special__card-cat {
-  margin: 0;
-  font-size: clamp(12px, 1vw, 14px);
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  color: var(--color-brand-sky);
-}
-
-.p-top-special__card-title {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: clamp(22px, 2.6vw, 40px);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 1.45;
-  color: var(--color-white);
-}
-
-.p-top-special__card-sub {
-  margin: 0;
-  font-size: clamp(13px, 1vw, 16px);
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.p-top-special__card-avatars {
-  list-style: none;
-  margin: 12px 0 0;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-}
-
-.p-top-special__card-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-
-  > img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.p-top-special__card-photo {
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  background: var(--color-special-bg);
-
-  > img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease;
-  }
-}
-
-// READ MORE ボタン: 写真の右下に重ねる (Figma 405:1194/1195/1196)
-.p-top-special__card-more {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 28px;
-  background: var(--color-special-card);
-  color: var(--color-white);
-  font-family: var(--font-family-display), var(--font-family-en);
-  font-weight: 500;
-  font-size: 14px;
-  letter-spacing: 0.18em;
-  transition: background var(--transition-base);
-}
-
-.p-top-special__card-more-arrow {
-  display: inline-block;
-  width: 36px;
-  height: 1px;
-  background: var(--color-white);
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: -3px;
-    width: 8px;
-    height: 8px;
-    border-top: 1px solid var(--color-white);
-    border-right: 1px solid var(--color-white);
-    transform: rotate(45deg);
-  }
-}
-
-// ============================================
 // レスポンシブ
 // ============================================
 @media screen and (max-width: 1280px) {
@@ -984,8 +777,6 @@
   }
 
   .p-top-pioneer__inner,
-  .p-top-special__heading,
-  .p-top-special__list,
   .p-top-decided__inner {
     padding-left: 48px;
     padding-right: 48px;
@@ -1106,29 +897,5 @@
 
   .p-top-env__inner {
     padding: 32px 24px;
-  }
-
-  .p-top-special {
-    padding: 80px 0 100px;
-  }
-
-  .p-top-special__heading,
-  .p-top-special__list {
-    padding: 0 24px;
-  }
-
-  .p-top-special__card {
-    grid-template-columns: 1fr;
-    min-height: 0;
-  }
-
-  .p-top-special__card-photo {
-    min-height: 200px;
-    aspect-ratio: 16 / 9;
-  }
-
-  .p-top-special__card-more {
-    padding: 10px 20px;
-    font-size: 12px;
   }
 }

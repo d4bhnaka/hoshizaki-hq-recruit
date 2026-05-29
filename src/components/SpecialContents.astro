@@ -1,0 +1,109 @@
+---
+/**
+ * SPECIAL CONTENTS（ヒーロー見出し + スクロール連動スタックカード）。
+ *
+ * トップページ（`/`）の SPECIAL CONTENTS セクションと
+ * SPECIAL CONTENTS インデックスページ（`/special/`）の両方で
+ * まったく同じスタイル・動き・構造を共有するための共通コンポーネント。
+ *
+ * 違いはプロップスで吸収する:
+ *   - basePath  : アセット（動画・画像）の相対パス基点
+ *   - storyBase : 各ストーリーへのリンク基点（`${storyBase}${slug}/`）
+ *   - headingTag: 見出しの要素。ページの主見出しになる特集ページは h1、
+ *                 トップページ内の 1 セクションとして使う場合は h2。
+ */
+import { specialStories } from "../data/specialStories";
+
+interface Props {
+  basePath?: string;
+  storyBase?: string;
+  headingTag?: "h1" | "h2" | "h3";
+}
+
+const { basePath = "./", storyBase = "./", headingTag = "h1" } = Astro.props;
+const HeadingTag = headingTag;
+
+// 背景・アバター画像は配列インデックス（1 始まり）から導出する。
+const cards = specialStories.map((story, i) => {
+  const n = String(i + 1).padStart(2, "0");
+  return {
+    href: `${storyBase}${story.slug}/`,
+    category: story.category,
+    titleLines: story.titleLines,
+    sub: story.sub,
+    bg: `${basePath}images/special/${n}.png`,
+    avatars: Array.from({ length: story.avatars }).map((_, a) => ({
+      src: `${basePath}images/special/sp${n}_pic${String(a + 1).padStart(2, "0")}.png`,
+      alt: `${story.category} 出演者 ${a + 1}`,
+    })),
+    modifier: story.slug,
+  };
+});
+---
+
+<!-- Hero（見出し） -->
+<section class="p-special__hero" aria-labelledby="special-hero-title">
+  <video
+    class="p-special__hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-hidden="true"
+  >
+    <source src={`${basePath}images/special/loop-mv.mp4`} type="video/mp4" />
+  </video>
+  <div class="p-special__hero-overlay" aria-hidden="true"></div>
+  <img
+    class="p-special__hero-silhouette"
+    src={`${basePath}images/special/silhouette-penguin.png`}
+    alt=""
+    aria-hidden="true"
+  />
+  <div class="p-special__hero-inner">
+    <HeadingTag class="p-special__hero-title" id="special-hero-title">SPECIAL<br />CONTENTS</HeadingTag>
+    <p class="p-special__hero-sub">ホシザキをさらに深く知るスペシャルコンテンツ</p>
+  </div>
+</section>
+
+<!-- Cards -->
+<section class="p-special__cards" aria-label="スペシャルコンテンツ一覧">
+  <ul class="p-special__list">
+    {
+      cards.map((card) => (
+        <li class={`p-special__card p-special__card--${card.modifier}`}>
+          <a class="p-special__card-link" href={card.href}>
+            <div
+              class="p-special__card-photo"
+              style={`background-image: url('${card.bg}');`}
+              aria-hidden="true"
+            />
+            <div class="p-special__card-panel">
+              <p class="p-special__card-category">{card.category}</p>
+              <h2 class="p-special__card-title">
+                {card.titleLines.map((line, i) => (
+                  <>
+                    {line}
+                    {i < card.titleLines.length - 1 && <br />}
+                  </>
+                ))}
+              </h2>
+              <p class="p-special__card-sub">{card.sub}</p>
+              <ul class="p-special__card-avatars" aria-hidden="true">
+                {card.avatars.map((a) => (
+                  <li class="p-special__card-avatar">
+                    <img src={a.src} alt="" loading="lazy" width="48" height="48" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <span class="p-special__card-more">
+              READ MORE <span aria-hidden="true">→</span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
