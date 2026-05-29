@@ -1,495 +1,376 @@
 // ============================================
 // Project: Strategy (Beyond HOSHIZAKI)
+// Figma node: 245:557 (03_strategy / 1600x8441)
 // ============================================
 
 .p-strategy {
-  background: var(--color-bg-light);
-  color: var(--color-text-primary);
-}
+  --strategy-cyan: #00a0e9; // 飲食市場 / バッジ / ピル
+  --strategy-periwinkle: #617ad3; // 飲食外市場
+  --strategy-card-radius: 12px;
 
-// --------------------------------------------
-// Banner
-// --------------------------------------------
-.p-strategy-banner {
+  display: block;
   width: 100%;
-  background: linear-gradient(180deg, #cfe3f4 0%, #9cc3e4 100%);
-}
-
-.p-strategy-banner__inner {
-  position: relative;
   max-width: var(--page-max-width);
   margin: 0 auto;
-  aspect-ratio: 1600 / 520;
+  background: #eef6fc;
+  color: var(--color-text-primary);
   overflow: hidden;
 }
 
-.p-strategy-banner__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.p-strategy-banner__penguin {
-  position: absolute;
-  right: 10%;
-  bottom: 10%;
-  width: 160px;
-  height: auto;
-  pointer-events: none;
+// 共通コンテンツ幅（Figma の本文帯 ≈ 300–1300 / 1600）
+.p-strategy-intro__inner,
+.p-strategy-field__inner,
+.p-strategy-global__inner,
+.p-strategy-pioneers__inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-inline: clamp(20px, 5vw, 40px);
+  box-sizing: border-box;
 }
 
 // --------------------------------------------
-// Intro + Pie chart
+// Hero FV（タイトル下のペンギン写真帯）
+// --------------------------------------------
+.p-strategy .c-page-hero {
+  padding-bottom: 56px;
+}
+
+.p-strategy__fv {
+  margin-top: 40px;
+}
+
+.p-strategy__fv img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-lg);
+}
+
+// --------------------------------------------
+// Intro
 // --------------------------------------------
 .p-strategy-intro {
-  padding: 120px 64px;
-}
-
-.p-strategy-intro__inner {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr minmax(320px, 420px);
-  gap: 64px;
-  align-items: start;
-}
-
-.p-strategy-intro__title {
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1.6;
-  margin: 0 0 24px;
-  color: var(--color-brand-navy);
+  padding: 80px 0 32px;
 }
 
 .p-strategy-intro__lead {
-  display: inline-block;
   margin: 0 0 24px;
-  padding: 6px 16px;
-  border: 1px solid var(--color-brand-primary);
-  border-radius: var(--border-radius-pill);
-  color: var(--color-brand-primary);
-  font-size: 14px;
+  font-size: clamp(22px, 3vw, 34px);
   font-weight: 700;
-}
-
-.p-strategy-intro__paragraph {
-  margin: 0 0 20px;
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
-  color: var(--color-text-primary);
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-.p-strategy-intro__chart {
-  padding: 32px 28px;
-  background: var(--color-white);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-card);
-  text-align: center;
-}
-
-.p-strategy-intro__chart-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--color-text-secondary);
-  margin: 0 0 6px;
-}
-
-.p-strategy-intro__chart-sub {
-  font-family: var(--font-family-en);
-  font-size: 28px;
-  font-weight: 700;
+  line-height: 1.6;
   color: var(--color-brand-navy);
-  margin: 0 0 20px;
 }
 
-.p-strategy-intro__chart-wrap {
-  position: relative;
-  width: 240px;
-  height: 240px;
-  margin: 0 auto 24px;
-}
-
-.p-strategy-intro__pie {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: conic-gradient(
-    var(--color-brand-primary) 0deg 212.04deg,
-    var(--color-brand-cyan) 212.04deg 360deg
-  );
-}
-
-.p-strategy-intro__pie-center {
-  position: absolute;
-  inset: 28%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-white);
-  border-radius: 50%;
-  text-align: center;
-  gap: 4px;
-}
-
-.p-strategy-intro__pie-label-main {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--color-text-secondary);
-}
-
-.p-strategy-intro__pie-label-pct {
-  font-family: var(--font-family-en);
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--color-brand-primary);
-}
-
-.p-strategy-intro__legend {
-  list-style: none;
-  padding: 0;
+.p-strategy-intro__text {
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.p-strategy-intro__legend-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
+  font-size: var(--font-size-base);
+  line-height: 2;
   color: var(--color-text-primary);
-}
-
-.p-strategy-intro__legend-swatch {
-  width: 16px;
-  height: 16px;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-
-.p-strategy-intro__legend-swatch--primary {
-  background: var(--color-brand-primary);
-}
-
-.p-strategy-intro__legend-swatch--secondary {
-  background: var(--color-brand-cyan);
-}
-
-.p-strategy-intro__legend-label {
-  flex: 1;
-  text-align: left;
-}
-
-.p-strategy-intro__legend-value {
-  font-family: var(--font-family-en);
-  font-weight: 700;
-  color: var(--color-brand-navy);
 }
 
 // --------------------------------------------
 // Business Field
 // --------------------------------------------
 .p-strategy-field {
-  padding: 120px 64px;
-  background: var(--color-bg-sky);
-}
-
-.p-strategy-field__inner {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
+  padding: 72px 0;
 }
 
 .p-strategy-field__intro {
-  margin-bottom: 48px;
+  max-width: 840px;
+  margin: 0 0 48px;
+  font-size: var(--font-size-base);
+  line-height: 2;
 }
 
-.p-strategy-field__paragraph {
-  margin: 0 0 16px;
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
+// データカード（タイトル + 割合バー + 2カラム）
+.p-strategy-field__card-title {
+  margin: 0 0 20px;
+  font-size: clamp(17px, 2vw, 22px);
+  font-weight: 700;
+  color: var(--color-brand-navy);
+}
 
-  &:last-child {
-    margin-bottom: 0;
+// 売上高割合バー
+.p-strategy-field__ratio {
+  display: flex;
+  margin: 0 0 32px;
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+}
+
+.p-strategy-field__ratio-seg {
+  flex: 0 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 14px 16px;
+  color: var(--color-white);
+}
+
+.p-strategy-field__ratio-seg--food {
+  background: var(--strategy-cyan);
+}
+
+.p-strategy-field__ratio-seg--beyond {
+  background: var(--strategy-periwinkle);
+}
+
+.p-strategy-field__ratio-label {
+  font-size: clamp(14px, 1.6vw, 20px);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.p-strategy-field__ratio-pct {
+  font-family: var(--font-family-en);
+  font-size: clamp(24px, 3.2vw, 42px);
+  font-weight: 700;
+  line-height: 1;
+
+  small {
+    font-size: 0.6em;
+    margin-left: 2px;
   }
 }
 
-.p-strategy-field__list {
+// 2カラム（飲食市場 / 飲食外市場）
+.p-strategy-field__cols {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+  margin: 0 0 56px;
+}
+
+.p-strategy-field__col {
+  background: var(--color-white);
+  border-radius: var(--strategy-card-radius);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08);
+  padding: 32px clamp(20px, 3vw, 40px);
+}
+
+.p-strategy-field__col--food {
+  flex: 411 1 0;
+}
+
+.p-strategy-field__col--beyond {
+  flex: 589 1 0;
+}
+
+.p-strategy-field__col-label {
+  margin: 0 0 2px;
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: 700;
+  text-align: center;
+  color: var(--color-text-primary);
+}
+
+.p-strategy-field__col-en {
+  margin: 0 0 24px;
+  font-size: clamp(15px, 1.8vw, 20px);
+  text-align: center;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.p-strategy-field__col-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
+
+  li {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--color-text-primary);
+  }
 }
 
-.p-strategy-field__item {
-  background: var(--color-white);
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--shadow-card);
-  overflow: hidden;
+// 人物イラスト + カテゴリーピル
+.p-strategy-field__people {
+  margin-top: 8px;
+  text-align: center;
 }
 
-.p-strategy-field__details[open] .p-strategy-field__summary-icon::after {
-  transform: rotate(90deg);
-  opacity: 0;
+.p-strategy-field__people-img {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  margin: 0 auto 18px;
 }
 
-.p-strategy-field__summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 24px 32px;
-  cursor: pointer;
+.p-strategy-field__audiences {
   list-style: none;
-  user-select: none;
-
-  &::-webkit-details-marker {
-    display: none;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
 }
 
-.p-strategy-field__summary-label {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--color-brand-navy);
-}
-
-.p-strategy-field__summary-icon {
-  position: relative;
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background: var(--color-brand-primary);
-    transition: transform var(--transition-base), opacity var(--transition-base);
-  }
-
-  &::before {
-    width: 16px;
-    height: 2px;
-    transform: translate(-50%, -50%);
-  }
-
-  &::after {
-    width: 2px;
-    height: 16px;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.p-strategy-field__body {
-  padding: 0 32px 28px;
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
-  color: var(--color-text-primary);
-
-  p {
-    margin: 0;
-  }
+.p-strategy-field__audience {
+  padding: 5px 16px;
+  background: var(--strategy-cyan);
+  color: var(--color-white);
+  font-size: 14px;
+  border-radius: var(--border-radius-pill);
 }
 
 // --------------------------------------------
 // Global Market
 // --------------------------------------------
 .p-strategy-global {
-  padding: 120px 64px;
-  background: linear-gradient(180deg, #eaf4fc 0%, #d4ebf8 100%);
-}
-
-.p-strategy-global__inner {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
+  padding: 72px 0;
+  background: linear-gradient(180deg, #e4f1fb 0%, #d2e8f6 100%);
 }
 
 .p-strategy-global__subtitle {
-  font-size: 22px;
+  margin: -24px 0 28px;
+  font-size: clamp(19px, 2.4vw, 26px);
   font-weight: 700;
   color: var(--color-brand-navy);
-  margin: -24px 0 32px;
 }
 
 .p-strategy-global__intro {
-  margin-bottom: 64px;
-}
-
-.p-strategy-global__paragraph {
-  margin: 0 0 20px;
+  margin: 0 0 48px;
   font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
-
-  &:last-child {
-    margin-bottom: 0;
-  }
+  line-height: 2;
 }
 
+// 世界地図
 .p-strategy-global__map {
   position: relative;
-  padding: 48px;
-  background: var(--color-white);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-card);
-  margin-bottom: 64px;
-  display: grid;
-  place-items: center;
-  min-height: 360px;
+  margin: 0 0 56px;
+}
+
+.p-strategy-global__penguins {
+  display: block;
+  width: clamp(180px, 28%, 320px);
+  height: auto;
+  margin: 0 0 -1% auto;
+  position: relative;
+  z-index: 1;
+}
+
+.p-strategy-global__map-wrap {
+  position: relative;
 }
 
 .p-strategy-global__map-img {
-  width: 100%;
-  max-width: 960px;
-  height: auto;
   display: block;
+  width: 100%;
+  height: auto;
 }
 
-.p-strategy-global__stat {
+.p-strategy-global__map-penguin {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.9);
-  padding: 20px 28px;
-  border-radius: var(--border-radius-md);
-  text-align: center;
+  height: auto;
   pointer-events: none;
 }
 
-.p-strategy-global__stat-line {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--color-brand-navy);
-  line-height: 1.6;
+.p-strategy-global__badge {
+  position: absolute;
+  left: 48.5%;
+  top: 38%;
+  width: clamp(110px, 17%, 200px);
+  height: auto;
+  pointer-events: none;
 }
 
-.p-strategy-global__stat-num {
-  font-family: var(--font-family-en);
-  font-size: 28px;
-  color: var(--color-brand-primary);
-  margin: 0 4px;
-}
-
-.p-strategy-global__list {
+// 市場別カード
+.p-strategy-global__markets {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 28px;
 }
 
-.p-strategy-global__item {
+.p-strategy-market {
+  position: relative;
   background: var(--color-white);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--strategy-card-radius);
   box-shadow: var(--shadow-card);
+  padding: 26px clamp(24px, 3.5vw, 40px) 28px;
   overflow: hidden;
 }
 
-.p-strategy-global__details[open] .p-strategy-global__summary-icon::after {
-  transform: rotate(90deg);
-  opacity: 0;
+// カード右側の氷テクスチャ（35%・左へフェード）
+.p-strategy-market::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 42%;
+  background: url("../images/strategy/card-texture.jpg") right center / cover no-repeat;
+  opacity: 0.35;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 65%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 65%);
+  pointer-events: none;
 }
 
-.p-strategy-global__summary {
-  display: flex;
+// 六角リボンのバッジ（市場名）— 市場カードとパイオニアで共用
+.p-strategy-market__badge {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 20px 28px;
-  cursor: pointer;
-  list-style: none;
-  user-select: none;
-
-  &::-webkit-details-marker {
-    display: none;
-  }
-}
-
-.p-strategy-global__summary-label {
-  font-size: 18px;
+  justify-content: center;
+  min-width: 180px;
+  padding: 9px 26px;
+  background: var(--strategy-cyan);
+  color: var(--color-white);
+  font-size: clamp(16px, 1.6vw, 20px);
   font-weight: 700;
-  color: var(--color-brand-navy);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  clip-path: polygon(5.48% 0, 93.9% 0, 100% 50%, 93.9% 100%, 5.48% 100%, 0 50%);
 }
 
-.p-strategy-global__summary-icon {
+.p-strategy-market__body {
   position: relative;
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background: var(--color-brand-primary);
-    transition: transform var(--transition-base), opacity var(--transition-base);
-  }
-
-  &::before {
-    width: 14px;
-    height: 2px;
-    transform: translate(-50%, -50%);
-  }
-
-  &::after {
-    width: 2px;
-    height: 14px;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.p-strategy-global__body {
-  padding: 0 28px 24px;
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
+  z-index: 1;
+  margin: 18px 0 0;
+  font-size: 15px;
+  line-height: 1.9;
   color: var(--color-text-primary);
-
-  p {
-    margin: 0;
-  }
 }
 
 // --------------------------------------------
 // Global Pioneers
 // --------------------------------------------
 .p-strategy-pioneers {
-  padding: 120px 64px;
-  background: var(--color-bg-light);
+  padding: 72px 0 96px;
 }
 
-.p-strategy-pioneers__inner {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
+.p-strategy-pioneers__heading {
+  margin: 0 0 24px;
+}
+
+.p-strategy-pioneers__en {
+  margin: 0;
+  font-family: var(--font-family-en);
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--color-text-primary);
+}
+
+.p-strategy-pioneers__ja {
+  margin: 8px 0 0;
+  font-size: clamp(14px, 1.8vw, 18px);
+  font-weight: 700;
+  color: var(--color-text-primary);
 }
 
 .p-strategy-pioneers__intro {
-  margin-bottom: 56px;
-}
-
-.p-strategy-pioneers__paragraph {
-  margin: 0 0 16px;
+  margin: 0 0 48px;
   font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
-
-  &:last-child {
-    margin-bottom: 0;
-  }
+  line-height: 2;
 }
 
 .p-strategy-pioneers__list {
@@ -498,24 +379,24 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 28px;
 }
 
 .p-strategy-pioneers__item {
   display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 40px;
+  grid-template-columns: 260px 1fr;
+  gap: 36px;
   align-items: center;
-  padding: 32px;
+  padding: 28px;
   background: var(--color-white);
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--strategy-card-radius);
   box-shadow: var(--shadow-card);
 }
 
 .p-strategy-pioneers__avatar {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
+  width: 100%;
+  aspect-ratio: 220 / 150;
+  border-radius: var(--strategy-card-radius);
   overflow: hidden;
   background: var(--color-brand-blue-100);
 
@@ -530,25 +411,14 @@
 .p-strategy-pioneers__content {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-}
-
-.p-strategy-pioneers__market {
-  display: inline-block;
-  align-self: flex-start;
-  margin: 0;
-  padding: 4px 14px;
-  background: var(--color-brand-primary);
-  color: var(--color-white);
-  font-size: 13px;
-  font-weight: 700;
-  border-radius: var(--border-radius-pill);
+  align-items: flex-start;
+  gap: 14px;
 }
 
 .p-strategy-pioneers__body {
   margin: 0;
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
+  font-size: 15px;
+  line-height: 1.9;
   color: var(--color-text-primary);
 }
 
@@ -560,72 +430,68 @@
   .p-strategy-field,
   .p-strategy-global,
   .p-strategy-pioneers {
-    padding: 72px 20px;
+    padding-top: 56px;
+    padding-bottom: 56px;
   }
 
-  .p-strategy-intro__inner {
-    grid-template-columns: 1fr;
-    gap: 40px;
+  .p-strategy-field__cols {
+    flex-direction: column;
+    gap: 16px;
   }
 
-  .p-strategy-intro__title {
-    font-size: 22px;
-  }
-
-  .p-strategy-global__subtitle {
-    font-size: 18px;
-    margin-top: -12px;
-  }
-
-  .p-strategy-global__map {
-    padding: 24px;
-    min-height: 240px;
-  }
-
-  .p-strategy-global__stat {
-    padding: 14px 18px;
-  }
-
-  .p-strategy-global__stat-line {
-    font-size: 13px;
-  }
-
-  .p-strategy-global__stat-num {
-    font-size: 22px;
-  }
-
-  .p-strategy-field__summary,
-  .p-strategy-global__summary {
-    padding: 18px 20px;
-  }
-
-  .p-strategy-field__summary-label {
-    font-size: 17px;
-  }
-
-  .p-strategy-global__summary-label {
-    font-size: 16px;
-  }
-
-  .p-strategy-field__body,
-  .p-strategy-global__body {
-    padding: 0 20px 20px;
-    font-size: 14px;
+  .p-strategy-field__col--food,
+  .p-strategy-field__col--beyond {
+    flex: 1 1 auto;
   }
 
   .p-strategy-pioneers__item {
     grid-template-columns: 1fr;
     gap: 20px;
-    padding: 24px;
   }
 
   .p-strategy-pioneers__avatar {
-    width: 140px;
-    height: 140px;
+    max-width: 320px;
     margin: 0 auto;
   }
 
-  .p-strategy-banner__penguin {
-    width: 100px;
+  .p-strategy-pioneers__content {
+    align-items: stretch;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .p-strategy-intro__text,
+  .p-strategy-field__intro,
+  .p-strategy-global__intro,
+  .p-strategy-pioneers__intro {
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  .p-strategy-field__ratio-seg {
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 8px;
+  }
+
+  .p-strategy-field__col {
+    padding: 24px 20px;
+  }
+
+  .p-strategy-market {
+    padding: 22px 20px 24px;
+  }
+
+  .p-strategy-market::after {
+    width: 50%;
+  }
+
+  .p-strategy-market__badge {
+    min-width: 0;
+    padding: 8px 22px;
+  }
+
+  .p-strategy-pioneers__item {
+    padding: 20px;
   }
 }
