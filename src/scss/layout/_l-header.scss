@@ -90,10 +90,12 @@
   position: relative;
 }
 
+// Figma 296:12674 (Group 2368) — 50×50 #232735 ボックス + 白 3 本線
+//   線: x12→38 (幅26px) / y14.5・24.5・34.5 (ピッチ10px) / stroke 1px white
 .l-header__menu {
   appearance: none;
   border: 0;
-  background: transparent;
+  background: var(--color-header-button);
   width: 50px;
   height: 50px;
   padding: 0;
@@ -101,20 +103,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 9px;
   cursor: pointer;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background-color: var(--color-brand-navy);
+  }
 
   span {
     display: block;
-    width: 28px;
-    height: 2px;
-    background: var(--color-brand-navy);
-    border-radius: 2px;
+    width: 26px;
+    height: 1px;
+    background: var(--color-text-inverse);
   }
-}
-
-.l-header--light .l-header__menu span {
-  background: var(--color-brand-navy);
 }
 
 .l-header--solid {
@@ -132,7 +134,7 @@
 }
 
 .l-header__menu[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
+  transform: translateY(10px) rotate(45deg);
 }
 
 .l-header__menu[aria-expanded="true"] span:nth-child(2) {
@@ -140,7 +142,7 @@
 }
 
 .l-header__menu[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
+  transform: translateY(-10px) rotate(-45deg);
 }
 
 .l-header__menu span {

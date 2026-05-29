@@ -273,7 +273,7 @@ img {
 .l-header__menu {
   appearance: none;
   border: 0;
-  background: transparent;
+  background: var(--color-header-button);
   width: 50px;
   height: 50px;
   padding: 0;
@@ -281,19 +281,18 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 9px;
   cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+.l-header__menu:hover {
+  background-color: var(--color-brand-navy);
 }
 .l-header__menu span {
   display: block;
-  width: 28px;
-  height: 2px;
-  background: var(--color-brand-navy);
-  border-radius: 2px;
-}
-
-.l-header--light .l-header__menu span {
-  background: var(--color-brand-navy);
+  width: 26px;
+  height: 1px;
+  background: var(--color-text-inverse);
 }
 
 .l-header--solid {
@@ -311,7 +310,7 @@ img {
 }
 
 .l-header__menu[aria-expanded=true] span:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
+  transform: translateY(10px) rotate(45deg);
 }
 
 .l-header__menu[aria-expanded=true] span:nth-child(2) {
@@ -319,7 +318,7 @@ img {
 }
 
 .l-header__menu[aria-expanded=true] span:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
+  transform: translateY(-10px) rotate(-45deg);
 }
 
 .l-header__menu span {
