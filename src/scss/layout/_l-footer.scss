@@ -1,40 +1,56 @@
 // ============================================
 // Layout: Footer
+// --------------------------------------------
+// Figma 360:179 (Footer) — 1600×539
+//   白背景はフレーム上端から 72px (13.36%) の位置から開始。
+//   ※フレーム上部 0–72px の「採用TOP > 採用メッセージ」は
+//     ページ側のパンくず(c-breadcrumb)で、フッターには含めない。
+//   ナビ文字: Noto Sans JP Medium 14px / #000(見出し・リンク共通)
+//   カラム左位置: 186 / 373 / 634 / 898px(フレーム基準)
+//   行ピッチ: 35px / 先頭行 y=152(白背景上端から 80px)
+//   ワードマーク: y=377 / 左右 ≈8px インセット / 1583×162
 // ============================================
 
 .l-footer {
   position: relative;
-  background: var(--color-white);
-  color: var(--color-text-primary);
-  padding: 48px 32px 0;
-  border-top: 1px solid var(--color-border);
+  background: #fbfbfb;
+  color: #000;
+  // 白背景上端 = フッター上端。先頭ナビ行(y=152)まで 80px。
+  padding: 80px 0 0;
   overflow: hidden;
 }
 
 .l-footer__inner {
+  // フレーム端 = 内側端として Figma 座標をそのまま再現する
   max-width: var(--page-max-width);
   margin: 0 auto;
 }
 
 .l-footer__nav {
   display: grid;
-  grid-template-columns: 140px repeat(3, minmax(0, 1fr));
-  gap: 24px 48px;
-  padding-bottom: 48px;
+  // 各カラムの開始 X を固定: 186 → 373 → 634 → 898
+  grid-template-columns: 187px 261px 264px max-content;
+  padding-left: 186px;
 }
 
 .l-footer__col {
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
 .l-footer__heading {
+  // 見出し下端から次行頭まで 35px(21px ボックス + 14px)
+  margin: 0 0 14px;
+}
+
+.l-footer__heading,
+.l-footer__link {
+  font-family: var(--font-family-base);
   font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--color-text-primary);
-  margin: 0;
+  font-weight: 500;
+  line-height: 1.5; // 14px × 1.5 = 21px
+  color: #000;
+  white-space: nowrap;
 }
 
 .l-footer__heading-link {
@@ -42,35 +58,34 @@
   transition: opacity var(--transition-fast);
 
   &:hover {
-    opacity: 0.7;
+    opacity: 0.6;
   }
 }
 
 .l-footer__list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 14px; // 行ピッチ 35px = 21px ボックス + 14px
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .l-footer__link {
-  font-size: 13px;
-  color: var(--color-text-primary);
-  opacity: 0.8;
+  display: inline-block;
+  color: #000;
   transition: opacity var(--transition-fast);
 
   &:hover {
-    opacity: 1;
+    opacity: 0.6;
   }
 }
 
 .l-footer__wordmark {
-  margin: 0;
-  padding: 0;
+  // ナビ最下行から 64px 下げてワードマーク上端 y=377 に合わせる
+  margin: 64px 0 0;
+  padding: 0 8px;
   line-height: 0;
-  overflow: hidden;
 
   img {
     display: block;
@@ -79,14 +94,29 @@
   }
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 1080px) {
   .l-footer {
-    padding: 32px 16px 0;
+    padding: 48px 16px 0;
   }
 
   .l-footer__nav {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
-    padding-bottom: 32px;
+    gap: 32px 24px;
+    padding-left: 0;
+  }
+
+  .l-footer__link {
+    white-space: normal;
+  }
+
+  .l-footer__wordmark {
+    margin-top: 40px;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .l-footer__nav {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
