@@ -16,6 +16,8 @@
   --color-brand-magenta: #ff2d9a;
   --color-special-bg: #0a2540;
   --color-special-card: #14233b;
+  /* ヘッダー CTA ボタン (Figma 296:12667 / 296:12671) */
+  --color-header-button: #232735;
   --color-bg-sky: #eaf4fc;
   --color-bg-cloud: #d4ebf8;
   --color-bg-page: #d8e5e8;
@@ -196,13 +198,13 @@ img {
   left: 0;
   right: 0;
   z-index: 20;
-  padding: 20px 32px;
+  padding: 16px 16px 0;
   color: var(--color-text-primary);
 }
 
 .l-header__inner {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
   max-width: var(--page-max-width);
   margin: 0 auto;
@@ -211,9 +213,7 @@ img {
 .l-header__logo {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  width: 84px;
-  min-width: 64px;
+  width: 135px;
   flex-shrink: 0;
 }
 .l-header__logo img {
@@ -230,35 +230,38 @@ img {
 }
 
 .l-header__actions {
+  margin-top: 9px;
   margin-left: auto;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .l-header__cta {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  gap: 10px;
-  min-width: 180px;
-  height: 44px;
-  padding: 0 20px;
-  background-color: var(--color-brand-navy-deep);
+  gap: 8px;
+  width: 199px;
+  height: 50px;
+  padding: 0 16px;
+  background-color: var(--color-header-button);
   color: var(--color-text-inverse);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 -0.463px 6.951px rgba(0, 0, 0, 0.5);
   transition: background-color var(--transition-fast);
 }
 .l-header__cta:hover {
-  background: var(--color-brand-navy);
+  background-color: var(--color-brand-navy);
 }
 
 .l-header__cta-icon {
   display: inline-block;
-  width: 14px;
-  height: 14px;
+  width: 19px;
+  height: 19px;
   background: url("../images/common/ice-01.png") center/contain no-repeat;
   flex-shrink: 0;
 }
@@ -271,9 +274,13 @@ img {
   appearance: none;
   border: 0;
   background: transparent;
-  padding: 10px;
+  width: 50px;
+  height: 50px;
+  padding: 0;
   display: inline-flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 6px;
   cursor: pointer;
 }
@@ -497,16 +504,27 @@ img {
 }
 @media screen and (max-width: 960px) {
   .l-header {
-    padding: 14px 16px;
+    padding: 14px 16px 0;
+  }
+  .l-header__logo {
+    width: 108px;
+  }
+  .l-header__actions {
+    margin-top: 4px;
+    gap: 8px;
   }
   .l-header__cta {
-    min-width: auto;
+    width: auto;
     padding: 0 14px;
-    height: 40px;
-    font-size: 12px;
+    height: 44px;
+    font-size: 13px;
   }
   .l-header__cta-label {
     display: none;
+  }
+  .l-header__menu {
+    width: 44px;
+    height: 44px;
   }
 }
 .l-footer {
