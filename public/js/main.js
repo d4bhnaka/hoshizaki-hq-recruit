@@ -73,13 +73,17 @@
     var tabs = document.querySelectorAll("[data-person-filter]");
     var cards = document.querySelectorAll("[data-person-card]");
     if (!tabs.length || !cards.length) return;
+    var empty = document.querySelector("[data-person-empty]");
 
     function applyFilter(value) {
+      var visible = 0;
       cards.forEach(function (card) {
         var tags = (card.getAttribute("data-person-tags") || "").split(/\s+/);
         var match = value === "all" || tags.indexOf(value) !== -1;
         card.style.display = match ? "" : "none";
+        if (match) visible++;
       });
+      if (empty) empty.hidden = visible !== 0;
     }
 
     tabs.forEach(function (tab) {

@@ -145,7 +145,7 @@
 - [r] M6b-P02 What's HOSHIZAKI `/fact/`（node `238:6058`）— [07 の 02 節](./07-spec-subpages.md#02-whats-hoshizaki数字で見るホシザキ--fact)
 - [r] M6b-P03 Beyond HOSHIZAKI `/strategy/`（node `245:557`）— [07 の 03 節](./07-spec-subpages.md#03-beyond-hoshizaki事業領域海外展開--strategy)
 - [r] M6b-P04 Team HOSHIZAKI `/job/`（node `245:287`）— [07 の 04 節](./07-spec-subpages.md#04-team-hoshizaki職種紹介--job)。2026-05-28 に Figma 忠実コーディング＋実アセット書き出し済み（後述セッションログ参照）。
-- [r] M6b-P05 Person 一覧 `/person/`（node `246:1055`）— [07 の 05 節](./07-spec-subpages.md#05-先輩たちのここに決めた一覧--person)
+- [r] M6b-P05 Person 一覧 `/person/`（**最新 node `836:2220`**／旧 `246:1055`）— [07 の 05 節](./07-spec-subpages.md#05-先輩たちのここに決めた一覧--person)。2026-06-04 に Figma `836:2220` 忠実コーディング＋実データ反映済み（後述セッションログ）。
 - [r] M6b-P05s Person 詳細 `/person/detail/`（node `360:58`）— [07 の 05s 節](./07-spec-subpages.md#05s-person-詳細--personslug)
 - [r] M6b-P06 はたらく環境 `/environment/`（node `242:446`）— [07 の 06 節](./07-spec-subpages.md#06-はたらく環境environment--environment)。2026-06-04 に Figma 忠実コーディングへ全面再実装＋実アセット書き出し済み（後述セッションログ参照）。Office Tour は Swiper カルーセル。
 - [r] M6b-P07 募集要項 `/requirement/`（node `242:71`）— [07 の 07 節](./07-spec-subpages.md#07-募集要項requirement--requirement)
@@ -157,7 +157,7 @@
 ### アセット一括配置
 
 - [ ] M6-A1 13 ページ分のアセットを Figma から書き出して [../public/images/<page>/](../public/images/) 配下へ配置（各ページ仕様書のアセット表に従う）。
-- [ ] M6-A2 Person 用 14 名分の写真を [../public/images/person/](../public/images/person/) に配置し、必要に応じて `src/data/persons.ts` から参照。
+- [r] M6-A2 Person 用 **15 名分**のカード写真を [../public/images/person/](../public/images/person/) に配置（`person01.jpg`〜`person15.jpg`）。Figma のプレースホルダー写真（人物切り抜き＋ぼかし背景の合成）を再現して書き出し。2026-06-04。**実社員写真の支給後に差し替え予定**。
 
 ---
 
@@ -332,6 +332,7 @@ dist/
 - **修正ファイル**: [src/pages/strategy.astro](../src/pages/strategy.astro)（`globalMarkets` に `id`・`map{left,top}` 追加＋地図ボタン markup＋カード `id`）／[src/scss/object/project/_p-strategy.scss](../src/scss/object/project/_p-strategy.scss)（地図ブレイクアウト・`.c-ice-link--map`・`scroll-margin`）。新規アセットなし（既存 `link-button-ice.png` を流用）。
 - **検証**: `npm run build` 14 ページ成功。`/strategy/` で `data-astro-cid=0`・インライン `<style>=0`・ルート絶対パス `=0`。`scrollWidth==clientWidth`（横溢れ無し）。CDP（1280幅×2）で地図を撮影 → 7 ボタン＋ペンギン＋中央バッジが Figma と一致。アンカー 7 本がカード `id` 7 件と全て対応。
 
+<<<<<<< HEAD
 ### 2026-06-04 セッション: はたらく環境ページ（/environment/）の Figma 忠実コーディング（全面再実装）
 
 - **着手範囲**: `/environment/`（Figma `242:446`「06_environment」1600×7360）を Figma に忠実へ全面再実装。旧実装はプレースホルダ（プラス型 SVG アイコン・HTML マトリクス・"PHOTO" 枠）だったため破棄し、`get_design_context` の正確なテキスト・配色で作り直し。ページ全体背景は **`#d8e5e8`** 一色、本文グレーは `#7c7c7c`。
@@ -369,6 +370,31 @@ dist/
   - [src/scss/object/project/_p-requirement.scss](../src/scss/object/project/_p-requirement.scss) — 旧 `.p-req .c-page-hero--cloud`（独自の cloud01.png 背景・PC/SP）を撤去し共通の雲に統一。
 - **検証**: `npm run build` 14 ページ成功。6ページ全てで `data-astro-cid`/インライン `<style>`/ルート絶対パス=0。`_c-page-hero.scss` から cloud01/02・eaf4fc 参照が消えたことを確認。Chrome ヘッドレスで6ページのヒーローを撮影し、Figma 実レンダリング（`get_screenshot`）と同スケールで比較 → ミスト雲・背景・タイトルとも一致。雲の不透明度は分離テスト（Figma 座標で 0.8/0.65/0.5 を比較）で 0.78 に微調整。生成された Figma 書き出しのハッシュ名一時ファイル（リポジトリ直下・`public/images/` 直下、計87個）は全て削除済み（コード参照0件を確認）。
 - **既知の制約**: 雲 SVG をラスタライズした 540KB PNG を全下層ページで読み込む（FTP 入稿前提で許容範囲）。元の `top/cloud01.png` `cloud02.png` は `_l-background.scss` 等が引き続き参照するため残置。
+=======
+### 2026-06-04 セッション: Person 一覧（/person/）を Figma 836:2220 に忠実コーディング＋実データ反映
+
+- **着手範囲**: `/person/`（最新 Figma `836:2220`「05_person」1600×3744）を忠実に再実装。旧実装はダミー文面＋thumb01-04 の使い回しだったため、`writing/sources/` の社員 15 名の実データを反映。
+- **データ源**: [writing/sources/](../writing/sources/) の社員紹介 15 ファイル。各カードの見出し（「ここに決めた！」キャッチ）は Figma の各カードテキストと完全一致を確認して転記。表示順も Figma の並び（左上→右下／4 列、15 枚＝3 行 4 枚＋末尾行 3 枚）に一致。
+- **ユーザー確認した 3 つの判断**:
+  1. **カード写真** = Figma の写真を**合成再現**。Figma の写真はストック/AI 合成のプレースホルダー（人物切り抜き＋ぼかし背景）で、Dev Mode では平坦化 1 枚として書き出せず**レイヤー素材のみ**。人物切り抜きは透過 PNG なので、各カードの「人物（IM6_xxxx）＋可視背景（最上位シーン: Firefly 工場 / pixta シーン / 世界地図 等）」を Python(PIL) で合成し `person01.jpg`〜`person15.jpg`（608×376, JPEG q86）として書き出した。フレーミングは頭〜胸の head-and-shoulders で統一（`height_scale≈1.5`）。**実社員写真の支給後に差し替え予定**。
+  2. **カテゴリタグ/絞り込み** = **Figma 通りに忠実**（先頭 10 名＝技術系／後半 5 名＝企画管理系）。実部署と一致しない人もいる（例: 加藤＝購買部・南＝情報システム部・山根＝生産管理部 などが技術系表示）が、デザイン忠実を優先。文理（science/humanities）は学部情報から、性別（male/female）はカード写真から判定し `data-person-tags` に付与（絞り込み 7 種に対応）。
+  3. **カードのリンク先** = **リンクなし**（個別詳細ページ未確定のため）。`PersonCard.astro` を href 無指定時 `<article>`（非リンク）で描画するよう変更。Figma のシェブロンは視覚要素として残置。
+- **修正/作成ファイル**:
+  - [src/pages/person.astro](../src/pages/person.astro) — `people[]`（15 名: image/body/category/tags/name）に全面リライト。フィルタタブ＋4 列グリッド＋空状態メッセージ。
+  - [src/components/PersonCard.astro](../src/components/PersonCard.astro) — href 省略時に非リンク（`<article>`）化。
+  - [src/scss/object/component/_c-person-card.scss](../src/scss/object/component/_c-person-card.scss) — Figma 準拠（角丸 22px・写真角丸 14px・見出し `clamp(18px,1.5vw,24px)` Noto Bold・タグ 13px `#00a0e9`・底面アイステクスチャ）。
+  - [src/scss/object/project/_p-person.scss](../src/scss/object/project/_p-person.scss) — 本文バンド `1332px`（Figma のカード帯 x129〜1461）中央寄せ、グリッド col-gap 20 / row-gap 36、ヒーロー背景に**ソフト白クラウド**（Figma `836:2221` のベクタ雲を `radial-gradient` で近似）。
+  - [public/js/main.js](../public/js/main.js) — 既存 `initPersonFilter()` に空状態トグルを追加（フィルタ機能自体は既存実装が `data-person-*` と一致しており流用）。
+  - [public/images/person/copy.png](../public/images/person/) — 既存はキャッチ文字（青）のみだったため、Figma `836:4217` の**白ハイライトボックス**（2 本）を PIL で焼き込み。
+  - [public/images/person/card-ice.jpg](../public/images/person/) — Figma の低ポリ・アイステクスチャ（pixta_103410553）を 820px JPEG に最適化（1.7MB→64KB）。
+- **アセット書き出し手順（次エージェント向けメモ）**: Figma Dev Mode MCP の `get_design_context` を各カード node（`837:45xx`）に対し `dirForAssetWrites=public/images/person/_figma/cNN` で実行 → レイヤー PNG（人物=透過, 背景=不透明シーン, ICE=8cd50d 共有）を取得。可視背景は「コード上で人物 div の直前の最上位シーン img」。`_figma/` 一時フォルダは合成後に削除（dist に同梱しない）。
+- **検証**: `npm run build` 14 ページ成功。`/person/` で `data-astro-cid=0`・インライン `<style>=0`・ルート絶対パス `=0`・`dist/assets` ハッシュ無し・HTML 整形済み。dev サーバ（Playwright 1600 幅）で全体＋ヒーロー＋カードを目視 → Figma と一致。フィルタ「女性」クリックで該当 5 名（勝部/横山/河村/山羽/呉）のみ表示＝動作確認。Person 画像合計 552KB。
+- **未確認 / TODO**:
+  - カード写真は**プレースホルダー再現**。実社員写真の支給後に差し替え。
+  - 文理/性別タグは学部情報・写真からの**推定**（山根は学部情報欠落のため理系と仮置き）。正式分類が必要なら要確認。
+  - 個別詳細ページ（`/person/detail/`）の本実装・カードからの導線は別タスク（現状リンクなし）。
+  - **注意**: 本セッション中に別プロセス由来の未追跡ファイル（`public/images/person/p01〜p15.png`・`crosstalk.*` の変更等）が混在。**本タスクの成果物ではない**ためコミット対象から除外すること。
+>>>>>>> 086f4654ca44bb30994830647aea901bb88a00a8
 
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 

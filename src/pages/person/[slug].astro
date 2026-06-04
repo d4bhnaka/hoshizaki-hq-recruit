@@ -1,0 +1,125 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import BottomCta from "../../components/BottomCta.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import { personDetails } from "../../data/personDetails";
+
+export function getStaticPaths() {
+  return personDetails.map((person) => ({
+    params: { slug: person.slug },
+    props: { person },
+  }));
+}
+
+const base = "../../";
+const { person } = Astro.props;
+const titleText = person.title.join("");
+---
+
+<Layout
+  basePath={base}
+  title={`${person.initials}／${person.dept}｜はたらく人を知る｜ホシザキ本社採用サイト`}
+  description={`ホシザキ本社の先輩社員インタビュー。${person.dept}・${person.year}の${person.initials}が語る「${titleText}」——入社理由とやりがい、これからの目標。`}
+>
+  <div class="l-container">
+    <Header basePath={base} />
+    <main class="l-main">
+      <article class="p-person-detail">
+        <div class="p-person-detail__inner">
+          <section class="p-person-detail__split">
+            <!-- Left: scrollable interview content (white panel) -->
+            <div class="p-person-detail__left">
+              <p class="p-person-detail__label">Person</p>
+              <h1 class="p-person-detail__title">
+                {
+                  person.title.map((line, i) => (
+                    <>
+                      {line}
+                      {i < person.title.length - 1 && <br />}
+                    </>
+                  ))
+                }
+              </h1>
+
+              <div class="p-person-detail__meta">
+                <span class="p-person-detail__meta-name">{person.initials}</span>
+                <span class="p-person-detail__meta-item">{person.dept}</span>
+                <span class="p-person-detail__meta-item">{person.year}</span>
+                <span class="p-person-detail__meta-item">{person.faculty}</span>
+              </div>
+
+              <div class="p-person-detail__qa-list">
+                {
+                  person.qa.map((block) => (
+                    <div class="p-person-detail__qa">
+                      <p class="p-person-detail__q">
+                        <span class="p-person-detail__q-tick" aria-hidden="true" />
+                        {block.question}
+                      </p>
+                      <h2 class="p-person-detail__answer">
+                        {block.headline.map((line, i) => (
+                          <>
+                            {line}
+                            {i < block.headline.length - 1 && <br />}
+                          </>
+                        ))}
+                      </h2>
+                      <p class="p-person-detail__body">{block.body}</p>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+
+            <!-- Right: sticky person photo (transparent cutout) -->
+            <aside class="p-person-detail__right">
+              <figure class="p-person-detail__photo">
+                <img
+                  src={`${base}images/person/${person.photo}`}
+                  alt={`${person.initials}さん`}
+                  loading="eager"
+                />
+              </figure>
+            </aside>
+          </section>
+
+          <!-- Back to list -->
+          <div class="p-person-detail__list">
+            <a class="p-person-detail__list-btn" href="../">
+              <span class="p-person-detail__list-label">社員インタビュー一覧を見る</span>
+              <span class="p-person-detail__list-chevron" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="9 6 15 12 9 18"></polyline>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Bottom CTA (INTERNSHIP / ENTRY) -->
+        <BottomCta basePath={base} />
+
+        <!-- Breadcrumb -->
+        <div class="p-person-detail__breadcrumb">
+          <Breadcrumb
+            basePath={base}
+            items={[
+              { label: "はたらく人を知る", href: "../" },
+              { label: person.initials },
+            ]}
+          />
+        </div>
+      </article>
+    </main>
+    <Footer basePath={base} />
+  </div>
+</Layout>

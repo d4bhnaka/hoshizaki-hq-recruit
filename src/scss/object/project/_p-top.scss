@@ -698,7 +698,7 @@
 .p-top-env {
   position: relative;
   width: 100%;
-  // Figma: 660 / 1600 = 0.4125
+  // Figma 868:5243: 1600 × 660
   aspect-ratio: 1600 / 660;
   min-height: 360px;
   overflow: hidden;
@@ -714,54 +714,57 @@
   z-index: 1;
 }
 
+// コンテンツはフルブリード写真の上に「左 123/1600・上 153/660」で重ねる。
+// 固定アスペクト比なので % 配置＋ vw サイズで全体が比例スケールする（1600px で実寸一致）。
 .p-top-env__inner {
-  position: relative;
+  position: absolute;
   z-index: 2;
-  max-width: var(--page-max-width);
-  margin: 0 auto;
-  padding: clamp(40px, 6%, 96px) 80px;
+  left: 7.69%; // 123 / 1600
+  top: 23.18%; // 153 / 660
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 24px;
-  height: 100%;
 }
 
-// 見出しはネイビーピル (Figma 296:12578: x=123 y=153 w=564 h=79)
 .p-top-env__heading {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: flex-start;
+  gap: clamp(10px, 1.44vw, 23px); // タイトル → サブ間 23px
 }
 
+// タイトル：シアンの帯＋白文字（Figma 296:12578 帯 #00a0e9 / 296:12580 56px Regular）
 .p-top-env__title {
   margin: 0;
-  display: inline-block;
-  padding: 14px 32px;
-  background: var(--color-brand-navy);
-  color: var(--color-white);
-  font-size: clamp(22px, 2.6vw, 40px);
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  line-height: 1.2;
+  display: block;
   width: max-content;
   max-width: 100%;
+  padding: 0.143em 0.71em 0.143em 0.357em; // 帯 79px / 左 20px・右 41px 相当
+  background: var(--color-brand-cyan);
+  color: var(--color-white);
+  font-size: clamp(26px, 3.5vw, 56px); // 56px @1600
+  font-weight: 400; // Noto Sans JP Regular
+  line-height: 1.125; // 63 / 56
 }
 
+// サブ：白帯＋黒の太字（Figma 296:12657 帯 #fff / 296:12658 17px Bold）
 .p-top-env__sub {
   margin: 0;
-  padding: 6px 16px;
-  background: rgba(0, 47, 95, 0.7);
-  color: var(--color-white);
-  font-size: clamp(13px, 1.1vw, 18px);
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  display: block;
   width: max-content;
   max-width: 100%;
+  padding: 0.18em 0.53em; // 帯 29px / 左 9px 相当
+  background: var(--color-white);
+  color: #000;
+  font-size: clamp(13px, 1.0625vw, 17px); // 17px @1600
+  font-weight: 700; // Noto Sans JP Bold
+  line-height: 1.2;
 }
 
+// アイスリンクボタン：サブから 93px 下・タイトルより 13px 左（クリスタルの透明余白分）
 .p-top-env__button {
-  margin-top: auto;
+  margin-top: clamp(28px, 5.81vw, 93px); // サブ → ボタン間 93px
+  margin-left: -0.81vw; // 110 − 123 = −13px @1600
 }
 
 // ============================================
@@ -778,11 +781,6 @@
 
   .p-top-pioneer__inner,
   .p-top-decided__inner {
-    padding-left: 48px;
-    padding-right: 48px;
-  }
-
-  .p-top-env__inner {
     padding-left: 48px;
     padding-right: 48px;
   }
@@ -890,12 +888,30 @@
     justify-self: center;
   }
 
+  // モバイルは固定アスペクト比をやめ、写真の上にコンテンツを通常フローで重ねる
   .p-top-env {
     aspect-ratio: auto;
-    min-height: 480px;
+    min-height: 420px;
   }
 
   .p-top-env__inner {
-    padding: 32px 24px;
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    padding: 48px 24px;
+  }
+
+  .p-top-env__title {
+    font-size: clamp(24px, 6vw, 40px);
+  }
+
+  .p-top-env__sub {
+    font-size: clamp(12px, 3.4vw, 16px);
+  }
+
+  .p-top-env__button {
+    margin-top: clamp(24px, 8vw, 56px);
+    margin-left: 0;
   }
 }
