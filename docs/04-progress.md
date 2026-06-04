@@ -355,6 +355,7 @@ dist/
   - 新規 **`src/components/OfficeTourCarousel.astro`**（`label` / `photos` props）＋ **`src/scss/object/component/_c-office-tour.scss`**（`.c-office-tour`・`style.scss` 登録）を作成し、豊明本社／島根工場の 2 拠点で再利用。旧 `.p-env-office__*`（`_p-environment.scss`）は撤去。
   - Swiper（`public/js/main.js` `initOfficeTour()`）を `centeredSlides:true` / `loop:true` / `slideToClickedSlide:true` に変更。CSS で `.c-office-tour__slide{transform:scale(.81)}` ＋ `.swiper-slide-active{transform:scale(1)}` によりサイズ差のみで中央を強調（不透明度は Figma 準拠で落とさない）。キャプションは `text-align:center`。
   - 検証：`npm run build` 成功、`p-env-office` 残存=0、`data-astro-cid`/インライン `<style>`/ルート絶対パス=0。Chrome ヘッドレス（1440／390 幅）で中央拡大・中央揃えキャプション・両隣ピークを目視確認。
+- **追補2（同日）**: スライダーが `.p-env__inner`（max 1160px）で途切れる点をユーザー指摘 → **`.c-office-tour__swiper` をフルブリード（ウィンドウ全幅）化**。`width:100vw; margin-inline:calc(50% - 50vw)` でコンテンツ列を飛び出し、ラベル／ナビ（`__head`）はコンテンツ幅のまま据え置き（Figma `242:446` どおり写真のみ全幅）。`--page-max-width:1600px` 超の超ワイドでは既存の `.p-env{overflow:hidden}`（%幅なので body 幅を超えない）がフレーム中央でクリップ＝横スクロールバーは発生しない。全幅化に合わせ Swiper の `slidesPerView` に 1280=3.0／1600=3.4 のブレークポイントを追加し、1枚が過大にならないよう調整。1280／1440／390 幅で目視確認済み。
 
 ### 2026-06-04 セッション: 雲ヒーロー（`.c-page-hero--cloud`）を Figma 忠実化（共通6ページ）
 
