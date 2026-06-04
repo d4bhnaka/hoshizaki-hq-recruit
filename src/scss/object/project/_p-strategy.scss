@@ -340,37 +340,44 @@
 }
 
 // --------------------------------------------
-// Global Pioneers
+// Global Pioneers / Life Across Borders
+// Figma node: 836:2191（海外駐在社員メッセージ）
 // --------------------------------------------
 .p-strategy-pioneers {
-  padding: 72px 0 96px;
+  --pioneer-line: #0177fe; // トピック見出しの短い罫線
+  --pioneer-radius: 20px; // カードの角丸
+  --pioneer-media-radius: 12px; // 写真サムネイルの角丸（角丸なしJPEGをCSSでクリップ）
+
+  padding: 80px 0 96px;
+  background: var(--color-bg-page); // #d8e5e8
 }
 
 .p-strategy-pioneers__heading {
-  margin: 0 0 24px;
+  margin: 0 0 20px;
 }
 
 .p-strategy-pioneers__en {
   margin: 0;
   font-family: var(--font-family-en);
-  font-size: clamp(32px, 4.5vw, 56px);
-  font-weight: 700;
+  font-size: clamp(40px, 6vw, 68px);
+  font-weight: 400;
   line-height: 1.1;
-  letter-spacing: 0.02em;
-  color: var(--color-text-primary);
+  letter-spacing: 0.01em;
+  color: #232735;
 }
 
 .p-strategy-pioneers__ja {
-  margin: 8px 0 0;
-  font-size: clamp(14px, 1.8vw, 18px);
-  font-weight: 700;
-  color: var(--color-text-primary);
+  margin: 4px 0 0;
+  font-size: clamp(15px, 1.6vw, 18px);
+  font-weight: 500;
+  color: #232735;
 }
 
 .p-strategy-pioneers__intro {
-  margin: 0 0 48px;
+  margin: 0 0 44px;
   font-size: var(--font-size-base);
-  line-height: 2;
+  line-height: 1.6;
+  color: var(--color-text-primary);
 }
 
 .p-strategy-pioneers__list {
@@ -379,24 +386,72 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: clamp(48px, 6vw, 72px);
 }
 
-.p-strategy-pioneers__item {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 36px;
-  align-items: center;
-  padding: 28px;
+// 駐在員ごとの白カード
+.p-strategy-pioneers__card {
+  position: relative;
+  margin-top: 20px; // バッジが上辺をまたぐ分の余白
+  padding: clamp(40px, 5vw, 54px) clamp(24px, 4vw, 48px);
   background: var(--color-white);
-  border-radius: var(--strategy-card-radius);
+  border-radius: var(--pioneer-radius);
   box-shadow: var(--shadow-card);
 }
 
-.p-strategy-pioneers__avatar {
-  width: 100%;
+// 六角バッジ — カード上辺をまたいで左寄せ
+.p-strategy-pioneers__badge {
+  position: absolute;
+  top: 0;
+  left: clamp(24px, 4vw, 48px);
+  transform: translateY(-50%);
+}
+
+.p-strategy-pioneers__topics {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(36px, 4vw, 48px);
+}
+
+// 写真つきトピック（本文＝左、写真＝右の2カラム）
+.p-strategy-pioneers__topic--media {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(170px, 22%, 220px);
+  gap: clamp(24px, 3vw, 40px);
+  align-items: center;
+}
+
+.p-strategy-pioneers__topic-heading {
+  position: relative;
+  margin: 0 0 14px;
+  padding-left: 70px; // 50px 罫線 + 20px gap
+  font-size: clamp(16px, 1.7vw, 18px);
+  font-weight: 700;
+  line-height: 1.7;
+  color: var(--color-text-primary);
+}
+
+.p-strategy-pioneers__topic-heading::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.85em; // 1行目の視覚的中央付近
+  width: 50px;
+  height: 2px;
+  background: var(--pioneer-line);
+}
+
+.p-strategy-pioneers__body {
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: 1.9;
+  color: var(--color-text-primary);
+}
+
+// 写真サムネイル（角丸なしJPEGをCSSで角丸クリップ）
+.p-strategy-pioneers__media {
   aspect-ratio: 220 / 150;
-  border-radius: var(--strategy-card-radius);
+  border-radius: var(--pioneer-media-radius);
   overflow: hidden;
   background: var(--color-brand-blue-100);
 
@@ -406,20 +461,6 @@
     object-fit: cover;
     display: block;
   }
-}
-
-.p-strategy-pioneers__content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-}
-
-.p-strategy-pioneers__body {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.9;
-  color: var(--color-text-primary);
 }
 
 // --------------------------------------------
@@ -444,18 +485,14 @@
     flex: 1 1 auto;
   }
 
-  .p-strategy-pioneers__item {
+  // 写真つきトピックを縦積みにして、本文の下に写真を配置
+  .p-strategy-pioneers__topic--media {
     grid-template-columns: 1fr;
     gap: 20px;
   }
 
-  .p-strategy-pioneers__avatar {
+  .p-strategy-pioneers__media {
     max-width: 320px;
-    margin: 0 auto;
-  }
-
-  .p-strategy-pioneers__content {
-    align-items: stretch;
   }
 }
 
@@ -491,7 +528,11 @@
     padding: 8px 22px;
   }
 
-  .p-strategy-pioneers__item {
-    padding: 20px;
+  .p-strategy-pioneers__card {
+    padding: 32px 20px;
+  }
+
+  .p-strategy-pioneers__topic-heading {
+    padding-left: 62px;
   }
 }
