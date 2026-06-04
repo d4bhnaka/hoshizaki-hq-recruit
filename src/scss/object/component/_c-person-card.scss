@@ -1,6 +1,6 @@
 // ============================================
 // c-person-card : Reusable person card (grid item)
-// Figma: PersonCard 318 x 431 (05_person)
+// Figma: PersonCard 318 x 431 (05_person / 837:4547)
 // ============================================
 
 .c-person-card {
@@ -10,28 +10,31 @@
   flex-direction: column;
   width: 100%;
   // white card with a faint low-poly "ice" texture anchored to the bottom
-  // (Figma: pixta_103410553 over white — barely visible, strongest at the foot)
+  // (Figma: pixta_103410553 over white at 70% — strongest at the foot)
   background-color: var(--color-white);
   background-image: linear-gradient(
       to bottom,
-      var(--color-white) 38%,
-      rgba(255, 255, 255, 0.86) 100%
+      var(--color-white) 46%,
+      rgba(255, 255, 255, 0.78) 100%
     ),
-    url("../images/job/diagram-bg.png");
+    url("../images/person/card-ice.jpg");
   background-repeat: no-repeat, no-repeat;
-  background-position: center, bottom center;
-  background-size: cover, 130% auto;
-  border-radius: 12px;
+  background-position: center, right bottom;
+  background-size: cover, 118% auto;
+  // Figma rounded-[22.122px]
+  border-radius: 22px;
   overflow: hidden;
-  box-shadow: var(--shadow-card);
-  color: var(--color-text-primary);
+  // Figma shadow is very soft (0 5.53 5.53 / 0.03); keep a subtle card lift
+  box-shadow: 0 4px 14px rgba(0, 47, 95, 0.06);
+  color: #000;
   text-decoration: none;
   transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 32px rgba(0, 47, 95, 0.12);
-  }
+// Hover lift only when the card is interactive (an <a>)
+a.c-person-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 47, 95, 0.12);
 }
 
 // --------------------------------------------
@@ -42,7 +45,7 @@
   margin: 7px 7px 0;
   aspect-ratio: 304 / 188;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 14px;
   background: var(--color-brand-blue-100);
 }
 
@@ -60,16 +63,17 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 19px 18px 24px;
+  padding: 20px 18px 22px;
 }
 
 .c-person-card__text {
   margin: 0;
-  font-size: 18px;
+  // Figma 24px Noto Bold (318px card) — fluid so it tracks the card width
+  font-size: clamp(18px, 1.5vw, 24px);
   font-weight: 700;
-  line-height: 1.45;
+  line-height: 1.46;
   letter-spacing: 0.01em;
-  color: var(--color-text-primary);
+  color: #000;
 }
 
 .c-person-card__footer {
@@ -78,7 +82,7 @@
   justify-content: space-between;
   gap: 12px;
   margin-top: auto;
-  padding-top: 44px;
+  padding-top: 40px;
 }
 
 .c-person-card__tag {
@@ -91,7 +95,7 @@
 
 .c-person-card__chevron {
   flex: 0 0 auto;
-  width: 12px;
+  width: 13px;
   height: 22px;
-  color: var(--color-text-primary);
+  color: #2b2f31;
 }

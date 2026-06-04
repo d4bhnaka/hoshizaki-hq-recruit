@@ -3,15 +3,18 @@ interface Props {
   image: string;
   body: string;
   department: string;
+  /** When omitted, the card renders as a non-interactive <article>
+   *  (個別詳細ページが未確定のため一覧ページではリンクなし). */
   href?: string;
 }
 
-const { image, body, department, href = "./detail/" } = Astro.props;
+const { image, body, department, href } = Astro.props;
 
 const bodyLines = body.split("／");
+const Tag = href ? "a" : "article";
 ---
 
-<a class="c-person-card" href={href}>
+<Tag class="c-person-card" {...href ? { href } : {}}>
   <figure class="c-person-card__photo">
     <img
       class="c-person-card__photo-img"
@@ -46,4 +49,4 @@ const bodyLines = body.split("／");
       </svg>
     </div>
   </div>
-</a>
+</Tag>

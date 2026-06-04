@@ -9,6 +9,10 @@ import PersonCard from "../components/PersonCard.astro";
 
 const base = "../";
 
+// --------------------------------------------------------------------------
+// 絞り込みフィルター（Figma 836:2220 の ToggleButton 7 個に対応）
+// 値はカードの data-person-tags（英語トークン）と突き合わせる。
+// --------------------------------------------------------------------------
 const filters = [
   { label: "すべて", value: "all", active: true },
   { label: "技術系", value: "tech" },
@@ -19,57 +23,136 @@ const filters = [
   { label: "女性", value: "female" },
 ];
 
-interface PersonCard {
+interface Person {
+  /** カード写真（Figma のプレースホルダー写真を合成再現） */
   image: string;
+  /** カード見出し（／で改行）。Figma の各カード見出しと一致 */
   body: string;
-  department: string;
+  /** カード左下のカテゴリタグ。Figma 表記に忠実（技術系 / 企画管理系） */
+  category: string;
+  /** 絞り込み用トークン: カテゴリ / 文理 / 性別 */
   tags: string[];
+  /** 参考：社員名（writing/sources のデータ。現状カードには非表示） */
+  name: string;
 }
 
-const thumb = (i: number) =>
-  `${base}images/person/thumb${String((i % 4) + 1).padStart(2, "0")}.png`;
-
-const firstRow: PersonCard[] = [
+// 表示順 = Figma の並び順（左上→右下、4 列）。
+// category（技術系/企画管理系）は Figma のタグ表記をそのまま採用。
+// 文理（science/humanities）は writing/sources の学部情報から、
+// 性別（male/female）は Figma カード写真から判定。
+const people: Person[] = [
   {
-    image: thumb(0),
-    body: "ペンギンマークの会社で／働いています！と／自信をもって言える事",
-    department: "開発設計職",
+    name: "野村健人",
+    image: `${base}images/person/person01.jpg`,
+    body: "地元で、世界で。／長く働ける／会社を選んだ。",
+    category: "技術系",
     tags: ["tech", "science", "male"],
   },
   {
-    image: thumb(1),
-    body: "ペンギンマークの会社で／働いています！と／自信をもって言える事",
-    department: "海外事業企画・海外営業",
+    name: "加藤圭二",
+    image: `${base}images/person/person02.jpg`,
+    body: "自分の仕事が、／暮らしの中で、／形になる。",
+    category: "技術系",
+    tags: ["tech", "science", "male"],
+  },
+  {
+    name: "南潤哉",
+    image: `${base}images/person/person03.jpg`,
+    body: "なくならない「食」／世界トップの／安定に決めた",
+    category: "技術系",
+    tags: ["tech", "humanities", "male"],
+  },
+  {
+    name: "佐々琢磨",
+    image: `${base}images/person/person04.jpg`,
+    body: "業界トップの／高い品質基準で、／暮らしを支える。",
+    category: "技術系",
+    tags: ["tech", "science", "male"],
+  },
+  {
+    name: "山本凌大",
+    image: `${base}images/person/person05.jpg`,
+    body: "業界No.1の環境で、／まだ誰もやっていない／ことに挑む。",
+    category: "技術系",
+    tags: ["tech", "science", "male"],
+  },
+  {
+    name: "古田彰謙",
+    image: `${base}images/person/person06.jpg`,
+    body: "挑戦できる環境で、／ものづくりを／支える人になる。",
+    category: "技術系",
+    tags: ["tech", "science", "male"],
+  },
+  {
+    name: "武田大地",
+    image: `${base}images/person/person07.jpg`,
+    body: "地元・島根に／貢献したい想いが／私の原点。",
+    category: "技術系",
+    tags: ["tech", "science", "male"],
+  },
+  {
+    name: "勝部葵",
+    image: `${base}images/person/person08.jpg`,
+    body: "島根から世界へ。／ものづくりで／未来をつくる",
+    category: "技術系",
+    tags: ["tech", "science", "female"],
+  },
+  {
+    name: "山根一眞",
+    image: `${base}images/person/person09.jpg`,
+    body: "将来性と安心。／だからここに決めた。",
+    category: "技術系",
+    tags: ["tech", "science", "male"],
+  },
+  {
+    name: "横山千穂",
+    image: `${base}images/person/person10.jpg`,
+    body: "「これはお母さんが／作った製品だよ」と／言える仕事。",
+    category: "技術系",
+    tags: ["tech", "science", "female"],
+  },
+  {
+    name: "河村真由",
+    image: `${base}images/person/person11.jpg`,
+    body: "語学を武器に、／世界No.1へ挑む／会社を選んだ。",
+    category: "企画管理系",
     tags: ["admin", "humanities", "female"],
   },
   {
-    image: thumb(2),
-    body: "ペンギンマークの会社で／働いています！と／自信をもって言える事",
-    department: "国内広域営業・営業企画",
+    name: "冨江圭佑",
+    image: `${base}images/person/person12.jpg`,
+    body: "仕事もスポーツも。／全力で打ち込める／環境を選んだ。",
+    category: "企画管理系",
     tags: ["admin", "humanities", "male"],
   },
   {
-    image: thumb(3),
-    body: "ペンギンマークの会社で／働いています！と／自信をもって言える事",
-    department: "コーポレート",
+    name: "山羽紗由",
+    image: `${base}images/person/person13.jpg`,
+    body: "この人たちと働きたい。／そう思えた会社。",
+    category: "企画管理系",
+    tags: ["admin", "humanities", "female"],
+  },
+  {
+    name: "東龍吾",
+    image: `${base}images/person/person14.jpg`,
+    body: "海外比率50%へ。／その挑戦に、／自分も加わる。",
+    category: "企画管理系",
+    tags: ["admin", "humanities", "male"],
+  },
+  {
+    name: "呉瑋芳",
+    image: `${base}images/person/person15.jpg`,
+    body: "限界を決めない。／挑戦が私の／世界を広げる。",
+    category: "企画管理系",
     tags: ["admin", "humanities", "female"],
   },
 ];
-
-const serviceCards: PersonCard[] = Array.from({ length: 10 }, (_, i) => ({
-  image: thumb(i + 4),
-  body: "ペンギンマークの会社で／働いています！と／自信をもって言える事",
-  department: "技術サービス",
-  tags: ["tech", i % 2 === 0 ? "science" : "humanities", i % 3 === 0 ? "female" : "male"],
-}));
-
-const cards: PersonCard[] = [...firstRow, ...serviceCards];
 ---
 
 <Layout
   basePath={base}
   title="はたらく人を知る｜ホシザキ本社採用サイト"
-  description="ホシザキで働く先輩社員たちの声を紹介。「ここに決めた！」理由と、入社後のリアルなストーリーを職種別に掲載しています。"
+  description="ホシザキで働く先輩社員たちの「ここに決めた！」理由を職種別に紹介。技術系・企画管理系で活躍する先輩のリアルな声を掲載しています。"
 >
   <div class="l-container">
     <Header basePath={base} />
@@ -92,7 +175,7 @@ const cards: PersonCard[] = [...firstRow, ...serviceCards];
         </PageHero>
 
         <!-- Filter tabs -->
-        <section class="p-person__filter" aria-label="職種で絞り込み">
+        <section class="p-person__filter" aria-label="職種・属性で絞り込み">
           <ul class="p-person__filter-list">
             {
               filters.map((f) => (
@@ -115,21 +198,24 @@ const cards: PersonCard[] = [...firstRow, ...serviceCards];
         <section class="p-person__grid-section" aria-label="社員一覧">
           <ul class="p-person__grid">
             {
-              cards.map((card) => (
+              people.map((p) => (
                 <li
                   class="p-person__grid-item"
                   data-person-card
-                  data-person-tags={card.tags.join(" ")}
+                  data-person-tags={p.tags.join(" ")}
                 >
                   <PersonCard
-                    image={card.image}
-                    body={card.body}
-                    department={card.department}
+                    image={p.image}
+                    body={p.body}
+                    department={p.category}
                   />
                 </li>
               ))
             }
           </ul>
+          <p class="p-person__empty" data-person-empty hidden>
+            該当する社員が見つかりませんでした。
+          </p>
         </section>
 
         <!-- Bottom CTA -->

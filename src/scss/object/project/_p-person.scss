@@ -1,5 +1,5 @@
 // ============================================
-// p-person : Person list page (Figma 246:1055 / "05_person")
+// p-person : Person list page (Figma 836:2220 / "05_person")
 // ============================================
 
 .p-person {
@@ -8,22 +8,29 @@
   background: var(--color-bg-page);
 }
 
-// Hero background — Figma shows a soft, airy light field that blends into
-// the page (#d8e5e8). Override the shared cloud variant so there is no hard
-// colour band between the hero and the card grid.
+// Hero background — Figma (836:2221) shows a soft white cloud filling the
+// upper-right of an airy light-sky field that blends into the page (#d8e5e8).
+// Approximate the cloud with a soft white radial glow over a vertical sky
+// gradient (vector cloud can't be rasterised; this keeps the handoff asset-free).
 .p-person .c-page-hero {
   background-color: var(--color-bg-page);
-  background-image: linear-gradient(
-    180deg,
-    #eef6fc 0%,
-    var(--color-bg-page) 100%
-  );
+  background-image:
+    radial-gradient(
+      78% 92% at 76% 24%,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(255, 255, 255, 0.55) 34%,
+      rgba(255, 255, 255, 0) 64%
+    ),
+    linear-gradient(180deg, #eef6fc 0%, var(--color-bg-page) 100%);
 }
+
+// Figma の本文バンド: カードは x=129〜1461（= 1332px）を 1600 幅の中央に配置。
+// フィルター・グリッド・パンくずをこのバンド幅に揃える。
+$person-band: 1332px;
 
 // --------------------------------------------
 // Catch copy (image, sits in the PageHero slot)
-// 「先輩たちの『ここに決めた！』」— supplied as copy.png (white
-// highlight boxes are baked into the image)
+// 「先輩たちの『ここに決めた！』」— copy.png（白ハイライトボックス焼き込み済み）
 // --------------------------------------------
 .p-person__catch {
   display: flex;
@@ -39,18 +46,18 @@
 }
 
 // --------------------------------------------
-// Filter tabs
+// Filter tabs (Figma ToggleButton ×7)
 // --------------------------------------------
 .p-person__filter {
-  max-width: var(--page-max-width);
+  max-width: $person-band;
   margin: 0 auto;
-  padding: 44px 64px 20px;
+  padding: 40px 20px 18px;
 }
 
 .p-person__filter-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -66,7 +73,7 @@
   align-items: center;
   justify-content: center;
   min-width: 84px;
-  padding: 7px 20px;
+  padding: 6px 20px;
   border: 1px solid #dbdbdb;
   border-radius: var(--border-radius-pill);
   background: var(--color-white);
@@ -103,9 +110,9 @@
 // Grid
 // --------------------------------------------
 .p-person__grid-section {
-  max-width: var(--page-max-width);
+  max-width: $person-band;
   margin: 0 auto;
-  padding: 20px 64px 96px;
+  padding: 18px 20px 96px;
 }
 
 .p-person__grid {
@@ -114,8 +121,9 @@
   padding: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: clamp(16px, 1.6vw, 22px);
-  row-gap: clamp(40px, 4.2vw, 60px);
+  // Figma: column gap 20px / row pitch 467 − card 431 = 36px
+  column-gap: 20px;
+  row-gap: 36px;
 }
 
 .p-person__grid-item {
@@ -123,13 +131,21 @@
   display: flex;
 }
 
+.p-person__empty {
+  margin: 48px 0 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
 // --------------------------------------------
 // Breadcrumb wrapper
 // --------------------------------------------
 .p-person__breadcrumb {
-  max-width: var(--page-max-width);
+  max-width: $person-band;
   margin: 0 auto;
-  padding: 24px 64px 56px;
+  padding: 24px 20px 56px;
 }
 
 // --------------------------------------------
@@ -141,22 +157,15 @@
   }
 }
 
-@media screen and (max-width: 960px) {
-  .p-person__filter,
-  .p-person__grid-section,
-  .p-person__breadcrumb {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-
 @media screen and (max-width: 768px) {
   .p-person__grid {
     grid-template-columns: repeat(2, 1fr);
+    column-gap: 14px;
+    row-gap: 28px;
   }
 
   .p-person__filter {
-    padding-top: 32px;
+    padding-top: 28px;
   }
 }
 
@@ -166,6 +175,6 @@
   }
 
   .c-person-card__text {
-    font-size: 16px;
+    font-size: 17px;
   }
 }
