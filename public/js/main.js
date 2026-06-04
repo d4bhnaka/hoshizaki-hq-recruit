@@ -143,15 +143,53 @@
     }
   }
 
+  // --------------------------------------------
+  // Environment: Office Tour 写真カルーセル（拠点ごとに Swiper）
+  // --------------------------------------------
+  function initOfficeTour() {
+    var blocks = document.querySelectorAll("[data-office]");
+    if (!blocks.length || typeof Swiper === "undefined") return;
+
+    blocks.forEach(function (block) {
+      var swiperEl = block.querySelector("[data-office-swiper]");
+      if (!swiperEl) return;
+
+      new Swiper(swiperEl, {
+        // 中央のスライドが選択中（.swiper-slide-active）＝一回り大きく表示。
+        // CSS 側で active 以外を scale(0.81) に縮小して中央を強調する。
+        centeredSlides: true,
+        loop: true,
+        slideToClickedSlide: true,
+        grabCursor: true,
+        // フルブリード（ウィンドウ全幅）表示のため、画面が広いほど枚数を増やして
+        // 1枚あたりのサイズが過大にならないようにする。
+        slidesPerView: 1.3,
+        spaceBetween: 16,
+        breakpoints: {
+          600: { slidesPerView: 2.0, spaceBetween: 20 },
+          900: { slidesPerView: 2.6, spaceBetween: 28 },
+          1280: { slidesPerView: 3.0, spaceBetween: 32 },
+          1600: { slidesPerView: 3.4, spaceBetween: 36 },
+        },
+        navigation: {
+          prevEl: block.querySelector("[data-office-prev]"),
+          nextEl: block.querySelector("[data-office-next]"),
+        },
+      });
+    });
+  }
+
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", function () {
       initDrawer();
       initPersonFilter();
       initInternship();
+      initOfficeTour();
     });
   } else {
     initDrawer();
     initPersonFilter();
     initInternship();
+    initOfficeTour();
   }
 })();

@@ -1,0 +1,150 @@
+// ============================================
+// Component: Office Tour カルーセル (c-office-tour)
+// Figma node: 242:446（拠点紹介）/ 666:1519・743:1676（写真一覧）
+// 中央のスライドが選択中（active）で、両隣より一回り大きく表示される。
+// 豊明本社・島根工場の 2 拠点で再利用（src/components/OfficeTourCarousel.astro）。
+// ============================================
+.c-office-tour {
+  margin-top: clamp(40px, 5vw, 56px);
+
+  &:first-of-type {
+    margin-top: clamp(28px, 3.5vw, 44px);
+  }
+}
+
+.c-office-tour__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.c-office-tour__label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  min-height: 41px;
+  margin: 0;
+  padding: 6px 28px;
+  background: var(--color-brand-cyan);
+  clip-path: polygon(5.5% 0, 94% 0, 100% 50%, 94% 100%, 5.5% 100%, 0 50%);
+  color: var(--color-white);
+  font-size: clamp(16px, 1.7vw, 20px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.c-office-tour__nav {
+  display: flex;
+  gap: 6px;
+}
+
+.c-office-tour__arrow {
+  width: 43px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: #00c8ff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease, background 0.2s ease;
+
+  &::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-top: 2.5px solid var(--color-white);
+    border-right: 2.5px solid var(--color-white);
+  }
+
+  &:hover {
+    background: #00b4e6;
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+}
+
+.c-office-tour__arrow--prev::before {
+  transform: rotate(-135deg);
+  margin-left: 3px;
+}
+
+.c-office-tour__arrow--next::before {
+  transform: rotate(45deg);
+  margin-right: 3px;
+}
+
+.c-office-tour__swiper {
+  // 親（.p-env__inner = max 1160px）の幅で途切れさせず、ウィンドウ全幅で表示する。
+  // ラベル／ナビ（__head）はコンテンツ幅のまま、写真スライダーだけをフルブリード。
+  // 1600px（--page-max-width）超の超ワイド画面では .p-env の overflow:hidden が
+  // デザインフレーム中央でクリップする。
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  // 縮小した両隣スライドが見切れるようにクリップ
+  overflow: hidden;
+}
+
+.c-office-tour__slide {
+  height: auto;
+  // 既定（両隣）は一回り小さく。中央（active）だけ等倍に戻して大きく見せる。
+  // Figma 準拠で両隣も色は落とさず（不透明度はそのまま）、サイズ差のみで中央を強調。
+  transform: scale(0.81);
+  transform-origin: center center;
+  transition: transform 0.4s ease;
+}
+
+.c-office-tour__slide.swiper-slide-active {
+  transform: scale(1);
+}
+
+.c-office-tour__figure {
+  margin: 0;
+}
+
+.c-office-tour__media {
+  position: relative;
+  aspect-ratio: 430 / 269;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  background: #b3b3b3;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.c-office-tour__placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #b3b3b3;
+  color: var(--color-white);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.c-office-tour__caption {
+  margin-top: 12px;
+  font-size: clamp(14px, 1.4vw, 16px);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .c-office-tour__head {
+    margin-bottom: 16px;
+  }
+}

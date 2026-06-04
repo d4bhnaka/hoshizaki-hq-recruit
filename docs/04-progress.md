@@ -147,7 +147,7 @@
 - [r] M6b-P04 Team HOSHIZAKI `/job/`（node `245:287`）— [07 の 04 節](./07-spec-subpages.md#04-team-hoshizaki職種紹介--job)。2026-05-28 に Figma 忠実コーディング＋実アセット書き出し済み（後述セッションログ参照）。
 - [r] M6b-P05 Person 一覧 `/person/`（node `246:1055`）— [07 の 05 節](./07-spec-subpages.md#05-先輩たちのここに決めた一覧--person)
 - [r] M6b-P05s Person 詳細 `/person/detail/`（node `360:58`）— [07 の 05s 節](./07-spec-subpages.md#05s-person-詳細--personslug)
-- [r] M6b-P06 はたらく環境 `/environment/`（node `242:446`）— [07 の 06 節](./07-spec-subpages.md#06-はたらく環境environment--environment)
+- [r] M6b-P06 はたらく環境 `/environment/`（node `242:446`）— [07 の 06 節](./07-spec-subpages.md#06-はたらく環境environment--environment)。2026-06-04 に Figma 忠実コーディングへ全面再実装＋実アセット書き出し済み（後述セッションログ参照）。Office Tour は Swiper カルーセル。
 - [r] M6b-P07 募集要項 `/requirement/`（node `242:71`）— [07 の 07 節](./07-spec-subpages.md#07-募集要項requirement--requirement)
 - [r] M6b-P08 SPECIAL CONTENTS インデックス `/special/`（node `368:1401`）— [07 の 08 節](./07-spec-subpages.md#08-special-contents-インデックス--special)
 - [r] M6b-P08-1 クロストーク `/special/crosstalk/`（node `246:935`）— [07 の 08-1 節](./07-spec-subpages.md#08-1-クロストーク--specialcrosstalk)
@@ -331,6 +331,43 @@ dist/
   - 地図が本文帯（1040px）より広い（Figma 1405px）ため、`.p-strategy-global__map` を `width:min(1404px,96vw)` で中央寄せブレイクアウト（`.p-strategy` の `overflow:hidden` で横スクロール無し）。ペンギンは `z-index:3` でボタンの上に。
 - **修正ファイル**: [src/pages/strategy.astro](../src/pages/strategy.astro)（`globalMarkets` に `id`・`map{left,top}` 追加＋地図ボタン markup＋カード `id`）／[src/scss/object/project/_p-strategy.scss](../src/scss/object/project/_p-strategy.scss)（地図ブレイクアウト・`.c-ice-link--map`・`scroll-margin`）。新規アセットなし（既存 `link-button-ice.png` を流用）。
 - **検証**: `npm run build` 14 ページ成功。`/strategy/` で `data-astro-cid=0`・インライン `<style>=0`・ルート絶対パス `=0`。`scrollWidth==clientWidth`（横溢れ無し）。CDP（1280幅×2）で地図を撮影 → 7 ボタン＋ペンギン＋中央バッジが Figma と一致。アンカー 7 本がカード `id` 7 件と全て対応。
+
+### 2026-06-04 セッション: はたらく環境ページ（/environment/）の Figma 忠実コーディング（全面再実装）
+
+- **着手範囲**: `/environment/`（Figma `242:446`「06_environment」1600×7360）を Figma に忠実へ全面再実装。旧実装はプレースホルダ（プラス型 SVG アイコン・HTML マトリクス・"PHOTO" 枠）だったため破棄し、`get_design_context` の正確なテキスト・配色で作り直し。ページ全体背景は **`#d8e5e8`** 一色、本文グレーは `#7c7c7c`。
+- **ヒーロー**: strategy ページ同様 `PageHero variant="cloud"`（雲スカイ）＋スロットに本社外観の帯写真 `page-fv.png`（1283×430・角丸）を配置（`.p-env__fv`）。
+- **新共通コンポーネント**: Figma の大見出し（アイスキューブ＋日本語28px＋巨大英字100px）はサイト既存の `SectionHeading`（英字40px・シアン菱形）と別系統のため、**`src/components/IceHeading.astro` ＋ `_c-ice-heading.scss`** を新設（`style.scss` に登録）。Training / Benefits / Office Tour の3見出しで再利用。アイスキューブは既存 `images/common/ice-01.png`。**※ユーザー確認済み：見出しは「Figma に忠実な大見出し」を採用。**
+- **Training**: 研修体系図は Figma 上もフラット画像（`635:1380` image 27, 1830×752）だったため、**画像をそのまま書き出し** → `public/images/environment/training-system.png` に配置（クライアントは画像1枚を差し替えるだけ）。続く4制度カード（メンター／語学／社内検定／選抜型）は「左：アイスキューブ付き見出し＋本文／右：サムネイル（既存 `img01〜04.png` 309×179）」の横並び。
+- **Benefits**: 白い円（`box-shadow`）＋ **Feather 系アイコンをインライン SVG で再現**（stroke `#2C82BB`：gift / award / pie-chart / trending-up / book / key / home / coffee の8種）の 4列×2行グリッド。テキストは Figma から正確転記。
+- **Office Tour**: **Swiper カルーセル**（internship と同じ vendored `public/js|css/swiper-bundle.min.*` を `slot="head"` で読込、初期化は `public/js/main.js` の `initOfficeTour()` を追加し拠点ごとに生成）。拠点ラベルはシアン六角バッジ（`clip-path` で再現、`#00A0E9`）、ナビ矢印は `#00c8ff` の角丸ボタン。**愛知（本社）= 実写真11枚**（`office-tour/toyoake/t01〜t11.jpg`・各写真を目視して `本社外観/開発オフィス/執務スペース/製造ライン/社員食堂/ショールーム/企業ミュージアム/研修センター/独身寮/グラウンド/シンボルの城` とキャプション付与）。**島根工場 = 写真未提供のためグレーのプレースホルダ5枚（「準備中」）＋ astro 内に TODO コメント**（`office-tour/shimane/` に実写真を置いて差し替える指示）。※ユーザー確認済み。
+- **修正/新規ファイル**: [src/pages/environment.astro](../src/pages/environment.astro)（全面書換）／[src/scss/object/project/_p-environment.scss](../src/scss/object/project/_p-environment.scss)（全面書換）／[src/components/IceHeading.astro](../src/components/IceHeading.astro)（新規）／[src/scss/object/component/_c-ice-heading.scss](../src/scss/object/component/_c-ice-heading.scss)（新規・`style.scss` 登録）／[public/js/main.js](../public/js/main.js)（`initOfficeTour()` 追加）／`public/images/environment/training-system.png`（新規・Figma 書き出し）。
+- **検証**: `npm run build` 14 ページ成功。`/environment/` で `data-astro-cid=0`・インライン `<style>=0`・ルート絶対パス `=0`、Swiper CSS/JS と `main.js` は全て `../` 相対。dist を `python3 -m http.server` 配信＋Chrome ヘッドレス（1440 幅・390 幅）で全体を目視 → Figma と一致（ヒーロー／マトリクス／4カード／8アイコン／2拠点カルーセル＋島根プレースホルダ／CTA すべて OK）。レスポンシブも確認（Benefits 4→2列、Training カード縦積み、Office Swiper 1.15枚表示）。
+- **既知の制約**: 研修体系図はフラット画像のため、モバイル幅では文字が小さくなる（Figma 仕様どおり。可読性が要件化したら HTML テーブル化を検討）。`img02`「語学研修制度」の本文は Figma が「資格取得補助制度を設けています」と記載しており、原文ママで忠実転記している。
+
+### 2026-06-04 セッション: Office Tour の掲載順・キャプション・島根工場実写真を Figma 準拠へ更新
+
+- **背景**: 拠点紹介カルーセルの順番・テキストの正は Figma 2フレーム（豊明本社 `666:1519` / 島根工場 `743:1676`）。旧実装の豊明本社はキャプションが目視推測（開発オフィス/執務スペース/独身寮/シンボルの城 等）で順序も Figma と不一致、島根工場は「準備中」プレースホルダ5枚だった。
+- **豊明本社**: `office-tour/toyoake/t01〜t11.jpg` を **Figma の読み順（左→右・上→下）に一致**させ、ラベルを「愛知（本社）」→**「豊明本社」**に変更。キャプションを Figma 準拠に修正 → `本社外観 / 社員寮 / 研修センター / お城 / グラウンド / 中央研究所オフィス / 事務フロア / 工場 / 食堂 / ショールーム / 記念館`。t06/t07（中央研究所オフィス＝青デスク / 事務フロア＝明るい大部屋）は Figma 該当セルと写真を突き合わせて確定。t01〜t11 は元々 Figma 読み順で命名されていた。
+- **島根工場**: クライアント提供の実写真12枚 `office-tour/unnan/u01〜u12.jpg`（1200×750）を配置し、プレースホルダ＋TODO コメントを撤去。Figma `743:1676` 準拠で順序・キャプション付与 → `社屋外観 ×3 / 事務フロア / 設計フロア / ショールーム / グラウンド / 工場内休憩スペース / 和室会議室 / 工場外観 / 薬師堂 / ふるさと尺の内公園（ホシザキグリーン財団）`。u04/u05（事務フロア / 設計フロア）も Figma セルと突き合わせて確定。雲南（unnan）は島根県の拠点。
+- **変更ファイル**: [src/pages/environment.astro](../src/pages/environment.astro)（`offices` データ配列のみ。テンプレート/CSS は変更なし）。
+- **検証**: `npm run build` 14 ページ成功。dist 出力で unnan 12枚を参照・コピー、Figma 全キャプションを確認、`準備中`=0、`data-astro-cid`/インライン `<style>`=0。Chrome ヘッドレス（1400 幅）で目視 → 両カルーセルが Figma の写真・キャプション・順序どおりに描画。
+- **追補（同日）**: Office Tour カルーセルを**中央スライド強調＋コンポーネント化**に改修（ユーザー要望）。Figma ページ `242:446` の拠点紹介は **中央＝選択中スライドが両隣より一回り大きい**（中央 531×332／両隣 430×269＝約1.23×・両隣は中央に対し上下センタリング）構成。これを再現：
+  - 新規 **`src/components/OfficeTourCarousel.astro`**（`label` / `photos` props）＋ **`src/scss/object/component/_c-office-tour.scss`**（`.c-office-tour`・`style.scss` 登録）を作成し、豊明本社／島根工場の 2 拠点で再利用。旧 `.p-env-office__*`（`_p-environment.scss`）は撤去。
+  - Swiper（`public/js/main.js` `initOfficeTour()`）を `centeredSlides:true` / `loop:true` / `slideToClickedSlide:true` に変更。CSS で `.c-office-tour__slide{transform:scale(.81)}` ＋ `.swiper-slide-active{transform:scale(1)}` によりサイズ差のみで中央を強調（不透明度は Figma 準拠で落とさない）。キャプションは `text-align:center`。
+  - 検証：`npm run build` 成功、`p-env-office` 残存=0、`data-astro-cid`/インライン `<style>`/ルート絶対パス=0。Chrome ヘッドレス（1440／390 幅）で中央拡大・中央揃えキャプション・両隣ピークを目視確認。
+
+### 2026-06-04 セッション: 雲ヒーロー（`.c-page-hero--cloud`）を Figma 忠実化（共通6ページ）
+
+- **背景**: 下層ページのヒーローが Figma と不一致との指摘。旧 `.c-page-hero--cloud` は背景 `#eaf4fc` ＋汎用パフ雲 `top/cloud01.png`・`cloud02.png` で、実際の Figma（背景 `#d8e5e8` 一色＋右上のミスト雲を `mix-blend-screen`・不透明度80%で重ねる）と別物だった。
+- **調査（ワークフロー並列調査）**: 6ページ（environment / requirement / strategy / job / person / fact）の Figma ヒーローを並列サブエージェントで突き合わせ → **雲ヒーローは全ページ完全共通**と判明（背景 `#d8e5e8`、右上のミスト雲 `imgGroup2184` を `mix-blend-screen`・opacity 0.8、英字136px Barlow Condensed `#1d2527`）。JA サブタイトルのみ environment が **30px**、他5ページは 24px。→ **ユーザー選択で共通コンポーネントを修正**（6ページ同時に忠実化）。
+- **雲アセット**: Figma の雲は 1MB の複雑な SVG（`imgGroup2184`／暗いネイビー＋白のミスト）。Chrome ヘッドレスで**透過2x PNG**（2372×1172・約540KB）にラスタライズし [public/images/common/hero-cloud.png](../public/images/common/hero-cloud.png) に配置（全ページ共通アセットのため `common/`）。`mix-blend-screen` を CSS 側で適用するため、暗部は背景同色に沈み・明部（中央）が白いミストとして浮く（=Figma の見た目を再現）。
+- **修正ファイル**:
+  - [src/scss/object/component/_c-page-hero.scss](../src/scss/object/component/_c-page-hero.scss) — `.c-page-hero--cloud` を `background:#d8e5e8` のみに簡素化し、`::before` でミスト雲を右上配置（`left:49% / top:clamp(-20px,-1.4vw,0) / width:74% / aspect-ratio:1185/586 / mix-blend-mode:screen / opacity:.78`）。`.c-page-hero--ja-lg` 修飾子（JA 30px）も追加。`.c-page-hero` は既に `isolation:isolate` のためブレンドはヒーロー内に限定。
+  - [src/components/PageHero.astro](../src/components/PageHero.astro) — `jaSize?: "md"|"lg"` プロップ追加（lg で `c-page-hero--ja-lg`）。
+  - [src/pages/environment.astro](../src/pages/environment.astro) — ヒーローに `jaSize="lg"`（Figma 30px）。
+  - [src/scss/object/project/_p-requirement.scss](../src/scss/object/project/_p-requirement.scss) — 旧 `.p-req .c-page-hero--cloud`（独自の cloud01.png 背景・PC/SP）を撤去し共通の雲に統一。
+- **検証**: `npm run build` 14 ページ成功。6ページ全てで `data-astro-cid`/インライン `<style>`/ルート絶対パス=0。`_c-page-hero.scss` から cloud01/02・eaf4fc 参照が消えたことを確認。Chrome ヘッドレスで6ページのヒーローを撮影し、Figma 実レンダリング（`get_screenshot`）と同スケールで比較 → ミスト雲・背景・タイトルとも一致。雲の不透明度は分離テスト（Figma 座標で 0.8/0.65/0.5 を比較）で 0.78 に微調整。生成された Figma 書き出しのハッシュ名一時ファイル（リポジトリ直下・`public/images/` 直下、計87個）は全て削除済み（コード参照0件を確認）。
+- **既知の制約**: 雲 SVG をラスタライズした 540KB PNG を全下層ページで読み込む（FTP 入稿前提で許容範囲）。元の `top/cloud01.png` `cloud02.png` は `_l-background.scss` 等が引き続き参照するため残置。
 
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 

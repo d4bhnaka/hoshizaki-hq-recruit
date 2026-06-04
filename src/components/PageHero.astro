@@ -6,6 +6,7 @@ interface Props {
   compact?: boolean;
   align?: "left" | "center";
   bg?: string;
+  jaSize?: "md" | "lg";
 }
 
 const {
@@ -15,13 +16,14 @@ const {
   compact = false,
   align = "left",
   bg,
+  jaSize = "md",
 } = Astro.props;
 
 const style = bg ? `--page-hero-bg: url('${bg}');` : undefined;
 ---
 
 <section
-  class={`c-page-hero c-page-hero--${variant} c-page-hero--${align}${compact ? " c-page-hero--compact" : ""}${bg ? " c-page-hero--has-bg" : ""}`}
+  class={`c-page-hero c-page-hero--${variant} c-page-hero--${align}${compact ? " c-page-hero--compact" : ""}${bg ? " c-page-hero--has-bg" : ""}${jaSize === "lg" ? " c-page-hero--ja-lg" : ""}`}
   style={style}
 >
   <div class="c-page-hero__inner">
