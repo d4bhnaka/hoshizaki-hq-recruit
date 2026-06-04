@@ -1,0 +1,61 @@
+// ============================================
+// Component: Ice Heading
+// アイスキューブ + 日本語キャッチ + 巨大英字 + 補足
+// Figma: 06_environment の Training / Benefits / Office Tour 見出し
+// ============================================
+
+.c-ice-heading {
+  margin-bottom: clamp(28px, 3.5vw, 44px);
+}
+
+.c-ice-heading__ja {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 2px;
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-text-primary);
+}
+
+.c-ice-heading__ice {
+  width: clamp(22px, 1.8vw, 26px);
+  height: auto;
+  flex-shrink: 0;
+}
+
+.c-ice-heading__main {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 28px;
+}
+
+.c-ice-heading__en {
+  margin: 0;
+  font-family: var(--font-family-en);
+  font-size: clamp(48px, 7vw, 100px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--color-text-primary);
+}
+
+.c-ice-heading__note {
+  margin: 0;
+  font-size: clamp(14px, 1.3vw, 18px);
+  line-height: 2;
+  color: var(--color-text-primary);
+}
+
+@media screen and (max-width: 768px) {
+  .c-ice-heading__main {
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .c-ice-heading__note {
+    line-height: 1.8;
+  }
+}

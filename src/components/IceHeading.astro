@@ -1,0 +1,35 @@
+---
+// Figma 準拠の大見出し: アイスキューブ + 日本語キャッチ + 巨大な英字 + 補足。
+// 既存の小さい SectionHeading とは別系統（はたらく環境ページ等の大見出し用）。
+interface Props {
+  en: string;
+  ja?: string;
+  note?: string;
+  id?: string;
+  basePath?: string;
+}
+
+const { en, ja, note, id, basePath = "./" } = Astro.props;
+---
+
+<header class="c-ice-heading" id={id}>
+  {
+    ja && (
+      <p class="c-ice-heading__ja">
+        <img
+          class="c-ice-heading__ice"
+          src={`${basePath}images/common/ice-01.png`}
+          alt=""
+          width="26"
+          height="27"
+          aria-hidden="true"
+        />
+        <span>{ja}</span>
+      </p>
+    )
+  }
+  <div class="c-ice-heading__main">
+    <h2 class="c-ice-heading__en">{en}</h2>
+    {note && <p class="c-ice-heading__note">{note}</p>}
+  </div>
+</header>

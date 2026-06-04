@@ -1,0 +1,67 @@
+---
+// --------------------------------------------
+// OfficeTourCarousel — 拠点ごとの写真カルーセル（Swiper）
+// 豊明本社 / 島根工場 の両方で再利用。中央スライドが選択中＝一回り大きく表示される。
+// Swiper の初期化は public/js/main.js の initOfficeTour() が data 属性を介して行う。
+// --------------------------------------------
+interface OfficePhoto {
+  src?: string;
+  caption: string;
+}
+
+interface Props {
+  label: string;
+  photos: OfficePhoto[];
+}
+
+const { label, photos } = Astro.props;
+---
+
+<div class="c-office-tour" data-office>
+  <div class="c-office-tour__head">
+    <p class="c-office-tour__label">{label}</p>
+    <div class="c-office-tour__nav">
+      <button
+        class="c-office-tour__arrow c-office-tour__arrow--prev"
+        type="button"
+        aria-label={`${label}の前の写真`}
+        data-office-prev
+      ></button>
+      <button
+        class="c-office-tour__arrow c-office-tour__arrow--next"
+        type="button"
+        aria-label={`${label}の次の写真`}
+        data-office-next
+      ></button>
+    </div>
+  </div>
+
+  <div class="swiper c-office-tour__swiper" data-office-swiper>
+    <div class="swiper-wrapper">
+      {
+        photos.map((photo) => (
+          <div class="swiper-slide c-office-tour__slide">
+            <figure class="c-office-tour__figure">
+              <div class="c-office-tour__media">
+                {photo.src ? (
+                  <img
+                    src={photo.src}
+                    alt={`${label}：${photo.caption}`}
+                    loading="lazy"
+                    width="430"
+                    height="269"
+                  />
+                ) : (
+                  <span class="c-office-tour__placeholder" aria-hidden="true">
+                    準備中
+                  </span>
+                )}
+              </div>
+              <figcaption class="c-office-tour__caption">{photo.caption}</figcaption>
+            </figure>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
