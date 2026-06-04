@@ -6313,8 +6313,93 @@ img {
   margin-bottom: 0;
 }
 
+.p-special-talk__profile {
+  width: 424px;
+  max-width: 100%;
+  margin: 88px auto 0;
+}
+
+.p-special-talk__profile-label {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: fit-content;
+  margin: 0 auto -22px;
+  padding: 6px 26px;
+  isolation: isolate;
+}
+.p-special-talk__profile-label::before, .p-special-talk__profile-label::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.p-special-talk__profile-label::before {
+  z-index: 0;
+  background: #00a0e9;
+  transform: translate(5px, 5px) skewX(-12deg);
+}
+.p-special-talk__profile-label::after {
+  z-index: 1;
+  background: var(--color-white);
+  transform: skewX(-12deg);
+}
+.p-special-talk__profile-label > span {
+  position: relative;
+  z-index: 2;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #222;
+}
+
+.p-special-talk__profile-card {
+  position: relative;
+  z-index: 1;
+  background: #ebebeb;
+  border-radius: 20px;
+}
+
+.p-special-talk__profile-meta {
+  width: 285px;
+  max-width: calc(100% - 40px);
+  margin: 96px auto 43px;
+  padding: 0 16px 24px;
+  background: var(--color-white);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.p-special-talk__profile-avatar {
+  width: 240px;
+  height: 240px;
+  max-width: 100%;
+  margin: -43px auto 14px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.p-special-talk__profile-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.p-special-talk__profile-role {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+}
+
+.p-special-talk__profile-name {
+  margin: 6px 0 0;
+  font-size: 20px;
+  line-height: 1.4;
+  color: #000;
+}
+
 .p-special-talk__body {
-  max-width: 1040px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 96px 40px 0;
   display: flex;
@@ -6322,22 +6407,22 @@ img {
   gap: 88px;
 }
 
-.p-special-talk__qa {
+.p-special-talk__section {
   display: flex;
   flex-direction: column;
 }
 
-.p-special-talk__q {
+.p-special-talk__heading {
   display: flex;
   align-items: flex-start;
   gap: 20px;
-  margin: 0 0 40px;
+  margin: 0 0 32px;
   font-size: 18px;
   font-weight: 700;
-  line-height: 1.7;
-  color: #000;
+  line-height: 2;
+  color: #191919;
 }
-.p-special-talk__q::before {
+.p-special-talk__heading::before {
   content: "";
   flex: 0 0 50px;
   width: 50px;
@@ -6346,33 +6431,18 @@ img {
   background: #0177fe;
 }
 
-.p-special-talk__comment {
-  display: flex;
-  align-items: flex-start;
-  gap: 29px;
-  padding-left: 41px;
-}
-
-.p-special-talk__comment-avatar {
-  flex: 0 0 60px;
-  width: 60px;
-  height: 60px;
+.p-special-talk__text {
   margin: 0;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.p-special-talk__comment-avatar img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.p-special-talk__comment-body {
-  margin: 0;
+  padding-left: 70px;
   font-size: 16px;
-  line-height: 1.8;
+  line-height: 1.9;
   color: #000;
+}
+.p-special-talk__text p {
+  margin: 0 0 1.9em;
+}
+.p-special-talk__text p:last-child {
+  margin-bottom: 0;
 }
 
 .p-special-talk__scene {
@@ -6489,30 +6559,50 @@ img {
   .p-special-talk__lead {
     font-size: 3.5vw;
   }
+  .p-special-talk__profile {
+    width: 78vw;
+    margin-top: 6.13em;
+  }
+  .p-special-talk__profile-label {
+    margin-bottom: -1.4em;
+    padding: 0.4em 1.4em;
+  }
+  .p-special-talk__profile-label > span {
+    font-size: 5.3vw;
+  }
+  .p-special-talk__profile-meta {
+    width: 56vw;
+    max-width: none;
+    margin: 13vw auto 7vw;
+    padding: 0 1em 1.6em;
+  }
+  .p-special-talk__profile-avatar {
+    width: 42vw;
+    height: 42vw;
+    margin-top: -6vw;
+  }
+  .p-special-talk__profile-role {
+    font-size: 3.2vw;
+  }
+  .p-special-talk__profile-name {
+    font-size: 3.9vw;
+  }
   .p-special-talk__body {
     padding: 3.73em 1.07em 0;
     gap: 3.73em;
   }
-  .p-special-talk__q {
+  .p-special-talk__heading {
     gap: 0.88em;
     font-size: 3.73vw;
-    margin-bottom: 1.75em;
+    margin-bottom: 1.6em;
   }
-  .p-special-talk__q::before {
+  .p-special-talk__heading::before {
     flex-basis: 2em;
     width: 2em;
     margin-top: 0.94em;
   }
-  .p-special-talk__comment {
-    gap: 1.07em;
+  .p-special-talk__text {
     padding-left: 0;
-  }
-  .p-special-talk__comment-avatar {
-    flex-basis: 3.2em;
-    width: 3.2em;
-    height: 3.2em;
-  }
-  .p-special-talk__comment-body {
     font-size: 3.5vw;
   }
   .p-special-talk__scene {
