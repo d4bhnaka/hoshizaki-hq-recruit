@@ -50,7 +50,7 @@ export default defineConfig({
   // 相対パスで出力（サブディレクトリ配置対応）
   base: "./",
   server: {
-    port: 4750,
+    port: 3380,
   },
   integrations:
     isProduction && siteUrl

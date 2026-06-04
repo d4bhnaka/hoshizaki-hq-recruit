@@ -175,7 +175,7 @@
   background: rgba(8, 18, 36, 0.82);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 5px;
 }
 
 .p-special__card-category {
@@ -189,7 +189,7 @@
 .p-special__card-title {
   font-size: 42px;
   font-weight: 500;
-  line-height: 1.45;
+  line-height: 1.2;
   margin: 0;
   color: var(--color-text-inverse);
 }
@@ -226,26 +226,52 @@
   }
 }
 
+// READ MORE ボタン。デザイン上はテキストが上段、細長い矢印が下段に重なる
+// レイアウトのため、矢印はボタンに対して絶対配置する。
 .p-special__card-more {
   position: absolute;
   right: 32px;
   bottom: 28px;
   z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 18px;
-  padding: 13px 22px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  background-color: rgba(8, 18, 36, 0.32);
+  display: block;
+  width: 210px;
+  height: 58px;
+  // Figma(473:1033 など)のボタン背景色
+  background-color: #131827;
   font-family: var(--font-family-en);
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: var(--color-text-inverse);
   transition: background-color var(--transition-base);
 
   .p-special__card-link:hover & {
-    background-color: rgba(8, 18, 36, 0.55);
+    background-color: #1f2638;
+  }
+}
+
+.p-special__card-more-text {
+  position: absolute;
+  left: 24px;
+  top: 16px;
+  z-index: 1;
+  line-height: 1;
+}
+
+// arrow.svg は viewBox 225.25 × 18.73（約12:1）の細長い矢印。
+// ボタン下部に左右いっぱいで配置し、テキストの下に重ねる。
+// 高さは幅から自動算出される。
+.p-special__card-more-arrow {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 15px;
+  width: auto;
+  height: auto;
+  transition: transform var(--transition-base);
+
+  .p-special__card-link:hover & {
+    transform: translateX(4px);
   }
 }
 
@@ -298,8 +324,20 @@
   .p-special__card-more {
     right: 16px;
     bottom: 16px;
-    padding: 10px 16px;
-    font-size: 12px;
+    width: 172px;
+    height: 50px;
+    font-size: 16px;
+  }
+
+  .p-special__card-more-text {
+    left: 18px;
+    top: 14px;
+  }
+
+  .p-special__card-more-arrow {
+    left: 18px;
+    right: 18px;
+    bottom: 13px;
   }
 }
 
