@@ -29,7 +29,7 @@ Figma の Y 座標順。スクリーンショット（画像1）と Figma `296:7
 | S2 | PIONEER SPIRIT（採用メッセージ） | ブランドメッセージへの導入 | `_p-pioneer-spirit.scss` | `.p-pioneer-spirit` | 見出し `PIONEER SPIRIT` ／サブ「採用メッセージ」／氷山に立つペンギンイラスト／IceLinkButton（`href="./message/"`, label「採用メッセージ」） |
 | S3 | コーポレートナビ（What's / Beyond / Team） | 下層 3 ページへの導線 | `_p-corporate-nav.scss` | `.p-corporate-nav` | 中央：地球儀＋ペンギンの装飾／上「What's HOSHIZAKI」IceLinkButton（`./fact/`, label「キーワードで見る」）／左「Beyond HOSHIZAKI」IceLinkButton（`./strategy/`, label「ホシザキの海外展開」）／右「Team HOSHIZAKI」ペンギン群写真＋IceLinkButton（`./job/`, label「グループの役割」） |
 | S4 | 先輩たちの「ここに決めた！」 | 社員インタビュー一覧への導線 | `_p-person-lead.scss` | `.p-person-lead` | 星型マスクの集合（中央に大きな星＋周囲に 4 枚の社員写真）／見出し「先輩たちの『ここに決めた！』」／IceLinkButton（`./person/`, label「はたらく人を知る」） |
-| S5 | はたらく環境を知る | 環境ページへの導線 | `_p-work-env-lead.scss` | `.p-work-env-lead` | 横長オフィス写真（女性＋ペンギン群）／見出し「はたらく環境を知る」／コピー「制度も環境も、安心して働ける様まで整えてきました。」／IceLinkButton（`./environment/`, label「はたらく環境を知る」） |
+| S5 | はたらく環境を知る | 環境ページへの導線 | `_p-top.scss` | `.p-top-env` | 横長オフィス写真（女性＋ペンギン群, `images/top/section-bg-environment.jpg`）／シアン帯（#00a0e9）の見出し「はたらく環境を知る」(56px 白)／白帯＋黒太字コピー「制度も環境も、妥協せずに整えてきました。」／IceLinkButton（`./environment/`, label「はたらく環境を知る」）。Figma 868:5243 |
 | S6 | SPECIAL CONTENTS | 企画コンテンツ 3 本への導線 | `_p-special-contents.scss` | `.p-special-contents` | 大見出し `SPECIAL CONTENTS`（白抜き）＋クジラ／ペンギンシルエット背景／サブ「ホシザキではたらくリアル」／横長ダークカード × 3（クロストーク／プロジェクトストーリー／スペシャルトーク。各カードは背景写真＋ラベル＋見出し＋概要＋顔写真 avatar＋`READ MORE`） |
 | S7 | Entry / Internship CTA | 共通 CTA ペア | 共通コンポーネント | — | Entry / Internship の 2 つの CTA バナー（[06-spec-common.md](./06-spec-common.md) の `EntryCta` / `InternshipCta` を使用） |
 
@@ -119,16 +119,17 @@ Figma の Y 座標順。スクリーンショット（画像1）と Figma `296:7
 
 ### 要素
 
-- 横長の背景写真（オフィスコリドール／スーツ女性＋ペンギン群）。
-- 左寄せの見出し「はたらく環境を知る」＋サブコピー「制度も環境も、安心して働ける様まで整えてきました。」。
-- IceLinkButton（`./environment/`, label「はたらく環境を知る」）。
+- フルブリードの背景写真（オフィスコリドール／スーツ女性＋ペンギン群）。ペンギンは写真に焼き込み済みで前景 PNG は不要。
+- 写真の上に左寄せ（左 123/1600・上 153/660）で重ねる：シアン帯（`#00a0e9`）の見出し「はたらく環境を知る」（Noto Sans JP 56px / Regular / 白）＋その下にサブコピー「制度も環境も、妥協せずに整えてきました。」（白帯＋黒の太字 17px / Bold）。
+- IceLinkButton（`./environment/`, label「はたらく環境を知る」）。サブから約 93px 下。
+- 実装は `_p-top.scss` の `.p-top-env*`。固定アスペクト比 1600/660 を保ち、% 配置＋ vw サイズで全体を比例スケール（1600px で実寸一致）。≤960px で通常フローに切替。Figma 868:5243。
 
 ### アセット
 
 | 名前 | 形式 | 配置先 |
 |:--|:--|:--|
-| オフィス写真 | JPG | `public/assets/work-env-lead.jpg` |
-| ペンギン群（前景） | PNG（透過） | `public/assets/work-env-penguins.png` |
+| 背景写真（女性＋ペンギン込み） | JPG | `public/images/top/section-bg-environment.jpg` |
+| アイスリンクボタン背景 | PNG（透過） | `public/images/common/link-button-ice.png` |
 
 ## S6 SPECIAL CONTENTS 詳細
 
