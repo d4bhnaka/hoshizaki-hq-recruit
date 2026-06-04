@@ -137,11 +137,14 @@
 .p-person-detail__right {
   min-width: 0;
   padding-left: 40px;
+  // 右カラム自体を sticky 固定し、左カラム(.p-person-detail__left)だけをスクロールさせる。
+  // align-self:start でグリッド行いっぱいに伸びず写真高さに保つことで sticky が効く。
+  position: sticky;
+  top: 40px;
+  align-self: start;
 }
 
 .p-person-detail__photo {
-  position: sticky;
-  top: 32px;
   margin: 0;
   max-width: 600px;
 
@@ -252,6 +255,7 @@
 
   .p-person-detail__right {
     order: -1;
+    position: static;
     padding-left: 0;
     margin: 0 auto 12px;
     max-width: 300px;
