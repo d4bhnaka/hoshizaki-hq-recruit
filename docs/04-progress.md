@@ -312,6 +312,16 @@ dist/
   - 「冒険を始める ENTRY」ボタンの**外部リンク URL が未定**（現状 `href="#"`）。決定後に差し替え。
   - SP レイアウトは `@media 768px` で暫定。Figma の SP デザイン確認後に再調整。
 
+### 2026-06-04 セッション: Strategy ページ「Global Pioneers」を Figma 836:2191 に差し替え
+
+- **着手範囲**: `/strategy/` 末尾の **Global Pioneers** セクションを、新デザイン（Figma `836:2191`「海外駐在社員メッセージ」1600×2916）へ内容・レイアウトとも全面差し替え。見出しは `Life Across Borders` ＋ `国境を越えて、働く。暮らす。`、本文は 4 行イントロに更新。
+- **構成**: 駐在員 3 人（フィリピン・マニラ／英国・テルフォード／米国・ジョージア州）を白カード（角丸 20px・上辺をまたぐ六角バッジ）で表示。各カードは「短い罫線＋見出し＋本文」のトピックを 3 つ持ち、一部トピックは右側に写真サムネイル（マニラ＝1 / テルフォード＝1 / ジョージア＝2、計 4 枚）。テキストは Figma `get_design_context` から正確に転記。
+- **修正ファイル**:
+  - [src/pages/strategy.astro](../src/pages/strategy.astro) — `pioneers` データ配列を `market`＋`topics[{heading, body, image?, alt?}]` 構造へ刷新し、マークアップを `p-strategy-pioneers__card / __badge / __topics / __topic(--media) / __topic-heading / __media` で再構成。
+  - [src/scss/object/project/_p-strategy.scss](../src/scss/object/project/_p-strategy.scss) — Global Pioneers ブロックを全面書き換え（背景 `#d8e5e8`、見出し罫線 `#0177fe`、六角バッジは既存 `.p-strategy-market__badge` を流用）。旧 `__item/__avatar/__content` を撤去し、レスポンシブも追従。
+- **画像**: Figma の各サムネイルは元写真をマスクで角丸クリップしているため、**元の長方形写真**を `get_design_context` で書き出し → `sips` で**角丸なし JPEG**（長辺 760px・品質 82）に変換して [../public/images/strategy/](../public/images/strategy/) に配置：`pioneer-manila.jpg`（ボラカイ）/ `pioneer-telford.jpg`（カナーヴォン城）/ `pioneer-georgia-01.jpg`（会食）/ `pioneer-georgia-02.jpg`（シカゴ川ポートレート）。**角丸は CSS（`border-radius` ＋ `overflow:hidden`）でクリップ**。旧プレースホルダ `pioneer-01〜03.jpg` は削除。
+- **検証**: `npm run build` 14 ページ成功。`/strategy/` で `data-astro-cid=0`・インライン `<style>=0`・ルート絶対パス `=0`。dist を `python3 -m http.server` 配信＋Chrome ヘッドレス（CDP, 1280 幅 ×2）で当セクションを目視 → Figma と一致（バッジ／罫線／写真の角丸クリップ・配置とも OK）。※`loading="lazy"` のため、目視時はビューポートを縦長にして遅延読み込みを発火させてから撮影。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。

@@ -77,22 +77,66 @@ const mapPenguins = [
   { src: "pg07.png", left: 85.4, top: 75.5, w: 4.1 },
 ];
 
-// 世界の最前線で挑む3人
+// 海外駐在社員メッセージ（Figma 836:2191）— 3人 × 各3トピック
 const pioneers = [
   {
-    avatar: `${base}images/strategy/pioneer-01.jpg`,
-    market: "東南アジア市場",
-    body: "テキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプル",
+    market: "フィリピン・マニラ",
+    topics: [
+      {
+        heading: "活気あふれるオフィスで、無駄のない筋肉質な組織を",
+        body: "現在はフィリピン・マニラで勤務しています。ホシザキフィリピンには、明るく感性豊かなフィリピンらしいメンバーが多く在籍しており、日本のような静かなオフィスとは違う、活気にあふれた環境です。日本人が少ない分、一人で幅広い業務に向き合う必要がありますが、その分ローカル社員と協力し、互いのレベルを高め合いながら、無駄のない筋肉質な組織を目指しています。ここで生まれるエネルギーを、本社のある豊明まで届けたい。そんな思いで日々働いています。",
+      },
+      {
+        heading: "毎日のランチが、信頼を育てる",
+        body: "赴任以来ずっと続けているのが、ローカル社員と毎日ランチを共にすることです。行き先は「Carinderia」と呼ばれる地元の屋台。野良猫や虫も多く、ローカルフードの香りが鼻を突く、日本ではなかなか味わえない環境ですが、毎日同じ食卓を囲み、会話を重ねることで、確かな信頼関係が育っていきます。海外では、現地の成熟度を見極めながら、段階的に指示やサポートをしていくことが大切だと感じます。焦らず積み重ねていけば、チームは着実に成長していきます。",
+      },
+      {
+        heading: "休日は、筋トレとお笑いに捧げる",
+        body: "休日は、筋トレとお笑いに捧げています。トレーニング後に飲むプロテインと食べるご飯は格別です。日本のバラエティ番組で思い切り笑えば気分もリセットでき、良いコンディションを保てます。行きつけのバーに足を運ぶのも楽しみのひとつ。マニラの再開発エリア・BGCにある「Tap Station」では、世界各国のクラフトビールを味わえます。マニラを離れるなら、おすすめはボラカイ島。今でもあのビーチの景色が忘れられません。何度でも訪れたい、最高の場所です。",
+        image: `${base}images/strategy/pioneer-manila.jpg`,
+        alt: "ボラカイ島のビーチで砂の城とともに笑顔を見せる駐在社員",
+      },
+    ],
   },
   {
-    avatar: `${base}images/strategy/pioneer-02.jpg`,
-    market: "中国・香港市場",
-    body: "テキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプル",
+    market: "英国・テルフォード",
+    topics: [
+      {
+        heading: "部署も役職も越えて、活発に交わる職場",
+        body: "英国・テルフォードにある HOSHIZAKI EUROPE LIMITED に赴任しています。町の南には、ユネスコ世界遺産のアイアンブリッジ峡谷が広がり、この一帯は「産業革命発祥の地」として知られています。そんな歴史ある町の工場では、部署の垣根を越えて気軽に相談や情報共有ができます。上司と部下の関係もフラットで、役職に関わらず活発なコミュニケーションが飛び交う職場です。",
+      },
+      {
+        heading: "あいさつと、ひと言の雑談から",
+        body: "基本的なことですが、「あいさつを交わす」ことを徹底しています。仕事の相談や情報共有をするときには、相手の趣味や自分との共通の話題など、ほんの少しでも雑談を交えるよう心がけています。話しやすく、相談しやすい空気をつくっておくことが、いざというときの連携やサポートにつながると感じています。",
+      },
+      {
+        heading: "メリハリが、仕事の原動力になる",
+        body: "ローカルスタッフ以上に仕事をこなす場面も少なくないため、オンとオフのメリハリを大切にしています。プライベートをしっかり楽しんで充実させることが、リフレッシュになり、仕事への原動力にもつながります。休日は、家族と地方へ観光に出かけたり、趣味のゴルフを楽しんだりして過ごしています。",
+        image: `${base}images/strategy/pioneer-telford.jpg`,
+        alt: "英国・カナーヴォン城を背に立つ駐在社員",
+      },
+    ],
   },
   {
-    avatar: `${base}images/strategy/pioneer-03.jpg`,
-    market: "ヨーロッパ市場",
-    body: "テキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプル",
+    market: "米国・ジョージア州",
+    topics: [
+      {
+        heading: "一人ひとりが自律する、専門職の現場",
+        body: "ジョージア州ピーチツリーシティの本社オフィスで、経理部に所属しています。米国では経理が専門職としての色合いが強く、約20名の組織の中で、一人ひとりに明確な役割と責任が与えられています。それぞれが自律して業務を担いながら、チームとしても連携する——そんな働き方が印象的です。オフィス環境も日本とは大きく異なり、個人のスペースが広く、パーテーションで区切られています。デスクに家族の写真を飾る人も多く、まるでプライベート空間のように落ち着いて働ける環境です。",
+      },
+      {
+        heading: "「How was your weekend?」から始まる信頼",
+        body: "米国には、日本に比べて仕事以外の出来事も気軽に共有する文化があります。週明けは「How was your weekend?」から始まる雑談が延々と続き、最初は驚きましたが、こうした何気ない会話こそが信頼関係づくりにつながると感じています。外国人であり駐在員でもある自分だからこそ、現地スタッフに安心して一緒に働いてもらえるよう、日々のあいさつや日常の会話を大切にしています。",
+        image: `${base}images/strategy/pioneer-georgia-01.jpg`,
+        alt: "現地スタッフとレストランのテーブルを囲む駐在社員",
+      },
+      {
+        heading: "柔軟に時間を使い、しっかり切り替える",
+        body: "仕事とプライベートのメリハリはつけやすく、日本と比べて柔軟に時間を使えると感じています。日中は集中して業務に取り組みつつ、自分でスケジュールを調整できる範囲が大きいのが特徴です。日本との時差の関係で夜間に対応することもありますが、その分、勤務時間を調整しながら無理なく働いています。休日は国内旅行や外食でリフレッシュし、オンとオフをしっかり切り替えています。",
+        image: `${base}images/strategy/pioneer-georgia-02.jpg`,
+        alt: "シカゴ川を背にほほえむ駐在社員",
+      },
+    ],
   },
 ];
 ---
@@ -252,33 +296,45 @@ const pioneers = [
           </div>
         </section>
 
-        <!-- Global Pioneers -->
+        <!-- Global Pioneers / Life Across Borders -->
         <section class="p-strategy-pioneers" aria-labelledby="strategy-pioneers-title">
           <div class="p-strategy-pioneers__inner">
             <header class="p-strategy-pioneers__heading" id="strategy-pioneers-title">
-              <h2 class="p-strategy-pioneers__en">Global Pioneers</h2>
-              <p class="p-strategy-pioneers__ja">未知の海へ飛び込んだ、3人のファーストペンギン。</p>
+              <h2 class="p-strategy-pioneers__en">Life Across Borders</h2>
+              <p class="p-strategy-pioneers__ja">国境を越えて、働く。暮らす。</p>
             </header>
             <p class="p-strategy-pioneers__intro">
-              ホシザキのグローバル戦略。それを最前線で牽引しているのは、自ら国境を越え、異なる文化やビジネスの壁に挑む社員たちです。「世界No.1ブランド」という目標に向かって、彼らは異国の地で何を考え、どう道を切り拓いているのか。日本を飛び出し、世界の最前線で活躍する3人のリアルな挑戦の軌跡をご紹介します。
+              フィリピン、イギリス、アメリカ。ホシザキの社員は、世界のさまざまな場所で、それぞれの毎日を送っています。<br />
+              言葉も文化も違う環境で、現地の仲間とどんな関係を築き、どんなふうに働き、休日をどう過ごしているのか。<br />
+              「世界No.1ブランド」を目指す挑戦の裏側には、その土地に根を下ろした等身大の働き方と暮らしがあります。<br />
+              3人の駐在員が語る、海外での「働く環境・暮らし」のリアルをご紹介します。
             </p>
 
             <ul class="p-strategy-pioneers__list">
               {
                 pioneers.map((pioneer) => (
-                  <li class="p-strategy-pioneers__item">
-                    <div class="p-strategy-pioneers__avatar">
-                      <img
-                        src={pioneer.avatar}
-                        alt={`${pioneer.market}で活躍する社員`}
-                        loading="lazy"
-                        width="600"
-                        height="400"
-                      />
-                    </div>
-                    <div class="p-strategy-pioneers__content">
-                      <span class="p-strategy-market__badge">{pioneer.market}</span>
-                      <p class="p-strategy-pioneers__body">{pioneer.body}</p>
+                  <li class="p-strategy-pioneers__card">
+                    <span class="p-strategy-market__badge p-strategy-pioneers__badge">{pioneer.market}</span>
+                    <div class="p-strategy-pioneers__topics">
+                      {pioneer.topics.map((topic) => (
+                        <div class={`p-strategy-pioneers__topic${topic.image ? " p-strategy-pioneers__topic--media" : ""}`}>
+                          <div class="p-strategy-pioneers__topic-main">
+                            <h3 class="p-strategy-pioneers__topic-heading">{topic.heading}</h3>
+                            <p class="p-strategy-pioneers__body">{topic.body}</p>
+                          </div>
+                          {topic.image && (
+                            <div class="p-strategy-pioneers__media">
+                              <img
+                                src={topic.image}
+                                alt={topic.alt}
+                                loading="lazy"
+                                width="220"
+                                height="150"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      ))}
                     </div>
                   </li>
                 ))
