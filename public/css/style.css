@@ -3181,6 +3181,9 @@ img {
 
 .p-strategy-global__map {
   position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1404px, 96vw);
   margin: 0 0 56px;
 }
 
@@ -3207,6 +3210,7 @@ img {
   position: absolute;
   height: auto;
   pointer-events: none;
+  z-index: 3;
 }
 
 .p-strategy-global__badge {
@@ -3216,6 +3220,42 @@ img {
   width: clamp(110px, 17%, 200px);
   height: auto;
   pointer-events: none;
+  z-index: 2;
+}
+
+.p-strategy-global__map-link {
+  position: absolute;
+  z-index: 2;
+}
+
+.c-ice-link.c-ice-link--map {
+  width: clamp(46px, 5.84%, 84px);
+  height: auto;
+  aspect-ratio: 82/79;
+  filter: drop-shadow(0 3px 6px rgba(0, 47, 95, 0.16));
+}
+.c-ice-link.c-ice-link--map:hover {
+  transform: translateY(-3px);
+}
+
+.c-ice-link--map .c-ice-link__inner {
+  justify-content: center;
+  padding: 16% 6% 6%;
+  gap: 1px;
+}
+
+.c-ice-link--map .c-ice-link__label {
+  font-size: clamp(7px, 0.62vw, 10px);
+  letter-spacing: 0;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+.c-ice-link--map .c-ice-link__more {
+  font-size: clamp(5px, 0.42vw, 7px);
+  letter-spacing: 0.12em;
+  color: var(--color-text-primary);
 }
 
 .p-strategy-global__markets {
@@ -3234,6 +3274,7 @@ img {
   box-shadow: var(--shadow-card);
   padding: 26px clamp(24px, 3.5vw, 40px) 28px;
   overflow: hidden;
+  scroll-margin-top: 96px;
 }
 
 .p-strategy-market::after {

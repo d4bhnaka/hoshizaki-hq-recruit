@@ -35,33 +35,48 @@ const beyondColumn = {
 const audiences = ["医療", "学校・会社", "飲食店", "農業・漁業", "スーパー"];
 
 // 海外展開の市場別カード
+// id … 地図上アイスボタンのスクロール先 / map … 世界地図上のボタン配置（map ノード基準の %）
 const globalMarkets = [
   {
+    id: "market-america",
     title: "アメリカ市場",
+    map: { left: 69.5, top: 37.8 },
     body: "アメリカ市場で製氷機、業務用冷蔵庫、食器洗浄機、飲料ディスペンサーなどを展開、特に大型製氷機の分野で圧倒的なシェアを誇り、レストラン、ホテル、コンビニエンスストアなどで広く使用されている。さらに、環境規制に対応した省エネモデルや衛生管理に優れた製品開発を強化。全米に広がるネットワークと迅速な保守サービスにより、業界のリーダーとして確固たる地位を築いています。",
   },
   {
+    id: "market-central-america",
     title: "中米市場",
+    map: { left: 81.7, top: 49.9 },
     body: "メキシコ・パナマ市場で業務用冷蔵庫や飲料ディスペンサーを中心に展開。メキシコでは、炭酸飲料ディスペンサーや生ビールディスペンサーの需要が高く、飲食店やバー、スタジアム向けに販売を強化。アメリカ市場と連携しながら、現地に適した製品を提供しています。パナマでは、高温多湿な気候に適応した高耐久・高効率な冷却システムを導入し、ホテルやレストラン向けに安定した製品供給を行っています。",
   },
   {
+    id: "market-south-america",
     title: "南米市場",
+    map: { left: 79.7, top: 74.5 },
     body: "ブラジルでは、業務用冷蔵庫や製氷機、飲料ディスペンサーを中心に展開。特に、フードサービス業界向けの冷凍・冷蔵技術の開発を強化し、地域の食品保存ニーズに対応。さらに、炭酸飲料・ビールディスペンサーの需要が高く、現地の飲食文化に合わせた製品を提供。厳しい環境にも対応できる耐久性の高い機器を開発し、ブラジル国内でのシェア拡大を進めています。",
   },
   {
+    id: "market-china",
     title: "中国・香港市場",
+    map: { left: 35.9, top: 33.2 },
     body: "中国では大都市を中心に飲食産業が急成長しており、省エネ性能の高い業務用厨房機器の需要が拡大。特に、食品安全対策や効率的な食材管理を実現する冷蔵・冷凍技術に注力しています。香港では、コンパクトで高性能な機器を提供し、限られたスペースでも活用できる製品設計が特徴。地域ごとのニーズに適応し、サポート体制を強化しています。",
   },
   {
+    id: "market-southeast-asia",
     title: "東南アジア市場",
+    map: { left: 34.4, top: 56.1 },
     body: "東南アジア6カ国（シンガポール、インドネシア、タイ、マレーシア、ベトナム、フィリピン）で販売・保守サービスを展開。シンガポールに地域統括会社を設立し、タイに東南アジアサービスセンターを開設。域内では業務用冷蔵・冷凍機器や食材保存に特化した機器が主力で、高温多湿な気候に適した製品開発を推進。フィリピンやベトナムでは市場拡大を進め、供給体制を強化。地域の飲食文化やニーズに応じたソリューションを提供しています。",
   },
   {
+    id: "market-oceania",
     title: "オセアニア市場",
+    map: { left: 42.7, top: 67.7 },
     body: "オーストラリア・ニュージーランド市場で飲料ディスペンサーを中心に展開。特にビールやソフトドリンクのディスペンサーが主力で、飲食店やバー、スタジアム向けに需要が高い。日本や他のエリアと異なり、アルコール飲料の提供システムに強みを持ち、地元の嗜好や規制に適応した製品を開発。気候や文化に合わせた大型冷却機器や耐久性の高い機器の導入も進めています。",
   },
   {
+    id: "market-europe",
     title: "ヨーロッパ市場",
+    map: { left: 13.4, top: 29.1 },
     body: "ヨーロッパ全域で製品供給とサービスを展開。特に業務用製氷機や冷蔵・冷凍機器が主力で、厳しい環境規制に対応した省エネ・自然冷媒モデルを強化。イギリスでは大形クレセントアイスメーカーの販売を拡大し、飲食・ホテル業界のニーズに応える。イタリアではBrema Group S.p.A.をグループ化し、多様な製氷技術の開発と生産を推進。各国の市場特性に合わせた製品展開により、ヨーロッパ市場でのプレゼンスを強化しています。",
   },
 ];
@@ -280,13 +295,33 @@ const pioneers = [
                   width="490"
                   height="490"
                 />
+                {
+                  globalMarkets.map((market) => (
+                    <a
+                      class="c-ice-link c-ice-link--map p-strategy-global__map-link"
+                      href={`#${market.id}`}
+                      style={`left:${market.map.left}%;top:${market.map.top}%`}
+                    >
+                      <img
+                        class="c-ice-link__bg"
+                        src={`${base}images/common/link-button-ice.png`}
+                        alt=""
+                        loading="lazy"
+                      />
+                      <span class="c-ice-link__inner">
+                        <span class="c-ice-link__label">{market.title}</span>
+                        <span class="c-ice-link__more">READ MORE</span>
+                      </span>
+                    </a>
+                  ))
+                }
               </div>
             </div>
 
             <ul class="p-strategy-global__markets">
               {
                 globalMarkets.map((market) => (
-                  <li class="p-strategy-market">
+                  <li class="p-strategy-market" id={market.id}>
                     <span class="p-strategy-market__badge">{market.title}</span>
                     <p class="p-strategy-market__body">{market.body}</p>
                   </li>

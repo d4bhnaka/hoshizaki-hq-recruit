@@ -1,6 +1,7 @@
 // ============================================
 // Project: Strategy (Beyond HOSHIZAKI)
-// Figma node: 245:557 (03_strategy / 1600x8441)
+// Figma node: 245:557 (03_strategy / 1600x10271)
+// ※ Global Pioneers セクションは別ノード 836:2191（Life Across Borders）を正版として実装
 // ============================================
 
 .p-strategy {
@@ -242,9 +243,12 @@
   line-height: 2;
 }
 
-// 世界地図
+// 世界地図 — Figma では地図が本文帯より広い（1405/1600）ため中央寄せでブレイクアウト
 .p-strategy-global__map {
   position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1404px, 96vw);
   margin: 0 0 56px;
 }
 
@@ -271,6 +275,7 @@
   position: absolute;
   height: auto;
   pointer-events: none;
+  z-index: 3; // ペンギンはアイスボタンの上に立つ
 }
 
 .p-strategy-global__badge {
@@ -280,6 +285,44 @@
   width: clamp(110px, 17%, 200px);
   height: auto;
   pointer-events: none;
+  z-index: 2;
+}
+
+// 地図上の市場別アイスリンクボタン（共通 .c-ice-link を地図用に縮小）
+.p-strategy-global__map-link {
+  position: absolute;
+  z-index: 2;
+}
+
+.c-ice-link.c-ice-link--map {
+  width: clamp(46px, 5.84%, 84px);
+  height: auto;
+  aspect-ratio: 82 / 79;
+  filter: drop-shadow(0 3px 6px rgba(0, 47, 95, 0.16));
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+
+.c-ice-link--map .c-ice-link__inner {
+  justify-content: center;
+  padding: 16% 6% 6%;
+  gap: 1px;
+}
+
+.c-ice-link--map .c-ice-link__label {
+  font-size: clamp(7px, 0.62vw, 10px);
+  letter-spacing: 0;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+.c-ice-link--map .c-ice-link__more {
+  font-size: clamp(5px, 0.42vw, 7px);
+  letter-spacing: 0.12em;
+  color: var(--color-text-primary);
 }
 
 // 市場別カード
@@ -299,6 +342,7 @@
   box-shadow: var(--shadow-card);
   padding: 26px clamp(24px, 3.5vw, 40px) 28px;
   overflow: hidden;
+  scroll-margin-top: 96px; // 地図のアイスボタンからのアンカー着地位置（ヘッダー分）
 }
 
 // カード右側の氷テクスチャ（35%・左へフェード）

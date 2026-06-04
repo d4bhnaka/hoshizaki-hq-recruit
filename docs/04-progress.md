@@ -322,6 +322,16 @@ dist/
 - **画像**: Figma の各サムネイルは元写真をマスクで角丸クリップしているため、**元の長方形写真**を `get_design_context` で書き出し → `sips` で**角丸なし JPEG**（長辺 760px・品質 82）に変換して [../public/images/strategy/](../public/images/strategy/) に配置：`pioneer-manila.jpg`（ボラカイ）/ `pioneer-telford.jpg`（カナーヴォン城）/ `pioneer-georgia-01.jpg`（会食）/ `pioneer-georgia-02.jpg`（シカゴ川ポートレート）。**角丸は CSS（`border-radius` ＋ `overflow:hidden`）でクリップ**。旧プレースホルダ `pioneer-01〜03.jpg` は削除。
 - **検証**: `npm run build` 14 ページ成功。`/strategy/` で `data-astro-cid=0`・インライン `<style>=0`・ルート絶対パス `=0`。dist を `python3 -m http.server` 配信＋Chrome ヘッドレス（CDP, 1280 幅 ×2）で当セクションを目視 → Figma と一致（バッジ／罫線／写真の角丸クリップ・配置とも OK）。※`loading="lazy"` のため、目視時はビューポートを縦長にして遅延読み込みを発火させてから撮影。
 
+### 2026-06-04 セッション: Strategy ページ全体を Figma 245:557 に突き合わせ（地図アイスボタン追加）
+
+- **着手範囲**: `/strategy/` 全体を最新 Figma `245:557`（03_strategy / 1600×**10271**）と突き合わせ。Hero／Intro／Business Field／市場カードのテキスト・構成は既に忠実だったため据え置き。Life Across Borders（別ノード `836:2191`）はユーザー確認済みで現状維持。
+- **主な差分＝Global Market の世界地図**: Figma では各市場（ヨーロッパ／中国・香港／アメリカ／東南アジア／オセアニア／中米／南米）の位置に **アイスキューブ型「READ MORE」リンクボタン**（`LinkButtonIce`）が置かれ、その上にペンギンが立つ構成。現行はペンギンのみでボタンが欠落していたため、7 つのボタンを地図上の Figma 座標（map ノード 1405×773 基準の %）に追加。
+  - 既存の共通コンポーネント **`.c-ice-link`**（top ページ流用、`images/common/link-button-ice.png`）を再利用し、地図用の縮小モディファイア **`.c-ice-link--map`** を `_p-strategy.scss` に追加（ラベル下線＋READ MORE、`clamp()` で小サイズ対応）。
+  - **リンク先はユーザー選択により「下の該当市場カードへスクロール」**（同ページ内アンカー）。各市場カード `<li>` に `id`（`market-america` 等）を付与し、ボタンは `href="#…"`。`scroll-margin-top:96px` でヘッダー分を確保。
+  - 地図が本文帯（1040px）より広い（Figma 1405px）ため、`.p-strategy-global__map` を `width:min(1404px,96vw)` で中央寄せブレイクアウト（`.p-strategy` の `overflow:hidden` で横スクロール無し）。ペンギンは `z-index:3` でボタンの上に。
+- **修正ファイル**: [src/pages/strategy.astro](../src/pages/strategy.astro)（`globalMarkets` に `id`・`map{left,top}` 追加＋地図ボタン markup＋カード `id`）／[src/scss/object/project/_p-strategy.scss](../src/scss/object/project/_p-strategy.scss)（地図ブレイクアウト・`.c-ice-link--map`・`scroll-margin`）。新規アセットなし（既存 `link-button-ice.png` を流用）。
+- **検証**: `npm run build` 14 ページ成功。`/strategy/` で `data-astro-cid=0`・インライン `<style>=0`・ルート絶対パス `=0`。`scrollWidth==clientWidth`（横溢れ無し）。CDP（1280幅×2）で地図を撮影 → 7 ボタン＋ペンギン＋中央バッジが Figma と一致。アンカー 7 本がカード `id` 7 件と全て対応。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。
