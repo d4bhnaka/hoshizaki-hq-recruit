@@ -281,7 +281,7 @@
   display: flex;
   align-items: flex-start;
   gap: 20px;
-  margin: 0 0 40px;
+  margin: 0 0 28px;
   font-size: 18px;
   font-weight: 700;
   line-height: 1.7;
@@ -297,13 +297,22 @@
   }
 }
 
-.p-crosstalk__comments {
-  margin: 0 0 64px;
-  padding: 0;
-  list-style: none;
+// 司会／インタビュアーの問い。アバターは持たず、見出しテキストの位置に揃えて
+// やや浅くインデントする（Figma: moderator x359 = Q見出しテキストと同列）。
+.p-crosstalk__lead-q {
+  margin: 0 0 40px;
+  padding-left: 70px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #000;
+  word-break: break-word;
+}
+
+// 発言と挿入画像を縦に並べるストリーム（順序は Figma の配置どおり）。
+.p-crosstalk__stream {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 40px;
 }
 
 .p-crosstalk__comment {
@@ -541,13 +550,23 @@
   .p-crosstalk__q {
     gap: 0.88em;
     font-size: 3.73vw;
-    margin-bottom: 1.75em;
+    margin-bottom: 1.4em;
 
     &::before {
       flex-basis: 2em;
       width: 2em;
       margin-top: 0.94em;
     }
+  }
+
+  .p-crosstalk__lead-q {
+    margin-bottom: 1.87em;
+    padding-left: 0;
+    font-size: 3.5vw;
+  }
+
+  .p-crosstalk__stream {
+    gap: 2.67em;
   }
 
   .p-crosstalk__comment {
