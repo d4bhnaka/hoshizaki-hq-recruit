@@ -75,13 +75,26 @@
     if (!tabs.length || !cards.length) return;
     var empty = document.querySelector("[data-person-empty]");
 
+    var CARD_STAGGER = 0.035; // 1 枚あたりの遅延（秒）
+
     function applyFilter(value) {
       var visible = 0;
       cards.forEach(function (card) {
         var tags = (card.getAttribute("data-person-tags") || "").split(/\s+/);
         var match = value === "all" || tags.indexOf(value) !== -1;
-        card.style.display = match ? "" : "none";
-        if (match) visible++;
+        if (match) {
+          card.style.display = "";
+          // マイクロインタラクション: 一致カードを表示順にスタッガーで再生。
+          // クラスを一旦外し、リフローを挟んでから付け直して再アニメーションさせる。
+          card.classList.remove("is-filtering");
+          void card.offsetWidth;
+          card.style.animationDelay = visible * CARD_STAGGER + "s";
+          card.classList.add("is-filtering");
+          visible++;
+        } else {
+          card.style.display = "none";
+          card.classList.remove("is-filtering");
+        }
       });
       if (empty) empty.hidden = visible !== 0;
     }

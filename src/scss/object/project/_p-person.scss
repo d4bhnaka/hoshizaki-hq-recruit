@@ -93,7 +93,10 @@ $person-band: 1332px;
   }
 }
 
-.p-person__filter-btn--active {
+// 選択中の状態は JS が切り替える aria-pressed="true" を正として塗りつぶす。
+// （以前はクラス .--active のみで、JS が aria-pressed しか更新せず塗りが
+//  追従しなかった。アクセシブルな状態と見た目を一致させる。）
+.p-person__filter-btn[aria-pressed="true"] {
   background: var(--color-brand-cyan);
   border-color: var(--color-brand-cyan);
   color: var(--color-white);
@@ -129,6 +132,27 @@ $person-band: 1332px;
 .p-person__grid-item {
   margin: 0;
   display: flex;
+}
+
+// 絞り込み時のマイクロインタラクション。
+// JS が一致カードに .is-filtering を付け直し（リフロー後）、
+// 表示順に応じた animation-delay を inline で与えてスタッガー表示する。
+@keyframes p-person-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .p-person__grid-item.is-filtering {
+    animation: p-person-card-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    will-change: opacity, transform;
+  }
 }
 
 .p-person__empty {

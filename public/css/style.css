@@ -4108,13 +4108,13 @@ a.c-person-card:hover {
   color: var(--color-brand-cyan);
 }
 
-.p-person__filter-btn--active {
+.p-person__filter-btn[aria-pressed=true] {
   background: var(--color-brand-cyan);
   border-color: var(--color-brand-cyan);
   color: var(--color-white);
   font-weight: 700;
 }
-.p-person__filter-btn--active:hover {
+.p-person__filter-btn[aria-pressed=true]:hover {
   background: var(--color-brand-cyan);
   border-color: var(--color-brand-cyan);
   color: var(--color-white);
@@ -4141,6 +4141,22 @@ a.c-person-card:hover {
   display: flex;
 }
 
+@keyframes p-person-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .p-person__grid-item.is-filtering {
+    animation: p-person-card-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    will-change: opacity, transform;
+  }
+}
 .p-person__empty {
   margin: 48px 0 0;
   text-align: center;
