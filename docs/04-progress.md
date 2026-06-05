@@ -142,7 +142,7 @@
 
 - [r] M6b-P00 トップ `/`（node `296:7137`）— 並列サブエージェント実装済み（2026-04-24）
 - [r] M6b-P01 採用メッセージ `/message/`（node `162:53`）— [07 の 01 節](./07-spec-subpages.md#01-採用メッセージpioneer-spirit--message)
-- [r] M6b-P02 What's HOSHIZAKI `/fact/`（node `238:6058`）— [07 の 02 節](./07-spec-subpages.md#02-whats-hoshizaki数字で見るホシザキ--fact)
+- [r] M6b-P02 What's HOSHIZAKI `/fact/`（node `238:6058`）— [07 の 02 節](./07-spec-subpages.md#02-whats-hoshizaki数字で見るホシザキ--fact)。2026-06-05 に Figma 忠実コーディング＋実アセット書き出し済み：ヒーローを job 同様の「左インデント＋右ブリード」写真帯に修正／成長セクションを 3 列ベント配置（短=261・中=314・高=589 のアスペクト比で列揃え）に再構築／統計カードを平行四辺形タブ＋黒の極太数字（Noto Sans JP 900）＋淡色ウォーターマーク画像（王冠/月桂冠/日本地図/世界地図/製品/棒グラフ、Figma 指定 opacity 再現）に刷新／海外売上比率は conic-gradient 円グラフ／福利厚生4枚を上50:50・下33:67 グリッドに。アイコン16点を `public/images/fact/` へ書き出し。
 - [r] M6b-P03 Beyond HOSHIZAKI `/strategy/`（node `245:557`）— [07 の 03 節](./07-spec-subpages.md#03-beyond-hoshizaki事業領域海外展開--strategy)
 - [r] M6b-P04 Team HOSHIZAKI `/job/`（node `245:287`）— [07 の 04 節](./07-spec-subpages.md#04-team-hoshizaki職種紹介--job)。2026-05-28 に Figma 忠実コーディング＋実アセット書き出し済み（後述セッションログ参照）。
 - [r] M6b-P05 Person 一覧 `/person/`（**最新 node `836:2220`**／旧 `246:1055`）— [07 の 05 節](./07-spec-subpages.md#05-先輩たちのここに決めた一覧--person)。2026-06-04 に Figma `836:2220` 忠実コーディング＋実データ反映済み（後述セッションログ）。

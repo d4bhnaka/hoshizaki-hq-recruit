@@ -1,174 +1,181 @@
 // ============================================
 // Project: Fact (What's HOSHIZAKI / 数字で見るホシザキ)
+// Figma node: 238:6058 (1600 x 4808)
 // ============================================
 
 .p-fact {
   display: block;
-  background: var(--color-bg-page);
-}
-
-// --------------------------------------------
-// Banner image (penguin on ice)
-// --------------------------------------------
-.p-fact__banner {
-  padding: 40px 64px 0;
-}
-
-.p-fact__banner-inner {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-}
-
-.p-fact__banner-image {
-  position: relative;
   width: 100%;
-  aspect-ratio: 16 / 5;
-  border-radius: var(--border-radius-xl);
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background: var(--color-bg-page); // #d8e5e8
+  color: var(--color-text-primary);
   overflow: hidden;
-  background:
-    linear-gradient(180deg, #bfe1f5 0%, #e8f3fb 100%);
-  box-shadow: var(--shadow-card);
 }
 
-.p-fact__banner-city {
-  position: absolute;
-  inset: 0;
+// --------------------------------------------
+// Hero FV（PageHero スロット内のペンギン写真帯）
+// Figma: 写真左端 x≈317（タイトル x≈137 より右にインデント）＋右端は枠外へブリード
+// --------------------------------------------
+.p-fact__hero-visual {
+  margin: 44px 0 0 auto;
+  width: min(1283px, 100%);
+  margin-right: clamp(-126px, -8vw, 0px);
+  aspect-ratio: 1283 / 430;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.p-fact__hero-visual img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.6;
-}
-
-.p-fact__banner-penguin {
-  position: absolute;
-  right: 8%;
-  bottom: 0;
-  width: 22%;
-  min-width: 180px;
-  max-width: 320px;
-  height: auto;
-  object-fit: contain;
 }
 
 // --------------------------------------------
 // Intro copy
 // --------------------------------------------
 .p-fact__intro {
-  padding: 64px 24px 32px;
+  padding: clamp(48px, 6vw, 76px) clamp(20px, 5vw, 40px) clamp(20px, 3vw, 32px);
 }
 
 .p-fact__intro-text {
-  max-width: 800px;
+  max-width: 1120px;
   margin: 0 auto;
-  font-size: 16px;
-  line-height: 2;
+  font-size: clamp(14px, 1.2vw, 16px);
+  line-height: 2.1;
   text-align: center;
   color: var(--color-text-primary);
 }
 
 // --------------------------------------------
-// Sections
+// Section wrapper
 // --------------------------------------------
 .p-fact__section {
-  padding: 80px 64px;
+  padding-block: clamp(48px, 6vw, 80px);
 }
 
-.p-fact__section--growth {
-  background: transparent;
-}
-
-.p-fact__section--benefits {
-  background: var(--color-bg-cloud);
-}
-
-.p-fact__section-inner {
-  max-width: var(--content-max-width);
+.p-fact__inner {
+  max-width: 1448px;
   margin: 0 auto;
+  padding-inline: clamp(20px, 5vw, 40px);
+  box-sizing: border-box;
 }
 
 // --------------------------------------------
-// Grid layouts
+// Section heading（◆ 日本語見出し + 補足）
 // --------------------------------------------
-.p-fact__grid {
-  display: grid;
-  gap: 24px;
+.p-fact__heading {
+  margin-bottom: clamp(28px, 3.2vw, 44px);
+}
+
+.p-fact__heading-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 10px;
+  font-size: clamp(20px, 2.4vw, 30px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-text-primary);
+}
+
+.p-fact__heading-mark {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  background: var(--color-brand-cyan-deep);
+  transform: rotate(45deg);
+}
+
+.p-fact__heading-note {
   margin: 0;
-  padding: 0;
-  list-style: none;
+  padding-left: 27px;
+  font-size: clamp(13px, 1.2vw, 15px);
+  color: var(--color-text-secondary);
 }
 
-.p-fact__grid--growth {
+// --------------------------------------------
+// Growth: bento grid（3列 / 各列でカード高さが異なる）
+// --------------------------------------------
+.p-fact__bento {
+  display: flex;
+  gap: clamp(14px, 1.5vw, 21px);
+}
+
+.p-fact__col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.5vw, 21px);
+}
+
+// --------------------------------------------
+// Benefits grid（2行 / 上=50:50・下=33:67）
+// --------------------------------------------
+.p-fact__benefits {
+  display: grid;
   grid-template-columns: repeat(6, 1fr);
+  gap: clamp(16px, 1.7vw, 24px);
 }
 
-.p-fact__grid--growth .p-fact__grid-item {
-  grid-column: span 2;
-}
-
-.p-fact__grid--growth .p-fact__grid-item--span-2 {
+.p-fact__benefits .c-benefit--tenure {
   grid-column: span 3;
 }
-
-.p-fact__grid--benefits {
-  grid-template-columns: repeat(2, 1fr);
+.p-fact__benefits .c-benefit--overtime {
+  grid-column: span 3;
 }
-
-.p-fact__grid-item {
-  display: flex;
+.p-fact__benefits .c-benefit--vacation {
+  grid-column: span 2;
 }
-
-.p-fact__grid-item > .c-stat-card {
-  flex: 1;
+.p-fact__benefits .c-benefit--childcare {
+  grid-column: span 4;
 }
 
 // --------------------------------------------
 // Breadcrumb wrapper
 // --------------------------------------------
 .p-fact__breadcrumb {
-  padding: 32px 64px 0;
+  max-width: 1448px;
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 32px) clamp(20px, 5vw, 40px) 0;
+  box-sizing: border-box;
 }
 
-@media screen and (max-width: 960px) {
-  .p-fact__banner {
-    padding: 24px 20px 0;
-  }
-
-  .p-fact__banner-image {
-    aspect-ratio: 16 / 7;
-  }
-
-  .p-fact__intro {
-    padding: 40px 20px 24px;
-  }
-
-  .p-fact__intro-text {
-    font-size: 15px;
-    line-height: 1.9;
-    text-align: left;
-  }
-
-  .p-fact__section {
-    padding: 56px 20px;
-  }
-
-  .p-fact__grid {
-    gap: 16px;
-  }
-
-  .p-fact__grid--growth {
+// --------------------------------------------
+// Responsive
+// --------------------------------------------
+@media (max-width: 920px) {
+  .p-fact__bento {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
+    align-items: start;
   }
-
-  .p-fact__grid--growth .p-fact__grid-item,
-  .p-fact__grid--growth .p-fact__grid-item--span-2 {
-    grid-column: span 2;
+  .p-fact__col {
+    display: contents;
   }
+  // 高さ揃えをやめてカード単位で並べる
+  .p-fact__bento .c-stat-card {
+    aspect-ratio: auto;
+  }
+}
 
-  .p-fact__grid--benefits {
+@media (max-width: 600px) {
+  .p-fact__bento {
     grid-template-columns: 1fr;
   }
-
-  .p-fact__breadcrumb {
-    padding: 24px 20px 0;
+  .p-fact__benefits {
+    grid-template-columns: 1fr;
+  }
+  .p-fact__benefits .c-benefit--tenure,
+  .p-fact__benefits .c-benefit--overtime,
+  .p-fact__benefits .c-benefit--vacation,
+  .p-fact__benefits .c-benefit--childcare {
+    grid-column: 1 / -1;
+  }
+  .p-fact__intro-text {
+    text-align: left;
   }
 }
