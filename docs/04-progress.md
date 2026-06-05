@@ -141,13 +141,8 @@
 共通コンポーネント（M2-C1〜C9）が揃ってから着手。各ページの詳細仕様は [07-spec-subpages.md](./07-spec-subpages.md) の該当セクションを参照。
 
 - [r] M6b-P00 トップ `/`（node `296:7137`）— 並列サブエージェント実装済み（2026-04-24）
-<<<<<<< HEAD
 - [r] M6b-P01 採用メッセージ `/message/`（node `162:53`）— [07 の 01 節](./07-spec-subpages.md#01-採用メッセージpioneer-spirit--message)。**2026-06-05** に Figma `162:53` 忠実コーディング＋実アセット書き出し済み（後述セッションログ参照）。
-- [r] M6b-P02 What's HOSHIZAKI `/fact/`（node `238:6058`）— [07 の 02 節](./07-spec-subpages.md#02-whats-hoshizaki数字で見るホシザキ--fact)
-=======
-- [r] M6b-P01 採用メッセージ `/message/`（node `162:53`）— [07 の 01 節](./07-spec-subpages.md#01-採用メッセージpioneer-spirit--message)
 - [r] M6b-P02 What's HOSHIZAKI `/fact/`（node `238:6058`）— [07 の 02 節](./07-spec-subpages.md#02-whats-hoshizaki数字で見るホシザキ--fact)。2026-06-05 に Figma 忠実コーディング＋実アセット書き出し済み：ヒーローを job 同様の「左インデント＋右ブリード」写真帯に修正／成長セクションを 3 列ベント配置（短=261・中=314・高=589 のアスペクト比で列揃え）に再構築／統計カードを平行四辺形タブ＋黒の極太数字（Noto Sans JP 900）＋淡色ウォーターマーク画像（王冠/月桂冠/日本地図/世界地図/製品/棒グラフ、Figma 指定 opacity 再現）に刷新／海外売上比率は conic-gradient 円グラフ／福利厚生4枚を上50:50・下33:67 グリッドに。アイコン16点を `public/images/fact/` へ書き出し。
->>>>>>> 020701df998f16d563cdd8301abd5a455b53a6cb
 - [r] M6b-P03 Beyond HOSHIZAKI `/strategy/`（node `245:557`）— [07 の 03 節](./07-spec-subpages.md#03-beyond-hoshizaki事業領域海外展開--strategy)
 - [r] M6b-P04 Team HOSHIZAKI `/job/`（node `245:287`）— [07 の 04 節](./07-spec-subpages.md#04-team-hoshizaki職種紹介--job)。2026-05-28 に Figma 忠実コーディング＋実アセット書き出し済み（後述セッションログ参照）。
 - [r] M6b-P05 Person 一覧 `/person/`（**最新 node `836:2220`**／旧 `246:1055`）— [07 の 05 節](./07-spec-subpages.md#05-先輩たちのここに決めた一覧--person)。2026-06-04 に Figma `836:2220` 忠実コーディング＋実データ反映済み（後述セッションログ）。
@@ -368,7 +363,6 @@ dist/
 - **修正ファイル**: [src/pages/strategy.astro](../src/pages/strategy.astro)（`globalMarkets` に `id`・`map{left,top}` 追加＋地図ボタン markup＋カード `id`）／[src/scss/object/project/_p-strategy.scss](../src/scss/object/project/_p-strategy.scss)（地図ブレイクアウト・`.c-ice-link--map`・`scroll-margin`）。新規アセットなし（既存 `link-button-ice.png` を流用）。
 - **検証**: `npm run build` 14 ページ成功。`/strategy/` で `data-astro-cid=0`・インライン `<style>=0`・ルート絶対パス `=0`。`scrollWidth==clientWidth`（横溢れ無し）。CDP（1280幅×2）で地図を撮影 → 7 ボタン＋ペンギン＋中央バッジが Figma と一致。アンカー 7 本がカード `id` 7 件と全て対応。
 
-<<<<<<< HEAD
 ### 2026-06-04 セッション: はたらく環境ページ（/environment/）の Figma 忠実コーディング（全面再実装）
 
 - **着手範囲**: `/environment/`（Figma `242:446`「06_environment」1600×7360）を Figma に忠実へ全面再実装。旧実装はプレースホルダ（プラス型 SVG アイコン・HTML マトリクス・"PHOTO" 枠）だったため破棄し、`get_design_context` の正確なテキスト・配色で作り直し。ページ全体背景は **`#d8e5e8`** 一色、本文グレーは `#7c7c7c`。
@@ -406,7 +400,7 @@ dist/
   - [src/scss/object/project/_p-requirement.scss](../src/scss/object/project/_p-requirement.scss) — 旧 `.p-req .c-page-hero--cloud`（独自の cloud01.png 背景・PC/SP）を撤去し共通の雲に統一。
 - **検証**: `npm run build` 14 ページ成功。6ページ全てで `data-astro-cid`/インライン `<style>`/ルート絶対パス=0。`_c-page-hero.scss` から cloud01/02・eaf4fc 参照が消えたことを確認。Chrome ヘッドレスで6ページのヒーローを撮影し、Figma 実レンダリング（`get_screenshot`）と同スケールで比較 → ミスト雲・背景・タイトルとも一致。雲の不透明度は分離テスト（Figma 座標で 0.8/0.65/0.5 を比較）で 0.78 に微調整。生成された Figma 書き出しのハッシュ名一時ファイル（リポジトリ直下・`public/images/` 直下、計87個）は全て削除済み（コード参照0件を確認）。
 - **既知の制約**: 雲 SVG をラスタライズした 540KB PNG を全下層ページで読み込む（FTP 入稿前提で許容範囲）。元の `top/cloud01.png` `cloud02.png` は `_l-background.scss` 等が引き続き参照するため残置。
-=======
+
 ### 2026-06-04 セッション: Person 一覧（/person/）を Figma 836:2220 に忠実コーディング＋実データ反映
 
 - **着手範囲**: `/person/`（最新 Figma `836:2220`「05_person」1600×3744）を忠実に再実装。旧実装はダミー文面＋thumb01-04 の使い回しだったため、`writing/sources/` の社員 15 名の実データを反映。
@@ -430,7 +424,6 @@ dist/
   - 文理/性別タグは学部情報・写真からの**推定**（山根は学部情報欠落のため理系と仮置き）。正式分類が必要なら要確認。
   - 個別詳細ページ（`/person/detail/`）の本実装・カードからの導線は別タスク（現状リンクなし）。
   - **注意**: 本セッション中に別プロセス由来の未追跡ファイル（`public/images/person/p01〜p15.png`・`crosstalk.*` の変更等）が混在。**本タスクの成果物ではない**ためコミット対象から除外すること。
->>>>>>> 086f4654ca44bb30994830647aea901bb88a00a8
 
 ### 2026-06-05 セッション: トップページ S1〜S4 を Figma 忠実へ全面再構築
 
