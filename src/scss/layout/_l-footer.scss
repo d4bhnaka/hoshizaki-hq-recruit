@@ -29,7 +29,7 @@
 .l-footer__nav {
   display: grid;
   // 各カラムの開始 X を固定: 186 → 373 → 634 → 898
-  grid-template-columns: 187px 261px 264px max-content;
+  grid-template-columns: 187px 260px 360px max-content;
   padding-left: 186px;
 }
 
