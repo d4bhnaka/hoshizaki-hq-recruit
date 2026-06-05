@@ -113,7 +113,7 @@
 - [r] M5-3 [06-spec-common.md](./06-spec-common.md) ＆ [07-spec-subpages.md](./07-spec-subpages.md) 作成。
 - [ ] M5-4 Footer サイトマップの SPECIAL CONTENTS 3 タイトルの正式名称をクライアント確認。
 - [r] M5-5 Internship v1 (`246:815`) と v2 (`446:5278`) の正版確認 → **v2 (`446:5278`) を正版として採用・忠実実装済み**（2026-05-28）。
-- [ ] M5-6 採用メッセージの「人の写真は使わない／採用ペンギン」の最終方針確認。
+- [r] M5-6 採用メッセージの「人の写真は使わない／採用ペンギン」の最終方針確認。**2026-06-05**：Figma `162:53` 確定版に基づき決着。人物写真は使わず、スーツ姿の採用ペンギン（`img01.png`）＋施設写真（ショールーム `img02.png`／厨房機器 `img03.png`）で実装。
 - [ ] M5-7 Strategy ページの「飲食市場」「飲食外市場」サブセクション本文の入稿確認。
 
 ---
@@ -141,7 +141,7 @@
 共通コンポーネント（M2-C1〜C9）が揃ってから着手。各ページの詳細仕様は [07-spec-subpages.md](./07-spec-subpages.md) の該当セクションを参照。
 
 - [r] M6b-P00 トップ `/`（node `296:7137`）— 並列サブエージェント実装済み（2026-04-24）
-- [r] M6b-P01 採用メッセージ `/message/`（node `162:53`）— [07 の 01 節](./07-spec-subpages.md#01-採用メッセージpioneer-spirit--message)
+- [r] M6b-P01 採用メッセージ `/message/`（node `162:53`）— [07 の 01 節](./07-spec-subpages.md#01-採用メッセージpioneer-spirit--message)。**2026-06-05** に Figma `162:53` 忠実コーディング＋実アセット書き出し済み（後述セッションログ参照）。
 - [r] M6b-P02 What's HOSHIZAKI `/fact/`（node `238:6058`）— [07 の 02 節](./07-spec-subpages.md#02-whats-hoshizaki数字で見るホシザキ--fact)
 - [r] M6b-P03 Beyond HOSHIZAKI `/strategy/`（node `245:557`）— [07 の 03 節](./07-spec-subpages.md#03-beyond-hoshizaki事業領域海外展開--strategy)
 - [r] M6b-P04 Team HOSHIZAKI `/job/`（node `245:287`）— [07 の 04 節](./07-spec-subpages.md#04-team-hoshizaki職種紹介--job)。2026-05-28 に Figma 忠実コーディング＋実アセット書き出し済み（後述セッションログ参照）。
@@ -440,6 +440,18 @@ dist/
 - **新規アセット**: [public/images/top/concept-movie-poster.png](../public/images/top/concept-movie-poster.png)、[public/images/top/koko-decided.svg](../public/images/top/koko-decided.svg)。既存 ap_01-05 / bg-city / pioneer / sec01-04 / ice_cubes は流用（dim が Figma rect と一致確認済み）。
 - **検証**: `npm run build` クリーン（`data-astro-cid=0` / インライン`<style>=0` / ルート絶対パス=0 / ハッシュ無し）。`dist/` を静的配信し Chrome ヘッドレス 1600px でレンダ→ S1/S2/S3 を Figma スクショ・ユーザー支給デザインと目視照合し一致。さらに 4 エージェントの敵対的レビュー（幾何/タイポ/色アセット/ビジュアル）を実施し、全項目 PASS（幾何ズレ最大 0.05pp、文言・ウェイト・色すべて適合）。
 - **未対応**: M3-A1〜A4 の GSAP アニメ（フェードイン/ペンギン浮遊/ScrollTrigger）は引き続き未実装。`src/pages/internship.astro:392` にも「さあ」表記が残るが別 Figma ノードのため本タスク対象外（要確認）。
+
+### 2026-06-05 セッション: 採用メッセージ（/message/）を Figma 162:53 に忠実コーディング
+
+- **着手範囲**: [/message/](../src/pages/message.astro) を Figma `162:53`（01_message, 1600×2804）に忠実再実装。旧実装はプレースホルダ（壊れた画像参照 `photo-01.jpg`/`page-fv.png`、キャプション色・雲/ペンギン位置が独自）だったため全面刷新。
+- **ヒーロー**: 青空は横グラデ `linear-gradient(90deg,#107AF4,#10AFF4)` ＋下辺斜めカット（`clip-path: polygon(0 0,100% 0,100% 80.543%,0 100%)` = Figma `Rectangle2224` の `M0 0 H1600 V712 L0 884 Z`）。霧の雲は `images/common/hero-cloud.png` を `mix-blend-mode: screen` で2枚（Group2184/2185 座標）。飛ぶペンギン5羽・タイトル「常識の／先へ、／跳べ。」・キャプション「PIONEER SPIRIT」(Barlow Condensed 80px **白**)＋「採用メッセージ」(30px 白) を、トップと同じ「固定アスペクト比ステージ + 絶対配置(%) + cqw + clamp()」方式で配置。
+- **本文**: 採用ペンギン（`img01.png`）＋導入文、続いて本文＋重なる2枚の施設写真（上=ショールーム `img02.png` / 下=厨房機器 `img03.png`、各 311×214 角丸）。可読性優先で最大幅コンテナ + clamp() のフロー/グリッド。背景は `--color-bg-page #d8e5e8`。**M5-6 決着**: 人物写真は使わず採用ペンギン＋施設写真で確定。
+- **新規アセット**: Figma Dev Mode MCP（`162:53`）から書き出し、2倍 PNG にリサイズして [public/images/message/](../public/images/message/) に配置 — ペンギン `ap_01〜ap_05.png`（中央の大ペンギンは Figma 番号 ap_05）。アバター/写真 `img01〜img03.png` は既存流用（2倍寸法一致を確認）。雲はトップ等と共通の `common/hero-cloud.png` を流用。
+- **検証**: `npm run build` クリーン（`data-astro-cid`=0 / インライン`<style>`=0 / ルート絶対パス=0 / 旧壊れ参照=0）。`dist/` を静的配信し Chrome ヘッドレス **1600 / 1280 / 390px** でレンダ→ユーザー支給 Figma スクショと目視照合し一致。レスポンシブは ≤960（本文を1カラム化・写真センタリング）／≤600（イントロ縦積み・ヒーローを縦長アスペクトに切替）で対応。
+- **敵対的レビュー（5観点＋統合）で発見→修正した major 2件**:
+  1. 雲がボディ三角部に黒ずんで漏れる不具合。原因はステージの `isolation:isolate` 配下で screen 合成の下地（ボディ `#d8e5e8`）が断たれ、雲PNG下部の濃い帯がそのまま表示されていた。`.p-message-hero__stage` に `background: var(--color-bg-page)` を付与し合成下地を確保→白い霧として馴染むよう修正。
+  2. モバイル(≤600)でヒーロータイトルがヘッダーロゴと衝突。`aspect-ratio: 5/6` でヒーローを縦長化し、タイトル `top:28%`／キャプションを再配置して解消。
+  その他の指摘（左 8.81% の丸め誤差、cqw の微小丸め、font-family の到達不能フォールバック等）は閾値内・意図的のため不変更。
 
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
