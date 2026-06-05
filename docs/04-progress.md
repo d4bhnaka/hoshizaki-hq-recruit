@@ -281,6 +281,37 @@ dist/
   - 先輩インタビューのリンク先・アバターの正式指定（暫定で `/person/` ＋ `thumb01.png`）。
   - SP（モバイル）レイアウトは `@media 768px` で暫定縦並び。Figma の SP デザイン確認後に再調整。
 
+### 2026-06-05 セッション: 職種紹介ページ（/job/）の Figma 再忠実化（上記 05-28 のスタイルを刷新）
+
+- **背景**: クライアント指摘で `/job/`（Figma `245:287`）が Figma と大きく乖離していたため再点検。Figma MCP（screenshot / metadata / design_context）で全ノードのジオメトリ・配色・タイポを実測し、現状とのピクセル差分を洗い出して修正。
+- **ユーザー確認済みの判断**: ①ヒーローを Figma 通りに作り直す、②組織図コネクタを Figma の塗り矢印にする、③Figma の生の色値に厳密に合わせる（既存トークンと食い違う箇所）。
+- **修正ファイル**:
+  - [src/pages/job.astro](../src/pages/job.astro) — ①ヒーロー: `PageHero` の全面写真背景（`bg=page-fv.png`）をやめ、`variant="cloud"`（淡色＋線画ペンギン）＋スロットに枠付き写真 `.p-job__hero-visual`（page-fv 1283×430）を配置（docs J-1/J-2 準拠）。②セクション見出しを `align="center"` → `align="left"`。
+  - [src/scss/object/project/_p-job.scss](../src/scss/object/project/_p-job.scss) — Figma 値で全面調整。
+- **主な差分修正（Figma 準拠）**:
+  - 見出し「Job」: 中央 40px → **左寄せ・clamp(56,6.5vw,100)px**（Barlow Condensed 400・色 `#1d2527`）、`職種紹介` は黒 28px Bold。見出しは max-width 1180px 中央寄せで左端 x≈210 に整列。
+  - 組織図コネクタ: 角丸ピル＋三角 → **塗りつぶし矢印 `#77ADF1`＋白文字**（`clip-path`。連携=水平双方向矢印、サポート=上向き矢印。SP では連携を下向き矢印に切替）。
+  - 組織図ボックス: 角丸 25→**32px**、影なし、上段 382×219 ×2＋下段 535、見出し clamp→**最大35px** シアン、項目ネイビー→**黒**。テクスチャ（diagram-bg）の白ベールを 0.5 に下げて facet を可視化。
+  - グループラベル: 小さめ角丸ピル → **ベタ塗りシアン帯（角丸 2px）＋白 clamp(20,2.4vw,28)px**。
+  - カード: 縦ティック `--color-brand-primary` → **`#0177fe`**（幅3px・角丸0）、本文/タイトル → **黒**、写真 320×角丸8 → **304×188・角丸18px**。先輩インタビュー導線: 下線/ホバー → `#0177fe`、丸アバター 56→**58px**、ラベル 18px。
+- **検証**: `npm run dev`（:3381）＋ Playwright で 1600px 幅（Figma フレーム幅）にて hero / 組織図 / 各カードを要素・ビューポート単位で目視確認し Figma と一致。モバイル 390px でも組織図縦積み・カード縦積みが崩れないことを確認。※フルページ/大領域キャプチャ時に出る暗いブロックは Playwright のレンダリングアーティファクト（DOM スキャン・単一要素撮影では不在）で実バグではない。
+- **CTA（INTERNSHIP/ENTRY）/ Footer / Header は焼き込み画像・共通コンポーネントで Figma と一致のため変更なし。**
+
+### 2026-06-05 セッション: 共通カラーパレットの是正（基本5色＋2系統シアンの明確化）
+
+- **背景**: クライアントより「サイト全体の共通基本カラーパレット」を提示（Figma `277:1337–1341`）。`_variables.scss` の値が一部誤りと指摘。
+- **基本パレット（Figma 実測）**: primary `#0177fe`（277:1337）/ cyan `#00c8ff`（277:1338）/ ink `#1d2527`（277:1339）/ black `#000`（277:1340）/ page-bg `#d8e5e8`（277:1341）。HTML 背景=`#d8e5e8`、基本文字色=`#1d2527`。
+- **修正（[_variables.scss](../src/scss/foundation/_variables.scss)）**:
+  - `--color-brand-primary` `#0a69d9` → **`#0177fe`**
+  - `--color-brand-cyan` `#00a0e9` → **`#00c8ff`**
+  - **`--color-brand-cyan-deep: #00a0e9` を新設**（下記2系統シアン参照）
+  - `--color-black: #000` を追加。`--color-text-primary #1d2527`・`--color-bg-page #d8e5e8` は既に正（body が参照）。
+- **重要な発見＝2系統のシアン**: サイトには **`#00c8ff`（明るいブランドシアン＝基本パレット）** と **`#00a0e9`（濃いアクセントシアン）** が併存。後者は internship のアクセント/カード枠/グラデ停止、特集3ページ（crosstalk/project/talk）の members バッジ・kicker・タイトル影、strategy の飲食市場セグメント・バッジ・ピル、special 索引のヒーロー帯グラデ（#00a0e9→#005a83）、job の組織図見出し・グループラベル、top のタイトル帯 等で**Figma 実機照合により #00a0e9 と確認**（4サブエージェントで各ページ Figma を照合）。ユーザー判断で **2色を維持**（B案）。
+  - 旧 `--color-brand-cyan`（=#00a0e9）を参照していた13箇所（job×2 / top / person×6 / person-detail / header / section-heading アイコン / entry-button グラデ / person-card / office-tour）を **`var(--color-brand-cyan-deep)` に付け替え**、#00a0e9 を復元。
+  - 各ページに直書きの `#00a0e9`（internship/strategy/special/特集3）は Figma 通りで**正のため据え置き**（将来 deep トークンへ寄せる DRY 化は任意）。
+- **job ページの追従**: tick/下線=`var(--color-brand-primary)`（#0177fe）、本文=`var(--color-text-primary)`（#1d2527）、組織図見出し・ラベル=`var(--color-brand-cyan-deep)`（#00a0e9）にトークン化。
+- **検証**: `build:scss` 成功。Playwright で job 組織図見出し/ラベル `rgb(0,160,233)=#00a0e9`、top タイトル帯 `#00a0e9` を計算値で復元確認。top ヒーロー等も崩れなし。
+
 ### 2026-05-28 セッション: 募集要項ページ（/requirement/）の Figma 忠実コーディング
 
 - **着手範囲**: `/requirement/`（Figma `242:71`「07_requirement」1600×2908）を Figma に忠実に再構築。

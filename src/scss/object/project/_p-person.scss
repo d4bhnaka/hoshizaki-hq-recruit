@@ -88,8 +88,8 @@ $person-band: 1332px;
     border-color var(--transition-base);
 
   &:hover {
-    border-color: var(--color-brand-cyan);
-    color: var(--color-brand-cyan);
+    border-color: var(--color-brand-cyan-deep);
+    color: var(--color-brand-cyan-deep);
   }
 }
 
@@ -97,14 +97,14 @@ $person-band: 1332px;
 // （以前はクラス .--active のみで、JS が aria-pressed しか更新せず塗りが
 //  追従しなかった。アクセシブルな状態と見た目を一致させる。）
 .p-person__filter-btn[aria-pressed="true"] {
-  background: var(--color-brand-cyan);
-  border-color: var(--color-brand-cyan);
+  background: var(--color-brand-cyan-deep);
+  border-color: var(--color-brand-cyan-deep);
   color: var(--color-white);
   font-weight: 700;
 
   &:hover {
-    background: var(--color-brand-cyan);
-    border-color: var(--color-brand-cyan);
+    background: var(--color-brand-cyan-deep);
+    border-color: var(--color-brand-cyan-deep);
     color: var(--color-white);
   }
 }

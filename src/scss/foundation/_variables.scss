@@ -4,12 +4,16 @@
 
 :root {
   // --------------------------------------------
-  // Brand Colors (Hoshizaki) — Figma 296:7137 準拠
+  // Brand Colors (Hoshizaki)
+  // 基本カラーパレット（Figma 277:1337–1341 準拠 / サイト全体共通）
+  //   primary #0177fe / cyan #00c8ff / ink #1d2527 / black #000 / page-bg #d8e5e8
   // --------------------------------------------
   --color-brand-navy: #002f5f;
   --color-brand-navy-deep: #001f40;
-  --color-brand-primary: #0a69d9;
-  --color-brand-cyan: #00a0e9;
+  --color-brand-primary: #0177fe;
+  --color-brand-cyan: #00c8ff;
+  /* 濃いアクセントシアン：バッジ/見出し/組織図/各特集のアクセント・グラデ等で多用される二次シアン（基本5色とは別） */
+  --color-brand-cyan-deep: #00a0e9;
   /* hero / display 用の鮮やかなシアン (Figma の空色) */
   --color-brand-sky: #1ab4e5;
   --color-brand-sky-light: #5dc5f2;
@@ -34,6 +38,7 @@
   --color-text-muted: rgb(78, 80, 86);
   --color-text-inverse: #ffffff;
 
+  --color-black: #000;
   --color-white: #fff;
   --color-white-transparent: rgba(255, 255, 255, 0.55);
   --color-border: #d0d7de;

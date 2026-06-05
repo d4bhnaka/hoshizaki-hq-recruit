@@ -1,15 +1,67 @@
 // ============================================
 // Project: Team HOSHIZAKI / 職種紹介 Page
 // Figma node: 245:287 (1600 x 6226 / "04_job")
+// 色は共通トークン準拠（見出し・ラベルのシアン=var(--color-brand-cyan-deep) #00a0e9 /
+// tick・下線=var(--color-brand-primary) #0177fe / コネクタ矢印 #77ADF1 /
+// 和文本文=var(--color-text-primary) #1d2527 / 英字大見出し #1d2527）
 // ============================================
 
 .p-job {
   display: block;
   width: 100%;
-  max-width: var(--page-max-width);
   margin: 0 auto;
-  background: var(--color-white);
   overflow: hidden;
+}
+
+// --------------------------------------------
+// Hero visual（淡色クラウドヒーロー内の枠付き写真 / Figma 372:1153 page-fv 1283×430）
+// PageHero(variant="cloud") のスロットに差し込む
+// --------------------------------------------
+.p-job__hero-visual {
+  margin: 44px 0 0 auto;
+  width: min(1283px, 100%);
+  // Figma: 写真左端 x≈379（タイトル x≈116 より右にインデント）＋右端は枠外へブリード
+  margin-right: clamp(-126px, -8vw, 0px);
+  aspect-ratio: 1283 / 430;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.p-job__hero-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+// --------------------------------------------
+// Section heading override（Figma: 左寄せ・"Job" 約100px・"職種紹介" 黒28px）
+// --------------------------------------------
+.p-job .c-section-heading {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.p-job .c-section-heading__ja {
+  color: var(--color-text-primary);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.p-job .c-section-heading__icon {
+  width: 16px;
+  height: 16px;
+}
+
+.p-job .c-section-heading__en {
+  font-family: var(--font-family-en);
+  font-weight: 400;
+  font-size: clamp(56px, 6.5vw, 100px);
+  line-height: 1;
+  letter-spacing: 0;
+  color: #1d2527;
 }
 
 // --------------------------------------------
@@ -38,145 +90,132 @@
 }
 
 // --------------------------------------------
-// Org chart (組織の役割)
+// Org chart (組織の役割)  Figma: 上段 382×219 ×2 ＋ 下段 535×172、中央寄せ
 // --------------------------------------------
 .p-job-chart {
-  max-width: 740px;
+  max-width: 900px;
   margin: 56px auto 0;
 }
 
 .p-job-chart__top {
+  position: relative;
   display: flex;
   align-items: stretch;
-  justify-content: center;
-  gap: 0;
+  justify-content: space-between;
 }
 
 .p-job-chart__box {
   position: relative;
+  z-index: 1;
   overflow: hidden;
-  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 20px 26px;
   text-align: center;
   background-color: var(--color-white);
-  // ice texture (Figma: pixta_103410553 @ 32% opacity over white)
-  background-image: linear-gradient(rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.66)),
+  // ice texture (Figma: pixta_103410553 @ 32%) — diagram-bg は淡いので白ベールを弱めて facet を見せる
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
     url("../images/job/diagram-bg.png");
   background-size: cover;
   background-position: center;
-  border-radius: 25px;
-  box-shadow: var(--shadow-card);
+  border-radius: 32px;
 }
 
 .p-job-chart__box--create,
 .p-job-chart__box--spread {
-  flex: 1 1 0;
-  max-width: 300px;
+  flex: 0 0 calc(50% - 68px); // 2 box + 136px gap（中央に連携矢印が重なる）
+  max-width: 382px;
 }
 
 .p-job-chart__box--support {
-  max-width: 420px;
+  width: 535px;
+  max-width: 535px;
   margin: 0 auto;
 }
 
 .p-job-chart__box-title {
-  margin-bottom: 6px;
-  color: var(--color-brand-cyan);
+  margin-bottom: 8px;
+  color: var(--color-brand-cyan-deep); // #00a0e9
   font-weight: 700;
-  font-size: clamp(19px, 2.2vw, 26px);
+  font-size: clamp(24px, 2.9vw, 35px);
   line-height: 1.4;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 .p-job-chart__box-list {
   list-style: none;
-  margin: 0;
+  margin: auto 0; // タイトル下の残り領域に縦中央寄せ
   padding: 0;
-  color: var(--color-brand-navy);
+  color: var(--color-text-primary);
   font-weight: 700;
-  font-size: clamp(13px, 1.4vw, 16px);
-  line-height: 1.9;
+  font-size: clamp(15px, 1.7vw, 20px);
+  line-height: 1.65;
 }
 
-// Connectors (連携 / サポート)
+// Connectors（Figma: 塗りつぶし矢印 #77ADF1 ＋ 白文字）
 .p-job-chart__link {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #77adf1;
+  color: var(--color-white);
   font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  color: var(--color-brand-cyan);
+  font-size: clamp(15px, 1.5vw, 20px);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
   white-space: nowrap;
 }
 
+// 連携：水平の双方向矢印（179×84）、上段ボックスの間に重ねて配置
 .p-job-chart__link--renkei {
-  flex: 0 0 auto;
-  align-self: center;
-  margin: 0 18px;
-  padding: 4px 10px;
-  background: var(--color-white);
-  border: 1.5px solid var(--color-brand-cyan);
-  border-radius: var(--border-radius-pill);
-
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    border-style: solid;
-    border-color: transparent;
-  }
-
-  &::before {
-    left: -9px;
-    border-width: 5px 8px 5px 0;
-    border-right-color: var(--color-brand-cyan);
-  }
-
-  &::after {
-    right: -9px;
-    border-width: 5px 0 5px 8px;
-    border-left-color: var(--color-brand-cyan);
-  }
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 179px;
+  height: 84px;
+  clip-path: polygon(
+    0% 50%,
+    30% 0%,
+    30% 27%,
+    70% 27%,
+    70% 0%,
+    100% 50%,
+    70% 100%,
+    70% 73%,
+    30% 73%,
+    30% 100%
+  );
 }
 
+// サポート：上向き矢印（154×100）、上段と下段の間にブリッジ
 .p-job-chart__link--support {
-  display: block;
-  width: max-content;
-  margin: 16px auto;
-  padding: 4px 12px;
-  background: var(--color-white);
-  border: 1.5px solid var(--color-brand-cyan);
-  border-radius: var(--border-radius-pill);
-
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    border-style: solid;
-    border-color: transparent;
-  }
-
-  &::before {
-    top: -9px;
-    border-width: 0 5px 8px 5px;
-    border-bottom-color: var(--color-brand-cyan);
-  }
-
-  &::after {
-    bottom: -9px;
-    border-width: 8px 5px 0 5px;
-    border-top-color: var(--color-brand-cyan);
-  }
+  position: relative;
+  z-index: 3;
+  width: 154px;
+  height: 100px;
+  margin: -20px auto 10px;
+  align-items: flex-end;
+  padding-bottom: 16px;
+  clip-path: polygon(
+    50% 0%,
+    100% 45%,
+    78% 45%,
+    78% 100%,
+    22% 100%,
+    22% 45%,
+    0% 45%
+  );
 }
 
 // --------------------------------------------
 // Job groups
 // --------------------------------------------
 .p-job__groups {
-  max-width: 1040px;
-  margin: 72px auto 0;
+  max-width: 1000px;
+  margin: 80px auto 0;
 }
 
 .p-job-group {
@@ -190,30 +229,31 @@
 .p-job-group__head {
   display: flex;
   align-items: flex-end;
-  gap: 10px;
+  gap: 4px;
   margin-bottom: 28px;
 }
 
 .p-job-group__penguin {
-  height: clamp(88px, 11vw, 124px);
+  height: clamp(96px, 9vw, 128px);
   width: auto;
   display: block;
 }
 
+// Figma: ベタ塗りシアンの帯（角丸ほぼ0）＋白文字28px
 .p-job-group__label {
   display: inline-block;
-  padding: 11px 28px;
-  background: var(--color-brand-cyan);
-  border-radius: 4px;
+  padding: 10px 26px;
+  background: var(--color-brand-cyan-deep); // #00a0e9
+  border-radius: 2px;
   color: var(--color-white);
   font-weight: 700;
-  font-size: clamp(18px, 2.1vw, 24px);
+  font-size: clamp(20px, 2.4vw, 28px);
   line-height: 1.3;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
 }
 
 // --------------------------------------------
-// Job card
+// Job card  Figma: 1000×277（白・角丸10px）、本文18px/行間2/黒
 // --------------------------------------------
 .p-job-group__list {
   list-style: none;
@@ -227,8 +267,8 @@
 .p-job-card {
   display: flex;
   align-items: center;
-  gap: 40px;
-  padding: 36px 40px;
+  gap: 32px;
+  padding: 40px 36px 40px 50px;
   background: var(--color-white);
   border-radius: 10px;
   box-shadow: var(--shadow-card);
@@ -244,8 +284,8 @@
 
 .p-job-card__title {
   position: relative;
-  padding-left: 22px;
-  color: #1a1a1a;
+  padding-left: 20px;
+  color: var(--color-text-primary);
   font-weight: 700;
   font-size: clamp(21px, 2.3vw, 28px);
   line-height: 1.3;
@@ -255,11 +295,11 @@
     content: "";
     position: absolute;
     left: 0;
-    top: 0.2em;
-    width: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
     height: 1em;
     background: var(--color-brand-primary);
-    border-radius: 1px;
   }
 }
 
@@ -274,7 +314,7 @@
   }
 }
 
-// 先輩インタビュー導線 (card 01 only)
+// 先輩インタビュー導線 (card 01 only)  Figma: ラベル黒18px＋下線#0177fe(50×2)＋丸アバター58px
 .p-job-card__interview {
   display: inline-flex;
   flex-direction: column;
@@ -287,9 +327,9 @@
 .p-job-card__interview-label {
   position: relative;
   padding-bottom: 8px;
-  color: var(--color-brand-navy);
+  color: var(--color-text-primary);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.04em;
   transition: color var(--transition-fast);
 
@@ -305,8 +345,8 @@
 }
 
 .p-job-card__interview-avatar {
-  width: 56px;
-  height: 56px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: var(--shadow-card);
@@ -317,12 +357,12 @@
 }
 
 .p-job-card__figure {
-  flex: 0 0 320px;
-  width: 320px;
+  flex: 0 0 304px;
+  width: 304px;
   margin: 0;
-  aspect-ratio: 315 / 199;
+  aspect-ratio: 304 / 188;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 18px;
   background: var(--color-brand-blue-100);
 }
 
@@ -336,6 +376,16 @@
 // --------------------------------------------
 // Responsive
 // --------------------------------------------
+@media (max-width: 960px) {
+  .p-job__hero-visual {
+    margin-right: 0;
+  }
+
+  .p-job .c-section-heading {
+    max-width: none;
+  }
+}
+
 @media (max-width: 768px) {
   .p-job__section {
     padding: 32px 20px 80px;
@@ -349,33 +399,36 @@
 
   .p-job-chart__box--create,
   .p-job-chart__box--spread {
+    flex: none;
     max-width: 360px;
     width: 100%;
   }
 
+  // 縦並び時：連携を下向き矢印に
   .p-job-chart__link--renkei {
-    margin: 0;
-    align-self: center;
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: 120px;
+    height: 64px;
+    margin: -14px auto;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    clip-path: polygon(
+      50% 100%,
+      100% 55%,
+      78% 55%,
+      78% 0%,
+      22% 0%,
+      22% 55%,
+      0% 55%
+    );
+  }
 
-    &::before {
-      left: 50%;
-      top: -9px;
-      transform: translateX(-50%);
-      border-width: 0 5px 8px 5px;
-      border-right-color: transparent;
-      border-bottom-color: var(--color-brand-cyan);
-    }
-
-    &::after {
-      right: auto;
-      left: 50%;
-      bottom: -9px;
-      top: auto;
-      transform: translateX(-50%);
-      border-width: 8px 5px 0 5px;
-      border-left-color: transparent;
-      border-top-color: var(--color-brand-cyan);
-    }
+  .p-job-chart__box--support {
+    width: 100%;
+    max-width: 360px;
   }
 
   .p-job-card {
