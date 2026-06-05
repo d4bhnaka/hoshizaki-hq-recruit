@@ -95,11 +95,12 @@
 }
 
 .c-stat-card__num {
-  font-family: var(--font-family-base);
-  font-weight: 900;
-  font-size: clamp(56px, 7vw, 100px);
-  line-height: 0.9;
-  letter-spacing: 0.01em;
+  // DIN Condensed の代替として既読み込みの Barlow Condensed を使用
+  font-family: var(--font-family-en);
+  font-weight: 700;
+  font-size: clamp(60px, 7.6vw, 112px);
+  line-height: 0.86;
+  letter-spacing: 0.005em;
   color: var(--stat-ink);
 }
 
