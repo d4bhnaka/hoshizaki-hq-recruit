@@ -26,6 +26,7 @@ const chart = {
 
 interface Job {
   title: string;
+  titleNote?: string;
   lead: string;
   body?: string;
   image: string;
@@ -93,7 +94,8 @@ const groups: JobGroup[] = [
     penguin: `${base}images/job/penguin-support.png`,
     jobs: [
       {
-        title: "コーポレート（経営企画・財務・人事・知財など）",
+        title: "コーポレート",
+        titleNote: "（経営企画・財務・人事・知財など）",
         lead: "グローバル成長を裏方から支える経営基盤の強化、特許戦略による技術の保護。",
         image: `${base}images/job/card-07.jpg`,
       },
@@ -190,7 +192,12 @@ const groups: JobGroup[] = [
                     {group.jobs.map((job) => (
                       <li class="p-job-card">
                         <div class="p-job-card__body">
-                          <h4 class="p-job-card__title">{job.title}</h4>
+                          <h4 class="p-job-card__title">
+                            {job.title}
+                            {job.titleNote && (
+                              <span class="p-job-card__title-note">{job.titleNote}</span>
+                            )}
+                          </h4>
                           <div class="p-job-card__text">
                             <p>{job.lead}</p>
                             {job.body && <p>{job.body}</p>}

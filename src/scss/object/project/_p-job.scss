@@ -71,7 +71,7 @@
   max-width: 1000px;
   margin: 0 auto;
   padding: 80px 32px 40px;
-  text-align: center;
+  text-align: left;
 }
 
 .p-job__intro-text {
@@ -239,17 +239,29 @@
   display: block;
 }
 
-// Figma: ベタ塗りシアンの帯（角丸ほぼ0）＋白文字28px
+// Figma 635:1399: 水色背景は右へシアーした平行四辺形（skewX）＋白文字28px。
+// 文字は直立のまま背景だけ傾けるため、背景は ::before に逃がして skewX を掛ける
+//（HTML 構造を変えずにテキストは非傾斜のまま）。
 .p-job-group__label {
+  position: relative;
+  isolation: isolate; // ::before(z-index:-1) を文字の背面に確実に敷くため
   display: inline-block;
   padding: 10px 26px;
-  background: var(--color-brand-cyan-deep); // #00a0e9
-  border-radius: 2px;
   color: var(--color-white);
   font-weight: 700;
   font-size: clamp(20px, 2.4vw, 28px);
   line-height: 1.3;
   letter-spacing: 0.02em;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-brand-cyan-deep); // #00a0e9
+    border-radius: 2px;
+    transform: skewX(-11deg);
+  }
 }
 
 // --------------------------------------------
@@ -301,6 +313,12 @@
     height: 1em;
     background: var(--color-brand-primary);
   }
+}
+
+// Figma 399:7989: 見出し末尾の補足（括弧書き）は本文見出しより小さく（28px→16px ≒ 0.6em）
+.p-job-card__title-note {
+  font-size: 0.6em;
+  letter-spacing: 0.01em;
 }
 
 .p-job-card__text {
