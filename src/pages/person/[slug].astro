@@ -16,6 +16,9 @@ export function getStaticPaths() {
 const base = "../../";
 const { person } = Astro.props;
 const titleText = person.title.join("");
+// 背景写真は人物切り抜き（person.photo: 例 "p09.png"）のフレーム番号と対応させる。
+// 例: p09.png → p-bg-09.jpg（slug ではなく Figma フレーム番号で対応）。
+const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.png$/i, ".jpg");
 ---
 
 <Layout
@@ -27,86 +30,92 @@ const titleText = person.title.join("");
     <Header basePath={base} />
     <main class="l-main">
       <article class="p-person-detail">
-        <div class="p-person-detail__inner">
-          <section class="p-person-detail__split">
-            <!-- Left: scrollable interview content (white panel) -->
-            <div class="p-person-detail__left">
-              <p class="p-person-detail__label">Person</p>
-              <h1 class="p-person-detail__title">
-                {
-                  person.title.map((line, i) => (
-                    <>
-                      {line}
-                      {i < person.title.length - 1 && <br />}
-                    </>
-                  ))
-                }
-              </h1>
-
-              <div class="p-person-detail__meta">
-                <span class="p-person-detail__meta-name">{person.initials}</span>
-                <span class="p-person-detail__meta-item">{person.dept}</span>
-                <span class="p-person-detail__meta-item">{person.year}</span>
-                {person.faculty && (
-                  <span class="p-person-detail__meta-item">{person.faculty}</span>
-                )}
-              </div>
-
-              <div class="p-person-detail__qa-list">
-                {
-                  person.qa.map((block) => (
-                    <div class="p-person-detail__qa">
-                      <p class="p-person-detail__q">
-                        <span class="p-person-detail__q-tick" aria-hidden="true" />
-                        {block.question}
-                      </p>
-                      <h2 class="p-person-detail__answer">
-                        {block.headline.map((line, i) => (
-                          <>
-                            {line}
-                            {i < block.headline.length - 1 && <br />}
-                          </>
-                        ))}
-                      </h2>
-                      <p class="p-person-detail__body">{block.body}</p>
-                    </div>
-                  ))
-                }
-              </div>
-            </div>
-
-            <!-- Right: sticky person photo (transparent cutout) -->
-            <aside class="p-person-detail__right">
-              <figure
-                class="p-person-detail__photo"
-                style={`--photo-w: ${person.photoWidth}px`}
-              >
+        <div
+          class="p-person-detail__inner"
+          style={`--person-bg: url(${base}images/person/${bgImage}); --photo-w: ${person.photoWidth}px`}
+        >
+          <!-- Sticky full-bleed visual: blue band + 横幅いっぱいの背景写真 + 人物切り抜き。
+               人物は背景写真の下端に合わせ、頭が背景写真の上端より少し上にはみ出す。 -->
+          <div class="p-person-detail__stage">
+            <div class="p-person-detail__bg"></div>
+            <div class="p-person-detail__stage-inner">
+              <figure class="p-person-detail__photo">
                 <img
                   src={`${base}images/person/${person.photo}`}
                   alt={`${person.initials}さん`}
                   loading="eager"
                 />
               </figure>
-            </aside>
-          </section>
+            </div>
+          </div>
 
-          <!-- Back to list -->
-          <div class="p-person-detail__list">
-            <a class="p-person-detail__list-btn" href="../">
-              <span class="p-person-detail__list-label">社員インタビュー一覧を見る</span>
-              <span class="p-person-detail__list-chevron" aria-hidden="true">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="3"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <polyline points="9 6 15 12 9 18"></polyline>
-                </svg>
-              </span>
-            </a>
+          <!-- Scrollable interview content (overlaps the sticky stage) -->
+          <div class="p-person-detail__flow">
+            <section class="p-person-detail__split">
+              <div class="p-person-detail__left">
+                <p class="p-person-detail__label">Person</p>
+                <h1 class="p-person-detail__title">
+                  {
+                    person.title.map((line, i) => (
+                      <>
+                        {line}
+                        {i < person.title.length - 1 && <br />}
+                      </>
+                    ))
+                  }
+                </h1>
+
+                <div class="p-person-detail__meta">
+                  <span class="p-person-detail__meta-name">{person.initials}</span>
+                  <span class="p-person-detail__meta-item">{person.dept}</span>
+                  <span class="p-person-detail__meta-item">{person.year}</span>
+                  {person.faculty && (
+                    <span class="p-person-detail__meta-item">{person.faculty}</span>
+                  )}
+                </div>
+
+                <div class="p-person-detail__qa-list">
+                  {
+                    person.qa.map((block) => (
+                      <div class="p-person-detail__qa">
+                        <p class="p-person-detail__q">
+                          <span class="p-person-detail__q-tick" aria-hidden="true" />
+                          {block.question}
+                        </p>
+                        <h2 class="p-person-detail__answer">
+                          {block.headline.map((line, i) => (
+                            <>
+                              {line}
+                              {i < block.headline.length - 1 && <br />}
+                            </>
+                          ))}
+                        </h2>
+                        <p class="p-person-detail__body">{block.body}</p>
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+            </section>
+
+            <!-- Back to list -->
+            <div class="p-person-detail__list">
+              <a class="p-person-detail__list-btn" href="../">
+                <span class="p-person-detail__list-label">社員インタビュー一覧を見る</span>
+                <span class="p-person-detail__list-chevron" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="9 6 15 12 9 18"></polyline>
+                  </svg>
+                </span>
+              </a>
+            </div>
           </div>
         </div>
 

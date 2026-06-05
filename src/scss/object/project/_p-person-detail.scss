@@ -1,7 +1,9 @@
 // ============================================
 // p-person-detail : 社員紹介 個別ページ（Figma 819:1646 / 1858 / 1964）
-//   上部に淡い水色のヒーローバンド。左は白パネルに載るインタビュー本文、
-//   右は人物切り抜き写真（スクロール追従）。最下部に一覧ボタン＋CTA バナー。
+//   上部に淡い水色のバンド。その下に「横幅いっぱい」の背景写真（社員ごと、
+//   フレーム番号 p-bg-<NN>.jpg）をスクロール追従(sticky)で固定。人物切り抜きは
+//   背景写真の下端に下端を合わせ、頭が背景写真の上端より少し上にはみ出す。
+//   インタビュー本文は左の白い半透明パネルとして背景の上をスクロールする。
 // ============================================
 
 .p-person-detail {
@@ -10,44 +12,93 @@
   background: var(--color-bg-page);
 }
 
+// 背景(sticky)と本文(scroll)を同じグリッドセルへ重ねる。
+// max-width は本文側(.p-person-detail__split)に持たせ、inner は全幅。
 .p-person-detail__inner {
+  // 社員ごとに調整できるツマミ
+  --band-h: 210px; // 上部の淡い水色バンドの高さ（背景写真の上端 = 人物の頭が出る基準線）
+  --bg-aspect: 1600 / 700; // 背景写真(p-bg-*.jpg)の比率
   position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.p-person-detail__stage,
+.p-person-detail__flow {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+}
+
+// --------------------------------------------
+// 背景ステージ（淡い水色バンド + 横幅いっぱいの背景写真 + 人物）
+//   スクロールしても画面内に残るよう sticky 固定。
+// --------------------------------------------
+.p-person-detail__stage {
+  position: sticky;
+  top: 0;
+  align-self: start; // セル高さに引き伸ばさず自身の高さを保つ（sticky を効かせる）
+  z-index: 0;
+  // バンド色（背景写真の上の余白に出る）
+  background: linear-gradient(180deg, #e9f3f8 0%, #e3edf1 100%);
+}
+
+// 横幅いっぱいの背景写真。バンドの下に置く。
+.p-person-detail__bg {
+  width: 100%;
+  aspect-ratio: var(--bg-aspect);
+  margin-top: var(--band-h);
+  background: var(--person-bg) center center / cover no-repeat;
+}
+
+// ステージ上に人物を重ねる枠（コンテンツと同じ max-width で中央寄せ）
+.p-person-detail__stage-inner {
+  position: absolute;
+  inset: 0;
   max-width: var(--page-max-width);
   margin: 0 auto;
-  // 絶対配置ヘッダー（.l-header / z-index 20）の下に本文を逃がす
-  padding-top: 180px;
+  padding: 0 40px;
+  pointer-events: none;
 }
 
-// 上部ヒーローバンド（淡い水色 → ページ背景へフェード）
-.p-person-detail__inner::before {
-  content: "";
+// 人物切り抜き：下端をステージ下端（= 背景写真の下端）に合わせる。
+// 表示幅は社員ごと（Figma フレーム幅）。頭は背景写真の上端より上＝バンドへ出る。
+.p-person-detail__photo {
   position: absolute;
-  inset: 0 0 auto 0;
-  height: 760px;
-  background: linear-gradient(
-    180deg,
-    #e9f3f8 0%,
-    #e3edf1 55%,
-    var(--color-bg-page) 100%
-  );
-  z-index: 0;
+  right: 40px;
+  bottom: 0;
+  width: var(--photo-w, 600px);
+  max-width: 48%;
+  margin: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
 }
 
 // --------------------------------------------
-// 2 カラム（左：白パネル本文／右：追従写真）
+// 本文（背景ステージの上にかぶせてスクロール）
 // --------------------------------------------
-.p-person-detail__split {
+.p-person-detail__flow {
   position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 830px) minmax(0, 1fr);
-  align-items: start;
+  z-index: 2;
+}
+
+.p-person-detail__split {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  // 絶対配置ヘッダー（z-index 20）とバンドの下に本文を逃がす
+  padding: var(--band-h) 40px 0;
 }
 
 // --------------------------------------------
-// 左カラム（白パネル）
+// 左カラム（白い半透明パネル：背景写真がうっすら透ける）
 // --------------------------------------------
 .p-person-detail__left {
+  width: min(830px, 62%);
   min-width: 0;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 0 0 24px 0;
@@ -132,36 +183,9 @@
 }
 
 // --------------------------------------------
-// 右カラム（追従する人物切り抜き写真）
-// --------------------------------------------
-.p-person-detail__right {
-  min-width: 0;
-  padding-left: 40px;
-  // 右カラム自体を sticky 固定し、左カラム(.p-person-detail__left)だけをスクロールさせる。
-  // align-self:start でグリッド行いっぱいに伸びず写真高さに保つことで sticky が効く。
-  position: sticky;
-  top: 40px;
-  align-self: start;
-}
-
-.p-person-detail__photo {
-  margin: 0;
-  // 表示幅は社員ごと（Figma フレーム幅）。インライン --photo-w で指定。
-  max-width: var(--photo-w, 600px);
-
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-}
-
-// --------------------------------------------
 // 一覧へ戻るボタン
 // --------------------------------------------
 .p-person-detail__list {
-  position: relative;
-  z-index: 1;
   display: flex;
   justify-content: center;
   padding: 96px 24px 104px;
@@ -218,11 +242,12 @@
 // レスポンシブ
 // --------------------------------------------
 @media screen and (max-width: 1024px) {
-  .p-person-detail__split {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+  .p-person-detail__inner {
+    --band-h: 150px;
   }
 
   .p-person-detail__left {
+    width: min(640px, 64%);
     padding: 56px 40px 72px 56px;
   }
 
@@ -240,35 +265,39 @@
 }
 
 @media screen and (max-width: 768px) {
+  // モバイルは縦積み：背景写真＋人物のヒーローを上に、本文を下に。
   .p-person-detail__inner {
-    padding-top: 120px;
+    --band-h: 90px;
+    display: block;
   }
 
-  .p-person-detail__inner::before {
-    height: 300px;
-  }
-
-  // モバイルは縦積み＋写真を先頭（バンド上のヒーロー写真）に
-  .p-person-detail__split {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .p-person-detail__right {
-    order: -1;
+  .p-person-detail__stage {
     position: static;
-    padding-left: 0;
-    margin: 0 auto 12px;
-    max-width: 300px;
+    align-self: stretch;
+  }
+
+  .p-person-detail__bg {
+    aspect-ratio: 16 / 11;
+    background-position: center top;
+  }
+
+  .p-person-detail__stage-inner {
+    padding: 0 20px;
   }
 
   .p-person-detail__photo {
-    position: static;
-    max-width: 300px;
-    margin: 0 auto;
+    right: 50%;
+    transform: translateX(50%);
+    width: min(300px, 70%);
+    max-width: none;
+  }
+
+  .p-person-detail__split {
+    padding: 0;
   }
 
   .p-person-detail__left {
+    width: 100%;
     border-radius: 24px 24px 0 0;
     padding: 40px 24px 56px;
   }
