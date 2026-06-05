@@ -11,9 +11,7 @@
 
   display: block;
   width: 100%;
-  max-width: var(--page-max-width);
   margin: 0 auto;
-  background: #eef6fc;
   color: var(--color-text-primary);
   overflow: hidden;
 }
@@ -227,7 +225,6 @@
 // --------------------------------------------
 .p-strategy-global {
   padding: 72px 0;
-  background: linear-gradient(180deg, #e4f1fb 0%, #d2e8f6 100%);
 }
 
 .p-strategy-global__subtitle {
