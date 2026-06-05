@@ -1,6 +1,9 @@
 # build output
 dist/
 
+# compiled CSS (generated from src/scss/style.scss)
+public/css/style.css
+
 # generated types
 .astro/
 
