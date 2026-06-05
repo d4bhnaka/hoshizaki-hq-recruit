@@ -2,13 +2,19 @@
 // Project: Top Page
 // Figma node: 296:7137 (1600 × 9488 px) "00_top"
 //
+// 各セクションは Figma の 1600px キャンバスを忠実に再現するため
+// 「固定アスペクト比のステージ + 絶対配置(%) + コンテナクエリ単位(cqw)」で組む。
+//   - 位置(left/top) … Figma 座標を % 換算 (x/1600, y/ステージ高)
+//   - サイズ(font/img) … cqw 換算 (1cqw = ステージ幅の 1%。1600px 時 16px = 1cqw)
+//     → Figma の px ÷ 16 = cqw。ステージ幅に完全比例して拡縮する。
+//   - ステージに `container-type: inline-size` を付与し cqw の基準にする。
+//
 // 構造（Figma の y 座標帯ごとにセクション化）
-//   S1 Hero            y    0 – 1674
-//   S2 PIONEER SPIRIT  y 2562 – 3291
-//   S3 KNOW HOSHIZAKI  y 3283 – 5502
-//   S4 ここに決めた!  y 4783 – 5269 (S3 と重なる帯。独立セクションとして切り出し)
-//   S5 はたらく環境    y 5502 – 6162
-//   S6 SPECIAL CONTENTS y 6162 – 8450
+//   S1 Hero            y    0 – 2562 (空グラデ + 都市) … stage 1600×2562
+//   S2 PIONEER SPIRIT  y 2562 – 3291                    … stage 1600×729
+//   S3+S4 KNOW HOSHIZAKI / ここに決めた!  y 3283 – 5502 … stage 1600×2219 (1帯)
+//   S5 はたらく環境    y 5502 – 6162                    … 既存 (.p-top-env)
+//   S6 SPECIAL CONTENTS y 6162 – 8450                   … SpecialContents コンポーネント
 // ============================================
 
 .p-top {
@@ -39,6 +45,21 @@
 
   &:hover {
     transform: translateY(-4px);
+  }
+}
+
+// ステージ内で使うときはステージ幅に比例して拡縮する流体サイズ版。
+// 1600px 時に 207×200 / ラベル14px・READ MORE 11px と一致。
+.c-ice-link--fluid {
+  width: 12.9375cqw; // 207 / 16
+  height: 12.5cqw; // 200 / 16
+
+  .c-ice-link__label {
+    font-size: 0.875cqw; // 14 / 16
+  }
+
+  .c-ice-link__more {
+    font-size: 0.6875cqw; // 11 / 16
   }
 }
 
@@ -81,271 +102,232 @@
 }
 
 // ============================================
-// S1. Hero (Figma 0–1674)
-//   背景は鮮やかなシアンの空。タグライン左 / CONCEPT MOVIE 右上に配置。
-//   タグラインの下にホシザキの紹介本文。下部に都市シルエット + 飛ぶペンギン。
+// S1. Hero (Figma 0–2562)
+//   空 = 斜め2トーンのシアングラデ。下半分に都市イラスト(bg-city)を敷き、
+//   タグライン(左上)/飛ぶペンギン5羽/本文導入(左)/CONCEPT MOVIE(右)/
+//   「さぁ、その想いを翼に変えて。」(都市の上) を絶対配置で重ねる。
 // ============================================
 .p-top-hero {
   position: relative;
   width: 100%;
-  background: linear-gradient(90deg, #107af4 0%, #10aff4 100%);
   overflow: hidden;
   isolation: isolate;
 }
 
-.p-top-hero__sky {
+.p-top-hero__stage {
   position: relative;
   width: 100%;
-  // Figma: 1674 / 1600 ≒ 1.046 → 高さは画面幅の ~104.6%
-  min-height: clamp(720px, 104vw, 1674px);
-  padding: 200px 80px 0;
-
-  // TEMP — 旧リファレンス画像（1820×1620 で全幅展開された構成）は
-  // 実デザインの「右半分にクラスタを寄せる」構成と合わないため一旦無効化。
-  // 必要になったら再度有効化し、_layout-ref.png をデザインに合わせて差し替える。
-  // &::before {
-  //   content: "";
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   width: 100vw;
-  //   aspect-ratio: 1820 / 1620;
-  //   background: url("../images/top/_layout-ref.png") no-repeat top left / 100% 100%;
-  //   opacity: 0.35;
-  //   pointer-events: none;
-  //   z-index: 1;
-  // }
+  aspect-ratio: 1600 / 2562;
+  container-type: inline-size;
+  // Figma 296:7292: linear-gradient(120.636deg, #107af4 55.261%, #10aff4 55.261%)
+  background: linear-gradient(120.636deg, #107af4 55.261%, #10aff4 55.261%);
 }
 
-// 装飾の雲
-.p-top-hero__cloud {
+// 都市イラスト (Figma 296:7293, bg-city.png 1600×1048 相当)。
+// ステージ下端に揃え、上端は空へなじむよう少しフェード。
+.p-top-hero__city {
   position: absolute;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  opacity: 0.8;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
   z-index: 1;
-
-  &--1 {
-    top: 11%;
-    left: -6%;
-    width: 28%;
-    max-width: 460px;
-  }
-
-  &--2 {
-    top: 6%;
-    right: -4%;
-    width: 32%;
-    max-width: 520px;
-  }
-
-  &--3 {
-    top: 36%;
-    left: 38%;
-    width: 22%;
-    max-width: 360px;
-  }
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 9%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 9%);
 }
 
-// 飛ぶペンギン (5 羽)
+// 飛ぶペンギン (5 羽)。Figma `penguins` フレーム 296:12720 の各 ap_0x。
 .p-top-hero__penguin {
   position: absolute;
-  pointer-events: none;
   z-index: 2;
-  filter: drop-shadow(0 12px 18px rgba(0, 47, 95, 0.22));
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 1.2cqw 1.6cqw rgba(0, 47, 95, 0.18));
 
-  // 全て vw 基準。実デザイン (top-full.jpeg 系) のヒーロー右半分に
-  // 配置されるペンギンクラスタの実測値。
-
-  // 上段左：中サイズ（キャッチコピー「常識の」の右隣）
-  &--1 {
-    top: 13.3vw;
-    left: 40.4vw;
-    width: 19vw;
-  }
-
-  // 上段右：小サイズ
-  &--2 {
-    top: 12.2vw;
-    left: 68vw;
-    width: 10vw;
-  }
-
-  // 中央：最大サイズ（メインペンギン）
+  // ap_03 (296:12723) x1114 y186 w188
   &--3 {
-    top: 25.5vw;
-    left: 39.8vw;
-    width: 43.4vw;
+    left: 69.625%;
+    top: 7.26%;
+    width: 11.75%;
   }
-
-  // 右端：小サイズ
+  // ap_04 (296:12722) x687 y195 w268
   &--4 {
-    top: 35vw;
-    right: 5.1vw;
-    width: 12.2vw;
+    left: 42.9375%;
+    top: 7.611%;
+    width: 16.75%;
   }
-
-  // 下段左：中サイズ
+  // ap_01 (296:12725) x622 y282 w672 — メインの大ペンギン
+  &--1 {
+    left: 38.875%;
+    top: 11.007%;
+    width: 42%;
+  }
+  // ap_02 (296:12721) x1279 y479 w218
+  &--2 {
+    left: 79.9375%;
+    top: 18.696%;
+    width: 13.625%;
+  }
+  // ap_05 (296:12724) x589 y765 w316
   &--5 {
-    top: 45.8vw;
-    left: 33.1vw;
-    width: 19vw;
+    left: 36.8125%;
+    top: 29.86%;
+    width: 19.75%;
   }
 }
 
-.p-top-hero__inner {
-  position: relative;
-  z-index: 3;
-  max-width: var(--page-max-width);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "catch ."
-    "body  movie";
-  gap: 64px 48px;
-  align-items: start;
-}
-
-// タグライン「常識の／先へ、／跳べ。」(Figma 296:7296: x=146 y=132 w=600 h=690)
-// → 縦 3 行で 1 行あたり ~200-220px
+// タグライン「常識の／先へ、／跳べ。」(Figma 296:7296 x146 y132 w600 h690)
+// Noto Sans JP Bold 200px / 3行 (行送り 230px ≒ 1.15)
 .p-top-hero__catch {
-  grid-area: catch;
+  position: absolute;
+  left: 9.125%;
+  top: 5.152%;
+  z-index: 3;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
   font-family: var(--font-family-base);
   font-weight: 700;
-  font-size: clamp(72px, 13vw, 200px);
-  line-height: 1.05;
-  letter-spacing: 0.02em;
+  font-size: 12.5cqw; // 200 / 16
+  line-height: 1.15;
+  letter-spacing: 0;
   color: var(--color-white);
 }
 
 .p-top-hero__catch-line {
-  display: inline-block;
+  display: block;
 }
 
-// CONCEPT MOVIE (Figma 296:12581-12588: x=863 y=1144 w=640 h=440)
-.p-top-hero__movie {
-  grid-area: movie;
-  align-self: end;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: clamp(280px, 32vw, 460px);
+// 本文導入 (Figma 296:7298 x155 y1015 w550) Noto Sans JP Regular 23px / 行送り55px
+.p-top-hero__body {
+  position: absolute;
+  left: 9.6875%;
+  top: 39.617%;
+  z-index: 3;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-white);
 }
 
-.p-top-hero__movie-en {
+.p-top-hero__body-line {
+  font-family: var(--font-family-base);
+  font-size: 1.4375cqw; // 23 / 16
+  line-height: 3.4375cqw; // 55 / 16 (= 行送り 55px)
+  font-weight: 400;
+  white-space: nowrap;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.55);
+}
+
+// 「さぁ、その想いを翼に変えて。」都市の上 (Figma 296:7299 x155 y1618) 47px Regular
+.p-top-hero__outro {
+  position: absolute;
+  left: 9.6875%;
+  top: 63.154%;
+  z-index: 3;
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: 2.9375cqw; // 47 / 16
+  font-weight: 400;
+  line-height: 1.1;
+  white-space: nowrap;
+  color: var(--color-white);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.55);
+}
+
+// CONCEPT MOVIE ラベル (Figma 296:12581 x863 y1144) Barlow Condensed Thin 50px
+.p-top-hero__movie-label {
+  position: absolute;
+  left: 53.9375%;
+  top: 44.653%;
+  z-index: 3;
   margin: 0;
   font-family: var(--font-family-display), var(--font-family-en);
-  font-weight: 400;
-  font-size: clamp(28px, 3.2vw, 48px);
-  letter-spacing: 0.08em;
-  color: var(--color-white);
+  font-weight: 100;
+  font-size: 3.125cqw; // 50 / 16
+  letter-spacing: 0.02em;
   line-height: 1;
+  color: var(--color-white);
 }
 
-.p-top-hero__movie-thumb {
-  position: relative;
-  display: block;
-  width: 100%;
+// ムービーサムネイル (Figma 296:12582 x863 y1204 w640 h360)
+.p-top-hero__movie {
+  position: absolute;
+  left: 53.9375%;
+  top: 46.995%;
+  z-index: 3;
+  width: 40%; // 640 / 1600
   aspect-ratio: 640 / 360;
   border: 0;
   padding: 0;
-  border-radius: 4px;
-  background:
-    linear-gradient(135deg, rgba(0, 47, 95, 0.55), rgba(10, 105, 217, 0.35)),
-    var(--color-brand-blue-300);
+  background: var(--color-brand-blue-300);
   cursor: pointer;
   overflow: hidden;
-  box-shadow: 0 12px 28px rgba(0, 47, 95, 0.25);
+  box-shadow: 0 1.2cqw 2cqw rgba(0, 47, 95, 0.25);
   transition: transform var(--transition-base);
 
   &:hover {
-    transform: translateY(-2px);
+    transform: translateY(-0.4cqw);
   }
 }
 
-.p-top-hero__movie-play {
+.p-top-hero__movie-poster {
   position: absolute;
   inset: 0;
-  margin: auto;
-  width: 91px;
-  height: 91px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+// サムネ上のコピー (Figma 296:12585 x936 y1364) Noto Sans JP Bold 35px 白
+.p-top-hero__movie-overlay {
+  position: absolute;
+  left: 11.4%; // (936-863)/640
+  top: 44.4%; // (1364-1204)/360
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-weight: 700;
+  font-size: 2.1875cqw; // 35 / 16
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--color-white);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+}
+
+// 再生ボタン (Figma 296:12587 円91px / 296:12588 三角)
+.p-top-hero__movie-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 5.6875cqw; // 91 / 16
+  height: 5.6875cqw;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.92);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 18px rgba(0, 47, 95, 0.3);
+  box-shadow: 0 0.4cqw 1.2cqw rgba(0, 47, 95, 0.3);
+  pointer-events: none;
 }
 
 .p-top-hero__movie-triangle {
   display: block;
   width: 0;
   height: 0;
-  border-left: 22px solid var(--color-brand-sky);
-  border-top: 14px solid transparent;
-  border-bottom: 14px solid transparent;
-  margin-left: 6px;
-}
-
-// Hero 本文 (Figma 296:7298 + 296:7299)
-//   1600 × 1674 のうち下半分 (y=1015-1674) を占める白文字本文。
-.p-top-hero__body {
-  grid-area: body;
-  position: relative;
-  z-index: 4;
-  margin-top: 24px;
-  max-width: 720px;
-  color: var(--color-white);
-}
-
-.p-top-hero__body-list {
-  list-style: none;
-  margin: 0 0 28px;
-  padding: 0;
-}
-
-.p-top-hero__body-line {
-  font-size: clamp(15px, 1.4vw, 22px);
-  line-height: 2;
-  letter-spacing: 0.06em;
-  font-weight: 500;
-  text-shadow: 0 2px 12px rgba(0, 47, 95, 0.45);
-}
-
-.p-top-hero__body-outro {
-  margin: 0;
-  font-size: clamp(20px, 1.9vw, 30px);
-  font-weight: 700;
-  line-height: 1.6;
-  letter-spacing: 0.08em;
-  color: var(--color-white);
-  text-shadow: 0 2px 14px rgba(0, 47, 95, 0.55);
-}
-
-.p-top-hero__city {
-  position: absolute;
-  left: 0;
-  right: 0;
-  // TEMP — ペンギン配置の確認中は都市シルエットを下方に退避（合わせ込み完了後に bottom: 0 に戻す）
-  bottom: -40vw;
-  width: 100%;
-  height: auto;
-  z-index: 1;
-  pointer-events: none;
-  display: block;
-  user-select: none;
+  border-left: 1.375cqw solid var(--color-brand-cyan); // 22 / 16
+  border-top: 0.875cqw solid transparent;
+  border-bottom: 0.875cqw solid transparent;
+  margin-left: 0.375cqw;
 }
 
 // ============================================
 // S2. PIONEER SPIRIT (Figma 296:7176, 1600 × 729)
-//   pioneer.png (1600×729) を背景帯として全幅で配置。
-//   画像左半分は空白なので、そこに大型 "PIONEER SPIRIT" シアン文字 +
-//   サブ「採用メッセージ」+ アイスリンクボタンを重ねる。
+//   pioneer.png (1600×729) を全面背景に敷き、左の余白に
+//   大型 "PIONEER SPIRIT" + サブ「採用メッセージ」+ アイスリンクボタンを重ねる。
 // ============================================
 .p-top-pioneer {
   position: relative;
@@ -354,12 +336,11 @@
   overflow: hidden;
 }
 
-.p-top-pioneer__inner {
+.p-top-pioneer__stage {
   position: relative;
   width: 100%;
-  // Figma 1600 × 729
   aspect-ratio: 1600 / 729;
-  min-height: 360px;
+  container-type: inline-size;
 }
 
 .p-top-pioneer__visual {
@@ -367,331 +348,221 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.p-top-pioneer__penguins {
-  display: block;
-  width: 100%;
-  height: 100%;
   object-fit: cover;
   object-position: center bottom;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.p-top-pioneer__heading {
-  position: absolute;
-  z-index: 2;
-  top: 16%;
-  left: 6%;
-  max-width: 60%;
-}
-
+// 見出し PIONEER SPIRIT (Figma 296:12559 x91 y2640) Barlow Condensed Thin 180px #00a0e9
 .p-top-pioneer__en {
+  position: absolute;
+  left: 5.6875%;
+  top: 10.7%; // (2640-2562)/729
+  z-index: 2;
   margin: 0;
   font-family: var(--font-family-display), var(--font-family-en);
-  font-weight: 400;
-  font-size: clamp(56px, 9vw, 156px);
-  letter-spacing: 0.02em;
+  font-weight: 100;
+  font-size: 11.25cqw; // 180 / 16
+  letter-spacing: 0.01em;
   line-height: 1;
-  color: var(--color-brand-sky);
+  color: var(--color-brand-cyan);
+  white-space: nowrap;
 }
 
+// サブ 採用メッセージ (Figma 296:12579 x91 y2845) Noto Sans JP Regular 40px #00a0e9
 .p-top-pioneer__ja {
-  margin: 24px 0 0;
-  font-size: clamp(14px, 1.3vw, 22px);
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  color: var(--color-text-muted);
+  position: absolute;
+  left: 5.6875%;
+  top: 38.82%; // (2845-2562)/729
+  z-index: 2;
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-weight: 400;
+  font-size: 2.5cqw; // 40 / 16
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--color-brand-cyan);
+  white-space: nowrap;
 }
 
+// ボタン (Figma 365:16916 x81 y2990)
 .p-top-pioneer__button {
   position: absolute;
+  left: 5.0625%;
+  top: 58.711%; // (2990-2562)/729
   z-index: 3;
-  left: 6%;
-  bottom: 12%;
-  display: inline-block;
 }
 
 // ============================================
-// S3. KNOW HOSHIZAKI / Trio (Figma 365:13388 帯, y 3283–5502)
-//   ふわっとした水色グラデの帯背景の中に、What's / Beyond / Team の 3 つを
-//   階段状にずらして配置。それぞれ:
-//     - 大きな英字ラベル (cyan, 2 行)
-//     - 関連画像 (sec02-04)
-//     - アイスリンクボタン
-//   Figma 座標 (1600 幅基準) を % 換算で再現。
+// S3+S4. KNOW HOSHIZAKI / ここに決めた! (Figma 365:13388 帯, y 3283–5502, 1600×2219)
+//   1枚の帯に What's / Beyond / Team の3導線 + 先輩たち「ここに決めた!」を
+//   Figma 座標どおり絶対配置。氷キューブを各所に散らす。
 // ============================================
 .p-top-trio {
   position: relative;
   width: 100%;
-  background: linear-gradient(
-    180deg,
-    var(--color-bg-sky) 0%,
-    var(--color-bg-cloud) 50%,
-    var(--color-bg-sky) 100%
-  );
   overflow: hidden;
 }
 
-.p-top-trio__inner {
+.p-top-trio__stage {
   position: relative;
   width: 100%;
-  max-width: var(--page-max-width);
-  margin: 0 auto;
-  // Figma: y 3283-5502 = 2219 高 / 1600 幅 = 1.387
   aspect-ratio: 1600 / 2219;
+  container-type: inline-size;
+  // Figma 365:13388: 上 #c8e9ff → 16.346% で白
+  background: linear-gradient(to bottom, #c8e9ff 0%, var(--color-white) 16.346%);
 }
 
 // 装飾の氷キューブ (Figma 543:6520-6523)
 .p-top-trio__cube {
   position: absolute;
-  pointer-events: none;
   z-index: 1;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
 
-  // ice_cubes_01: x=1441 y=34 w=112 (band 内座標)
   &--1 {
-    top: 1.5%;
-    left: 90%;
+    left: 90.0625%;
+    top: 1.532%;
     width: 7%;
   }
-
-  // ice_cubes_02: x=147 y=551 w=104
   &--2 {
-    top: 25%;
-    left: 9%;
+    left: 9.1875%;
+    top: 24.831%;
     width: 6.5%;
   }
-
-  // ice_cubes_03: x=149 y=1449 w=110
   &--3 {
-    top: 65%;
-    left: 9.3%;
-    width: 6.9%;
+    left: 9.3125%;
+    top: 65.299%;
+    width: 6.875%;
   }
-
-  // ice_cubes_04: x=1383 y=1552 w=129
   &--4 {
-    top: 70%;
-    left: 86%;
+    left: 86.4375%;
+    top: 69.941%;
     width: 8%;
   }
 }
 
-// 各カード (What's / Beyond / Team) を絶対配置
-.p-top-trio__card {
+// 各カードの画像 / 英字ラベル / ボタンを個別に絶対配置
+.p-top-trio__img {
   position: absolute;
-  display: block;
-  text-decoration: none;
-  color: inherit;
   z-index: 2;
-  transition: transform var(--transition-base);
+  height: auto;
+  filter: drop-shadow(0 1.4cqw 2cqw rgba(0, 47, 95, 0.16));
 
-  &:hover {
-    transform: translateY(-6px);
+  // What's: penguin sec01 (Figma 296:12641 x812 y3398 w460)
+  &--whats {
+    left: 50.75%;
+    top: 5.182%;
+    width: 28.75%;
+  }
+  // Beyond: globe sec02 (Figma 475:8736 x360 y3834 w434)
+  &--beyond {
+    left: 22.5%;
+    top: 24.831%;
+    width: 27.125%;
+  }
+  // Team: penguins sec03 (Figma 296:7149 x1007 y4316 w497)
+  &--team {
+    left: 62.9375%;
+    top: 46.553%;
+    width: 31.0625%;
+  }
+  // 先輩たち sec04 (Figma 367:857 x187 y4783 w509)
+  &--decided {
+    left: 11.6875%;
+    top: 67.598%;
+    width: 31.8125%;
   }
 }
 
-// What's HOSHIZAKI: 右上 (Figma 296:12560 x=725 y=335 / 296:7300 image / 365:16920 button x=1159 y=393)
-.p-top-trio__card--whats {
-  top: 8%;
-  left: 42%;
-  width: 50%;
-}
-
-// Beyond HOSHIZAKI: 中央左 (Figma 460:6857 x=93 y=805 / 365:16924 button x=491 y=979)
-.p-top-trio__card--beyond {
-  top: 24%;
-  left: 0;
-  width: 50%;
-}
-
-// Team HOSHIZAKI: 中央右 (Figma 365:13370 x=793 y=1246 / 365:16928 button x=1232 y=1300)
-.p-top-trio__card--team {
-  top: 50%;
-  left: 38%;
-  width: 56%;
-}
-
-.p-top-trio__card-img {
-  position: relative;
-  display: block;
-  width: 80%;
-  height: auto;
-  margin-bottom: -8%;
-  filter: drop-shadow(0 16px 24px rgba(0, 47, 95, 0.2));
-}
-
-.p-top-trio__card-text {
-  display: block;
+// 英字大ラベル (Figma 296:12560 / 460:6857 / 365:13370)
+// Barlow Condensed ExtraLight 120px #00a0e9 / 2行 leading-none
+.p-top-trio__en {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
   font-family: var(--font-family-display), var(--font-family-en);
-  font-weight: 400;
-  color: var(--color-brand-sky);
-  line-height: 0.95;
-  letter-spacing: 0.01em;
-  margin-bottom: 24px;
+  font-weight: 200;
+  font-size: 7.5cqw; // 120 / 16
+  line-height: 1;
+  letter-spacing: 0.005em;
+  color: var(--color-brand-cyan);
+  white-space: nowrap;
+
+  &--whats {
+    left: 45.3125%;
+    top: 15.097%;
+  }
+  &--beyond {
+    left: 5.8125%;
+    top: 36.277%;
+  }
+  &--team {
+    left: 49.5625%;
+    top: 56.152%;
+  }
 }
 
-.p-top-trio__card--beyond .p-top-trio__card-img,
-.p-top-trio__card--beyond .p-top-trio__card-text {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.p-top-trio__card-en1 {
+.p-top-trio__en-line {
   display: block;
-  font-size: clamp(36px, 5.2vw, 96px);
-  font-style: italic;
-  font-weight: 500;
 }
 
-.p-top-trio__card-en2 {
-  display: block;
-  font-size: clamp(40px, 5.6vw, 104px);
-  font-weight: 500;
-}
-
-.p-top-trio__card-button {
-  display: inline-block;
-  position: relative;
+// アイスリンクボタン
+.p-top-trio__button {
+  position: absolute;
   z-index: 3;
-}
 
-// What's: ボタンを画像の右下に
-.p-top-trio__card--whats {
-  .p-top-trio__card-img {
-    width: 60%;
-    margin-left: 30%;
+  &--whats {
+    left: 72.4375%;
+    top: 17.711%;
   }
-  .p-top-trio__card-text {
-    margin-top: -8%;
-    margin-left: 4%;
+  &--beyond {
+    left: 30.6875%;
+    top: 44.119%;
   }
-  .p-top-trio__card-button {
-    position: absolute;
-    top: 18%;
-    right: 4%;
+  &--team {
+    left: 77%;
+    top: 58.585%;
   }
-}
-
-// Beyond: 画像中央、ボタンが画像下部
-.p-top-trio__card--beyond {
-  text-align: center;
-  .p-top-trio__card-img {
-    width: 56%;
-  }
-  .p-top-trio__card-text {
-    text-align: left;
-    width: max-content;
-    max-width: 60%;
-    margin-left: 12%;
-    margin-top: -16%;
-  }
-  .p-top-trio__card-button {
-    position: absolute;
-    top: 60%;
-    left: 50%;
+  &--decided {
+    left: 39.375%;
+    top: 77.828%;
   }
 }
 
-// Team: 画像右、テキスト左、ボタン右下
-.p-top-trio__card--team {
-  .p-top-trio__card-img {
-    width: 50%;
-    margin-left: 30%;
-  }
-  .p-top-trio__card-text {
-    margin-top: -8%;
-    margin-left: 6%;
-  }
-  .p-top-trio__card-button {
-    position: absolute;
-    top: 30%;
-    right: 4%;
-  }
-}
-
-// ============================================
-// S4. 先輩たちの「ここに決めた！」 (Figma 367:857 / y 4783-5269)
-//   星型クリップで人物写真を 3-4 枚オーバーラップ表示し、
-//   その下に「先輩たちの／『ここに決めた！』」の見出し。
-//   Figma の S3 帯と重なるが、独立セクションとして切り出して扱う。
-// ============================================
-.p-top-decided {
-  position: relative;
-  width: 100%;
-  background: linear-gradient(
-    180deg,
-    var(--color-bg-sky) 0%,
-    var(--color-white) 100%
-  );
-  padding: 80px 0 120px;
-  overflow: hidden;
-}
-
-.p-top-decided__inner {
-  position: relative;
-  max-width: var(--page-max-width);
-  margin: 0 auto;
-  padding: 0 80px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: "photo title" "photo button";
-  gap: 32px 48px;
-  align-items: center;
-}
-
-.p-top-decided__photo {
-  grid-area: photo;
-  display: block;
-  width: 100%;
-  max-width: 560px;
-  height: auto;
-  filter: drop-shadow(0 24px 40px rgba(0, 47, 95, 0.22));
-}
-
-.p-top-decided__title {
-  grid-area: title;
+// 先輩たちの (Figma 296:12640 x448 y5191) Noto Sans JP Regular 36.8px #00a0e9
+.p-top-trio__decided-lead {
+  position: absolute;
+  z-index: 3;
+  left: 28%;
+  top: 85.985%;
   margin: 0;
   font-family: var(--font-family-base);
-  font-weight: 900;
-  line-height: 1.4;
-  color: var(--color-brand-navy);
-  align-self: end;
+  font-weight: 400;
+  font-size: 2.3cqw; // 36.8 / 16
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--color-brand-cyan);
+  white-space: nowrap;
 }
 
-.p-top-decided__title-line1 {
-  display: block;
-  font-size: clamp(20px, 2.2vw, 36px);
-  letter-spacing: 0.06em;
-  margin-bottom: 8px;
-}
-
-.p-top-decided__title-line2 {
-  display: block;
-  font-size: clamp(28px, 3.6vw, 56px);
-  letter-spacing: 0.04em;
-  color: var(--color-brand-navy);
-}
-
-.p-top-decided__title-emph {
-  background: linear-gradient(transparent 60%, rgba(255, 45, 154, 0.18) 60%);
-  padding: 0 4px;
-}
-
-.p-top-decided__title-bang {
-  color: var(--color-brand-magenta);
-}
-
-.p-top-decided__button {
-  grid-area: button;
-  align-self: start;
-  justify-self: start;
+// 「ここに決めた！」筆文字グラフィック (Figma 470:1395 x453 y5259 w409, #00A0E9 SVG)
+.p-top-trio__decided-koko {
+  position: absolute;
+  z-index: 3;
+  left: 28.3125%;
+  top: 89.05%;
+  width: 25.5625%; // 409 / 1600
+  height: auto;
+  pointer-events: none;
+  user-select: none;
 }
 
 // ============================================
 // S5. はたらく環境を知る (Figma 296:7285, y 5502-6162, 1599×660)
-//   背景にオフィス写真。左上にネイビーピル "はたらく環境を知る"、
+//   背景にオフィス写真。左上にシアン帯 "はたらく環境を知る"、
 //   その下にサブコピー。左下にアイスリンクボタン。歩くペンギン群は
 //   写真に既に含まれているのでオーバーレイは不要。
 // ============================================
@@ -768,150 +639,165 @@
 }
 
 // ============================================
-// レスポンシブ
+// レスポンシブ（≤960px は固定アスペクト比をやめ通常フローへ）
 // ============================================
-@media screen and (max-width: 1280px) {
-  .p-top-hero__sky {
-    padding: 160px 48px 0;
-  }
-
-  .p-top-hero__inner {
-    gap: 40px 32px;
-  }
-
-  .p-top-pioneer__inner,
-  .p-top-decided__inner {
-    padding-left: 48px;
-    padding-right: 48px;
-  }
-}
-
 @media screen and (max-width: 960px) {
-  .p-top-hero__sky {
-    padding: 140px 24px 0;
-    min-height: clamp(640px, 130vw, 980px);
+  // --- S1 Hero: 縦積みのシンプル構成に切替 ---
+  .p-top-hero__stage {
+    aspect-ratio: auto;
+    container-type: normal;
+    display: block;
+    padding: 120px 24px 0;
   }
 
-  .p-top-hero__inner {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "catch"
-      "movie"
-      "body";
-    gap: 32px;
+  .p-top-hero__city {
+    position: relative;
+    margin: 40px -24px 0;
+    width: calc(100% + 48px);
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  // ペンギンは PC 専用の絶対配置のため SP では非表示（都市イラスト内に鳥群あり）
+  .p-top-hero__penguin {
+    display: none;
+  }
+
+  .p-top-hero__catch {
+    position: relative;
+    left: auto;
+    top: auto;
+    font-size: clamp(56px, 16vw, 120px);
+  }
+
+  .p-top-hero__body {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-top: 24px;
+  }
+
+  .p-top-hero__body-line {
+    font-size: clamp(13px, 3.4vw, 18px);
+    line-height: 2;
+    white-space: normal;
+  }
+
+  .p-top-hero__movie-label {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-top: 40px;
+    font-size: clamp(24px, 6vw, 40px);
   }
 
   .p-top-hero__movie {
-    width: 100%;
-    max-width: 420px;
-    margin-top: 0;
-  }
-
-  .p-top-hero__cloud--3 {
-    display: none;
-  }
-
-  .p-top-pioneer__inner {
-    aspect-ratio: 1600 / 920;
-  }
-
-  .p-top-pioneer__heading {
-    top: 8%;
-    left: 6%;
-    max-width: 80%;
-  }
-
-  .p-top-pioneer__button {
-    left: 6%;
-    bottom: 6%;
-  }
-
-  // Trio: 縦並びに切替
-  .p-top-trio__inner {
-    aspect-ratio: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 56px;
-    padding: 80px 24px 96px;
-  }
-
-  .p-top-trio__cube {
-    display: none;
-  }
-
-  .p-top-trio__card {
-    position: relative;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    width: 100% !important;
-    text-align: center;
-  }
-
-  .p-top-trio__card-img {
-    width: 70% !important;
-    margin: 0 auto -8% !important;
-  }
-
-  .p-top-trio__card-text {
-    margin: 0 auto 16px !important;
-    text-align: center;
-    width: max-content;
-    max-width: 100%;
-  }
-
-  .p-top-trio__card-button {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    margin: 16px auto 0;
-    display: block;
-    width: 207px;
-  }
-
-  .p-top-decided__inner {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "photo"
-      "title"
-      "button";
-    text-align: center;
-    padding: 0 24px;
-  }
-
-  .p-top-decided__photo {
-    margin: 0 auto;
-  }
-
-  .p-top-decided__button {
-    justify-self: center;
-  }
-
-  // モバイルは固定アスペクト比をやめ、写真の上にコンテンツを通常フローで重ねる
-  .p-top-env {
-    aspect-ratio: auto;
-    min-height: 420px;
-  }
-
-  .p-top-env__inner {
     position: relative;
     left: auto;
     top: auto;
     width: 100%;
-    padding: 48px 24px;
+    max-width: 480px;
+    margin-top: 12px;
+    box-shadow: 0 12px 28px rgba(0, 47, 95, 0.25);
   }
 
-  .p-top-env__title {
-    font-size: clamp(24px, 6vw, 40px);
+  .p-top-hero__movie-overlay {
+    font-size: clamp(16px, 4vw, 24px);
   }
 
-  .p-top-env__sub {
-    font-size: clamp(12px, 3.4vw, 16px);
+  .p-top-hero__movie-play {
+    width: 64px;
+    height: 64px;
+  }
+  .p-top-hero__movie-triangle {
+    border-left: 16px solid var(--color-brand-cyan);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    margin-left: 4px;
   }
 
-  .p-top-env__button {
-    margin-top: clamp(24px, 8vw, 56px);
-    margin-left: 0;
+  .p-top-hero__outro {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-top: 32px;
+    font-size: clamp(20px, 5vw, 34px);
+    white-space: normal;
   }
+
+  // --- S2 PIONEER: 通常フローへ ---
+  .p-top-pioneer__stage {
+    aspect-ratio: auto;
+    container-type: normal;
+    padding: 56px 24px 72px;
+    background: linear-gradient(to bottom, var(--color-white) 70%, #c8e9ff 70%);
+  }
+  .p-top-pioneer__visual {
+    position: relative;
+    inset: auto;
+    height: auto;
+    margin-top: 24px;
+  }
+  .p-top-pioneer__en {
+    position: relative;
+    left: auto;
+    top: auto;
+    font-size: clamp(72px, 18vw, 140px);
+  }
+  .p-top-pioneer__ja {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-top: 8px;
+    font-size: clamp(18px, 4.4vw, 28px);
+  }
+  .p-top-pioneer__button {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-top: 24px;
+  }
+
+  // --- S3+S4 Trio: 縦積みカードへ ---
+  .p-top-trio__stage {
+    aspect-ratio: auto;
+    container-type: normal;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+    padding: 72px 24px 88px;
+    background: linear-gradient(to bottom, #c8e9ff 0%, var(--color-white) 12%);
+  }
+  .p-top-trio__cube {
+    display: none;
+  }
+  .p-top-trio__img,
+  .p-top-trio__en,
+  .p-top-trio__button,
+  .p-top-trio__decided-lead,
+  .p-top-trio__decided-koko {
+    position: relative;
+    left: auto;
+    top: auto;
+  }
+  .p-top-trio__img {
+    width: 56%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .p-top-trio__en {
+    font-size: clamp(48px, 12vw, 96px);
+    text-align: center;
+  }
+  .p-top-trio__decided-lead {
+    font-size: clamp(20px, 5vw, 32px);
+    text-align: center;
+  }
+  .p-top-trio__decided-koko {
+    width: clamp(220px, 60vw, 360px);
+    margin: 8px auto 0;
+  }
+  // 縦積み時は「カード」を擬似的にまとめる: 画像→英字→ボタンの順に並ぶよう
+  // DOM 順に従う（HTML 側でカード単位にグルーピング）。
 }

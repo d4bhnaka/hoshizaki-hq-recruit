@@ -21,38 +21,40 @@ const heroBodyLines = [
   "これからも、ホシザキは進化を止めない。",
 ];
 
-// 3 つのコーポレートナビ (KNOW HOSHIZAKI band)。Figma の y=3283-5502 帯に
-// 階段状に配置される。`pos` は `_p-top.scss` 側で扱う配置クラス。
+// 飛ぶペンギン（Figma `penguins` フレーム 296:12720 の各 ap_0x）
+const heroPenguins = [
+  { n: 3, img: "ap_03.png" },
+  { n: 4, img: "ap_04.png" },
+  { n: 1, img: "ap_01.png" },
+  { n: 2, img: "ap_02.png" },
+  { n: 5, img: "ap_05.png" },
+];
+
+// S3 コーポレートナビ 3 枚（What's / Beyond / Team）。Figma 365:13388 帯に絶対配置。
 const trioCards = [
   {
     pos: "whats",
     href: `${basePath}fact/`,
-    en1: "What's",
-    en2: "HOSHIZAKI",
+    en: ["What's", "HOSHIZAKI"],
     label: "キーワードで見る",
     img: `${basePath}images/top/sec01_img.png`,
     imgAlt: "飛ぶペンギン",
-    button: `${basePath}images/common/link-button-ice.png`,
   },
   {
     pos: "beyond",
     href: `${basePath}strategy/`,
-    en1: "Beyond",
-    en2: "HOSHIZAKI",
+    en: ["Beyond", "HOSHIZAKI"],
     label: "ホシザキの海外展開",
     img: `${basePath}images/top/sec02_img.png`,
-    imgAlt: "地球儀の中で泳ぐペンギン",
-    button: `${basePath}images/common/link-button-ice.png`,
+    imgAlt: "地球儀の中を泳ぐペンギン",
   },
   {
     pos: "team",
     href: `${basePath}job/`,
-    en1: "Team",
-    en2: "HOSHIZAKI",
+    en: ["Team", "HOSHIZAKI"],
     label: "グループの役割",
     img: `${basePath}images/top/sec03_img.png`,
-    imgAlt: "並ぶ3羽のペンギン",
-    button: `${basePath}images/common/link-button-ice.png`,
+    imgAlt: "寄り添う3羽のペンギン",
   },
 ];
 ---
@@ -62,95 +64,62 @@ const trioCards = [
 
   <main class="p-top">
     {/* ============================================ */}
-    {/* S1. Hero (Figma y: 0–1674) */}
+    {/* S1. Hero (Figma y: 0–2562) */}
     {/* ============================================ */}
     <section class="p-top-hero" aria-label="メインビジュアル">
-      <div class="p-top-hero__sky">
-        {/* 装飾の雲 */}
-        <img
-          class="p-top-hero__cloud p-top-hero__cloud--1"
-          src={`${basePath}images/top/cloud01.png`}
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p-top-hero__cloud p-top-hero__cloud--2"
-          src={`${basePath}images/top/cloud02.png`}
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p-top-hero__cloud p-top-hero__cloud--3"
-          src={`${basePath}images/top/cloud03.png`}
-          alt=""
-          aria-hidden="true"
-        />
+      <div class="p-top-hero__stage">
+        {/* タグライン「常識の／先へ、／跳べ。」 */}
+        <h1 class="p-top-hero__catch">
+          <span class="p-top-hero__catch-line">常識の</span>
+          <span class="p-top-hero__catch-line">先へ、</span>
+          <span class="p-top-hero__catch-line">跳べ。</span>
+        </h1>
 
-        {/* 飛ぶペンギン (5 羽) */}
-        <img
-          class="p-top-hero__penguin p-top-hero__penguin--1"
-          src={`${basePath}images/top/ap_01.png`}
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p-top-hero__penguin p-top-hero__penguin--2"
-          src={`${basePath}images/top/ap_02.png`}
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p-top-hero__penguin p-top-hero__penguin--3"
-          src={`${basePath}images/top/ap_03.png`}
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p-top-hero__penguin p-top-hero__penguin--4"
-          src={`${basePath}images/top/ap_04.png`}
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p-top-hero__penguin p-top-hero__penguin--5"
-          src={`${basePath}images/top/ap_05.png`}
-          alt=""
-          aria-hidden="true"
-        />
+        {/* 飛ぶペンギン 5 羽 */}
+        {
+          heroPenguins.map((p) => (
+            <img
+              class={`p-top-hero__penguin p-top-hero__penguin--${p.n}`}
+              src={`${basePath}images/top/${p.img}`}
+              alt=""
+              aria-hidden="true"
+            />
+          ))
+        }
 
-        <div class="p-top-hero__inner">
-          <h1 class="p-top-hero__catch">
-            <span class="p-top-hero__catch-line">常識の</span>
-            <span class="p-top-hero__catch-line">先へ、</span>
-            <span class="p-top-hero__catch-line">跳べ。</span>
-          </h1>
+        {/* 本文導入コピー */}
+        <ol class="p-top-hero__body">
+          {
+            heroBodyLines.map((line) => (
+              <li class="p-top-hero__body-line">{line}</li>
+            ))
+          }
+        </ol>
 
-          <aside class="p-top-hero__movie" aria-label="CONCEPT MOVIE">
-            <p class="p-top-hero__movie-en">CONCEPT MOVIE</p>
-            <button
-              type="button"
-              class="p-top-hero__movie-thumb"
-              aria-label="コンセプトムービーを再生"
-            >
-              <span class="p-top-hero__movie-play" aria-hidden="true">
-                <span class="p-top-hero__movie-triangle"></span>
-              </span>
-            </button>
-          </aside>
+        {/* CONCEPT MOVIE */}
+        <p class="p-top-hero__movie-label">CONCEPT MOVIE</p>
+        <button
+          type="button"
+          class="p-top-hero__movie"
+          aria-label="コンセプトムービーを再生"
+        >
+          <img
+            class="p-top-hero__movie-poster"
+            src={`${basePath}images/top/concept-movie-poster.png`}
+            alt=""
+          />
+          <span class="p-top-hero__movie-overlay"
+            >さぁ、その想いを翼に変えて。</span
+          >
+          <span class="p-top-hero__movie-play" aria-hidden="true">
+            <span class="p-top-hero__movie-triangle"></span>
+          </span>
+        </button>
 
-          <div class="p-top-hero__body">
-            <ol class="p-top-hero__body-list">
-              {
-                heroBodyLines.map((line) => (
-                  <li class="p-top-hero__body-line">{line}</li>
-                ))
-              }
-            </ol>
-            <p class="p-top-hero__body-outro">さあ、その想いを翼に変えて。</p>
-          </div>
-        </div>
+        {/* 「さぁ、その想いを翼に変えて。」(都市の上) */}
+        <p class="p-top-hero__outro">さぁ、その想いを翼に変えて。</p>
 
-        {/* 都市のシルエット (下部) */}
+        {/* 都市イラスト（下端・背景） */}
         <img
           class="p-top-hero__city"
           src={`${basePath}images/top/bg-city.png`}
@@ -164,14 +133,11 @@ const trioCards = [
     {/* S2. PIONEER SPIRIT (Figma y: 2562–3291 / Group 296:7176) */}
     {/* ============================================ */}
     <section class="p-top-pioneer" aria-label="採用メッセージ">
-      <div class="p-top-pioneer__inner">
-        <header class="p-top-pioneer__heading">
-          <h2 class="p-top-pioneer__en">PIONEER SPIRIT</h2>
-          <p class="p-top-pioneer__ja">採用メッセージ</p>
-        </header>
-
+      <div class="p-top-pioneer__stage">
+        <h2 class="p-top-pioneer__en">PIONEER SPIRIT</h2>
+        <p class="p-top-pioneer__ja">採用メッセージ</p>
         <a
-          class="p-top-pioneer__button c-ice-link"
+          class="p-top-pioneer__button c-ice-link c-ice-link--fluid"
           href={`${basePath}message/`}
           aria-label="採用メッセージを読む"
         >
@@ -186,67 +152,55 @@ const trioCards = [
             <span class="c-ice-link__more">READ MORE</span>
           </span>
         </a>
-
-        <div class="p-top-pioneer__visual" aria-hidden="true">
-          <img
-            class="p-top-pioneer__penguins"
-            src={`${basePath}images/top/pioneer.png`}
-            alt=""
-          />
-        </div>
+        <img
+          class="p-top-pioneer__visual"
+          src={`${basePath}images/top/pioneer.png`}
+          alt=""
+          aria-hidden="true"
+        />
       </div>
     </section>
 
     {/* ============================================ */}
-    {/* S3. KNOW HOSHIZAKI / Trio (Figma y: 3283–5502 / 365:13388 帯) */}
+    {/* S3+S4. KNOW HOSHIZAKI / ここに決めた! (Figma y: 3283–5502 / 365:13388 帯) */}
     {/* ============================================ */}
-    <section class="p-top-trio" aria-label="ホシザキを知る3つの視点">
-      <div class="p-top-trio__inner">
+    <section
+      class="p-top-trio"
+      aria-label="ホシザキを知る視点とはたらく人を知る導線"
+    >
+      <div class="p-top-trio__stage">
         {/* 装飾の氷キューブ */}
-        <img
-          class="p-top-trio__cube p-top-trio__cube--1"
-          src={`${basePath}images/top/ice_cubes_01.png`}
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p-top-trio__cube p-top-trio__cube--2"
-          src={`${basePath}images/top/ice_cubes_02.png`}
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p-top-trio__cube p-top-trio__cube--3"
-          src={`${basePath}images/top/ice_cubes_03.png`}
-          alt=""
-          aria-hidden="true"
-        />
-        <img
-          class="p-top-trio__cube p-top-trio__cube--4"
-          src={`${basePath}images/top/ice_cubes_04.png`}
-          alt=""
-          aria-hidden="true"
-        />
+        {
+          [1, 2, 3, 4].map((i) => (
+            <img
+              class={`p-top-trio__cube p-top-trio__cube--${i}`}
+              src={`${basePath}images/top/ice_cubes_0${i}.png`}
+              alt=""
+              aria-hidden="true"
+            />
+          ))
+        }
 
+        {/* What's / Beyond / Team */}
         {
           trioCards.map((card) => (
-            <a
-              class={`p-top-trio__card p-top-trio__card--${card.pos}`}
-              href={card.href}
-            >
+            <Fragment>
               <img
-                class="p-top-trio__card-img"
+                class={`p-top-trio__img p-top-trio__img--${card.pos}`}
                 src={card.img}
                 alt={card.imgAlt}
               />
-              <span class="p-top-trio__card-text">
-                <span class="p-top-trio__card-en1">{card.en1}</span>
-                <span class="p-top-trio__card-en2">{card.en2}</span>
-              </span>
-              <span class="p-top-trio__card-button c-ice-link">
+              <p class={`p-top-trio__en p-top-trio__en--${card.pos}`}>
+                <span class="p-top-trio__en-line">{card.en[0]}</span>
+                <span class="p-top-trio__en-line">{card.en[1]}</span>
+              </p>
+              <a
+                class={`p-top-trio__button p-top-trio__button--${card.pos} c-ice-link c-ice-link--fluid`}
+                href={card.href}
+              >
                 <img
                   class="c-ice-link__bg"
-                  src={card.button}
+                  src={`${basePath}images/common/link-button-ice.png`}
                   alt=""
                   aria-hidden="true"
                 />
@@ -254,35 +208,25 @@ const trioCards = [
                   <span class="c-ice-link__label">{card.label}</span>
                   <span class="c-ice-link__more">READ MORE</span>
                 </span>
-              </span>
-            </a>
+              </a>
+            </Fragment>
           ))
         }
-      </div>
-    </section>
 
-    {/* ============================================ */}
-    {
-      /* S4. 先輩たちの「ここに決めた！」 (Figma y: 4783–5269 / Group 367:857) */
-    }
-    {/* ============================================ */}
-    <section class="p-top-decided" aria-label="先輩たちの「ここに決めた！」">
-      <div class="p-top-decided__inner">
+        {/* 先輩たちの「ここに決めた！」 */}
         <img
-          class="p-top-decided__photo"
+          class="p-top-trio__img p-top-trio__img--decided"
           src={`${basePath}images/top/sec04_img.png`}
-          alt="星型の氷フレームに収まった3名の先輩"
+          alt="星型の氷フレームに収まった先輩社員たち"
         />
-        <h2 class="p-top-decided__title">
-          <span class="p-top-decided__title-line1">先輩たちの</span>
-          <span class="p-top-decided__title-line2"
-            >「<span class="p-top-decided__title-emph">ここに決めた</span><span
-              class="p-top-decided__title-bang">！</span
-            >」</span
-          >
-        </h2>
+        <p class="p-top-trio__decided-lead">先輩たちの</p>
+        <img
+          class="p-top-trio__decided-koko"
+          src={`${basePath}images/top/koko-decided.svg`}
+          alt="「ここに決めた！」"
+        />
         <a
-          class="p-top-decided__button c-ice-link"
+          class="p-top-trio__button p-top-trio__button--decided c-ice-link c-ice-link--fluid"
           href={`${basePath}person/`}
           aria-label="はたらく人を知る"
         >

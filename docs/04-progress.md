@@ -70,10 +70,10 @@
 ### セクション（[03-spec-top-page.md](./03-spec-top-page.md) のセクション番号に対応）
 
 - [r] M3-0 [src/pages/index.astro](../src/pages/index.astro) に Header／Footer 配置、ビルド成功確認（2026-04-24）。
-- [r] M3-S1 Hero（`.p-top-hero`）— タグライン／ペンギン／コンセプトムービー／背景ビジュアル。2026-04-30 Figma 296:7137 準拠で再構築。
-- [r] M3-S2 PIONEER SPIRIT（`.p-top-pioneer`）— pioneer.png (1600×729) を帯背景に。タイトル左上 / アイスリンクボタン左下。
-- [r] M3-S3 コーポレートナビ（`.p-top-trio`）— What's / Beyond / Team を Figma 座標 (% 換算) で階段配置。sec01/sec02/sec03_img.png + link-button-ice_02-04.png。
-- [r] M3-S4 先輩たちの「ここに決めた！」（`.p-top-decided`）— sec04_img.png (星型ICEフレーム入り集合写真) を直接利用。
+- [r] M3-S1 Hero（`.p-top-hero`）— タグライン／ペンギン／コンセプトムービー／背景ビジュアル。**2026-06-05 全面再構築**：固定アスペクト比ステージ(1600×2562)＋絶対配置(%)＋`cqw` で Figma 座標に忠実化。発明物の `cloud01-03` 浮遊を撤去、空は実グラデ(120.636deg)、都市は `bg-city` を下端フェード、ムービーは実ポスター(`concept-movie-poster.png`)。本文の誤字「さあ」→「さぁ」修正。
+- [r] M3-S2 PIONEER SPIRIT（`.p-top-pioneer`）— pioneer.png (1600×729) を帯背景に。**2026-06-05**：見出しを Barlow Condensed Thin 180px `#00a0e9`、サブ「採用メッセージ」40px に修正。
+- [r] M3-S3 コーポレートナビ（`.p-top-trio`）— **2026-06-05**：S4 と統合し Figma 365:13388 帯(1600×2219)の 1 ステージに。EN ラベルを Barlow Condensed **ExtraLight** 120px `#00a0e9`・非斜体に修正（旧：italic＋誤色 #1ab4e5）。Google Fonts に weight 200 追加。
+- [r] M3-S4 先輩たちの「ここに決めた！」— **2026-06-05** に S3 帯へ統合（`.p-top-trio__*--decided`）。「ここに決めた！」は Figma 筆文字を `koko-decided.svg`（#00A0E9）で再現。`.p-top-decided` は廃止。
 - [r] M3-S5 はたらく環境を知る（`.p-top-env`）— section-bg-environment.jpg をフルブリードで配置。ネイビーピル見出し + アイスリンクボタン。
 - [r] M3-S6 SPECIAL CONTENTS（`.p-top-special`）— ネイビー背景 + 3 カード (text 左 / 写真右 / READ MORE 右下)。
 - [r] M3-S7 Entry / Internship CTA（`BottomCta` コンポーネント）。
@@ -395,6 +395,20 @@ dist/
   - 個別詳細ページ（`/person/detail/`）の本実装・カードからの導線は別タスク（現状リンクなし）。
   - **注意**: 本セッション中に別プロセス由来の未追跡ファイル（`public/images/person/p01〜p15.png`・`crosstalk.*` の変更等）が混在。**本タスクの成果物ではない**ためコミット対象から除外すること。
 >>>>>>> 086f4654ca44bb30994830647aea901bb88a00a8
+
+### 2026-06-05 セッション: トップページ S1〜S4 を Figma 忠実へ全面再構築
+
+- **着手範囲**: ユーザー指摘「ヒーローとその後のセクションがデザインと大幅にズレ」を受け、S1 Hero／S2 PIONEER SPIRIT／S3 コーポレートナビ／S4「ここに決めた！」を Figma `296:7137` の実座標で再構築（S5 環境以降は既に忠実なので非変更）。
+- **手法（重要・今後の踏襲推奨）**: env セクションで実績のある「固定アスペクト比ステージ＋絶対配置(%)」を全面採用し、サイズは **コンテナクエリ単位 `cqw`**（`container-type: inline-size`、1cqw=ステージ幅1%、1600px時 16px=1cqw＝Figma px ÷16）でステージ幅に完全比例させた。位置 `left/top` は `figma座標 ÷ 1600`（x）/ `÷ ステージ高`（y）。各ステージ高: Hero 2562 / Pioneer 729 / Trio帯 2219。
+- **主な是正点**:
+  - Hero: 発明物の浮遊雲 `cloud01-03` を撤去（Figma に存在しない）。空は実グラデ `linear-gradient(120.636deg,#107af4 55.261%,#10aff4 55.261%)`、都市 `bg-city.png` を下端＋上端フェードで配置、ペンギン5羽(ap_01-05)を実座標に。CONCEPT MOVIE は実ポスター `concept-movie-poster.png`（Figma 743:1954 書き出し）。
+  - 文言誤字 **「さあ」→「さぁ」**（小書きぁ、Figma 296:7299/12585）を修正。
+  - S3+S4 を Figma 通り **1 帯に統合**。EN ラベルは Barlow Condensed **ExtraLight(200)** 120px `#00a0e9`・**非斜体**（旧実装は italic＋誤色 `#1ab4e5`）。`Layout.astro` の Google Fonts に weight **200** を追加。
+  - 「ここに決めた！」は筆文字ベクター `koko-decided.svg`（Figma 470:1395、#00A0E9）で再現。
+  - シアン見出しは全て `--color-brand-cyan #00a0e9`（Pioneer/Trio/先輩たちの）。
+- **新規アセット**: [public/images/top/concept-movie-poster.png](../public/images/top/concept-movie-poster.png)、[public/images/top/koko-decided.svg](../public/images/top/koko-decided.svg)。既存 ap_01-05 / bg-city / pioneer / sec01-04 / ice_cubes は流用（dim が Figma rect と一致確認済み）。
+- **検証**: `npm run build` クリーン（`data-astro-cid=0` / インライン`<style>=0` / ルート絶対パス=0 / ハッシュ無し）。`dist/` を静的配信し Chrome ヘッドレス 1600px でレンダ→ S1/S2/S3 を Figma スクショ・ユーザー支給デザインと目視照合し一致。さらに 4 エージェントの敵対的レビュー（幾何/タイポ/色アセット/ビジュアル）を実施し、全項目 PASS（幾何ズレ最大 0.05pp、文言・ウェイト・色すべて適合）。
+- **未対応**: M3-A1〜A4 の GSAP アニメ（フェードイン/ペンギン浮遊/ScrollTrigger）は引き続き未実装。`src/pages/internship.astro:392` にも「さあ」表記が残るが別 Figma ノードのため本タスク対象外（要確認）。
 
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
