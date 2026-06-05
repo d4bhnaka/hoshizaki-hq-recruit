@@ -34,8 +34,6 @@ interface Person {
   tags: string[];
   /** 参考：社員名（writing/sources のデータ。現状カードには非表示） */
   name: string;
-  /** 個別ページへのリンク（未作成の社員は省略 → カードは非リンク） */
-  href?: string;
 }
 
 // 表示順 = Figma の並び順（左上→右下、4 列）。
@@ -49,7 +47,6 @@ const people: Person[] = [
     body: "地元で、世界で。／長く働ける／会社を選んだ。",
     category: "技術系",
     tags: ["tech", "science", "male"],
-    href: "./01/",
   },
   {
     name: "加藤圭二",
@@ -57,7 +54,6 @@ const people: Person[] = [
     body: "自分の仕事が、／暮らしの中で、／形になる。",
     category: "技術系",
     tags: ["tech", "science", "male"],
-    href: "./02/",
   },
   {
     name: "南潤哉",
@@ -65,7 +61,6 @@ const people: Person[] = [
     body: "なくならない「食」／世界トップの／安定に決めた",
     category: "技術系",
     tags: ["tech", "humanities", "male"],
-    href: "./03/",
   },
   {
     name: "佐々琢磨",
@@ -203,7 +198,7 @@ const people: Person[] = [
         <section class="p-person__grid-section" aria-label="社員一覧">
           <ul class="p-person__grid">
             {
-              people.map((p) => (
+              people.map((p, i) => (
                 <li
                   class="p-person__grid-item"
                   data-person-card
@@ -213,7 +208,7 @@ const people: Person[] = [
                     image={p.image}
                     body={p.body}
                     department={p.category}
-                    href={p.href}
+                    href={`./${String(i + 1).padStart(2, "0")}/`}
                   />
                 </li>
               ))

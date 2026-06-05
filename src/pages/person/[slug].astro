@@ -47,7 +47,9 @@ const titleText = person.title.join("");
                 <span class="p-person-detail__meta-name">{person.initials}</span>
                 <span class="p-person-detail__meta-item">{person.dept}</span>
                 <span class="p-person-detail__meta-item">{person.year}</span>
-                <span class="p-person-detail__meta-item">{person.faculty}</span>
+                {person.faculty && (
+                  <span class="p-person-detail__meta-item">{person.faculty}</span>
+                )}
               </div>
 
               <div class="p-person-detail__qa-list">
@@ -75,7 +77,10 @@ const titleText = person.title.join("");
 
             <!-- Right: sticky person photo (transparent cutout) -->
             <aside class="p-person-detail__right">
-              <figure class="p-person-detail__photo">
+              <figure
+                class="p-person-detail__photo"
+                style={`--photo-w: ${person.photoWidth}px`}
+              >
                 <img
                   src={`${base}images/person/${person.photo}`}
                   alt={`${person.initials}さん`}

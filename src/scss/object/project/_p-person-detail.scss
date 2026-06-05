@@ -146,7 +146,8 @@
 
 .p-person-detail__photo {
   margin: 0;
-  max-width: 600px;
+  // 表示幅は社員ごと（Figma フレーム幅）。インライン --photo-w で指定。
+  max-width: var(--photo-w, 600px);
 
   img {
     display: block;

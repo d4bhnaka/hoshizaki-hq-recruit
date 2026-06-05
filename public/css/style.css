@@ -1029,6 +1029,8 @@ img {
 }
 
 .c-office-tour__swiper {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
   overflow: hidden;
 }
 
@@ -4297,7 +4299,7 @@ a.c-person-card:hover {
 
 .p-person-detail__photo {
   margin: 0;
-  max-width: 600px;
+  max-width: var(--photo-w, 600px);
 }
 .p-person-detail__photo img {
   display: block;
