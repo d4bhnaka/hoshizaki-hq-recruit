@@ -48,18 +48,22 @@
 - [r] M2-C5 `BottomCta.astro` ＋ `_c-bottom-cta.scss`。INTERNSHIP + ENTRY 横並びバナーで M2-C5 統合版。
 - [r] M2-C6 `PageHero.astro` ＋ `_c-page-hero.scss`。Props: `en`, `ja`, `variant`, `compact`, `align`, `bg`。
 - [r] M2-C7 [`PersonCard.astro`](../src/components/PersonCard.astro) ＋ `_c-person-card.scss`（2026-04-25 にコンポーネント化）。`person.astro` から 14 回呼出し。Props: `image`, `quote`, `body`, `department`, `href?`。
-- [r] M2-C8 SPECIAL CONTENTS ストーリーのデータ共通化（[`src/data/specialStories.ts`](../src/data/specialStories.ts)、2026-04-25）。トップ S6 と `/special/` インデックスの両方がここから 3 件を読み出す。見た目（`.p-top-special__card` と `.p-special__card`）は意図的に非共通化。
+- [r] M2-C8 SPECIAL CONTENTS の共通化。データは [`src/data/specialStories.ts`](../src/data/specialStories.ts)（3 件、`slug: crosstalk | project | special-talk`）。**2026-06-08 時点で見た目も [`SpecialContents.astro`](../src/components/SpecialContents.astro) ＋ `_p-special.scss` で共通化済み**：トップ S6 と `/special/` インデックスが同一のスタックカード UI を共有し、`basePath` / `storyBase` / `headingTag` プロップで差分を吸収する。当初の「見た目は意図的に非共通化」方針からコンポーネント共通化へ移行した。
 - [r] M2-C9 新規 SCSS partial をすべて [style.scss](../src/scss/style.scss) に `@use` 登録。
 - [r] M2-C10 `SectionHeading.astro` ＋ `_c-section-heading.scss`（新規）。日本語＋英語セクション見出し。
 - [r] M2-C11 `.c-interview-block` ＋ `_c-interview-block.scss`（新規）。Person 詳細・Special 各ページの Q+A ブロック。
 - [r] M2-C12 `.c-stat-card` ＋ `_c-stat-card.scss`（新規）。Fact ページの数値カード。
+- [r] M2-C13 [`SpecialContents.astro`](../src/components/SpecialContents.astro)（新規）。SPECIAL CONTENTS のヒーロー見出し＋スクロール連動スタックカード。トップ `/` と `/special/` で共有（M2-C8 の見た目共通化の実体）。
+- [r] M2-C14 [`IceHeading.astro`](../src/components/IceHeading.astro) ＋ `_c-ice-heading.scss`（新規・2026-06-04）。アイスキューブ＋日本語28px＋巨大英字（Barlow Condensed 100px）の大見出し。environment ほかで使用。`SectionHeading`（小見出し）とは別系統。
+- [r] M2-C15 [`OfficeTourCarousel.astro`](../src/components/OfficeTourCarousel.astro) ＋ `_c-office-tour.scss`（新規・2026-06-04）。中央スライド強調の Swiper カルーセル。environment の拠点紹介（豊明本社／島根工場）で再利用。
+- [r] M2-C16 インターンシップ専用コンポーネント 3 種（2026-05-28）：[`CourseCard.astro`](../src/components/CourseCard.astro)（コース選択スライド）／[`CourseDetail.astro`](../src/components/CourseDetail.astro)（選択コースのタブパネル、`Course` 型を export）／[`InternshipHeading.astro`](../src/components/InternshipHeading.astro)（ja 小＋en 特大見出し）。
 
 ### スクリプト基盤
 
 - [ ] M2-S1 Lenis のスムーススクロール初期化を `src/scripts/lenis.ts` に実装し、`Layout.astro` から読み込む。
 - [ ] M2-S2 GSAP の共通セットアップ（`src/scripts/gsap.ts`）。ScrollTrigger の共通設定を用意。
 - [ ] M2-S3 Swiper は使用セクションで個別初期化する方針を合意（共通化しない）。
-- [ ] M2-S4 Person 一覧のクライアントサイドフィルター（`src/scripts/person-filter.ts`）。
+- [r] M2-S4 Person 一覧のクライアントサイドフィルター。**実装済み**：`src/scripts/person-filter.ts` ではなく [`public/js/main.js`](../public/js/main.js) の `initPersonFilter()`（`data-person-tags` による 7 種絞り込み＋空状態トグル）。
 
 ---
 
@@ -75,7 +79,7 @@
 - [r] M3-S3 コーポレートナビ（`.p-top-trio`）— **2026-06-05**：S4 と統合し Figma 365:13388 帯(1600×2219)の 1 ステージに。EN ラベルを Barlow Condensed **ExtraLight** 120px `#00a0e9`・非斜体に修正（旧：italic＋誤色 #1ab4e5）。Google Fonts に weight 200 追加。
 - [r] M3-S4 先輩たちの「ここに決めた！」— **2026-06-05** に S3 帯へ統合（`.p-top-trio__*--decided`）。「ここに決めた！」は Figma 筆文字を `koko-decided.svg`（#00A0E9）で再現。`.p-top-decided` は廃止。
 - [r] M3-S5 はたらく環境を知る（`.p-top-env`）— section-bg-environment.jpg をフルブリードで配置。ネイビーピル見出し + アイスリンクボタン。
-- [r] M3-S6 SPECIAL CONTENTS（`.p-top-special`）— ネイビー背景 + 3 カード (text 左 / 写真右 / READ MORE 右下)。
+- [r] M3-S6 SPECIAL CONTENTS — **2026-06-08 に共通コンポーネント [`SpecialContents.astro`](../src/components/SpecialContents.astro) へ移行**（`/special/` インデックスとスタックカード UI を共有。`headingTag="h2"` でトップ用見出しに）。
 - [r] M3-S7 Entry / Internship CTA（`BottomCta` コンポーネント）。
 
 ### アニメーション
@@ -95,7 +99,7 @@
 
 ## M4. 動作検証（トップページ時点）
 
-- [r] M4-1 `npm run build` が警告なしで通る（14 ページ、2026-04-25 クリーンビルド）。
+- [r] M4-1 `npm run build` が警告なしで通る（**2026-06-08 時点 28 ページ**＝固定 13 ルート＋Person 詳細 15 ルート。旧 14 ページのうち Person 詳細 1 ルートを 15 名分の動的ルートへ拡張した結果。初回クリーンビルドは 2026-04-25 の 14 ページ）。
 - [r] M4-2 `grep -r 'data-astro-cid' dist/` が 0 件。
 - [r] M4-3 `grep -rE 'href="/|src="/' dist/ --include='*.html'` が 0 件。
 - [r] M4-4 `dist/assets/` 内のファイル名にハッシュが付いていない。
@@ -146,13 +150,13 @@
 - [r] M6b-P03 Beyond HOSHIZAKI `/strategy/`（node `245:557`）— [07 の 03 節](./07-spec-subpages.md#03-beyond-hoshizaki事業領域海外展開--strategy)
 - [r] M6b-P04 Team HOSHIZAKI `/job/`（node `245:287`）— [07 の 04 節](./07-spec-subpages.md#04-team-hoshizaki職種紹介--job)。2026-05-28 に Figma 忠実コーディング＋実アセット書き出し済み（後述セッションログ参照）。
 - [r] M6b-P05 Person 一覧 `/person/`（**最新 node `836:2220`**／旧 `246:1055`）— [07 の 05 節](./07-spec-subpages.md#05-先輩たちのここに決めた一覧--person)。2026-06-04 に Figma `836:2220` 忠実コーディング＋実データ反映済み（後述セッションログ）。
-- [r] M6b-P05s Person 詳細 `/person/detail/`（node `360:58`）— [07 の 05s 節](./07-spec-subpages.md#05s-person-詳細--personslug)
+- [r] M6b-P05s Person 詳細 `/person/[slug]/`（node `360:58`）— **動的ルートで 15 名分を静的生成**（[`src/pages/person/[slug].astro`](../src/pages/person/) ＋ [`src/data/personDetails.ts`](../src/data/personDetails.ts) の `getStaticPaths`、slug は `01`〜`15`）。一覧カードから `./01/`〜`./15/` へリンク済み。各ページは横幅いっぱいの固定背景写真（`p-bg-NN.jpg`）＋人物切り抜き（`pNN.png`）。[07 の 05s 節](./07-spec-subpages.md#05s-person-詳細--personslug)
 - [r] M6b-P06 はたらく環境 `/environment/`（node `242:446`）— [07 の 06 節](./07-spec-subpages.md#06-はたらく環境environment--environment)。2026-06-04 に Figma 忠実コーディングへ全面再実装＋実アセット書き出し済み（後述セッションログ参照）。Office Tour は Swiper カルーセル。
 - [r] M6b-P07 募集要項 `/requirement/`（node `242:71`）— [07 の 07 節](./07-spec-subpages.md#07-募集要項requirement--requirement)
 - [r] M6b-P08 SPECIAL CONTENTS インデックス `/special/`（node `368:1401`）— [07 の 08 節](./07-spec-subpages.md#08-special-contents-インデックス--special)
 - [r] M6b-P08-1 クロストーク `/special/crosstalk/`（node `246:935`）— [07 の 08-1 節](./07-spec-subpages.md#08-1-クロストーク--specialcrosstalk)
 - [r] M6b-P08-2 プロジェクトストーリー `/special/project/`（node `393:1711`）— [07 の 08-2 節](./07-spec-subpages.md#08-2-プロジェクトストーリー--specialproject)
-- [r] M6b-P08-3 スペシャルトーク `/special/talk/`（node `393:1902`）— [07 の 08-3 節](./07-spec-subpages.md#08-3-スペシャルトーク--specialtalk)
+- [r] M6b-P08-3 スペシャルトーク `/special/special-talk/`（旧 node `393:1902` → 最新 `626:1473`／`856:2912`）— **ルート名は `special-talk`（`talk` ではない）**。[`src/pages/special/special-talk.astro`](../src/pages/special/special-talk.astro)。[07 の 08-3 節](./07-spec-subpages.md#08-3-スペシャルトーク--specialspecial-talk)
 
 ### アセット一括配置
 
@@ -451,6 +455,19 @@ dist/
   2. モバイル(≤600)でヒーロータイトルがヘッダーロゴと衝突。`aspect-ratio: 5/6` でヒーローを縦長化し、タイトル `top:28%`／キャプションを再配置して解消。
   その他の指摘（左 8.81% の丸め誤差、cqw の微小丸め、font-family の到達不能フォールバック等）は閾値内・意図的のため不変更。
 
+### 2026-06-08 セッション: ドキュメントをコード実態へ同期（ドリフト解消）
+
+- **背景**: 2026-06-05 以降のコミット（fact／message 再構築・Person 詳細の動的ルート化・footer メニュー更新・Person 一覧の全幅背景写真）の一部が docs に未反映で、進行管理が実態と乖離していた。コードを正としてドキュメントを突き合わせ更新。
+- **コードで確認した実態（docs 反映済み）**:
+  - **ビルド出力は 28 ルート**（旧 14）。固定 13 ルート＋**Person 詳細を動的ルート化**：[`src/pages/person/[slug].astro`](../src/pages/person/) ＋ [`src/data/personDetails.ts`](../src/data/personDetails.ts)（15 名・slug `01`〜`15`）で個別ページを `getStaticPaths` 生成。一覧カードは `./01/`〜`./15/` へリンク済み（[src/pages/person.astro](../src/pages/person.astro)）。各詳細は横幅いっぱいの固定背景写真（`p-bg-NN.jpg`）＋人物切り抜き（`pNN.png`）。→ M6b-P05s／M4-1 を更新。
+  - **スペシャルトークのルート名は `/special/special-talk/`**（旧 docs の `/special/talk/` は誤り）。ファイルは [`src/pages/special/special-talk.astro`](../src/pages/special/special-talk.astro)、Figma 最新ノードは `626:1473`／`856:2912`（プロフィール＝佐々木 誠／執行役員 中央研究所所長）。→ M6b-P08-3／01／03／07 を更新。
+  - **SPECIAL CONTENTS は [`SpecialContents.astro`](../src/components/SpecialContents.astro) で見た目も共通化**（トップ S6 と `/special/` インデックスが同一スタックカード UI を共有、`basePath`／`storyBase`／`headingTag` で差分吸収）。`specialStories.ts` の slug は `crosstalk`／`project`／`special-talk`。→ M2-C8／M2-C13／M3-S6 を更新。
+  - **未登録だった共通コンポーネントを M2-C13〜C16 として追記**：SpecialContents／IceHeading（`_c-ice-heading.scss`）／OfficeTourCarousel（`_c-office-tour.scss`）／インターンシップ 3 種（CourseCard／CourseDetail／InternshipHeading）。
+  - **Person フィルター（M2-S4）は実装済み**：`public/js/main.js` の `initPersonFilter()`（`src/scripts/person-filter.ts` ではない）。→ `[ ]`→`[r]`。
+  - **`about.astro`／`Welcome.astro` は削除済み**（旧インベントリは「残置」と記載）。コンポーネント 13・SCSS 32 partial・画像 11 ディレクトリへインベントリを更新。
+  - **footer メニュー更新**（コミット `2198952`／`7182299`）：[Footer.astro](../src/components/Footer.astro) は 採用 TOP／SPECIAL CONTENTS／About・Career の構成で、各下層・特集 3 本・外部企業サイトへリンク。スペシャルトークのリンクも `special/special-talk/`。
+- **コード非変更**: 本セッションは docs のみ更新（`src/`／`public/` は変更なし）。`npm run build` は 28 ページでクリーン（`data-astro-cid`／ルート絶対パス／インライン `<style>` すべて 0）を確認済み。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。
@@ -458,15 +475,15 @@ dist/
 2. **ブラウザ目視確認（M4-6 / M4-8）** — `npm run preview` で実機レイアウトを確認。アセット入稿後でないと意味のある検証にならない。
 3. **クライアント仕様確認（M5-4 / M5-5 / M5-6 / M5-7）** — Footer の SPECIAL タイトル正式名称、Internship v1/v2 の正版、採用メッセージの写真方針、Strategy 飲食市場本文。
 4. **Web フォントのローカル化（M2-F4）** — 現状 Google Fonts CDN。納品後にクライアント側で FTP 配置することを考慮し、必要なら `public/fonts/` へのセルフホスト切替を検討。
-5. **JS 基盤（M2-S1〜S4）** — Lenis / GSAP / Swiper / Person フィルター。Astro `<script>` で読込み予定だが未着手。
+5. **JS 基盤（M2-S1〜S2）** — Lenis / GSAP は未着手。※ Swiper（M2-S3）は vendored（`public/js|css/swiper-bundle.min.*`）で internship／environment が個別初期化済み、Person フィルター（M2-S4）も `public/js/main.js` の `initPersonFilter()` で実装済み。実装済み挙動は `main.js` に集約（`initDrawer` / `initPersonFilter` / `initInternship` / `initOfficeTour`）。
 6. **アニメーション（M3-A1〜A4）** — トップページの GSAP アニメーション。アセット入稿後に着手。
-7. **共通化リファクタ候補** — `IceLinkButton.astro`（M2-C4）と `SpecialStoryCard.astro`（M2-C8）。現状は各ページの `.p-*` で個別実装。
+7. **共通化リファクタ候補** — `IceLinkButton.astro`（M2-C4）。現状は各ページの `.p-*`（`.c-ice-link`）で個別実装。※ SPECIAL CONTENTS は `SpecialContents.astro` で共通化済み（M2-C8／M2-C13 完了）。
 
 ### 開始時に走らせるコマンド
 
 ```sh
 # 状態確認
-npm run build                                    # 14 ページのビルドが通ることを確認
+npm run build                                    # 28 ページのビルドが通ることを確認
 grep -r 'data-astro-cid' dist/ | wc -l           # 0 であること
 grep -rE 'href="/|src="/' dist/ --include='*.html' | wc -l  # 0 であること
 npm run preview                                  # http://localhost:4321 で目視
@@ -476,9 +493,10 @@ npm run dev                                      # http://localhost:4321
 npm run watch:scss                               # SCSS 変更の即時反映（dev 中の別ターミナル）
 ```
 
-### ファイルインベントリ（2026-04-25 時点）
+### ファイルインベントリ（2026-06-08 時点）
 
-- **Astro ページ**：14 ファイル（[src/pages/](../src/pages/)、`about.astro` は Astro デフォルトの参考用で残置）
-- **共通コンポーネント**：6 ファイル（[src/components/](../src/components/)。`Welcome.astro` は Astro デモ・残置）
-- **SCSS**：foundation 3 + layout 5 + component 8 + project 14 = **30 partials**＋エントリ [style.scss](../src/scss/style.scss)
-- **画像ディレクトリ**：[public/images/](../public/images/) 配下に 10 サブディレクトリ（common / environment / fact / job / message / person / requirement / special / strategy / top）。一部画像配置済み・大半は未配置。
+- **Astro ページ**：14 ファイル（[src/pages/](../src/pages/)）。うち [`person/[slug].astro`](../src/pages/person/) は動的ルートで 15 ページを生成するため**ビルド出力は 28 ルート**。`about.astro` は削除済み（Astro デフォルトの残置物だった）。
+- **共通コンポーネント**：13 ファイル（[src/components/](../src/components/)）。`Welcome.astro` は削除済み。一覧：BottomCta / Breadcrumb / CourseCard / CourseDetail / Footer / Header / IceHeading / InternshipHeading / OfficeTourCarousel / PageHero / PersonCard / SectionHeading / SpecialContents。
+- **データモジュール**：[src/data/](../src/data/) に `personDetails.ts`（Person 詳細 15 名）／`specialStories.ts`（SPECIAL 3 本）。
+- **SCSS**：foundation 3 + layout 5 + component 10 + project 14 = **32 partials**＋エントリ [style.scss](../src/scss/style.scss)
+- **画像ディレクトリ**：[public/images/](../public/images/) 配下に 11 サブディレクトリ（common / environment / fact / internship / job / message / person / requirement / special / strategy / top）。多くは Figma 書き出し済み・一部は実アセット入稿待ちのプレースホルダ。

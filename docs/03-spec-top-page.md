@@ -148,11 +148,13 @@ Figma の Y 座標順。スクリーンショット（画像1）と Figma `296:7
 
 ### 各カードの href
 
+カード内容は [`src/data/specialStories.ts`](../src/data/specialStories.ts) を正とし、共通コンポーネント [`SpecialContents.astro`](../src/components/SpecialContents.astro) がトップ S6 と `/special/` 索引で同じ UI を描画する（下表はデータの転記）。
+
 | カード | 見出し | 概要 | href |
 |:--|:--|:--|:--|
-| 1 | 若手が語る／はたらく環境 | 入社3年目社員に聞いてみた！会社のリアル | `./special/crosstalk/` |
-| 2 | 妥協なき、／食の未来への挑戦 | 開発若手社員×中堅先輩社員 | `./special/project/` |
-| 3 | ホシザキの技術が／作る未来 | ホシザキの開発責任者による特別トーク | `./special/talk/` |
+| 1 | 若手が語るはたらく環境 | 入社3年目社員に聞いてみた！会社のリアル | `./special/crosstalk/` |
+| 2 | 互いの知恵を重ね、前例なきモノづくりへ。 | 設計×生産技術、職種を越えた共創 | `./special/project/` |
+| 3 | ホシザキの技術、その未来とは？ | ホシザキの開発責任者による特別トーク | `./special/special-talk/` |
 
 ### アセット
 

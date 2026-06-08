@@ -18,7 +18,7 @@
 - [08 SPECIAL CONTENTS インデックス `/special/`](#08-special-contents-インデックス--special)
 - [08-1 クロストーク `/special/crosstalk/`](#08-1-クロストーク--specialcrosstalk)
 - [08-2 プロジェクトストーリー `/special/project/`](#08-2-プロジェクトストーリー--specialproject)
-- [08-3 スペシャルトーク `/special/talk/`](#08-3-スペシャルトーク--specialtalk)
+- [08-3 スペシャルトーク `/special/special-talk/`](#08-3-スペシャルトーク--specialspecial-talk)
 - [09 インターンシップ `/internship/`](#09-インターンシップ--internship)
 
 ---
@@ -83,17 +83,17 @@ const base = "../"; // 深さに応じて "../" or "../../"
 | `/strategy/` | `src/pages/strategy.astro` | `.p-strategy` | `_p-strategy.scss` |
 | `/job/` | `src/pages/job.astro` | `.p-job` | `_p-job.scss` |
 | `/person/` | `src/pages/person.astro` | `.p-person` | `_p-person.scss` |
-| `/person/detail/` | `src/pages/person/detail/index.astro` | `.p-person-detail` | `_p-person-detail.scss` |
+| `/person/[slug]/` | `src/pages/person/[slug].astro` | `.p-person-detail` | `_p-person-detail.scss` |
 | `/environment/` | `src/pages/environment.astro` | `.p-environment` | `_p-environment.scss` |
 | `/requirement/` | `src/pages/requirement.astro` | `.p-requirement` | `_p-requirement.scss` |
 | `/special/` | `src/pages/special.astro` | `.p-special` | `_p-special.scss` |
 | `/special/crosstalk/` | `src/pages/special/crosstalk.astro` | `.p-crosstalk` | `_p-crosstalk.scss` |
 | `/special/project/` | `src/pages/special/project.astro` | `.p-project-story` | `_p-project-story.scss` |
-| `/special/talk/` | `src/pages/special/talk.astro` | `.p-special-talk` | `_p-special-talk.scss` |
+| `/special/special-talk/` | `src/pages/special/special-talk.astro` | `.p-special-talk` | `_p-special-talk.scss` |
 | `/internship/` | `src/pages/internship.astro` | `.p-internship` | `_p-internship.scss` |
 
-> Person 詳細は **動的ルート `[slug]` ではなく固定テンプレ `/person/detail/`** で実装されている。14 名分の個別ページが必要になった段階で `[slug]` へ移行する（将来課題）。
-> SPECIAL CONTENTS 3 ストーリーは **1 本ずつ別クラス／別 partial**（共通化されていない）。再利用箇所が増えたら `_p-special-story.scss` に統合する余地あり（将来課題）。
+> Person 詳細は **動的ルート `src/pages/person/[slug].astro` ＋ `src/data/personDetails.ts`（15 名・slug `01`〜`15`）** で実装されている（`getStaticPaths` で個別ページを静的生成。2026-06-08 時点）。
+> SPECIAL CONTENTS 3 ストーリーの**索引・トップ用カード UI は `SpecialContents.astro` ＋ `specialStories.ts` で共通化済み**。ただし各ストーリー本文ページ（crosstalk／project／special-talk）は内容が異なるため **1 本ずつ別クラス／別 partial**（`_p-crosstalk.scss`／`_p-project-story.scss`／`_p-special-talk.scss`）のまま。
 
 ### アセット配置規則（全ページ共通）
 
@@ -365,58 +365,41 @@ const { href, photo, title, dept, highlightPhoto } = Astro.props;
 
 ---
 
-## 05s Person 詳細 — `/person/detail/`
+## 05s Person 詳細 — `/person/[slug]/`
 
 ### Figma / 出力先
 
 - node：`360:58`（1600×4434）
-- Astro：`src/pages/person/detail/index.astro`（固定の詳細テンプレート）
+- Astro：`src/pages/person/[slug].astro`（**動的ルート**）。[`src/data/personDetails.ts`](../src/data/personDetails.ts) の `personDetails`（15 名・slug `01`〜`15`）を `getStaticPaths` で展開し、`/person/01/`〜`/person/15/` を静的生成する。
 - `basePath`：`"../../"`
-- **備考**：初期実装は**動的ルートではなく 1 本の固定テンプレ**。14 名分の個別ページが必要になったら `src/pages/person/[slug].astro` に切り替え、`src/data/persons.ts` からの `getStaticPaths` で静的出力に移行する。
+- **実装状態（2026-06-08）**：当初の「固定テンプレ 1 本（`/person/detail/`）」から**動的ルートへ移行済み**。一覧 [`person.astro`](../src/pages/person.astro) のカードから `./01/`〜`./15/` にリンク。`personDetails.ts` の 1 レコード = `{ slug, initials, dept, year, faculty, title[], photo, photoWidth, qa[{ question, headline[], body }] }`。本文は実データ（プレースホルダではない）。
 
 ### セクション構成
 
+ルート要素は `<article class="p-person-detail">`。クラスはすべて `.p-person-detail__*` BEM。`__inner` に CSS 変数 `--person-bg`（背景写真 `p-bg-NN.jpg`）と `--photo-w`（人物切り抜き幅）をインライン付与する。
+
 | # | セクション | クラス | 主な中身 |
 |:--|:--|:--|:--|
-| PS-1 | 2 カラムレイアウト開始 | `.p-person-single` | **左カラムがスクロール、右カラムが `position: sticky`（画面高いっぱい）**。Figma 注記「画像企業社員／画像固定され、左側だけスクロールします」が明記 |
-| PS-2 | 左：小英字 `Person` | `.p-person-single__label` | 青字 |
-| PS-3 | 左：人物紹介 | `.p-person-single__intro` | 大見出し（例：「ペンギンマークの会社で／働いています！と／自信をもって言える事」）＋氏名（S.T）／部署（技術サービス）／入社年（2018 年入社）／出身（理系卒） |
-| PS-4 | 右：大きな人物写真 | `.p-person-single__portrait` | Sticky、ページ高さの大半に渡って表示 |
-| PS-5 | 左：Q&A ブロック × 4 | `.p-person-single__qa` | 各ブロック：`—— 質問` 小見出し／大見出し（回答見出し）／本文 2 段落 |
-| PS-6 | 「社員インタビュー一覧を見る」ボタン | `.p-person-single__back` | 青い大きなボタン（水色 `#0099FF` 系）、`./`（一覧）へ |
-| PS-7 | CTA ペア | — | `CtaBannerPair` |
-| PS-8 | パンくず | — | `採用TOP ▸ はたらく人を知る ▸ {氏名}`（または階層 2 段にして氏名を省略） |
+| PS-1 | Sticky 全幅ビジュアル | `.p-person-detail__stage` / `__bg` / `__stage-inner` / `__photo` | **`position: sticky` で画面に固定**。青帯（`__bg`）＋横幅いっぱいの背景写真（`--person-bg`）＋人物切り抜き（`__photo`、頭が背景写真上端より少しはみ出す）。`loading="eager"` |
+| PS-2 | スクロールするインタビュー本文 | `.p-person-detail__flow` | sticky ステージに重なって流れる |
+| PS-3 | 小英字 `Person` | `.p-person-detail__label` | 青字 |
+| PS-4 | 人物紹介見出し | `.p-person-detail__title`（h1）／`.p-person-detail__meta` | `title[]` を `<br>` 連結した大見出し＋メタ（`__meta-name`=initials／`__meta-item`=dept・year・faculty。faculty が空なら省略） |
+| PS-5 | Q&A ブロック × N | `.p-person-detail__qa-list` / `__qa` | 各ブロック：`__q`（先頭に `__q-tick` 装飾＋question）／`__answer`（h2、`headline[]` を `<br>` 連結）／`__body`（回答本文） |
+| PS-6 | 「社員インタビュー一覧を見る」ボタン | `.p-person-detail__list` / `__list-btn` | `href="../"`（一覧へ）。`__list-label`＋シェブロン `__list-chevron`（インライン SVG） |
+| PS-7 | CTA ペア | — | `BottomCta`（INTERNSHIP / ENTRY） |
+| PS-8 | パンくず | `.p-person-detail__breadcrumb` | `Breadcrumb`：`採用TOP ▸ はたらく人を知る ▸ {initials}` |
 
-### Q&A の質問（Figma 既存）
+### Q&A データ
 
-1. ホシザキに入ったきっかけは？ → 「世界の『食』を支える／仕事内容に惹かれました」
-2. やりがいを感じることは？ → 「最新技術に対応するには／自分自身の知識と技量の／アップデートが必要」
-3. 今後の目標は？ → 「技術、知識、会話力 すべてを兼ね備えた／信頼される技術者になりたい」
-4. 学生へのメッセージ → 「失敗を恐れず、／何事もチャレンジしてみてください！」
-
-各回答本文は `テキストサンプル…` のプレースホルダ。
+質問・回答見出し・本文は各社員ごとに [`personDetails.ts`](../src/data/personDetails.ts) の `qa[]`（`{ question, headline[], body }`）に実データで定義（社員ごとに件数は可変）。一覧の見出しキャッチ（`title[]`）も Figma の各カードテキストと一致。実社員写真の支給後にカード写真・人物切り抜きを差し替える前提（現状は Figma プレースホルダの合成再現）。
 
 ### Sticky の実装
 
-```scss
-.p-person-single {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: start;
-}
-.p-person-single__portrait {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-}
-```
+`.p-person-detail__stage`（全幅ビジュアル）が `position: sticky` で固定され、`.p-person-detail__flow`（本文）がその上に重なってスクロールする構成。詳細は [`_p-person-detail.scss`](../src/scss/object/project/_p-person-detail.scss) を参照。
 
-- ヘッダー分のオフセットが必要なら `top: 100px` などで調整。
+### データ駆動（実装済み）
 
-### データ駆動（将来）
-
-14 名分の個別ページ化時に `src/data/persons.ts` に配列（slug／氏名／部署／年度／卒／質問応答／portrait 画像パス）を持たせ、`getStaticPaths` で静的ビルド。現状は `/person/detail/` 1 本のみ。
+[`src/data/personDetails.ts`](../src/data/personDetails.ts) に 15 名分の配列（slug／initials／dept／year／faculty／title[]／photo／photoWidth／qa[]）を持ち、`[slug].astro` の `getStaticPaths` で `/person/01/`〜`/person/15/` を静的ビルドする。
 
 ### アセット
 
@@ -653,12 +636,12 @@ interface Props {
 
 ---
 
-## 08-3 スペシャルトーク — `/special/talk/`
+## 08-3 スペシャルトーク — `/special/special-talk/`
 
 ### Figma / 出力先
 
-- node：`393:1902`（1600×5763）
-- Astro：`src/pages/special/talk.astro`
+- node：旧 `393:1902`（1600×5763） → 最新 `626:1473`／`856:2912`（プロフィール＝佐々木 誠／執行役員 中央研究所所長）
+- Astro：`src/pages/special/special-talk.astro`（ルート `/special/special-talk/`。`talk` ではない）
 - `basePath`：`"../../"`
 
 ### セクション構成（`.p-special-story .p-special-story--talk`）

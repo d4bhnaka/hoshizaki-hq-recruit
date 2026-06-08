@@ -136,21 +136,25 @@ import Layout from "../layouts/Layout.astro";
 ```
 /
 ├── public/
-│   ├── assets/             ← 画像ファイル
-│   │   ├── astro.svg
-│   │   └── background.svg
+│   ├── images/             ← 画像（common / 各ページ ID 別の 11 ディレクトリ）
 │   ├── css/
-│   │   └── style.css       ← ビルドで生成されるCSS
+│   │   ├── style.css       ← build:scss で生成されるCSS
+│   │   └── swiper-bundle.min.css  ← Swiper（vendored）
+│   ├── js/
+│   │   ├── main.js         ← サイト共通スクリプト（ドロワー / Person フィルター / Swiper 初期化 等）
+│   │   └── swiper-bundle.min.js   ← Swiper（vendored）
 │   └── favicon.svg
 ├── src/
-│   ├── components/
-│   │   └── Welcome.astro
+│   ├── components/         ← 13 個の .astro（Header / Footer / PageHero / PersonCard / SpecialContents 等）
+│   ├── data/              ← personDetails.ts（Person 詳細 15 名）/ specialStories.ts（SPECIAL 3 本）
 │   ├── layouts/
 │   │   └── Layout.astro    ← 共通レイアウト（basePath対応）
 │   ├── pages/
 │   │   ├── index.astro     ← トップページ
-│   │   └── about.astro     ← 下層ページ
-│   └── scss/               ← SCSSソースファイル
+│   │   ├── message.astro 〜 strategy.astro  ← 1 階層下層ページ
+│   │   ├── person/[slug].astro              ← Person 詳細（動的ルート・15 ページ生成）
+│   │   └── special/*.astro                  ← SPECIAL 3 ストーリー
+│   └── scss/               ← SCSSソースファイル（FLOCSS）
 │       ├── style.scss
 │       ├── foundation/
 │       ├── layout/

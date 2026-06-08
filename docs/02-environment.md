@@ -103,8 +103,8 @@ src/scss/
 | ページ深さ | 指定する `basePath` | 例 |
 |:--|:--|:--|
 | トップ（`src/pages/index.astro`） | `"./"`（デフォルト） | `<Layout>` |
-| 1 階層下（`src/pages/about.astro`） | `"../"` | `<Layout basePath="../">` |
-| 2 階層下（`src/pages/career/new-grad.astro`） | `"../../"` | `<Layout basePath="../../">` |
+| 1 階層下（`src/pages/message.astro`） | `"../"` | `<Layout basePath="../">` |
+| 2 階層下（`src/pages/person/[slug].astro`・`src/pages/special/crosstalk.astro`） | `"../../"` | `<Layout basePath="../../">` |
 
 **新しい下層ページを追加したら、必ず適切な `basePath` を渡す**。忘れると CSS が読み込めず真っ白になります。
 
