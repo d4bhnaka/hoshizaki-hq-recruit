@@ -13,7 +13,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
 <Layout
   basePath={base}
   title="What's HOSHIZAKI｜ホシザキ本社採用サイト"
-  description="数字で見るホシザキ。国内シェアNo.1の基盤と世界120ヶ国以上のネットワーク、社員の働きやすさを支える環境を数字で紹介します。"
+  description="数字で見るホシザキ。製氷機国内シェアNo.1の基盤と世界120ヶ国以上のネットワーク、社員の働きやすさを支える環境を数字で紹介します。"
 >
   <div class="l-container">
     <Header basePath={base} />
@@ -36,7 +36,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
           <p class="p-fact__intro-text">
             街中で見かける「ペンギンマーク」。その親しみやすさの裏側には、あなたの想像を超えるダイナミックな世界が広がっています。<br
             />
-            国内シェアNo.1という盤石な基盤、世界五大陸を舞台にしたグローバルな躍進、そして一人ひとりの挑戦を支える確かな環境。<br
+            製氷機国内シェアNo.1という盤石な基盤、世界五大陸を舞台にしたグローバルな躍進、そして一人ひとりの挑戦を支える確かな環境。<br
             />
             まだ見ぬホシザキの「驚き」と「可能性」を、確かな数字で解き明かします。
           </p>
@@ -139,7 +139,9 @@ const img = (name: string) => `${base}images/fact/${name}`;
                       alt=""
                       aria-hidden="true"
                     />
-                    <p class="c-stat-card__sub">製氷機　国内シェア</p>
+                    <p class="c-stat-card__sub">
+                      製氷機　国内シェア<span class="p-fact__note-ref">※</span>
+                    </p>
                     <p class="c-stat-card__figure">
                       <span class="c-stat-card__num">No.1</span>
                     </p>
@@ -257,6 +259,10 @@ const img = (name: string) => `${base}images/fact/${name}`;
                 </article>
               </div>
             </div>
+
+            <p class="p-fact__note">
+              <span class="p-fact__note-ref">※</span>製氷機の国内シェアNo.1は自社調べ（2022年度）によるものです。
+            </p>
           </div>
         </section>
 

@@ -97,6 +97,23 @@
 }
 
 // --------------------------------------------
+// 出典脚注（※ 製氷機 国内シェア No.1 など）
+// --------------------------------------------
+.p-fact__note {
+  margin: clamp(20px, 2.4vw, 32px) 0 0;
+  font-size: clamp(11px, 1vw, 13px);
+  line-height: 1.7;
+  text-align: right;
+  color: var(--color-text-secondary);
+}
+
+.p-fact__note-ref {
+  margin-right: 1px;
+  font-size: 0.7em;
+  vertical-align: super;
+}
+
+// --------------------------------------------
 // Growth: bento grid（3列 / 各列でカード高さが異なる）
 // --------------------------------------------
 .p-fact__bento {
