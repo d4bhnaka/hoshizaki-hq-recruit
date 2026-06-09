@@ -51,6 +51,25 @@ const canonicalUrl =
         } catch (e) {}
       })();
     </script>
+    {/* Inview リビール（出現前の非表示ガード）: prefers-reduced-motion 非該当かつ
+        IntersectionObserver 対応時のみ <html>.inview-ready を *描画前に* 付与する。
+        この class が付いている時だけ [data-inview] を初期非表示にするため、
+        JS 無効・低モーション環境ではコンテンツが消えず即表示される。
+        実体の監視は js/main.js の initInview、スタイルは
+        scss/object/utility/_u-inview.scss。 */}
+    <script is:inline>
+      (function () {
+        try {
+          if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          )
+            return;
+          if (!("IntersectionObserver" in window)) return;
+          document.documentElement.classList.add("inview-ready");
+        } catch (e) {}
+      })();
+    </script>
     {!isProduction && <meta name="robots" content="noindex,nofollow" />}
     <meta name="description" content={description} />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}

@@ -502,6 +502,46 @@
     });
   }
 
+  // --------------------------------------------
+  // Inview reveal — スクロールでビューポートに入った要素を
+  //   ふわっとフェードイン（+上昇）させる。
+  //   検知は IntersectionObserver、見た目の動きは CSS
+  //   (scss/object/utility/_u-inview.scss)。出現前の非表示ガードは
+  //   <html>.inview-ready（Layout.astro head のインラインスクリプトで付与）。
+  // --------------------------------------------
+  function initInview() {
+    var targets = document.querySelectorAll("[data-inview]");
+    if (!targets.length) return;
+
+    // 非表示ガード(.inview-ready)が無い＝低モーション/未対応なので何もしない
+    // （CSS 側でも初期非表示にしていないため要素は既に見えている）。
+    if (
+      !document.documentElement.classList.contains("inview-ready") ||
+      !("IntersectionObserver" in window)
+    ) {
+      targets.forEach(function (el) {
+        el.classList.add("is-inview");
+      });
+      return;
+    }
+
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-inview");
+          io.unobserve(entry.target); // 一度出たら監視解除（再生は1回）
+        });
+      },
+      // 少し見えてから（下端から12%手前で）発火させる
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.12 }
+    );
+
+    targets.forEach(function (el) {
+      io.observe(el);
+    });
+  }
+
   function init() {
     initDrawer();
     initHeaderScroll();
@@ -510,6 +550,7 @@
     initOfficeTour();
     initPageTransition();
     initMovieModal();
+    initInview();
   }
 
   if (document.readyState === "loading") {

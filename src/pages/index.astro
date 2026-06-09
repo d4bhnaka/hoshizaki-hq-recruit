@@ -137,12 +137,18 @@ const trioCards = [
     {/* ============================================ */}
     <section class="p-top-pioneer" aria-label="採用メッセージ">
       <div class="p-top-pioneer__stage">
-        <h2 class="p-top-pioneer__en">PIONEER SPIRIT</h2>
-        <p class="p-top-pioneer__ja">採用メッセージ</p>
+        <h2 class="p-top-pioneer__en" data-inview style="--inview-i: 0">
+          PIONEER SPIRIT
+        </h2>
+        <p class="p-top-pioneer__ja" data-inview style="--inview-i: 1">
+          採用メッセージ
+        </p>
         <a
           class="p-top-pioneer__button c-ice-link c-ice-link--fluid"
           href={`${basePath}message/`}
           aria-label="採用メッセージを読む"
+          data-inview="fade"
+          style="--inview-i: 2"
         >
           <img
             class="c-ice-link__bg"
@@ -192,14 +198,22 @@ const trioCards = [
                 class={`p-top-trio__img p-top-trio__img--${card.pos}`}
                 src={card.img}
                 alt={card.imgAlt}
+                data-inview
+                style="--inview-i: 0"
               />
-              <p class={`p-top-trio__en p-top-trio__en--${card.pos}`}>
+              <p
+                class={`p-top-trio__en p-top-trio__en--${card.pos}`}
+                data-inview
+                style="--inview-i: 1"
+              >
                 <span class="p-top-trio__en-line">{card.en[0]}</span>
                 <span class="p-top-trio__en-line">{card.en[1]}</span>
               </p>
               <a
                 class={`p-top-trio__button p-top-trio__button--${card.pos} c-ice-link c-ice-link--fluid`}
                 href={card.href}
+                data-inview="fade"
+                style="--inview-i: 2"
               >
                 <img
                   class="c-ice-link__bg"
@@ -221,17 +235,25 @@ const trioCards = [
           class="p-top-trio__img p-top-trio__img--decided"
           src={`${basePath}images/top/sec04_img.png`}
           alt="星型の氷フレームに収まった先輩社員たち"
+          data-inview
+          style="--inview-i: 0"
         />
-        <p class="p-top-trio__decided-lead">先輩たちの</p>
+        <p class="p-top-trio__decided-lead" data-inview style="--inview-i: 1">
+          先輩たちの
+        </p>
         <img
           class="p-top-trio__decided-koko"
           src={`${basePath}images/top/koko-decided.svg`}
           alt="「ここに決めた！」"
+          data-inview
+          style="--inview-i: 2"
         />
         <a
           class="p-top-trio__button p-top-trio__button--decided c-ice-link c-ice-link--fluid"
           href={`${basePath}person/`}
           aria-label="はたらく人を知る"
+          data-inview="fade"
+          style="--inview-i: 3"
         >
           <img
             class="c-ice-link__bg"
@@ -259,13 +281,19 @@ const trioCards = [
       />
       <div class="p-top-env__inner">
         <header class="p-top-env__heading">
-          <h2 class="p-top-env__title">はたらく環境を知る</h2>
-          <p class="p-top-env__sub">制度も環境も、妥協せずに整えてきました。</p>
+          <h2 class="p-top-env__title" data-inview style="--inview-i: 0">
+            はたらく環境を知る
+          </h2>
+          <p class="p-top-env__sub" data-inview style="--inview-i: 1">
+            制度も環境も、妥協せずに整えてきました。
+          </p>
         </header>
         <a
           class="p-top-env__button c-ice-link"
           href={`${basePath}environment/`}
           aria-label="はたらく環境を知る"
+          data-inview="fade"
+          style="--inview-i: 2"
         >
           <img
             class="c-ice-link__bg"
