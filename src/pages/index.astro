@@ -102,6 +102,9 @@ const trioCards = [
           type="button"
           class="p-top-hero__movie"
           aria-label="コンセプトムービーを再生"
+          data-movie-open
+          aria-haspopup="dialog"
+          aria-controls="concept-movie-modal"
         >
           <img
             class="p-top-hero__movie-poster"
@@ -292,6 +295,46 @@ const trioCards = [
     </div>
 
     <BottomCta basePath={basePath} />
+
+    {/* ============================================ */}
+    {/* コンセプトムービー モーダル */}
+    {/* 初期は hidden。ボタン押下で開き、video を先頭から再生。 */}
+    {/* 動画(約25MB)を初期ロードしないよう preload="none"。 */}
+    {/* ============================================ */}
+    <div
+      class="c-movie-modal"
+      id="concept-movie-modal"
+      data-movie-modal
+      role="dialog"
+      aria-modal="true"
+      aria-label="コンセプトムービー"
+      hidden
+    >
+      <div class="c-movie-modal__backdrop" data-movie-close></div>
+      <div class="c-movie-modal__dialog">
+        <button
+          type="button"
+          class="c-movie-modal__close"
+          data-movie-close
+          aria-label="ムービーを閉じる"
+        >
+          <span class="c-movie-modal__close-icon" aria-hidden="true"></span>
+        </button>
+        <div class="c-movie-modal__frame">
+          <video
+            class="c-movie-modal__video"
+            data-movie-video
+            controls
+            playsinline
+            preload="none"
+            poster={`${basePath}images/top/concept-movie-poster.png`}
+          >
+            <source src={`${basePath}videos/hoshizaki_01.mp4`} type="video/mp4" />
+            お使いのブラウザは動画の再生に対応していません。
+          </video>
+        </div>
+      </div>
+    </div>
   </main>
 
   <Footer basePath={basePath} />

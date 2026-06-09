@@ -1,0 +1,126 @@
+// ============================================
+// c-movie-modal — コンセプトムービー モーダル
+//   トップページの CONCEPT MOVIE ボタンから開く。
+//   背景を暗くした全画面オーバーレイの中央に 16:9 の video を表示する。
+// ============================================
+
+.c-movie-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100; // ドロワー(40)より前面
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 48px);
+  // フェード遷移（data-open で切り替え）
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-base),
+    visibility var(--transition-base);
+}
+
+.c-movie-modal[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.c-movie-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 18, 40, 0.82);
+  cursor: pointer;
+}
+
+.c-movie-modal__dialog {
+  position: relative;
+  width: min(100%, 1100px);
+  // 縦長画面でも収まるよう高さも上限を設ける
+  max-height: calc(100vh - clamp(32px, 8vw, 96px));
+  // 開くときに少しせり上がる
+  transform: translateY(1.2rem);
+  transition: transform var(--transition-base);
+}
+
+.c-movie-modal[data-open="true"] .c-movie-modal__dialog {
+  transform: translateY(0);
+}
+
+.c-movie-modal__frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: calc(100vh - clamp(32px, 8vw, 96px));
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+.c-movie-modal__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  // letterbox 表示で見切れを防ぐ
+  object-fit: contain;
+  background: #000;
+}
+
+// 閉じるボタン（フレーム右上の外側）
+.c-movie-modal__close {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(255, 255, 255, 0.28);
+  }
+}
+
+.c-movie-modal__close-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.25rem;
+  height: 2px;
+  background: var(--color-white);
+  transform: translate(-50%, -50%) rotate(45deg);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--color-white);
+    transform: rotate(-90deg);
+  }
+}
+
+// 画面が低いと外側の閉じるボタンが見切れるため内側へ寄せる
+@media (max-height: 480px) {
+  .c-movie-modal__close {
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+// アニメーション抑制設定を尊重
+@media (prefers-reduced-motion: reduce) {
+  .c-movie-modal,
+  .c-movie-modal__dialog {
+    transition: none;
+  }
+  .c-movie-modal__dialog {
+    transform: none;
+  }
+}
