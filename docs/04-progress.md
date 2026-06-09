@@ -494,6 +494,15 @@ dist/
 - **検証（Playwright 実機）**: ① cover 中間フレームを Web Animations API で凍結し斜めシアー2トーンの左→右スイープを目視。② **全被覆フレームで隙間ゼロ**（全隅シアン＝遷移瞬間にフラッシュ無し）。③ 実クリック flow＝`pt-leave`＋フラグ"1"→`/internship/` へ遷移→遷移先でフラグ消費（head ガード作動）→後始末まで完走。④ reduced-motion＝傍受せず通常遷移。⑤ 直接ロード＝シャッター無し・即表示。⑥ コンソールエラー 0。⑦ `npm run build` 成功、`dist/` 全ページに正しい相対パス（深さ 2 で `../../js/main.js`）でマークアップ出力、`js-beautify` 後も head インラインスクリプト健全。
 - **マージ統合**: 本実装コミット（`b29dc25`）後、`origin/main`（コンセプトムービーのモーダル化＝`initMovieModal` ／ ドロワー現在地インジケーター）と乖離。`main.js`・`style.scss` のコンフリクトは**両方とも追加的で競合しないため両採用**（`init()` で `initPageTransition()` と `initMovieModal()` を併呼び、`style.scss` は `c-page-transition` と `c-movie-modal` を両方 `@use`）。マージ後 `npm run build` クリーン・`node --check` OK を確認。
 
+### 2026-06-09 セッション: ヘッダーを全ページ固定（fixed）＋スクロールで背景ぼかし
+
+- **着手範囲**: 共通 Header を**サイト全体で常に上部固定**へ変更（ユーザー依頼）。あわせて「200px 超スクロールで `backdrop-filter: blur(5px)`、それ以下は `blur(0)`、切替は `transition` でシームレス」を実装。背景色は付けずぼかしのみ（ユーザー指定）。
+- **変更ファイル**: [_l-header.scss](../src/scss/layout/_l-header.scss)（`.l-header` を `position: absolute`→**`fixed`**。ぼかしは後述の理由で `.l-header::before` に分離）／[public/js/main.js](../public/js/main.js)（`initHeaderScroll()` 追加・両 init 分岐で呼出し）。
+- **重要な CSS の落とし穴と対処**: `backdrop-filter`（blur(0) を含む非 none 値）を `.l-header` 本体に置くと、**その中にある `position: fixed` のドロワー（`.l-drawer`）の包含ブロックが `.l-header`（上部の細い帯）になり、全画面 backdrop／オーバーレイが壊れる**（CSS 仕様：filter/backdrop-filter は fixed 子孫の包含ブロックを生成）。→ ぼかしを**専用の `.l-header::before`（`position:absolute; inset:0; z-index:-1`）に分離**。ドロワーは `::before` の子ではないため包含ブロックは viewport のまま維持される。`.is-scrolled::before` で blur(5px)。transition は `--transition-base`（0.3s ease）。
+- **JS**: `window.scrollY > 200` で `.l-header` に `is-scrolled` をトグル。`requestAnimationFrame` スロットル＋`{passive:true}`、初期化時にも `update()`（リロード時に既にスクロール済みでも正しい状態に）。
+- **検証**: `npm run build` 28 ページ成功、`data-astro-cid`／ルート絶対パス=0、`node --check` で main.js 構文 OK。①**ドロワー回帰**: ドロワー強制オープンの静的コピーを Chrome ヘッドレス（CLI `--screenshot`）で撮影し、**backdrop が全画面・パネル全高**＝固定ヘッダー化で壊れていないことを確認。②**ぼかし**: `is-scrolled` を強制＋本文を translate でずらし、ヘッダー帯の背後コンテンツが blur(5px) でぼけること（OFF=鮮明 / ON=frosted）を比較確認。※ headless の CDP `Page.captureScreenshot` は本環境（Chrome 149）で恒常的にハングするため CLI `--screenshot` ＋静的状態注入で検証した。
+- **補足**: 既存の未使用バリアント `.l-header--solid`（`position: sticky`）は据え置き（どのページからも参照なし）。アンカー遷移のヘッダー被りは strategy が既に `scroll-margin-top` で対応済み、他ページは同一ページ内アンカー無し。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。

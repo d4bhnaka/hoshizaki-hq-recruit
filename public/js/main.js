@@ -67,6 +67,34 @@
   }
 
   // --------------------------------------------
+  // Header: 200px 以上スクロールで背景ぼかし（backdrop-filter）を切替
+  // --------------------------------------------
+  function initHeaderScroll() {
+    var header = document.querySelector(".l-header");
+    if (!header) return;
+    var THRESHOLD = 200;
+    var ticking = false;
+
+    function update() {
+      header.classList.toggle("is-scrolled", window.scrollY > THRESHOLD);
+      ticking = false;
+    }
+
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true }
+    );
+
+    update(); // 初期化（リロード時に既にスクロール済みでも正しい状態に）
+  }
+
+  // --------------------------------------------
   // Person filter (client-side, no JS frameworks)
   // --------------------------------------------
   function initPersonFilter() {
@@ -476,6 +504,7 @@
 
   function init() {
     initDrawer();
+    initHeaderScroll();
     initPersonFilter();
     initInternship();
     initOfficeTour();

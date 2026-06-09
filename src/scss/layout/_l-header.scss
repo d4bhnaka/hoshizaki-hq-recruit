@@ -10,13 +10,37 @@
 //   コンテンツ上端 y=16 / 左右 16px マージン
 // --------------------------------------------
 .l-header {
-  position: absolute;
+  // サイト全体で常に上部に固定（fixed）。ヒーローへの透過オーバーレイは従来どおり。
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 20;
   padding: 16px 16px 0;
   color: var(--color-text-primary);
+}
+
+// 背景ぼかし層（全幅・ヘッダー内容の背面）。
+// backdrop-filter を .l-header 本体に置くと、position:fixed の子であるドロワーの
+// 包含ブロックが .l-header になり全画面オーバーレイが壊れる（CSS 仕様）。
+// そのため専用の ::before に分離する（ドロワーは ::before の子ではないため無影響）。
+// 200px 以上スクロールで JS が .is-scrolled を付与 → blur(0)→blur(5px) を transition で切替。
+.l-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+  transition:
+    backdrop-filter var(--transition-base),
+    -webkit-backdrop-filter var(--transition-base);
+}
+
+.l-header.is-scrolled::before {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .l-header__inner {
