@@ -322,12 +322,165 @@
     });
   }
 
+  // --------------------------------------------
+  // Concept movie modal (top page)
+  //   ボタン押下でモーダルを開き、video を先頭から再生。
+  //   閉じたら必ず停止＆先頭に戻す（裏で音声が鳴り続けないように）。
+  // --------------------------------------------
+  function initMovieModal() {
+    var modal = document.querySelector("[data-movie-modal]");
+    var openBtn = document.querySelector("[data-movie-open]");
+    if (!modal || !openBtn) return;
+
+    var video = modal.querySelector("[data-movie-video]");
+    var closeTargets = modal.querySelectorAll("[data-movie-close]");
+    var lastFocused = null;
+    var preloadStarted = false;
+
+    // --- バックグラウンド先読み -----------------------------------------
+    // HTML 側は preload="none" にしてトップページの初期描画を一切ブロックしない。
+    // 描画完了後のアイドル時間に preload="auto" + load() へ切り替え、
+    // クリック前に動画を裏で並行ダウンロードしておく（クリック時の待ちを減らす）。
+    function startBackgroundPreload() {
+      if (preloadStarted || !video) return;
+      preloadStarted = true;
+
+      // 低速回線・データセーバー時は重い先読みを避ける（任意の安全策）
+      var conn =
+        navigator.connection ||
+        navigator.mozConnection ||
+        navigator.webkitConnection;
+      if (conn) {
+        if (conn.saveData) return;
+        if (/(^|-)2g$/.test(conn.effectiveType || "")) return;
+      }
+
+      video.preload = "auto";
+      video.load();
+    }
+
+    function schedulePreload() {
+      // requestIdleCallback があればアイドル時、無ければ少し遅延して開始
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(startBackgroundPreload, { timeout: 3000 });
+      } else {
+        setTimeout(startBackgroundPreload, 1200);
+      }
+    }
+
+    // ページの主要リソースが描画し終えた load 後に先読みを仕込む
+    if (document.readyState === "complete") {
+      schedulePreload();
+    } else {
+      window.addEventListener("load", schedulePreload, { once: true });
+    }
+
+    // --- フォーカストラップ ----------------------------------------------
+    function getFocusable() {
+      var nodes = modal.querySelectorAll(
+        'button:not([disabled]), [href], video[controls], [tabindex]:not([tabindex="-1"])'
+      );
+      return Array.prototype.filter.call(nodes, function (el) {
+        return el.offsetWidth > 0 || el.offsetHeight > 0;
+      });
+    }
+
+    function trapTab(event) {
+      if (event.key !== "Tab") return;
+      var focusable = getFocusable();
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      var active = document.activeElement;
+
+      if (event.shiftKey) {
+        if (active === first || !modal.contains(active)) {
+          event.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (active === last || !modal.contains(active)) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    function open() {
+      // 念のため：まだ先読みが走っていなければ即開始
+      startBackgroundPreload();
+
+      lastFocused = document.activeElement;
+      modal.removeAttribute("hidden");
+      // 1フレーム遅らせて data-open を付け、CSS のフェードイン遷移を効かせる
+      requestAnimationFrame(function () {
+        modal.setAttribute("data-open", "true");
+      });
+      document.body.style.overflow = "hidden";
+
+      if (video) {
+        // 開くたびに必ず先頭から。preload="none" のためここで読み込みが始まる。
+        try {
+          video.currentTime = 0;
+        } catch (e) {}
+        var playPromise = video.play();
+        // 自動再生がブロックされた場合もコントローラーから再生できるので握りつぶす
+        if (playPromise && typeof playPromise.catch === "function") {
+          playPromise.catch(function () {});
+        }
+      }
+
+      // フォーカスを閉じるボタンへ移動（キーボード操作対応）
+      var firstClose = modal.querySelector(".c-movie-modal__close");
+      if (firstClose) firstClose.focus();
+    }
+
+    function close() {
+      modal.setAttribute("data-open", "false");
+      document.body.style.overflow = "";
+
+      if (video) {
+        video.pause();
+        try {
+          video.currentTime = 0;
+        } catch (e) {}
+      }
+
+      // フェードアウト後に hidden を付ける
+      setTimeout(function () {
+        if (modal.getAttribute("data-open") === "false") {
+          modal.setAttribute("hidden", "");
+        }
+      }, 320);
+
+      // 起点のボタンへフォーカスを戻す
+      if (lastFocused && typeof lastFocused.focus === "function") {
+        lastFocused.focus();
+      }
+    }
+
+    openBtn.addEventListener("click", open);
+    closeTargets.forEach(function (el) {
+      el.addEventListener("click", close);
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (modal.getAttribute("data-open") !== "true") return;
+      if (event.key === "Escape") {
+        close();
+      } else if (event.key === "Tab") {
+        trapTab(event);
+      }
+    });
+  }
+
   function init() {
     initDrawer();
     initPersonFilter();
     initInternship();
     initOfficeTour();
     initPageTransition();
+    initMovieModal();
   }
 
   if (document.readyState === "loading") {

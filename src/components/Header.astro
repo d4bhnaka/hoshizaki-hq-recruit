@@ -11,16 +11,22 @@ const {
   logoSrc = `${Astro.props.basePath ?? "./"}images/common/hoshizaki-logo-mark-header.png`,
 } = Astro.props;
 
-// Figma 518:1195 (Navigation) — 8 項目 + 先頭にアイスキューブアイコン
+// 現在表示中のページを判定する。URL の先頭セグメントをキーにする。
+//   "/" → ""（トップ） / "/message/" → "message" / "/person/01/" → "person"
+// person 詳細などの下層ページも先頭セグメントで親メニュー項目に一致させる。
+const currentKey = Astro.url.pathname.split("/").filter(Boolean)[0] ?? "";
+
+// Figma 518:1195 (Navigation) — 8 項目。
+// アイスキューブアイコンは「現在表示中のページ」の項目先頭に表示し、現在地を示す。
 const drawerLinks = [
-  { href: `${basePath}`, label: "トップページ", icon: true },
-  { href: `${basePath}message/`, label: "採用メッセージ" },
-  { href: `${basePath}fact/`, label: "数字で見るホシザキ" },
-  { href: `${basePath}strategy/`, label: "ホシザキの事業戦略" },
-  { href: `${basePath}job/`, label: "ホシザキの職種紹介" },
-  { href: `${basePath}person/`, label: "はたらく人を知る" },
-  { href: `${basePath}environment/`, label: "はたらく環境を知る" },
-  { href: `${basePath}requirement/`, label: "募集要項" },
+  { href: `${basePath}`, label: "トップページ", key: "" },
+  { href: `${basePath}message/`, label: "採用メッセージ", key: "message" },
+  { href: `${basePath}fact/`, label: "数字で見るホシザキ", key: "fact" },
+  { href: `${basePath}strategy/`, label: "ホシザキの事業戦略", key: "strategy" },
+  { href: `${basePath}job/`, label: "ホシザキの職種紹介", key: "job" },
+  { href: `${basePath}person/`, label: "はたらく人を知る", key: "person" },
+  { href: `${basePath}environment/`, label: "はたらく環境を知る", key: "environment" },
+  { href: `${basePath}requirement/`, label: "募集要項", key: "requirement" },
 ];
 ---
 
@@ -76,22 +82,32 @@ const drawerLinks = [
       <nav class="l-drawer__nav">
         <ul class="l-drawer__list">
           {
-            drawerLinks.map((item) => (
-              <li class="l-drawer__item">
-                <a class="l-drawer__link" href={item.href}>
-                  {item.icon && (
+            drawerLinks.map((item, i) => {
+              const isCurrent = item.key === currentKey;
+              return (
+                // --i: 開扉時のスタッガー（順次フェードイン）の遅延に使う添字
+                <li class="l-drawer__item" style={`--i:${i}`}>
+                  <a
+                    class="l-drawer__link"
+                    href={item.href}
+                    aria-current={isCurrent ? "page" : undefined}
+                  >
+                    {/* アイコン用ガターは全項目で確保し、ラベル列を揃える。
+                        画像は現在ページの項目だけに表示する。 */}
                     <span class="l-drawer__link-icon" aria-hidden="true">
-                      <img
-                        src={`${basePath}images/common/ice-01.png`}
-                        alt=""
-                        onerror="this.style.display='none'"
-                      />
+                      {isCurrent && (
+                        <img
+                          src={`${basePath}images/common/ice-01.png`}
+                          alt=""
+                          onerror="this.style.display='none'"
+                        />
+                      )}
                     </span>
-                  )}
-                  <span class="l-drawer__link-label">{item.label}</span>
-                </a>
-              </li>
-            ))
+                    <span class="l-drawer__link-label">{item.label}</span>
+                  </a>
+                </li>
+              );
+            })
           }
         </ul>
       </nav>

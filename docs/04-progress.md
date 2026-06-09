@@ -468,6 +468,17 @@ dist/
   - **footer メニュー更新**（コミット `2198952`／`7182299`）：[Footer.astro](../src/components/Footer.astro) は 採用 TOP／SPECIAL CONTENTS／About・Career の構成で、各下層・特集 3 本・外部企業サイトへリンク。スペシャルトークのリンクも `special/special-talk/`。
 - **コード非変更**: 本セッションは docs のみ更新（`src/`／`public/` は変更なし）。`npm run build` は 28 ページでクリーン（`data-astro-cid`／ルート絶対パス／インライン `<style>` すべて 0）を確認済み。
 
+### 2026-06-09 セッション: グローバルナビ（ドロワー）に現在地インジケーターを実装
+
+- **着手範囲**: 共通 Header（[Header.astro](../src/components/Header.astro)）のドロワーメニューで、アイスキューブアイコンを「先頭固定（トップページ）」から **「現在表示中のページ」の項目先頭**へ移動（現在地インジケーター化）。ユーザー依頼。
+- **判定ロジック**: `Astro.url.pathname` の先頭セグメントを `currentKey` とし、各リンクに付与した `key` と一致した項目にアイコン＋`aria-current="page"` を付与。`/` → トップ、`/person/03/` などの下層は先頭セグメント（`person`）で親項目「はたらく人を知る」に一致させる。ドロワー 8 項目に無いページ（special 索引・特集 3 本・internship）は現在地表示なし（自然な挙動）。
+- **レイアウト修正（Figma 518:1195 準拠）**: Figma はナビが「アイコン用ガター（x=17, 47×46）＋ラベル列（x=81）」の 2 カラムで、**全ラベルが x=81 に揃う**。旧実装は「アイコンのある項目だけラベルが右へずれる」構造のため、アイコンを別項目へ移すとラベルがずれる問題があった（トップ項目だけ字下げされる既存の不整合も内包）。→ [_l-header.scss](../src/scss/layout/_l-header.scss) の `.l-drawer__panel` 左 padding 81→17、`.l-drawer__link-icon` を全項目で常時確保する 47×46 枠（中身＝画像は現在ページのみ）に変更し、gap 17 でラベルを x=81 に固定。モバイル（≤600）はガター縮小（左 14・アイコン 36・gap 12）。
+- **変更ファイル**: [Header.astro](../src/components/Header.astro)（`currentKey` 判定＋`key` 付与＋テンプレート）／[_l-header.scss](../src/scss/layout/_l-header.scss)（2 カラム化）。
+- **検証**: `npm run build` 28 ページ成功、`data-astro-cid`／ルート絶対パス=0。dev サーバで `/`・`/message/`・`/fact/`・`/person/`・`/person/03/` の `aria-current` が正しい項目に 1 個ずつ付くこと、internship は 0 個を確認。ドロワーを `data-open="true"` で強制描画した静的コピーを Chrome ヘッドレス（深さ 1=message／深さ 2=person 詳細）で撮影し、アイコンが現在ページのみ・全ラベル整列・深さ 2 でも画像読込 OK を目視確認。`aria-current` は 28 ページ中 23 ページ（メニュー 8 項目＋person 詳細 15、メニュー外 5 ページは無し）。
+- **ドロワー挙動の確認（既存実装で完備）**: 右からスライドイン（0.36s cubic-bezier）／backdrop フェード（0.3s）／ハンバーガー→×（0.2s）／backdrop・閉じる・リンククリック・Esc で閉じる／body スクロールロック。[public/js/main.js](../public/js/main.js) の `initDrawer()`。
+- **追加実装: ナビリンクの順次フェードイン（スタッガー）**（ユーザー選択）。ドロワー開扉時に 8 項目を上から順にフェードイン。手法は**依存の少ない CSS トランジション＋カスタムプロパティ**（GSAP は未セットアップ＝M2-S2／全ページに重い依存を足す割に過剰なため不採用。GSAP はトップの ScrollTrigger 系 M3-A で導入予定）。各 `<li>` に添字 `--i`（0〜7）を出力し、`.l-drawer[data-open="true"] .l-drawer__item` の `transition-delay: calc(0.12s + var(--i) * 0.05s)` でずらす。入場の transform は **li 側**に持たせ、リンク(a)のホバー `translateX` と競合させない。`prefers-reduced-motion: reduce` で入場アニメ無効（即時表示）。
+  - **検証（凍結フレーム法）**: headless の CDP `Page.captureScreenshot` はアクティブな CSS 遷移でハングするため、出荷と同値・同イージングの keyframe を `animation-play-state: paused` ＋負の `animation-delay` で全体時刻 T に凍結し、CLI `--screenshot` で実フレームを描画。T=300ms／480ms で「上から順に出現する波」とアイコンが現在ページに留まることを目視確認。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。
