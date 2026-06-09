@@ -64,6 +64,7 @@
 - [ ] M2-S2 GSAP の共通セットアップ（`src/scripts/gsap.ts`）。ScrollTrigger の共通設定を用意。
 - [ ] M2-S3 Swiper は使用セクションで個別初期化する方針を合意（共通化しない）。
 - [r] M2-S4 Person 一覧のクライアントサイドフィルター。**実装済み**：`src/scripts/person-filter.ts` ではなく [`public/js/main.js`](../public/js/main.js) の `initPersonFilter()`（`data-person-tags` による 7 種絞り込み＋空状態トグル）。
+- [r] M2-S5 全ページ共通のページ遷移アニメーション（斜めシアーシャッター）。**2026-06-09 実装**：[`public/js/main.js`](../public/js/main.js) の `initPageTransition()` ＋ [`_c-page-transition.scss`](../src/scss/object/component/_c-page-transition.scss)（[style.scss](../src/scss/style.scss) に `@use` 登録）、[Layout.astro](../src/layouts/Layout.astro) の `head` インラインガード＋`body` のシャッター/`.pt-page` ラッパー。参考サイト `~/Projects/sok-c.com/` の遷移を、納品制約に合わせ**バニラ CSS+JS** で移植。サイト内リンク遷移時にシアン2トーンの平行四辺形シャッターが左→右へスイープ（覆う→見せる）。詳細は下のセッションログ参照。
 
 ---
 
@@ -479,6 +480,20 @@ dist/
 - **追加実装: ナビリンクの順次フェードイン（スタッガー）**（ユーザー選択）。ドロワー開扉時に 8 項目を上から順にフェードイン。手法は**依存の少ない CSS トランジション＋カスタムプロパティ**（GSAP は未セットアップ＝M2-S2／全ページに重い依存を足す割に過剰なため不採用。GSAP はトップの ScrollTrigger 系 M3-A で導入予定）。各 `<li>` に添字 `--i`（0〜7）を出力し、`.l-drawer[data-open="true"] .l-drawer__item` の `transition-delay: calc(0.12s + var(--i) * 0.05s)` でずらす。入場の transform は **li 側**に持たせ、リンク(a)のホバー `translateX` と競合させない。`prefers-reduced-motion: reduce` で入場アニメ無効（即時表示）。
   - **検証（凍結フレーム法）**: headless の CDP `Page.captureScreenshot` はアクティブな CSS 遷移でハングするため、出荷と同値・同イージングの keyframe を `animation-play-state: paused` ＋負の `animation-delay` で全体時刻 T に凍結し、CLI `--screenshot` で実フレームを描画。T=300ms／480ms で「上から順に出現する波」とアイコンが現在ページに留まることを目視確認。
 
+### 2026-06-09 セッション: 全ページ共通のページ遷移アニメーション（斜めシアーシャッター）を実装
+
+- **着手範囲**: 参考サイト `~/Projects/sok-c.com/`（Next.js + Framer Motion の `PageTransition.tsx`）の「左→右へ流れる平行四辺形シャッター」を、本サイト（Astro 静的 MPA）へ移植。全 14 ページ共通の [Layout.astro](../src/layouts/Layout.astro) に組み込み。ユーザー依頼。
+- **ユーザー確定仕様**（`AskUserQuestion` で確認）: 配色＝**シアン2トーン**（背面 `--color-brand-cyan-deep` #00a0e9 ＋ 前面 `--color-brand-cyan` #00c8ff）／速さ＝**約0.9秒**（覆う 0.42s ＋ 見せる 0.42s）／再生タイミング＝**サイト内リンク遷移のみ**（直接アクセス・リロード・外部流入は即コンテンツ表示）。
+- **方式選定（なぜ Astro ClientRouter ではなくバニラ CSS+JS か）**: 本リポジトリの納品制約（[02-environment.md](./02-environment.md)）＝クライアントが生成 HTML/CSS/JS を直接編集・ハッシュ無し・フレームワークランタイムを足さない、に従い、`astro:transitions` を使わず**素の CSS keyframe ＋ `main.js` の介入**で実装。リアルなハードナビゲーションをまたいで「覆う→見せる」を繋ぐ MPA 方式。
+- **仕組み（覆う→見せるで 1 回の連続スイープ）**:
+  1. サイト内リンククリック → `initPageTransition()` が `<html>` に `.pt-leave` 付与＋`sessionStorage["pt:enter"]="1"` セット → シャッターが画面外左から流れ込み**画面を覆う**（`pt-cover`）→ 背面パネルが覆い切った `animationend` で `window.location` 遷移。
+  2. 遷移先では [Layout.astro](../src/layouts/Layout.astro) の `<head>` **インラインスクリプト**がフラグを*描画前に*読み `.pt-enter` を付与（フラッシュ防止：deferred な main.js では遅すぎる）→ シャッターが覆った状態から右へ抜けて**中身を見せる**（`pt-reveal`）＋ 本文 `.pt-page` が `opacity` でふわっと立ち上がる → reveal 完了で main.js が `.pt-enter` を除去。
+- **見た目の作り**: シャッターは `position:fixed` の `.pt-shutter`（`overflow:hidden` で viewport にクリップ）内に **2 枚の 140vw パネル**を重ね、`clip-path: polygon(0 0, var(--pt-shear) 100%, 100% 100%, calc(100% - var(--pt-shear)) 0)` で平行四辺形に。前面を `--pt-stagger`(0.06s) 遅らせて 2 トーンの奥行き。被覆フレームの `translateX(-20vw)` で**シアー込みでも viewport を隙間なく全被覆**（幾何計算：W=140vw・shear=14vw で被覆位置 T∈[-26vw,-14vw]）。`z-index 9000`（サイト内最大 40 より上）。
+- **堅牢性**: `prefers-reduced-motion: reduce` は CSS（keyframe を `@media (no-preference)` で囲む）＋ JS（リンク傍受せず通常遷移、head ガードも早期 return）の両方で無効化。BFCache 復帰は `pageshow.persisted` で `.pt-leave`/`.pt-enter` をリセット（覆ったまま戻らない）。リンク傍受は同一オリジン・非ハッシュ・修飾キー/中クリック無し・`target`/`download`/`data-no-transition` 除外・同一パス除外。速さ/傾き/色は `:root` のカスタムプロパティ、個別除外は `<a data-no-transition>`。
+- **変更ファイル**: [_c-page-transition.scss](../src/scss/object/component/_c-page-transition.scss)（新規）／[style.scss](../src/scss/style.scss)（`@use` 登録）／[Layout.astro](../src/layouts/Layout.astro)（head ガード＋シャッター/ラッパー）／[public/js/main.js](../public/js/main.js)（`initPageTransition()` ＋ `init()` 集約）。
+- **検証（Playwright 実機）**: ① cover 中間フレームを Web Animations API で凍結し斜めシアー2トーンの左→右スイープを目視。② **全被覆フレームで隙間ゼロ**（全隅シアン＝遷移瞬間にフラッシュ無し）。③ 実クリック flow＝`pt-leave`＋フラグ"1"→`/internship/` へ遷移→遷移先でフラグ消費（head ガード作動）→後始末まで完走。④ reduced-motion＝傍受せず通常遷移。⑤ 直接ロード＝シャッター無し・即表示。⑥ コンソールエラー 0。⑦ `npm run build` 成功、`dist/` 全ページに正しい相対パス（深さ 2 で `../../js/main.js`）でマークアップ出力、`js-beautify` 後も head インラインスクリプト健全。
+- **マージ統合**: 本実装コミット（`b29dc25`）後、`origin/main`（コンセプトムービーのモーダル化＝`initMovieModal` ／ ドロワー現在地インジケーター）と乖離。`main.js`・`style.scss` のコンフリクトは**両方とも追加的で競合しないため両採用**（`init()` で `initPageTransition()` と `initMovieModal()` を併呼び、`style.scss` は `c-page-transition` と `c-movie-modal` を両方 `@use`）。マージ後 `npm run build` クリーン・`node --check` OK を確認。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。
@@ -486,7 +501,7 @@ dist/
 2. **ブラウザ目視確認（M4-6 / M4-8）** — `npm run preview` で実機レイアウトを確認。アセット入稿後でないと意味のある検証にならない。
 3. **クライアント仕様確認（M5-4 / M5-5 / M5-6 / M5-7）** — Footer の SPECIAL タイトル正式名称、Internship v1/v2 の正版、採用メッセージの写真方針、Strategy 飲食市場本文。
 4. ~~**Web フォントのローカル化（M2-F4）**~~ — **2026-06-09 完了**。Google Fonts CDN を撤去しセルフホスト化（`public/fonts/` woff2 ＋ `public/css/fonts.css`）。詳細は M2-F4 ／ [`fonts/README.md`](../fonts/README.md)。
-5. **JS 基盤（M2-S1〜S2）** — Lenis / GSAP は未着手。※ Swiper（M2-S3）は vendored（`public/js|css/swiper-bundle.min.*`）で internship／environment が個別初期化済み、Person フィルター（M2-S4）も `public/js/main.js` の `initPersonFilter()` で実装済み。実装済み挙動は `main.js` に集約（`initDrawer` / `initPersonFilter` / `initInternship` / `initOfficeTour`）。
+5. **JS 基盤（M2-S1〜S2）** — Lenis / GSAP は未着手。※ Swiper（M2-S3）は vendored（`public/js|css/swiper-bundle.min.*`）で internship／environment が個別初期化済み、Person フィルター（M2-S4）も `public/js/main.js` の `initPersonFilter()` で実装済み。実装済み挙動は `main.js` の `init()` に集約（`initDrawer` / `initPersonFilter` / `initInternship` / `initOfficeTour` / `initPageTransition`〔M2-S5・全ページ遷移アニメ〕/ `initMovieModal`〔トップのコンセプトムービー〕）。
 6. **アニメーション（M3-A1〜A4）** — トップページの GSAP アニメーション。アセット入稿後に着手。
 7. **共通化リファクタ候補** — `IceLinkButton.astro`（M2-C4）。現状は各ページの `.p-*`（`.c-ice-link`）で個別実装。※ SPECIAL CONTENTS は `SpecialContents.astro` で共通化済み（M2-C8／M2-C13 完了）。
 
