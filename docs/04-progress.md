@@ -37,7 +37,7 @@
 - [r] M2-F1 Figma から色を抽出し `foundation/_variables.scss` に反映（navy / primary / cyan / blue-50〜400 / ice / magenta / bg-sky / bg-cloud / bg-page / bg-light）。
 - [r] M2-F2 余白（spacing xs〜3xl）・角丸（sm〜pill）・ページ幅・シャドウ・トランジションを `_variables.scss` に追加済み。
 - [r] M2-F3 `_base.scss` をクリーンアップ（Welcome 向けレガシー撤去）。body のフォントファミリ／カラー／行間を設定。
-- [ ] M2-F4 Web フォント／ローカルフォントの読込みを `public/fonts/` に配置。※ 現状は Google Fonts CDN 前提。
+- [r] M2-F4 Web フォントをセルフホスト化（Google Fonts CDN 撤去）。**2026-06-09**：Barlow Condensed（8 ウェイト・フルセット）＋ Noto Sans JP（`unicode-range` 124 チャンク・可変フォント）を `public/fonts/` に woff2 配置し、`public/css/fonts.css` の `@font-face` を [`Layout.astro`](../src/layouts/Layout.astro) で読込。ソース・再生成手順は [`fonts/README.md`](../fonts/README.md)（`python3 fonts/regenerate.py`、変換はスキル `webfont-selfhost`）。トップで全 124 中 約30 チャンクのみ遅延読込・外部依存ゼロを検証済み。
 
 ### 共通コンポーネント（詳細は [06-spec-common.md](./06-spec-common.md)）
 
@@ -485,7 +485,7 @@ dist/
    - 特に必須：`public/images/common/logo-hoshizaki.svg`（ヘッダーロゴ／不在時は CSS フォールバックの "HOSHIZAKI" テキストが表示される）。
 2. **ブラウザ目視確認（M4-6 / M4-8）** — `npm run preview` で実機レイアウトを確認。アセット入稿後でないと意味のある検証にならない。
 3. **クライアント仕様確認（M5-4 / M5-5 / M5-6 / M5-7）** — Footer の SPECIAL タイトル正式名称、Internship v1/v2 の正版、採用メッセージの写真方針、Strategy 飲食市場本文。
-4. **Web フォントのローカル化（M2-F4）** — 現状 Google Fonts CDN。納品後にクライアント側で FTP 配置することを考慮し、必要なら `public/fonts/` へのセルフホスト切替を検討。
+4. ~~**Web フォントのローカル化（M2-F4）**~~ — **2026-06-09 完了**。Google Fonts CDN を撤去しセルフホスト化（`public/fonts/` woff2 ＋ `public/css/fonts.css`）。詳細は M2-F4 ／ [`fonts/README.md`](../fonts/README.md)。
 5. **JS 基盤（M2-S1〜S2）** — Lenis / GSAP は未着手。※ Swiper（M2-S3）は vendored（`public/js|css/swiper-bundle.min.*`）で internship／environment が個別初期化済み、Person フィルター（M2-S4）も `public/js/main.js` の `initPersonFilter()` で実装済み。実装済み挙動は `main.js` に集約（`initDrawer` / `initPersonFilter` / `initInternship` / `initOfficeTour`）。
 6. **アニメーション（M3-A1〜A4）** — トップページの GSAP アニメーション。アセット入稿後に着手。
 7. **共通化リファクタ候補** — `IceLinkButton.astro`（M2-C4）。現状は各ページの `.p-*`（`.c-ice-link`）で個別実装。※ SPECIAL CONTENTS は `SpecialContents.astro` で共通化済み（M2-C8／M2-C13 完了）。
