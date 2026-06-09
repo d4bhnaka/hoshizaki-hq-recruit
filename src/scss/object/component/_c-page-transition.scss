@@ -1,0 +1,138 @@
+// ============================================
+// Page Transition — 斜めシアーシャッター
+// --------------------------------------------
+// 参考サイト sok-c.com の PageTransition（左→右へ流れる
+// 平行四辺形シャッター）を、ハンドオフ前提の Astro 静的サイト
+// 向けにバニラ CSS + JS で再現したもの。
+//
+// 仕組み:
+//   1. サイト内リンクをクリック → main.js が <html> に .pt-leave を付与
+//      → シャッターが画面外左から流れ込み画面を覆う（pt-cover）
+//      → 覆い切ったら window.location で遷移
+//   2. 遷移先では <head> のインラインスクリプトが sessionStorage の
+//      フラグを描画前に読み、<html> に .pt-enter を付与
+//      → シャッターが「覆った状態」から右へ抜けて中身を見せる（pt-reveal）
+//      → 同時に本文(.pt-page)が opacity でふわっと立ち上がる
+//
+//   覆う→見せるで 1 回の連続スイープ。直接アクセス／リロード時は
+//   フラグが無いので何も再生されず即コンテンツ表示。
+//
+//   速さ・色・傾きは下のカスタムプロパティで調整可能。
+// ============================================
+
+:root {
+  // スイープ片道（cover / reveal 各々）の長さ。合計 ≒ 0.9s
+  --pt-duration: 0.42s;
+  // 前面パネルが背面パネルを追う遅延（2 トーンの奥行き）
+  --pt-stagger: 0.06s;
+  // 斜めカット（シアー）の傾き量
+  --pt-shear: 14vw;
+  // expo 風 ease-in-out
+  --pt-ease: cubic-bezier(0.76, 0, 0.24, 1);
+  // 2 トーン: 背面=濃いシアン / 前面=基本シアン
+  --pt-color-back: var(--color-brand-cyan-deep); // #00a0e9
+  --pt-color-front: var(--color-brand-cyan); // #00c8ff
+  --pt-z: 9000; // サイト内最大 z-index(40) より十分上
+}
+
+// シャッター本体。viewport にクリップして 140vw のパネルが
+// 横スクロールバーを生まないようにする。通常時は非表示。
+.pt-shutter {
+  position: fixed;
+  inset: 0;
+  z-index: var(--pt-z);
+  overflow: hidden;
+  pointer-events: none;
+  display: none;
+}
+
+.pt-shutter__panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 140vw;
+  height: 100%;
+  will-change: transform;
+  // 既定は画面外左（cover 開始位置）
+  transform: translateX(-140vw);
+  // 平行四辺形（左→右へ斜めにシアーカット）
+  clip-path: polygon(
+    0 0,
+    var(--pt-shear) 100%,
+    100% 100%,
+    calc(100% - var(--pt-shear)) 0
+  );
+}
+
+.pt-shutter__panel--back {
+  background: var(--pt-color-back);
+}
+
+.pt-shutter__panel--front {
+  background: var(--pt-color-front);
+}
+
+// 本文ラッパー。既定は素通し（transform を持たせない=
+// 内部の position:fixed ヘッダー/ドロワーの基準を壊さない）。
+.pt-page {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  // --- 覆う（離脱: 画面外左 → 画面を覆う）---
+  html.pt-leave .pt-shutter {
+    display: block;
+  }
+  html.pt-leave .pt-shutter__panel {
+    animation: pt-cover var(--pt-duration) var(--pt-ease) both;
+  }
+  html.pt-leave .pt-shutter__panel--front {
+    animation-delay: var(--pt-stagger);
+  }
+
+  // --- 見せる（進入: 覆った状態 → 画面外右）---
+  html.pt-enter .pt-shutter {
+    display: block;
+  }
+  html.pt-enter .pt-shutter__panel {
+    animation: pt-reveal var(--pt-duration) var(--pt-ease) both;
+  }
+  html.pt-enter .pt-shutter__panel--front {
+    animation-delay: var(--pt-stagger);
+  }
+
+  // 本文はシャッターが抜けるのに合わせて opacity でふわっと
+  html.pt-enter .pt-page {
+    animation: pt-fade-in var(--pt-duration) ease-out
+      calc(var(--pt-duration) * 0.4) both;
+  }
+}
+
+// 画面外左 → 画面を覆う（-20vw で viewport 全体をシアー込みで完全被覆）
+@keyframes pt-cover {
+  from {
+    transform: translateX(-140vw);
+  }
+  to {
+    transform: translateX(-20vw);
+  }
+}
+
+// 覆った状態 → 画面外右へ抜ける
+@keyframes pt-reveal {
+  from {
+    transform: translateX(-20vw);
+  }
+  to {
+    transform: translateX(120vw);
+  }
+}
+
+@keyframes pt-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

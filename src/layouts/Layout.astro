@@ -29,6 +29,26 @@ const canonicalUrl =
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/* ページ遷移アニメ（進入ガード）: 直前ページが離脱時に立てた
+        sessionStorage フラグを *描画前に* 読み、進入アニメ .pt-enter を
+        付与する。フラッシュ防止のため必ず head 内・同期実行で行う
+        （deferred な main.js では遅すぎる）。スタイルは
+        scss/object/component/_c-page-transition.scss、離脱側は js/main.js。 */}
+    <script is:inline>
+      (function () {
+        try {
+          if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          )
+            return;
+          if (sessionStorage.getItem("pt:enter") === "1") {
+            sessionStorage.removeItem("pt:enter");
+            document.documentElement.classList.add("pt-enter");
+          }
+        } catch (e) {}
+      })();
+    </script>
     {!isProduction && <meta name="robots" content="noindex,nofollow" />}
     <meta name="description" content={description} />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
@@ -61,7 +81,15 @@ const canonicalUrl =
     <title>{title}</title>
   </head>
   <body>
-    <slot />
+    {/* ページ遷移シャッター（斜めシアー・シアン2トーン）。覆う/見せるの
+        制御は js/main.js と head のインラインスクリプト。 */}
+    <div class="pt-shutter" aria-hidden="true">
+      <span class="pt-shutter__panel pt-shutter__panel--back"></span>
+      <span class="pt-shutter__panel pt-shutter__panel--front"></span>
+    </div>
+    <div class="pt-page">
+      <slot />
+    </div>
     <script src={`${basePath}js/main.js`} defer is:inline></script>
   </body>
 </html>

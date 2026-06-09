@@ -196,17 +196,143 @@
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", function () {
-      initDrawer();
-      initPersonFilter();
-      initInternship();
-      initOfficeTour();
+  // --------------------------------------------
+  // Page transition — 斜めシアーシャッター（左→右スイープ）
+  // 覆う(離脱)→見せる(進入)で 1 回の連続スイープ。進入側のクラス
+  // 付与は head のインラインスクリプト（フラッシュ防止）、スタイルは
+  // scss/object/component/_c-page-transition.scss を参照。
+  // --------------------------------------------
+  function initPageTransition() {
+    var root = document.documentElement;
+    var reduce =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var shutter = document.querySelector(".pt-shutter");
+
+    // CSS カスタムプロパティから時間値(ms)を読む（単一の真実源）
+    function readTimeVar(name, fallback) {
+      try {
+        var v = getComputedStyle(root).getPropertyValue(name).trim();
+        if (!v) return fallback;
+        if (v.indexOf("ms") !== -1) return parseFloat(v);
+        if (v.indexOf("s") !== -1) return parseFloat(v) * 1000;
+        return parseFloat(v) || fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    // --- 進入アニメの後始末: reveal 完了で .pt-enter を外す ---
+    // （次の離脱で .pt-leave と競合しないよう必ず除去する）
+    if (root.classList.contains("pt-enter")) {
+      var enterDone = false;
+      var finishEnter = function () {
+        if (enterDone) return;
+        enterDone = true;
+        root.classList.remove("pt-enter");
+      };
+      if (shutter) {
+        shutter.addEventListener("animationend", function (e) {
+          // 最後に終わる前面パネルの pt-reveal 完了を待つ
+          if (
+            e.animationName === "pt-reveal" &&
+            e.target.classList.contains("pt-shutter__panel--front")
+          ) {
+            finishEnter();
+          }
+        });
+      }
+      window.setTimeout(finishEnter, 1500); // フォールバック
+    }
+
+    // reduced-motion では離脱アニメを行わず通常遷移に任せる
+    if (reduce || !shutter) return;
+
+    var durMs = readTimeVar("--pt-duration", 420);
+    var stagMs = readTimeVar("--pt-stagger", 60);
+    var leaveTimeout = durMs + stagMs + 160; // animationend が来ない場合の保険
+    var navigating = false;
+
+    document.addEventListener("click", function (e) {
+      if (navigating) {
+        e.preventDefault();
+        return;
+      }
+      if (e.defaultPrevented) return;
+      // 修飾キー / 中・右クリックはブラウザ標準（新規タブ等）に委ねる
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
+        return;
+
+      var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+      if (!a) return;
+      if (a.target && a.target !== "" && a.target !== "_self") return; // 別タブ
+      if (a.hasAttribute("download")) return;
+      if (a.getAttribute("data-no-transition") !== null) return; // 明示オプトアウト
+
+      var href = a.getAttribute("href");
+      if (!href) return;
+      if (/^(mailto:|tel:|javascript:|#)/i.test(href)) return;
+
+      var url;
+      try {
+        url = new URL(a.href, window.location.href);
+      } catch (err) {
+        return;
+      }
+      if (url.origin !== window.location.origin) return; // 外部リンク
+      // 同一ページ（ハッシュのみ等）はアニメせず標準動作に委ねる
+      if (
+        url.pathname === window.location.pathname &&
+        url.search === window.location.search
+      )
+        return;
+
+      e.preventDefault();
+      navigating = true;
+
+      // 次ページに「進入アニメを再生せよ」と伝える
+      try {
+        sessionStorage.setItem("pt:enter", "1");
+      } catch (err2) {}
+
+      // 進入クラスが残っていれば必ず外してから離脱クラスを付ける
+      root.classList.remove("pt-enter");
+      root.classList.add("pt-leave");
+
+      var done = false;
+      var go = function () {
+        if (done) return;
+        done = true;
+        window.location.href = url.href;
+      };
+      // 背面パネルが覆い切った時点（pt-cover 完了）で遷移
+      shutter.addEventListener("animationend", function (e2) {
+        if (e2.animationName === "pt-cover") go();
+      });
+      window.setTimeout(go, leaveTimeout);
     });
-  } else {
+
+    // BFCache 復帰時: 覆ったまま戻らないようクラスをリセット
+    window.addEventListener("pageshow", function (e) {
+      if (e.persisted) {
+        navigating = false;
+        root.classList.remove("pt-leave");
+        root.classList.remove("pt-enter");
+      }
+    });
+  }
+
+  function init() {
     initDrawer();
     initPersonFilter();
     initInternship();
     initOfficeTour();
+    initPageTransition();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
 })();
