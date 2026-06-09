@@ -1,0 +1,58 @@
+// ============================================
+// Utility: Inview reveal（スクロール連動フェードイン）
+//   要素がビューポートに入ったとき、ふわっとフェードイン
+//   （既定では下から少し上昇）させる。スクロール位置の検知は
+//   JS(IntersectionObserver / js/main.js の initInview)が
+//   .is-inview を付与し、動き自体はこの CSS が担う。
+//
+//   出現前に隠すのは <html>.inview-ready が付いているときだけ。
+//   付与は Layout.astro の head インラインスクリプトで、
+//   prefers-reduced-motion 非該当かつ IntersectionObserver 対応時のみ。
+//   → JS 無効・低モーション設定では隠さず即表示（コンテンツが消えない）。
+//
+//   使い方:
+//     data-inview            … フェード + 上昇（transform を持たない要素向け）
+//     data-inview="fade"     … フェードのみ（hover 等で transform を使う
+//                              アイスリンクボタン等向け。transform は触らない）
+//     style="--inview-i: 2"  … 同じ塊の中での表示順（スタッガー段数。0 始まり）
+//
+//   調整用カスタムプロパティ（任意で上書き可）:
+//     --inview-rise     上昇量（既定 2.4rem）
+//     --inview-duration 所要時間（既定 0.8s）
+//     --inview-stagger  1 段あたりの遅延（既定 0.09s）
+//     --inview-ease     イージング（既定 cubic-bezier(0.22, 1, 0.36, 1)）
+// ============================================
+
+.inview-ready [data-inview] {
+  opacity: 0;
+}
+.inview-ready [data-inview].is-inview {
+  opacity: 1;
+}
+
+// 既定: フェード + 下からの上昇
+.inview-ready [data-inview]:not([data-inview="fade"]) {
+  transform: translateY(var(--inview-rise, 2.4rem));
+  transition:
+    opacity var(--inview-duration, 0.8s)
+      var(--inview-ease, cubic-bezier(0.22, 1, 0.36, 1))
+      calc(var(--inview-i, 0) * var(--inview-stagger, 0.09s)),
+    transform var(--inview-duration, 0.8s)
+      var(--inview-ease, cubic-bezier(0.22, 1, 0.36, 1))
+      calc(var(--inview-i, 0) * var(--inview-stagger, 0.09s));
+  will-change: opacity, transform;
+}
+.inview-ready [data-inview]:not([data-inview="fade"]).is-inview {
+  transform: translateY(0);
+}
+
+// フェードのみ: transform は要素自身の hover 等に委ねる（競合回避）。
+// transform の transition は要素の既定値を保てるよう明示的に残す。
+.inview-ready [data-inview="fade"] {
+  transition:
+    opacity var(--inview-duration, 0.8s)
+      var(--inview-ease, cubic-bezier(0.22, 1, 0.36, 1))
+      calc(var(--inview-i, 0) * var(--inview-stagger, 0.09s)),
+    transform var(--transition-base);
+  will-change: opacity;
+}
