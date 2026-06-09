@@ -476,6 +476,8 @@ dist/
 - **変更ファイル**: [Header.astro](../src/components/Header.astro)（`currentKey` 判定＋`key` 付与＋テンプレート）／[_l-header.scss](../src/scss/layout/_l-header.scss)（2 カラム化）。
 - **検証**: `npm run build` 28 ページ成功、`data-astro-cid`／ルート絶対パス=0。dev サーバで `/`・`/message/`・`/fact/`・`/person/`・`/person/03/` の `aria-current` が正しい項目に 1 個ずつ付くこと、internship は 0 個を確認。ドロワーを `data-open="true"` で強制描画した静的コピーを Chrome ヘッドレス（深さ 1=message／深さ 2=person 詳細）で撮影し、アイコンが現在ページのみ・全ラベル整列・深さ 2 でも画像読込 OK を目視確認。`aria-current` は 28 ページ中 23 ページ（メニュー 8 項目＋person 詳細 15、メニュー外 5 ページは無し）。
 - **ドロワー挙動の確認（既存実装で完備）**: 右からスライドイン（0.36s cubic-bezier）／backdrop フェード（0.3s）／ハンバーガー→×（0.2s）／backdrop・閉じる・リンククリック・Esc で閉じる／body スクロールロック。[public/js/main.js](../public/js/main.js) の `initDrawer()`。
+- **追加実装: ナビリンクの順次フェードイン（スタッガー）**（ユーザー選択）。ドロワー開扉時に 8 項目を上から順にフェードイン。手法は**依存の少ない CSS トランジション＋カスタムプロパティ**（GSAP は未セットアップ＝M2-S2／全ページに重い依存を足す割に過剰なため不採用。GSAP はトップの ScrollTrigger 系 M3-A で導入予定）。各 `<li>` に添字 `--i`（0〜7）を出力し、`.l-drawer[data-open="true"] .l-drawer__item` の `transition-delay: calc(0.12s + var(--i) * 0.05s)` でずらす。入場の transform は **li 側**に持たせ、リンク(a)のホバー `translateX` と競合させない。`prefers-reduced-motion: reduce` で入場アニメ無効（即時表示）。
+  - **検証（凍結フレーム法）**: headless の CDP `Page.captureScreenshot` はアクティブな CSS 遷移でハングするため、出荷と同値・同イージングの keyframe を `animation-play-state: paused` ＋負の `animation-delay` で全体時刻 T に凍結し、CLI `--screenshot` で実フレームを描画。T=300ms／480ms で「上から順に出現する波」とアイコンが現在ページに留まることを目視確認。
 
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
