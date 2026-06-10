@@ -157,6 +157,21 @@
   opacity: 0.8;
   pointer-events: none;
   user-select: none;
+  will-change: transform, opacity;
+
+  // ── 出現＋漂いアニメーション ──
+  // 出現: ゆっくりフェードイン（透明 → Figma の不透明度 0.8 へ）。
+  // その後: 自身のサイズ基準で 1〜2% だけ往復する、ごくゆっくりした漂い。
+  // 周期・振幅・向きは雲ごとに変え、同期して見えないようにする。
+  --cloud-in-duration: 3.6s;
+  --cloud-in-delay: 0s;
+  --cloud-drift-duration: 22s;
+  --cloud-drift-x: 1.6%;
+  --cloud-drift-y: -1%;
+  animation:
+    p-top-cloud-in var(--cloud-in-duration) ease-out var(--cloud-in-delay) both,
+    p-top-cloud-drift var(--cloud-drift-duration) ease-in-out
+      var(--cloud-in-delay) infinite alternate;
 }
 
 // Group 2188 (296:10806) x-667.39 y668.24 w1022.89 — 左端で見切れる雲
@@ -164,18 +179,54 @@
   left: -41.7116%;
   top: 26.083%;
   width: 63.9304%;
+  --cloud-drift-duration: 26s;
+  --cloud-drift-x: 1.8%;
+  --cloud-drift-y: -0.9%;
 }
 // Group 2286 (296:9053) x779 y601 w1185.11 — 右中央・ペンギンの背後
 .p-top-hero__cloud--center {
   left: 48.6875%;
   top: 23.458%;
   width: 74.0694%;
+  --cloud-in-delay: 0.5s;
+  --cloud-drift-duration: 21s;
+  --cloud-drift-x: -1.4%;
+  --cloud-drift-y: 1.1%;
 }
 // Group 2184 (296:7300) x1179.34 y1405.81 w924.66 — 右下・都市の上に重なる
 .p-top-hero__cloud--right {
   left: 73.7087%;
   top: 54.872%;
   width: 57.7912%;
+  --cloud-in-delay: 1s;
+  --cloud-drift-duration: 17s;
+  --cloud-drift-x: 1.5%;
+  --cloud-drift-y: -1.2%;
+}
+
+// 出現フェード。to は書かずベースの opacity (0.8) へ収束させる。
+@keyframes p-top-cloud-in {
+  from {
+    opacity: 0;
+  }
+}
+
+// 漂い。alternate 往復なので必ず Figma の原点位置に戻ってくる。
+// translate は要素サイズ基準(%)なのでレスポンシブでも振幅バランスを保つ。
+@keyframes p-top-cloud-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(var(--cloud-drift-x), var(--cloud-drift-y), 0);
+  }
+}
+
+// アクセシビリティ: 動きを減らす設定ではフェード・漂いとも行わず最初から静止表示。
+@media (prefers-reduced-motion: reduce) {
+  .p-top-hero__cloud {
+    animation: none;
+  }
 }
 
 // 飛ぶペンギン (5 羽)。Figma `penguins` フレーム 296:12720 の各 ap_0x。

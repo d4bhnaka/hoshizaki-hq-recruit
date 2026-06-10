@@ -75,7 +75,7 @@
 ### セクション（[03-spec-top-page.md](./03-spec-top-page.md) のセクション番号に対応）
 
 - [r] M3-0 [src/pages/index.astro](../src/pages/index.astro) に Header／Footer 配置、ビルド成功確認（2026-04-24）。
-- [r] M3-S1 Hero（`.p-top-hero`）— タグライン／ペンギン／コンセプトムービー／背景ビジュアル。**2026-06-05 全面再構築**：固定アスペクト比ステージ(1600×2562)＋絶対配置(%)＋`cqw` で Figma 座標に忠実化。発明物の `cloud01-03` 浮遊を撤去、空は実グラデ(120.636deg)、都市は `bg-city` を下端フェード、ムービーは実ポスター(`concept-movie-poster.png`)。本文の誤字「さあ」→「さぁ」修正。
+- [r] M3-S1 Hero（`.p-top-hero`）— タグライン／ペンギン／コンセプトムービー／背景ビジュアル。**2026-06-05 全面再構築**：固定アスペクト比ステージ(1600×2562)＋絶対配置(%)＋`cqw` で Figma 座標に忠実化。都市は `bg-city` を下端フェード、ムービーは実ポスター(`concept-movie-poster.png`)。本文の誤字「さあ」→「さぁ」修正。**2026-06-10 背景修正**：`cloud01-03` は発明物ではなく Figma の雲グループ 3 つ（296:9053／296:10806／296:7300）の正確な 2x 書き出しと判明し、Figma 座標でスクリーン合成（80%）復元。空のグラデも実測の滑らかな斜めグラデ（135.93deg）へ修正（2026-06-05 の「撤去」「120.636deg」判断を訂正）。
 - [r] M3-S2 PIONEER SPIRIT（`.p-top-pioneer`）— pioneer.png (1600×729) を帯背景に。**2026-06-05**：見出しを Barlow Condensed Thin 180px `#00a0e9`、サブ「採用メッセージ」40px に修正。
 - [r] M3-S3 コーポレートナビ（`.p-top-trio`）— **2026-06-05**：S4 と統合し Figma 365:13388 帯(1600×2219)の 1 ステージに。EN ラベルを Barlow Condensed **ExtraLight** 120px `#00a0e9`・非斜体に修正（旧：italic＋誤色 #1ab4e5）。Google Fonts に weight 200 追加。
 - [r] M3-S4 先輩たちの「ここに決めた！」— **2026-06-05** に S3 帯へ統合（`.p-top-trio__*--decided`）。「ここに決めた！」は Figma 筆文字を `koko-decided.svg`（#00A0E9）で再現。`.p-top-decided` は廃止。
@@ -503,6 +503,18 @@ dist/
 - **JS**: `window.scrollY > 200` で `.l-header` に `is-scrolled` をトグル。`requestAnimationFrame` スロットル＋`{passive:true}`、初期化時にも `update()`（リロード時に既にスクロール済みでも正しい状態に）。
 - **検証**: `npm run build` 28 ページ成功、`data-astro-cid`／ルート絶対パス=0、`node --check` で main.js 構文 OK。①**ドロワー回帰**: ドロワー強制オープンの静的コピーを Chrome ヘッドレス（CLI `--screenshot`）で撮影し、**backdrop が全画面・パネル全高**＝固定ヘッダー化で壊れていないことを確認。②**ぼかし**: `is-scrolled` を強制＋本文を translate でずらし、ヘッダー帯の背後コンテンツが blur(5px) でぼけること（OFF=鮮明 / ON=frosted）を比較確認。※ headless の CDP `Page.captureScreenshot` は本環境（Chrome 149）で恒常的にハングするため CLI `--screenshot` ＋静的状態注入で検証した。
 - **補足**: 既存の未使用バリアント `.l-header--solid`（`position: sticky`）は据え置き（どのページからも参照なし）。アンカー遷移のヘッダー被りは strategy が既に `scroll-margin-top` で対応済み、他ページは同一ページ内アンカー無し。
+
+### 2026-06-10 セッション: トップ KV の背景を Figma 忠実化（滑らかグラデ＋雲3つのスクリーン合成）
+
+- **着手範囲**: ユーザー指摘「KV の背景（グラデ＋雲）がデザインと違う」。トップ S1 Hero の背景のみ修正。
+- **判明した事実（2026-06-05 セッションの判断を 2 点訂正）**:
+  1. **空のグラデはハード 2 トーンではない**。Figma の `get_design_context` は `linear-gradient(120.636deg, #107af4 55.261%, #10aff4 55.261%)`（両ストップ同位置＝ハード分割）を返すが、実レンダリングは**滑らかな斜めグラデ**。レンダ画像 2,572 点の最小二乗フィット（残差中央値 0.26）から平面を復元し、ステージ(1600×2562)用に `linear-gradient(135.93deg, #107af4 -12.8%, #10aff4 77.83%)` へ換算（CSS 換算誤差 0.0）。**codegen のグラデ出力は信用せずレンダ実測を正とする**。
+  2. **`cloud01-03.png` は「発明物」ではなかった**。3 枚の寸法が Figma の雲グループ（cloud01=296:9053 Group 2286／cloud02=296:10806 Group 2188／cloud03=296:7300 Group 2184）のちょうど 2x と一致する正確な書き出し。スクリーン合成モデルでの照合誤差 2.5（≒AA ノイズ）で実証済み。
+- **アルファ正規化**: 旧 PNG は書き出し時に**グループ不透明度 80% が焼き込み済み**（cloud01 の最大α=204=255×0.8）。CSS で `opacity:0.8` を掛けると二重に薄くなるため、**α×1.25 で「生の雲」に正規化**して上書き（Pillow、クリッピングなし）。以後この 3 枚は「素材=生、スタイル=CSS の screen＋0.8」が正。**Figma から再書き出しした場合は再度 ×1.25 が必要**な点に注意。
+- **実装**: [index.astro](../src/pages/index.astro) に雲 3 つの `<img>` を追加、[_p-top.scss](../src/scss/object/project/_p-top.scss) の `.p-top-hero__cloud`（`mix-blend-mode:screen; opacity:0.8`、Figma 座標の %絶対配置）。z-order を Figma レイヤー順へ是正: 都市(1) < テキスト(3) < **雲(4)** < ムービー(5) < ペンギン(6)（ペンギン 2→6、ムービー 3→5）。SP(≤960px) は通常フローのため雲はペンギン同様 `display:none`。
+- **検証**: `npm run build` 成功、`data-astro-cid`／インライン style／ルート絶対パス＝全 0。dist を http.server＋Chrome ヘッドレスで撮影し Figma レンダと領域別ピクセル照合 — 空 4 領域 mean 0.15〜0.84、雲ブレンド 3 領域 mean 0.39〜0.50、都市に重なる雲 mean 1.59（エッジの AA/スケーリング差のみ）。実質ピクセル一致。
+- **補足**: `.l-page--clouds`（[_l-background.scss](../src/scss/layout/_l-background.scss)）は現在どのページからも未参照のデッド CSS だが cloud01/02 を参照しており、α正規化後はやや濃く見える（使用時は要調整）。
+- **追補（同日・ユーザー指示）**: 雲に出現＋漂いアニメーションを追加。出現はゆっくりフェードイン（3.6s ease-out、左 0s／中央 0.5s／右 1s のスタッガー、`opacity 0 → 0.8`）。その後は `translate3d` の `alternate infinite` で自身サイズの 1〜2% をごくゆっくり往復（周期 26s／21s／17s と雲ごとに変えて非同期に見せる。往復なので必ず Figma 原点に戻る）。`prefers-reduced-motion: reduce` では両方無効＝最初から静止表示。実装はすべて `_p-top.scss`（`p-top-cloud-in` / `p-top-cloud-drift`）。
 
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
