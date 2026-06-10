@@ -542,6 +542,127 @@
     });
   }
 
+  // --------------------------------------------
+  // Hero テキストの「白バー塗り→抜き」リビールを、対象がウィンドウに
+  //   入った時点で開始する（本文導入コピー / 「さぁ、その想いを翼に変えて。」）。
+  //   ここでは .is-inview を付与するだけ。実際の動き（@keyframes と開始前の
+  //   一時停止ゲート）は scss/object/project/_p-top.scss が担う。
+  //   出現前の非表示ガードは <html>.inview-ready（initInview と共通）。
+  // --------------------------------------------
+  function initHeroReveals() {
+    var targets = document.querySelectorAll(
+      ".p-top-hero__body, .p-top-hero__outro"
+    );
+    if (!targets.length) return;
+
+    // 非表示ガード(.inview-ready)が無い＝低モーション/未対応。ゲートしないので
+    // 即 .is-inview を付与（CSS 側も初期非表示にしていない）。
+    if (
+      !document.documentElement.classList.contains("inview-ready") ||
+      !("IntersectionObserver" in window)
+    ) {
+      targets.forEach(function (el) {
+        el.classList.add("is-inview");
+      });
+      return;
+    }
+
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-inview");
+          io.unobserve(entry.target); // 一度出たら監視解除（再生は1回）
+        });
+      },
+      // 少し見えてから（下端から12%手前で）発火させる（他のリビールと揃える）
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.12 }
+    );
+    targets.forEach(function (el) {
+      io.observe(el);
+    });
+  }
+
+  // --------------------------------------------
+  // Parallax — スクロールに連動して装飾要素を縦方向に視差移動させる
+  //   （トップ S3 帯の氷キューブ等）。対象は [data-parallax] 要素で、
+  //   属性値は速度係数：正＝スクロールより遅く流れる（奥に見える）、
+  //   負＝速く流れる（手前に見える）。移動量は
+  //   「ビューポート中央と要素の基準中央の差分 × 係数」を transform で適用。
+  //   要素が画面中央にあるとき変位 0 なので、デザイン上の配置座標は崩れない。
+  // --------------------------------------------
+  function initParallax() {
+    var targets = document.querySelectorAll("[data-parallax]");
+    if (!targets.length) return;
+
+    // 低モーション設定時は視差を行わず、素の配置のまま静止させる
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    var items = [];
+    var ticking = false;
+
+    // 各要素の「視差変形を除いた素の中心位置」（ドキュメント座標）を記録する。
+    // transform を一旦外して測ることで、再計測時に視差分が混入しない。
+    function measure() {
+      items = [];
+      targets.forEach(function (el) {
+        // SP では display:none になる要素（氷キューブ）は対象外
+        if (!el.offsetParent && getComputedStyle(el).position !== "fixed") {
+          el.style.transform = "";
+          return;
+        }
+        var prev = el.style.transform;
+        el.style.transform = "none";
+        var rect = el.getBoundingClientRect();
+        el.style.transform = prev;
+        items.push({
+          el: el,
+          speed: parseFloat(el.getAttribute("data-parallax")) || 0,
+          center: rect.top + window.scrollY + rect.height / 2,
+        });
+      });
+    }
+
+    function update() {
+      ticking = false;
+      var vh = window.innerHeight;
+      var viewCenter = window.scrollY + vh / 2;
+      items.forEach(function (item) {
+        var delta = viewCenter - item.center;
+        // 画面から大きく離れている間は transform の更新をスキップ
+        if (Math.abs(delta) > vh * 1.5) return;
+        item.el.style.transform =
+          "translate3d(0, " + (delta * item.speed).toFixed(1) + "px, 0)";
+      });
+    }
+
+    function requestUpdate() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", function () {
+      measure();
+      requestUpdate();
+    });
+    // 画像ロード完了でレイアウトが確定してから基準位置を取り直す
+    window.addEventListener("load", function () {
+      measure();
+      requestUpdate();
+    });
+
+    measure();
+    update(); // 初期表示時点の変位を即適用（最初のスクロールでの跳びを防ぐ）
+  }
+
   function init() {
     initDrawer();
     initHeaderScroll();
@@ -551,6 +672,8 @@
     initPageTransition();
     initMovieModal();
     initInview();
+    initHeroReveals();
+    initParallax();
   }
 
   if (document.readyState === "loading") {

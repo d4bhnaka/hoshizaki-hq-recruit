@@ -103,9 +103,11 @@
 
 // ============================================
 // S1. Hero (Figma 0–2562)
-//   空 = 斜め2トーンのシアングラデ。下半分に都市イラスト(bg-city)を敷き、
+//   空 = 斜めの滑らかなシアングラデに雲3つをスクリーン合成。
+//   下半分に都市イラスト(bg-city)を敷き、
 //   タグライン(左上)/飛ぶペンギン5羽/本文導入(左)/CONCEPT MOVIE(右)/
 //   「さぁ、その想いを翼に変えて。」(都市の上) を絶対配置で重ねる。
+//   レイヤー順(Figma 準拠): 空 < 都市 < テキスト < 雲 < ムービー < ペンギン
 // ============================================
 .p-top-hero {
   position: relative;
@@ -119,8 +121,12 @@
   width: 100%;
   aspect-ratio: 1600 / 2562;
   container-type: inline-size;
-  // Figma 296:7292: linear-gradient(120.636deg, #107af4 55.261%, #10aff4 55.261%)
-  background: linear-gradient(120.636deg, #107af4 55.261%, #10aff4 55.261%);
+  // Figma 296:7292 の空。コード書き出しはハード2トーン分割
+  // (120.636deg / 両ストップ 55.261%) を返すが、実際のレンダリングは
+  // #107af4 → #10aff4 の滑らかな斜めグラデーション（レンダ画像から実測）。
+  // ストップ%は元矩形(1600×1549)の実測値をこのステージ(1600×2562)の
+  // 矩形に換算したもの。
+  background: linear-gradient(135.93deg, #107af4 -12.8%, #10aff4 77.83%);
 }
 
 // 都市イラスト (Figma 296:7293, bg-city.png 1600×1048 相当)。
@@ -138,44 +144,180 @@
   mask-image: linear-gradient(to bottom, transparent 0, #000 9%);
 }
 
+// 雲 3 つ (Figma 296:10806 / 296:9053 / 296:7300)。
+// 透過PNG(2x)を Figma と同じ「スクリーン合成 × 不透明度80%」で空に重ねる。
+// PNG のアルファは生の雲(グループ不透明度なし)に正規化済みで、
+// ここの opacity: 0.8 が Figma のグループ不透明度に相当する。
+// 暗い縁はスクリーン合成でほぼ消え、明るい中心だけが霞として空に乗る。
+.p-top-hero__cloud {
+  position: absolute;
+  z-index: 4;
+  height: auto;
+  mix-blend-mode: screen;
+  opacity: 0.8;
+  pointer-events: none;
+  user-select: none;
+}
+
+// Group 2188 (296:10806) x-667.39 y668.24 w1022.89 — 左端で見切れる雲
+.p-top-hero__cloud--left {
+  left: -41.7116%;
+  top: 26.083%;
+  width: 63.9304%;
+}
+// Group 2286 (296:9053) x779 y601 w1185.11 — 右中央・ペンギンの背後
+.p-top-hero__cloud--center {
+  left: 48.6875%;
+  top: 23.458%;
+  width: 74.0694%;
+}
+// Group 2184 (296:7300) x1179.34 y1405.81 w924.66 — 右下・都市の上に重なる
+.p-top-hero__cloud--right {
+  left: 73.7087%;
+  top: 54.872%;
+  width: 57.7912%;
+}
+
 // 飛ぶペンギン (5 羽)。Figma `penguins` フレーム 296:12720 の各 ap_0x。
+// z-index は Figma レイヤー順（雲・ムービーより上）。
 .p-top-hero__penguin {
   position: absolute;
-  z-index: 2;
+  z-index: 6;
   height: auto;
   pointer-events: none;
   user-select: none;
   filter: drop-shadow(0 1.2cqw 1.6cqw rgba(0, 47, 95, 0.18));
+  will-change: transform, opacity;
 
-  // ap_03 (296:12723) x1114 y186 w188
+  // ── 出現アニメーションのタイミング（キャッチコピー演出の後に開始） ──
+  // 各羽は左→右へ、画像の飛ぶ向き・姿勢に合わせた軌道でフェードインする。
+  // 開始までは backwards fill (animation ... both) で透明・退避位置に隠れる。
+  --penguin-start: 1.7s; // キャッチ演出(約2.1s完了)の終盤に少し重ねて開始
+  --penguin-duration: 1.3s; // 1 羽ぶんの出現
+  --penguin-stagger: 0.16s; // 左の羽から順に（--penguin-i 0→4）
+  --penguin-ease: cubic-bezier(0.22, 1, 0.36, 1); // 滑空するような減速
+
+  // 出現アニメ共通の指定（軌道＝向きごとの keyframes は &--N で割り当て）
+  &--1,
+  &--2,
+  &--3,
+  &--4,
+  &--5 {
+    animation-duration: var(--penguin-duration);
+    animation-timing-function: var(--penguin-ease);
+    animation-delay: calc(
+      var(--penguin-start) + var(--penguin-i, 0) * var(--penguin-stagger)
+    );
+    animation-fill-mode: both;
+  }
+
+  // ap_03 (296:12723) x1114 y186 w188 — 上方・水平〜やや上向きの滑空 → 左下から昇る
   &--3 {
     left: 69.625%;
     top: 7.26%;
     width: 11.75%;
+    --penguin-i: 3;
+    animation-name: p-top-penguin-in-3;
   }
-  // ap_04 (296:12722) x687 y195 w268
+  // ap_04 (296:12722) x687 y195 w268 — 右下へ降下 → 左上から降りてくる
   &--4 {
     left: 42.9375%;
     top: 7.611%;
     width: 16.75%;
+    --penguin-i: 2;
+    animation-name: p-top-penguin-in-4;
   }
-  // ap_01 (296:12725) x622 y282 w672 — メインの大ペンギン
+  // ap_01 (296:12725) x622 y282 w672 — メインの大ペンギン。右下へ降下 → 左上から
   &--1 {
     left: 38.875%;
     top: 11.007%;
     width: 42%;
+    --penguin-i: 1;
+    animation-name: p-top-penguin-in-1;
   }
-  // ap_02 (296:12721) x1279 y479 w218
+  // ap_02 (296:12721) x1279 y479 w218 — 急降下 → 高い左上から右下へ
   &--2 {
     left: 79.9375%;
     top: 18.696%;
     width: 13.625%;
+    --penguin-i: 4;
+    animation-name: p-top-penguin-in-2;
   }
-  // ap_05 (296:12724) x589 y765 w316
+  // ap_05 (296:12724) x589 y765 w316 — 長く水平な滑空 → 左から伸びやかに
   &--5 {
     left: 36.8125%;
     top: 29.86%;
     width: 19.75%;
+    --penguin-i: 0;
+    animation-name: p-top-penguin-in-5;
+  }
+}
+
+// 向きに合わせた 5 通りの出現軌道。いずれも左→右へ、フェードインしながら
+// 各ペンギンの滑空姿勢に沿って所定位置へ収まる。translate は要素サイズ基準(%)
+// なのでレスポンシブでもバランスを保つ。
+@keyframes p-top-penguin-in-1 {
+  // 大ペンギン: 左下から右上へ昇るように。機首をやや上げて滑空感、奥行き(scale)。
+  0% {
+    opacity: 0;
+    transform: translate(-44%, 22%) rotate(-2.5deg) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0) scale(1);
+  }
+}
+@keyframes p-top-penguin-in-2 {
+  // 水平に左から右へ。縦移動・回転なしの真っ直ぐな滑空。
+  0% {
+    opacity: 0;
+    transform: translateX(-56%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes p-top-penguin-in-3 {
+  // 水平〜上向き: 左下から昇るように。
+  0% {
+    opacity: 0;
+    transform: translate(-72%, 14%) rotate(3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0);
+  }
+}
+@keyframes p-top-penguin-in-4 {
+  // 降下＋翼上げ: 左上から滑り込む。
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -22%) rotate(-3.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0);
+  }
+}
+@keyframes p-top-penguin-in-5 {
+  // 水平な長い滑空: 左から伸びやかに、わずかに上昇。
+  0% {
+    opacity: 0;
+    transform: translate(-64%, 10%) rotate(2.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0);
+  }
+}
+
+// アクセシビリティ: 動きを減らす設定では出現アニメを行わず最初から表示。
+@media (prefers-reduced-motion: reduce) {
+  .p-top-hero__penguin {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -193,10 +335,99 @@
   line-height: 1.15;
   letter-spacing: 0;
   color: var(--color-white);
+
+  // ── ローディング時の行ごと「白バー塗り→抜き」演出のタイミング ──
+  // 調整はこの 5 つのカスタムプロパティで完結する。
+  --catch-reveal-duration: 1s; // 1 行ぶん（塗り 0.5s + 抜き 0.5s）
+  --catch-reveal-stagger: 0.42s; // 行送りの間隔
+  --catch-reveal-delay: 0.25s; // 読み込み後、開始までの待ち
+  --catch-reveal-ease: cubic-bezier(0.76, 0, 0.24, 1); // 塗り/抜きのイージング
+  --catch-bar-color: var(--color-white); // 覆う長方形の色（プレースホルダー）
 }
 
 .p-top-hero__catch-line {
   display: block;
+}
+
+// 各行のテキスト本体。塗りバーが退く瞬間まで透明にしておき、跡から現す。
+// inline-block で行のテキスト幅にフィットさせ、その幅ぶんだけ白バーが覆う。
+.p-top-hero__catch-word {
+  position: relative;
+  display: inline-block;
+  vertical-align: top; // inline-block のベースライン隙間で行送りがズレないように
+  color: transparent;
+  animation: p-top-catch-text var(--catch-reveal-duration)
+    var(--catch-reveal-ease)
+    calc(
+      var(--catch-reveal-delay) + var(--catch-i, 0) *
+        var(--catch-reveal-stagger)
+    )
+    both;
+
+  // 覆う白い長方形（プレースホルダー）。テキストの上に重ねる。
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: var(--catch-bar-color);
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: p-top-catch-bar var(--catch-reveal-duration)
+      var(--catch-reveal-ease)
+      calc(
+        var(--catch-reveal-delay) + var(--catch-i, 0) *
+          var(--catch-reveal-stagger)
+      )
+      both;
+  }
+}
+
+// 白バー: 0–50% で左→右に伸びて行を覆い、50–100% で左端が右へ抜けていく。
+// 50% の地点で transform-origin を左→右へ瞬時に切り替えるのがポイント
+// （全幅の瞬間なので切り替えは見えない）。
+@keyframes p-top-catch-bar {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+  50.01% {
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}
+
+// テキスト: バーが覆い切る 50% の瞬間に透明→白へ。バーの下に隠れているので
+// 切り替わりは見えず、バーが退くにつれて左→右に現れる。
+@keyframes p-top-catch-text {
+  0%,
+  50% {
+    color: transparent;
+  }
+  50.01%,
+  100% {
+    color: var(--color-white);
+  }
+}
+
+// アクセシビリティ: 動きを減らす設定では演出せず、最初から文字を表示。
+@media (prefers-reduced-motion: reduce) {
+  .p-top-hero__catch-word {
+    color: var(--color-white);
+    animation: none;
+
+    &::after {
+      display: none;
+    }
+  }
 }
 
 // 本文導入 (Figma 296:7298 x155 y1015 w550) Noto Sans JP Regular 23px / 行送り55px
@@ -209,6 +440,15 @@
   padding: 0;
   list-style: none;
   color: var(--color-white);
+
+  // ── 行ごと「白バー塗り→抜き」演出のタイミング（KV キャッチコピーと同じ仕組み）──
+  // 開始は .p-top-hero__body がウィンドウに入った時（下記 .inview-ready ゲート）。
+  // 入ってから行を上から順に現していく。調整はこの 5 つのカスタムプロパティで完結する。
+  --body-reveal-duration: 0.85s; // 1 行ぶん（塗り 0.425s + 抜き 0.425s）
+  --body-reveal-stagger: 0.12s; // 行送りの間隔
+  --body-reveal-delay: 0.2s; // ビューに入ってから 1 行目開始までの待ち
+  --body-reveal-ease: cubic-bezier(0.76, 0, 0.24, 1); // 塗り/抜きのイージング
+  --body-bar-color: var(--color-white); // 覆う長方形の色
 }
 
 .p-top-hero__body-line {
@@ -217,7 +457,98 @@
   line-height: 3.4375cqw; // 55 / 16 (= 行送り 55px)
   font-weight: 400;
   white-space: nowrap;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.55);
+}
+
+// 各行のテキスト本体。inline-block で行のテキスト幅にフィットさせ、
+// その幅ぶんだけ白バーが覆う。バーが退く瞬間まで透明にして跡から現す。
+// text-shadow も同時に現れるよう keyframes 側で切り替える（透明時の影残りを防ぐ）。
+.p-top-hero__body-text {
+  position: relative;
+  display: inline-block;
+  vertical-align: top; // inline-block のベースライン隙間で行送りがズレないように
+  color: transparent;
+  animation: p-top-body-text var(--body-reveal-duration)
+    var(--body-reveal-ease)
+    calc(
+      var(--body-reveal-delay) + var(--body-i, 0) * var(--body-reveal-stagger)
+    )
+    both;
+
+  // 覆う白い長方形。テキストの上に重ねる。
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: var(--body-bar-color);
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: p-top-body-bar var(--body-reveal-duration)
+      var(--body-reveal-ease)
+      calc(
+        var(--body-reveal-delay) + var(--body-i, 0) *
+          var(--body-reveal-stagger)
+      )
+      both;
+  }
+}
+
+// 開始タイミング: .p-top-hero__body がウィンドウに入ってから（JS が .is-inview を付与）。
+// それまではアニメを一時停止して 0% を保持し、文字=透明・バー=幅0 で何も見せない。
+// inview-ready が無い環境（低モーション / IntersectionObserver 非対応）ではゲートせず即再生。
+// 検知は js/main.js の initHeroReveals、非表示ガードは <html>.inview-ready。
+.inview-ready .p-top-hero__body:not(.is-inview) .p-top-hero__body-text,
+.inview-ready .p-top-hero__body:not(.is-inview) .p-top-hero__body-text::after {
+  animation-play-state: paused;
+}
+
+// 白バー: 0–50% で左→右に伸びて行を覆い、50–100% で左端が右へ抜けていく。
+// 50% の地点で transform-origin を左→右へ瞬時に切り替える（全幅の瞬間なので不可視）。
+@keyframes p-top-body-bar {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+  50.01% {
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}
+
+// テキスト: バーが覆い切る 50% の瞬間に透明→白へ。バーの下に隠れているので
+// 切り替わりは見えず、バーが退くにつれて左→右に現れる。影も同時に付与する。
+@keyframes p-top-body-text {
+  0%,
+  50% {
+    color: transparent;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0);
+  }
+  50.01%,
+  100% {
+    color: var(--color-white);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.55);
+  }
+}
+
+// アクセシビリティ: 動きを減らす設定では演出せず、最初から文字を表示。
+@media (prefers-reduced-motion: reduce) {
+  .p-top-hero__body-text {
+    color: var(--color-white);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.55);
+    animation: none;
+
+    &::after {
+      display: none;
+    }
+  }
 }
 
 // 「さぁ、その想いを翼に変えて。」都市の上 (Figma 296:7299 x155 y1618) 47px Regular
@@ -233,15 +564,67 @@
   line-height: 1.1;
   white-space: nowrap;
   color: var(--color-white);
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.55);
+
+  // ── 「白バー塗り→抜き」演出のタイミング（本文導入コピーと同じ仕組み）──
+  // 開始は .p-top-hero__outro がウィンドウに入った時（下記 .inview-ready ゲート）。
+  // 1 行なのでスタッガーは無し。keyframes は本文導入と共通のものを再利用する。
+  --outro-reveal-duration: 0.85s; // 塗り 0.425s + 抜き 0.425s
+  --outro-reveal-delay: 0.2s; // ビューに入ってから開始までの待ち
+  --outro-reveal-ease: cubic-bezier(0.76, 0, 0.24, 1); // 塗り/抜きのイージング
+  --outro-bar-color: var(--color-white); // 覆う長方形の色
+}
+
+// テキスト本体。inline-block で文字幅にフィットさせ、その幅ぶんだけ白バーが覆う。
+// バーが退く瞬間まで透明にして跡から現す。text-shadow も同時に keyframes で付与。
+.p-top-hero__outro-text {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  color: transparent;
+  animation: p-top-body-text var(--outro-reveal-duration)
+    var(--outro-reveal-ease) var(--outro-reveal-delay) both;
+
+  // 覆う白い長方形。テキストの上に重ねる。
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: var(--outro-bar-color);
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: p-top-body-bar var(--outro-reveal-duration)
+      var(--outro-reveal-ease) var(--outro-reveal-delay) both;
+  }
+}
+
+// 開始タイミング: .p-top-hero__outro がウィンドウに入ってから（JS が .is-inview を付与）。
+// それまではアニメを一時停止して 0% を保持し、文字=透明・バー=幅0 で何も見せない。
+.inview-ready .p-top-hero__outro:not(.is-inview) .p-top-hero__outro-text,
+.inview-ready .p-top-hero__outro:not(.is-inview) .p-top-hero__outro-text::after {
+  animation-play-state: paused;
+}
+
+// アクセシビリティ: 動きを減らす設定では演出せず、最初から文字を表示。
+@media (prefers-reduced-motion: reduce) {
+  .p-top-hero__outro-text {
+    color: var(--color-white);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.55);
+    animation: none;
+
+    &::after {
+      display: none;
+    }
+  }
 }
 
 // CONCEPT MOVIE ラベル (Figma 296:12581 x863 y1144) Barlow Condensed Thin 50px
+// z-index は Figma レイヤー順（雲より上・ペンギンより下）。
 .p-top-hero__movie-label {
   position: absolute;
   left: 53.9375%;
   top: 44.653%;
-  z-index: 3;
+  z-index: 5;
   margin: 0;
   font-family: var(--font-family-display), var(--font-family-en);
   font-weight: 100;
@@ -256,7 +639,7 @@
   position: absolute;
   left: 53.9375%;
   top: 46.995%;
-  z-index: 3;
+  z-index: 5;
   width: 40%; // 640 / 1600
   aspect-ratio: 640 / 360;
   border: 0;
@@ -415,12 +798,15 @@
 }
 
 // 装飾の氷キューブ (Figma 543:6520-6523)
+// スクロール視差（main.js initParallax）が transform: translate3d で
+// 縦方向に動かすため、合成レイヤー化して描画を軽くしておく。
 .p-top-trio__cube {
   position: absolute;
   z-index: 1;
   height: auto;
   pointer-events: none;
   user-select: none;
+  will-change: transform;
 
   &--1 {
     left: 90.0625%;
@@ -660,6 +1046,11 @@
 
   // ペンギンは PC 専用の絶対配置のため SP では非表示（都市イラスト内に鳥群あり）
   .p-top-hero__penguin {
+    display: none;
+  }
+
+  // 雲も PC の固定アスペクト比ステージ前提の絶対配置のため SP では非表示
+  .p-top-hero__cloud {
     display: none;
   }
 

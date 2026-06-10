@@ -179,6 +179,7 @@ Figma の Y 座標順。スクリーンショット（画像1）と Figma `296:7
 | S1 ペンギン | GSAP（`y` yoyo 無限） | 微小浮遊 |
 | S2〜S5 の IceLinkButton | GSAP ＋ CSS | スクロール進入でスライドイン／ホバーで浮遊 |
 | S6 カード | GSAP ScrollTrigger | 各カードが順にフェード＋スライド |
+| S3 氷キューブ装飾（`.p-top-trio__cube--1〜4`） | バニラ JS（`main.js` の `initParallax()`） | スクロール視差。`data-parallax` の係数（正＝奥／負＝手前）でキューブごとに速度・方向を変え奥行きを演出。**2026-06-10 実装済み** |
 
 ## 未解決事項（TODO）
 

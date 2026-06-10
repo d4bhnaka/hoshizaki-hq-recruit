@@ -89,6 +89,7 @@
 - [ ] M3-A2 Hero のペンギン微小浮遊（GSAP `yoyo`）。
 - [ ] M3-A3 IceLinkButton のスクロール進入演出（ScrollTrigger）。
 - [ ] M3-A4 S6 カードの順次フェード（ScrollTrigger）。
+- [r] M3-A5 S3 帯の装飾氷キューブ（`.p-top-trio__cube--1〜4`）のスクロール視差（パララックス）。**2026-06-10 実装**：[`public/js/main.js`](../public/js/main.js) の `initParallax()`（汎用 `[data-parallax]` 機構・バニラ JS）。属性値が速度係数（正＝スクロールより遅い＝奥、負＝速い＝手前。現値 `-0.18 / 0.14 / 0.1 / -0.24`）で、「ビューポート中央と要素基準中央の差分 × 係数」を `translate3d` で適用（中央で変位 0 のため Figma 配置座標は不変）。rAF スロットル＋`prefers-reduced-motion` で無効化＋resize/load で基準再計測。SP はキューブ自体が `display:none` のため対象外。CDP 実機検証で 4 キューブが係数どおりの速度・方向で移動することを確認。
 
 ### アセット配置
 

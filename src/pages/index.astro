@@ -30,6 +30,11 @@ const heroPenguins = [
   { n: 5, img: "ap_05.png" },
 ];
 
+// S3 装飾氷キューブの視差速度（data-parallax / main.js initParallax が参照）。
+// 正＝スクロールより遅く流れる（奥に見える）、負＝速く流れる（手前に見える）。
+// 大きいキューブほど手前・小さいほど奥になるよう係数を散らして奥行きを出す。
+const trioCubeSpeeds = [-0.18, 0.14, 0.1, -0.24];
+
 // S3 コーポレートナビ 3 枚（What's / Beyond / Team）。Figma 365:13388 帯に絶対配置。
 const trioCards = [
   {
@@ -69,10 +74,19 @@ const trioCards = [
     <section class="p-top-hero" aria-label="メインビジュアル">
       <div class="p-top-hero__stage">
         {/* タグライン「常識の／先へ、／跳べ。」 */}
+        {/* ローディング演出: 行ごとに白い長方形が左→右に伸びて覆い、 */}
+        {/* 続けて左→右へ退きながら文字を現す（純CSS / _p-top.scss）。 */}
+        {/* --catch-i は行ごとのディレイ順（0,1,2）。 */}
         <h1 class="p-top-hero__catch">
-          <span class="p-top-hero__catch-line">常識の</span>
-          <span class="p-top-hero__catch-line">先へ、</span>
-          <span class="p-top-hero__catch-line">跳べ。</span>
+          <span class="p-top-hero__catch-line" style="--catch-i: 0">
+            <span class="p-top-hero__catch-word">常識の</span>
+          </span>
+          <span class="p-top-hero__catch-line" style="--catch-i: 1">
+            <span class="p-top-hero__catch-word">先へ、</span>
+          </span>
+          <span class="p-top-hero__catch-line" style="--catch-i: 2">
+            <span class="p-top-hero__catch-word">跳べ。</span>
+          </span>
         </h1>
 
         {/* 飛ぶペンギン 5 羽 */}
@@ -88,10 +102,14 @@ const trioCards = [
         }
 
         {/* 本文導入コピー */}
+        {/* KV(キャッチコピー)と同じ「白バーで塗ってから抜いて現す」演出を */}
+        {/* 行ごとに適用。--body-i は行ごとのディレイ順（0,1,2,…）。 */}
         <ol class="p-top-hero__body">
           {
-            heroBodyLines.map((line) => (
-              <li class="p-top-hero__body-line">{line}</li>
+            heroBodyLines.map((line, i) => (
+              <li class="p-top-hero__body-line" style={`--body-i: ${i}`}>
+                <span class="p-top-hero__body-text">{line}</span>
+              </li>
             ))
           }
         </ol>
@@ -120,12 +138,36 @@ const trioCards = [
         </button>
 
         {/* 「さぁ、その想いを翼に変えて。」(都市の上) */}
-        <p class="p-top-hero__outro">さぁ、その想いを翼に変えて。</p>
+        {/* 本文導入コピーと同じ「白バーで塗ってから抜いて現す」演出。 */}
+        <p class="p-top-hero__outro">
+          <span class="p-top-hero__outro-text">さぁ、その想いを翼に変えて。</span>
+        </p>
 
         {/* 都市イラスト（下端・背景） */}
         <img
           class="p-top-hero__city"
           src={`${basePath}images/top/bg-city.png`}
+          alt=""
+          aria-hidden="true"
+        />
+
+        {/* 雲（Figma 296:10806 / 296:9053 / 296:7300） */}
+        {/* 透過PNGをスクリーン合成・不透明度80%で空に重ねる（_p-top.scss） */}
+        <img
+          class="p-top-hero__cloud p-top-hero__cloud--left"
+          src={`${basePath}images/top/cloud02.png`}
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="p-top-hero__cloud p-top-hero__cloud--center"
+          src={`${basePath}images/top/cloud01.png`}
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="p-top-hero__cloud p-top-hero__cloud--right"
+          src={`${basePath}images/top/cloud03.png`}
           alt=""
           aria-hidden="true"
         />
@@ -178,14 +220,15 @@ const trioCards = [
       aria-label="ホシザキを知る視点とはたらく人を知る導線"
     >
       <div class="p-top-trio__stage">
-        {/* 装飾の氷キューブ */}
+        {/* 装飾の氷キューブ（data-parallax: スクロール視差の速度係数） */}
         {
-          [1, 2, 3, 4].map((i) => (
+          trioCubeSpeeds.map((speed, idx) => (
             <img
-              class={`p-top-trio__cube p-top-trio__cube--${i}`}
-              src={`${basePath}images/top/ice_cubes_0${i}.png`}
+              class={`p-top-trio__cube p-top-trio__cube--${idx + 1}`}
+              src={`${basePath}images/top/ice_cubes_0${idx + 1}.png`}
               alt=""
               aria-hidden="true"
+              data-parallax={speed}
             />
           ))
         }
