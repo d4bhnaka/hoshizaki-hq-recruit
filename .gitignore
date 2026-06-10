@@ -30,5 +30,8 @@ pnpm-debug.log*
 # Figma personal access token (never commit)
 .figma_token
 
+# Figma MCP アセット書き出しの一時ステージ（作業後に削除する）
+.figma-stage/
+
 # Python bytecode cache
 __pycache__/
