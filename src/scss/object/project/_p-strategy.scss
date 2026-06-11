@@ -28,21 +28,27 @@
 }
 
 // --------------------------------------------
-// Hero FV（タイトル下のペンギン写真帯）
+// Hero FV（タイトル下のペンギン写真帯 / Figma 687:1456 page-fv 1283×430）
+// Figma: 写真左端 x≈379（タイトルより右にインデント）＋右端は枠外へブリード（job と同配置）
 // --------------------------------------------
 .p-strategy .c-page-hero {
   padding-bottom: 56px;
 }
 
 .p-strategy__fv {
-  margin-top: 40px;
+  margin: 44px 0 0 auto;
+  width: min(1283px, 100%);
+  margin-right: clamp(-126px, -8vw, 0px);
+  aspect-ratio: 1283 / 430;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 .p-strategy__fv img {
   display: block;
   width: 100%;
-  height: auto;
-  border-radius: var(--border-radius-lg);
+  height: 100%;
+  object-fit: cover;
 }
 
 // --------------------------------------------
@@ -508,6 +514,10 @@
 // Responsive
 // --------------------------------------------
 @media screen and (max-width: 960px) {
+  .p-strategy__fv {
+    margin-right: 0;
+  }
+
   .p-strategy-intro,
   .p-strategy-field,
   .p-strategy-global,

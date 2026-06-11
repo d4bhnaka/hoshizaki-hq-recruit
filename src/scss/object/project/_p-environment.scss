@@ -14,18 +14,23 @@
 }
 
 // --------------------------------------------
-// Hero FV banner (本社外観の帯写真)
+// Hero FV banner (本社外観の帯写真 / Figma 365:16909 page-fv 1283×430)
+// Figma: 写真左端 x≈317（タイトルより右にインデント）＋右端は枠外へブリード（fact と同配置）
 // --------------------------------------------
 .p-env__fv {
-  margin: clamp(28px, 4vw, 44px) auto 0;
-  max-width: 1240px;
+  margin: 44px 0 0 auto;
+  width: min(1283px, 100%);
+  margin-right: clamp(-126px, -8vw, 0px);
+  aspect-ratio: 1283 / 430;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 .p-env__fv img {
   display: block;
   width: 100%;
-  height: auto;
-  border-radius: var(--border-radius-lg);
+  height: 100%;
+  object-fit: cover;
 }
 
 // --------------------------------------------
@@ -186,6 +191,12 @@
 // --------------------------------------------
 // Responsive
 // --------------------------------------------
+@media screen and (max-width: 960px) {
+  .p-env__fv {
+    margin-right: 0;
+  }
+}
+
 @media screen and (max-width: 900px) {
   .p-env-benefits {
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -525,6 +525,14 @@ dist/
 - **検証**: `npm run build` 28 ページ成功。ビルド前後の `dist/index.html`・`dist/strategy/index.html` を diff し、**差分はクラス順序の入れ替わりのみ**（index）と**装飾画像への `aria-hidden="true"` 付与のみ**（strategy。alt="" の装飾画像なので改善）。`data-astro-cid`／ルート絶対パス／インライン `<style>` すべて 0、`dist/css/style.css` に `.c-ice-link` 出力あり。
 - **docs 同期**: [06-spec-common.md](./06-spec-common.md) C7 を「実装済み」に更新（テーブル行・本文・Props）。残タスクは「Team／Environment／Person ページでの使用有無を Figma で確認」のみ。
 
+### 2026-06-11 セッション: strategy／environment の FV 画像を右寄せに統一
+
+- **指示**: fact（数字で見る）／job（職種紹介）と同様に、strategy（事業戦略 `245:557`）／environment（はたらく環境 `242:446`）の FV 画像も右寄せにして Figma と共通化。
+- **Figma 実測**（get_metadata）: strategy `687:1456` page-fv は **x=379, 1283×430**（job と同配置＝右端が 1600 枠外へ 62px ブリード）、environment `365:16909` page-fv は **x=317, 1283×430**（fact と同配置）。
+- **実装**: [_p-strategy.scss](../src/scss/object/project/_p-strategy.scss)／[_p-environment.scss](../src/scss/object/project/_p-environment.scss) の FV を fact/job と同一パターンへ変更 — `margin: 44px 0 0 auto; width: min(1283px, 100%); margin-right: clamp(-126px, -8vw, 0px); aspect-ratio: 1283/430; border-radius: 20px; overflow: hidden;` ＋ img `object-fit: cover`。≤960px では job と同様 `margin-right: 0` でブリード解除。[strategy.astro](../src/pages/strategy.astro) の width 属性を job と同じ規約（Figma フレーム寸法 1283）に統一。
+- **メモ**: job/strategy のアセットは 1221×430（= 1600 − x379。キャンバス内の可視域クロップ）だが、1283/430 ボックス＋cover で job と同一レンダリングになるためアセットは変更不要。
+- **検証**: `npm run build` 成功、`data-astro-cid`／インライン style／ルート絶対パス＝全 0。dist を http.server＋Chrome ヘッドレス（1600px）で 4 ページ撮影し、FV 左端が全ページ **x=379** で一致することをピクセル走査で確認。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。
