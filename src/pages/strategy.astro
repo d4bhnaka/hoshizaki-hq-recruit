@@ -6,6 +6,7 @@ import PageHero from "../components/PageHero.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import BottomCta from "../components/BottomCta.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
+import IceLinkButton from "../components/IceLinkButton.astro";
 
 const base = "../";
 
@@ -297,22 +298,14 @@ const pioneers = [
                 />
                 {
                   globalMarkets.map((market) => (
-                    <a
-                      class="c-ice-link c-ice-link--map p-strategy-global__map-link"
+                    <IceLinkButton
+                      class="c-ice-link--map p-strategy-global__map-link"
                       href={`#${market.id}`}
+                      label={market.title}
+                      basePath={base}
+                      lazy
                       style={`left:${market.map.left}%;top:${market.map.top}%`}
-                    >
-                      <img
-                        class="c-ice-link__bg"
-                        src={`${base}images/common/link-button-ice.png`}
-                        alt=""
-                        loading="lazy"
-                      />
-                      <span class="c-ice-link__inner">
-                        <span class="c-ice-link__label">{market.title}</span>
-                        <span class="c-ice-link__more">READ MORE</span>
-                      </span>
-                    </a>
+                    />
                   ))
                 }
               </div>

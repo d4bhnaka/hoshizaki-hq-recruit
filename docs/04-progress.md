@@ -44,7 +44,7 @@
 - [r] M2-C1 `Header.astro` ＋ `_l-header.scss`。Figma `361:538`。実装（2026-04-24）：ロゴ＋インターンシップ／応募はこちら CTA ＋ハンバーガー。
 - [r] M2-C2 `Footer.astro` ＋ `_l-footer.scss`。Figma `360:179`。実装：4 カラム構成＋大型 HOSHIZAKI ワードマーク。
 - [r] M2-C3 `Breadcrumb.astro` ＋ `_c-breadcrumb.scss`。Props: `basePath`, `items[]`（`.c-breadcrumb`）。
-- [ ] M2-C4 `IceLinkButton.astro` ＋ `_c-ice-link.scss`。Figma `365:16915`。※ 現状トップページ内の `.p-top-*` として実装・将来的に共通化候補。
+- [r] M2-C4 [`IceLinkButton.astro`](../src/components/IceLinkButton.astro) ＋ `_c-ice-link.scss`。Figma `365:16915`。**2026-06-11 コンポーネント化**：`.c-ice-link` スタイルを `_p-top.scss` から component 層へ移設し、トップ 6 個＋strategy 地図 7 個の直書きマークアップを差し替え（出力 HTML は実質同一）。Props: `href` / `label` / `sublabel?` / `basePath?` / `fluid?` / `lazy?` / `class?` ＋透過属性。
 - [r] M2-C5 `BottomCta.astro` ＋ `_c-bottom-cta.scss`。INTERNSHIP + ENTRY 横並びバナーで M2-C5 統合版。
 - [r] M2-C6 `PageHero.astro` ＋ `_c-page-hero.scss`。Props: `en`, `ja`, `variant`, `compact`, `align`, `bg`。
 - [r] M2-C7 [`PersonCard.astro`](../src/components/PersonCard.astro) ＋ `_c-person-card.scss`（2026-04-25 にコンポーネント化）。`person.astro` から 14 回呼出し。Props: `image`, `quote`, `body`, `department`, `href?`。
@@ -516,6 +516,15 @@ dist/
 - **補足**: `.l-page--clouds`（[_l-background.scss](../src/scss/layout/_l-background.scss)）は現在どのページからも未参照のデッド CSS だが cloud01/02 を参照しており、α正規化後はやや濃く見える（使用時は要調整）。
 - **追補（同日・ユーザー指示）**: 雲に出現＋漂いアニメーションを追加。出現はゆっくりフェードイン（3.6s ease-out、左 0s／中央 0.5s／右 1s のスタッガー、`opacity 0 → 0.8`）。その後は `translate3d` の `alternate infinite` で自身サイズの 1〜2% をごくゆっくり往復（周期 26s／21s／17s と雲ごとに変えて非同期に見せる。往復なので必ず Figma 原点に戻る）。`prefers-reduced-motion: reduce` では両方無効＝最初から静止表示。実装はすべて `_p-top.scss`（`p-top-cloud-in` / `p-top-cloud-drift`）。
 
+### 2026-06-11 セッション: IceLinkButton のコンポーネント化（M2-C4）
+
+- **着手範囲**: アイスリンクボタン（Figma `365:16915` LinkButtonIce 207×200）の共通コンポーネント化。挙動・見た目の変更なしの純リファクタ。
+- **新規ファイル**: [src/components/IceLinkButton.astro](../src/components/IceLinkButton.astro)（Props: `href`／`label`／`sublabel?`＝"READ MORE"／`basePath?`＝"./"／`fluid?`／`lazy?`／`class?`＋`data-inview`・`style`・`aria-label` 等の透過属性）／[src/scss/object/component/_c-ice-link.scss](../src/scss/object/component/_c-ice-link.scss)（`.c-ice-link` 一式を [_p-top.scss](../src/scss/object/project/_p-top.scss) から逐語移設、[style.scss](../src/scss/style.scss) に `@use` 登録）。
+- **差し替え箇所**: [index.astro](../src/pages/index.astro) の 6 個（S2 Pioneer／S3 Trio×3／S4 ここに決めた！／S5 環境。fluid 版 5＋固定版 1）／[strategy.astro](../src/pages/strategy.astro) の世界地図 READ MORE 7 個（`class="c-ice-link--map p-strategy-global__map-link"` ＋ `lazy`）。
+- **設計判断**: ①docs 旧案の `variant: 'light'|'dark'` は使用実態がないため廃止し、実在する修飾子に合わせ `fluid`（cqw 流体）をプロップ化。②strategy 専用の縮小版 `.c-ice-link--map` はページ固有のため [_p-strategy.scss](../src/scss/object/project/_p-strategy.scss) の project 層拡張のまま維持（`class` プロップで付与）。③カスケード順は不変（component 層→project 層の順で、従来の「`_p-top.scss` 内で先頭定義→ページクラスが後勝ち」と同じ優先関係）。
+- **検証**: `npm run build` 28 ページ成功。ビルド前後の `dist/index.html`・`dist/strategy/index.html` を diff し、**差分はクラス順序の入れ替わりのみ**（index）と**装飾画像への `aria-hidden="true"` 付与のみ**（strategy。alt="" の装飾画像なので改善）。`data-astro-cid`／ルート絶対パス／インライン `<style>` すべて 0、`dist/css/style.css` に `.c-ice-link` 出力あり。
+- **docs 同期**: [06-spec-common.md](./06-spec-common.md) C7 を「実装済み」に更新（テーブル行・本文・Props）。残タスクは「Team／Environment／Person ページでの使用有無を Figma で確認」のみ。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。
@@ -525,7 +534,7 @@ dist/
 4. ~~**Web フォントのローカル化（M2-F4）**~~ — **2026-06-09 完了**。Google Fonts CDN を撤去しセルフホスト化（`public/fonts/` woff2 ＋ `public/css/fonts.css`）。詳細は M2-F4 ／ [`fonts/README.md`](../fonts/README.md)。
 5. **JS 基盤（M2-S1〜S2）** — Lenis / GSAP は未着手。※ Swiper（M2-S3）は vendored（`public/js|css/swiper-bundle.min.*`）で internship／environment が個別初期化済み、Person フィルター（M2-S4）も `public/js/main.js` の `initPersonFilter()` で実装済み。実装済み挙動は `main.js` の `init()` に集約（`initDrawer` / `initPersonFilter` / `initInternship` / `initOfficeTour` / `initPageTransition`〔M2-S5・全ページ遷移アニメ〕/ `initMovieModal`〔トップのコンセプトムービー〕）。
 6. **アニメーション（M3-A1〜A4）** — トップページの GSAP アニメーション。アセット入稿後に着手。
-7. **共通化リファクタ候補** — `IceLinkButton.astro`（M2-C4）。現状は各ページの `.p-*`（`.c-ice-link`）で個別実装。※ SPECIAL CONTENTS は `SpecialContents.astro` で共通化済み（M2-C8／M2-C13 完了）。
+7. ~~**共通化リファクタ候補** — `IceLinkButton.astro`（M2-C4）~~ — **2026-06-11 完了**。`IceLinkButton.astro` ＋ `_c-ice-link.scss` に共通化（トップ 6 個＋strategy 地図 7 個）。※ SPECIAL CONTENTS は `SpecialContents.astro` で共通化済み（M2-C8／M2-C13 完了）。
 
 ### 開始時に走らせるコマンド
 
@@ -544,7 +553,7 @@ npm run watch:scss                               # SCSS 変更の即時反映（
 ### ファイルインベントリ（2026-06-08 時点）
 
 - **Astro ページ**：14 ファイル（[src/pages/](../src/pages/)）。うち [`person/[slug].astro`](../src/pages/person/) は動的ルートで 15 ページを生成するため**ビルド出力は 28 ルート**。`about.astro` は削除済み（Astro デフォルトの残置物だった）。
-- **共通コンポーネント**：13 ファイル（[src/components/](../src/components/)）。`Welcome.astro` は削除済み。一覧：BottomCta / Breadcrumb / CourseCard / CourseDetail / Footer / Header / IceHeading / InternshipHeading / OfficeTourCarousel / PageHero / PersonCard / SectionHeading / SpecialContents。
+- **共通コンポーネント**：14 ファイル（[src/components/](../src/components/)）。`Welcome.astro` は削除済み。一覧：BottomCta / Breadcrumb / CourseCard / CourseDetail / Footer / Header / IceHeading / IceLinkButton / InternshipHeading / OfficeTourCarousel / PageHero / PersonCard / SectionHeading / SpecialContents。
 - **データモジュール**：[src/data/](../src/data/) に `personDetails.ts`（Person 詳細 15 名）／`specialStories.ts`（SPECIAL 3 本）。
-- **SCSS**：foundation 3 + layout 5 + component 10 + project 14 = **32 partials**＋エントリ [style.scss](../src/scss/style.scss)
+- **SCSS**：foundation 3 + layout 5 + component 13 + project 14 + utility 1 = **36 partials**（2026-06-11 時点）＋エントリ [style.scss](../src/scss/style.scss)
 - **画像ディレクトリ**：[public/images/](../public/images/) 配下に 11 サブディレクトリ（common / environment / fact / internship / job / message / person / requirement / special / strategy / top）。多くは Figma 書き出し済み・一部は実アセット入稿待ちのプレースホルダ。

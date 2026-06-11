@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BottomCta from "../components/BottomCta.astro";
+import IceLinkButton from "../components/IceLinkButton.astro";
 import SpecialContents from "../components/SpecialContents.astro";
 
 const basePath = "./";
@@ -185,24 +186,16 @@ const trioCards = [
         <p class="p-top-pioneer__ja" data-inview style="--inview-i: 1">
           採用メッセージ
         </p>
-        <a
-          class="p-top-pioneer__button c-ice-link c-ice-link--fluid"
+        <IceLinkButton
+          class="p-top-pioneer__button"
           href={`${basePath}message/`}
+          label="採用メッセージ"
+          basePath={basePath}
+          fluid
           aria-label="採用メッセージを読む"
           data-inview="fade"
           style="--inview-i: 2"
-        >
-          <img
-            class="c-ice-link__bg"
-            src={`${basePath}images/common/link-button-ice.png`}
-            alt=""
-            aria-hidden="true"
-          />
-          <span class="c-ice-link__inner">
-            <span class="c-ice-link__label">採用メッセージ</span>
-            <span class="c-ice-link__more">READ MORE</span>
-          </span>
-        </a>
+        />
         <img
           class="p-top-pioneer__visual"
           src={`${basePath}images/top/pioneer.png`}
@@ -252,23 +245,15 @@ const trioCards = [
                 <span class="p-top-trio__en-line">{card.en[0]}</span>
                 <span class="p-top-trio__en-line">{card.en[1]}</span>
               </p>
-              <a
-                class={`p-top-trio__button p-top-trio__button--${card.pos} c-ice-link c-ice-link--fluid`}
+              <IceLinkButton
+                class={`p-top-trio__button p-top-trio__button--${card.pos}`}
                 href={card.href}
+                label={card.label}
+                basePath={basePath}
+                fluid
                 data-inview="fade"
                 style="--inview-i: 2"
-              >
-                <img
-                  class="c-ice-link__bg"
-                  src={`${basePath}images/common/link-button-ice.png`}
-                  alt=""
-                  aria-hidden="true"
-                />
-                <span class="c-ice-link__inner">
-                  <span class="c-ice-link__label">{card.label}</span>
-                  <span class="c-ice-link__more">READ MORE</span>
-                </span>
-              </a>
+              />
             </Fragment>
           ))
         }
@@ -291,24 +276,16 @@ const trioCards = [
           data-inview
           style="--inview-i: 2"
         />
-        <a
-          class="p-top-trio__button p-top-trio__button--decided c-ice-link c-ice-link--fluid"
+        <IceLinkButton
+          class="p-top-trio__button p-top-trio__button--decided"
           href={`${basePath}person/`}
+          label="はたらく人を知る"
+          basePath={basePath}
+          fluid
           aria-label="はたらく人を知る"
           data-inview="fade"
           style="--inview-i: 3"
-        >
-          <img
-            class="c-ice-link__bg"
-            src={`${basePath}images/common/link-button-ice.png`}
-            alt=""
-            aria-hidden="true"
-          />
-          <span class="c-ice-link__inner">
-            <span class="c-ice-link__label">はたらく人を知る</span>
-            <span class="c-ice-link__more">READ MORE</span>
-          </span>
-        </a>
+        />
       </div>
     </section>
 
@@ -331,24 +308,15 @@ const trioCards = [
             制度も環境も、妥協せずに整えてきました。
           </p>
         </header>
-        <a
-          class="p-top-env__button c-ice-link"
+        <IceLinkButton
+          class="p-top-env__button"
           href={`${basePath}environment/`}
+          label="はたらく環境を知る"
+          basePath={basePath}
           aria-label="はたらく環境を知る"
           data-inview="fade"
           style="--inview-i: 2"
-        >
-          <img
-            class="c-ice-link__bg"
-            src={`${basePath}images/common/link-button-ice.png`}
-            alt=""
-            aria-hidden="true"
-          />
-          <span class="c-ice-link__inner">
-            <span class="c-ice-link__label">はたらく環境を知る</span>
-            <span class="c-ice-link__more">READ MORE</span>
-          </span>
-        </a>
+        />
       </div>
     </section>
 

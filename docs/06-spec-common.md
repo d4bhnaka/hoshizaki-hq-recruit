@@ -12,7 +12,7 @@
 | C4 | PageHero | [`src/components/PageHero.astro`](../src/components/PageHero.astro) | `object/component/_c-page-hero.scss` | component | `.c-page-hero` | 各下層ページ共通帯 | 実装済み |
 | C5 | BottomCta | [`src/components/BottomCta.astro`](../src/components/BottomCta.astro) | `object/component/_c-bottom-cta.scss` | component | `.c-bottom-cta` | `367:815` / `367:869` のペア | 実装済み |
 | C6 | SectionHeading | [`src/components/SectionHeading.astro`](../src/components/SectionHeading.astro) | `object/component/_c-section-heading.scss` | component | `.c-section-heading` | — | 実装済み |
-| C7 | IceLinkButton（未実装） | `src/components/IceLinkButton.astro`（予定） | `object/component/_c-ice-link.scss`（予定） | component | `.c-ice-link` | `365:16915` | **未実装**。現状はページ側で個別マークアップ |
+| C7 | IceLinkButton | [`src/components/IceLinkButton.astro`](../src/components/IceLinkButton.astro) | `object/component/_c-ice-link.scss` | component | `.c-ice-link` | `365:16915` | 実装済み（2026-06-11 コンポーネント化）。トップ 6 個＋strategy 地図 7 個で使用 |
 | C8 | PersonCard | [`src/components/PersonCard.astro`](../src/components/PersonCard.astro) | `object/component/_c-person-card.scss` | component | `.c-person-card` | `365:655` | 実装済み（2026-04-25） |
 | C9 | SPECIAL ストーリーデータ | [`src/data/specialStories.ts`](../src/data/specialStories.ts) | — | data | — | トップ S6 / SC index で共用 | **データのみ共通化**（コンポーネントは統合せず、`.p-top-special__card` と `.p-special__card` は別構造を維持） |
 
@@ -185,31 +185,36 @@ interface Props {
 
 ---
 
-## C7 IceLinkButton（未実装） — `.c-ice-link`
+## C7 IceLinkButton — `.c-ice-link`
 
 ### Figma
 
 - node：`365:16915`（`LinkButtonIce` symbol, 207×200）
 - 内部：`ice`（24×25、cube 1〜3 の小さな氷ブロック）
 
-### 役割
+### 実装（[src/components/IceLinkButton.astro](../src/components/IceLinkButton.astro)）— 2026-06-11 コンポーネント化（M2-C4）
 
-氷ブロック風の装飾を伴ったリンクボタン。トップページの S2〜S5、Beyond／Team ページのリンク部などで多用されている（はず）。**現状はトップページ側の `_p-top.scss` に個別で書かれており、共通化されていない。**
+氷塊画像（`images/common/link-button-ice.png`）にラベル＋サブラベルを重ねたリンクボタン。スタイルは `object/component/_c-ice-link.scss`（`style.scss` 登録済み）。使用箇所：トップ `/` の S2 Pioneer／S3 Trio×3／S4 ここに決めた！／S5 環境（計 6 個）、`/strategy/` の世界地図 READ MORE ボタン（計 7 個）。
 
-### 予定 Props
+```astro
+interface Props {
+  href: string;
+  label: string;
+  sublabel?: string;       // デフォルト "READ MORE"
+  basePath?: string;       // 氷画像への相対パス基準（デフォルト "./"。下層は "../"）
+  fluid?: boolean;         // cqw 比例の流体サイズ版（container-type のステージ内専用）
+  lazy?: boolean;          // 氷画像を loading="lazy" で読み込む
+  class?: string;          // ページ側の配置クラス（.p-top-trio__button 等）を追加
+  [key: string]: unknown;  // data-inview / style / aria-label などの透過属性
+}
+```
 
-| 名 | 型 | 必須 | 備考 |
-|:--|:--|:--|:--|
-| `href` | `string` | ✅ | 相対パス推奨 |
-| `label` | `string` | ✅ | ボタンのラベル |
-| `sublabel` | `string` | 任意 | デフォルト `READ MORE` |
-| `variant` | `'light' \| 'dark'` | 任意 | デフォルト `'light'` |
+- 当初予定の `variant: 'light' | 'dark'` は実装不要と判明したため廃止し、実態に合わせ `fluid`（トップのステージ内で cqw 拡縮）を採用。
+- strategy の地図用縮小版 **`.c-ice-link--map`** はページ固有のため `object/project/_p-strategy.scss` 側で拡張（`class` プロップで付与）。
 
-### 残タスク（M2-C4）
+### 残タスク
 
-- [ ] トップページの氷ボタンを `IceLinkButton` コンポーネントに抽出。
-- [ ] `_c-ice-link.scss` を `src/scss/object/component/` に新設、`style.scss` に `@use` 登録。
-- [ ] Beyond／Team／Environment／Person の各ページでも同ボタンが使われているかを Figma で確認し、使われていれば差し替え。
+- [ ] Team／Environment／Person の各ページでも同ボタンが使われているかを Figma で確認し、使われていれば差し替え。
 
 ---
 
@@ -324,5 +329,5 @@ public/
 - [ ] ハンバーガー展開時のナビ（`425:1440` 他）の正版を特定し実装。
 - [ ] Footer サイトマップの SPECIAL CONTENTS 3 本の正式タイトルを確認（M5-4）。
 - [ ] BottomCta の Entry 先（`/requirement/` か外部マイページか）をクライアント確認。
-- [ ] IceLinkButton / PersonCard / SpecialStoryCard のコンポーネント化。
+- [ ] SpecialStoryCard のコンポーネント化（IceLinkButton は 2026-06-11、PersonCard は 2026-04-25 に完了）。
 - [ ] Fonts ディレクトリの読み込み設定（`_base.scss` と `public/fonts/`）。

@@ -1,0 +1,49 @@
+---
+// アイスリンクボタン（Figma: LinkButtonIce 207×200, node 365:16915）
+// 氷塊画像 (images/common/link-button-ice.png) にラベル＋サブラベルを重ねたリンク。
+// スタイルは object/component/_c-ice-link.scss（.c-ice-link）。
+interface Props {
+  href: string;
+  label: string;
+  /** ラベル下の英字。省略時 "READ MORE" */
+  sublabel?: string;
+  /** 氷画像への相対パス基準。ページの depth に合わせて渡す（index は "./"） */
+  basePath?: string;
+  /** cqw 比例の流体サイズ版（container-type: inline-size のステージ内専用） */
+  fluid?: boolean;
+  /** 氷画像を loading="lazy" で読み込む */
+  lazy?: boolean;
+  class?: string;
+  /** data-inview / style / aria-label などの透過属性 */
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  label,
+  sublabel = "READ MORE",
+  basePath = "./",
+  fluid = false,
+  lazy = false,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<a
+  class:list={["c-ice-link", { "c-ice-link--fluid": fluid }, className]}
+  href={href}
+  {...rest}
+>
+  <img
+    class="c-ice-link__bg"
+    src={`${basePath}images/common/link-button-ice.png`}
+    alt=""
+    aria-hidden="true"
+    loading={lazy ? "lazy" : undefined}
+  />
+  <span class="c-ice-link__inner">
+    <span class="c-ice-link__label">{label}</span>
+    <span class="c-ice-link__more">{sublabel}</span>
+  </span>
+</a>
