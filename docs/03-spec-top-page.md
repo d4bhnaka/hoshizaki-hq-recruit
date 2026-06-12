@@ -188,4 +188,19 @@ Figma の Y 座標順。スクリーンショット（画像1）と Figma `296:7
 - [ ] S3 の 3 コーポレートナビの配置（グリッド／絶対配置）を Figma の座標から詳細化。
 - [ ] S4 星型マスクの枚数と各画像のトリミング位置を Figma で確定。
 - [ ] S6 出演者 avatar のソース画像（各 SPECIAL CONTENTS ページの avatar と同一か）を確認。
-- [ ] SP 版（`431:1181`）のレイアウト差分を追記。
+- [x] SP 版（`431:1181`）のレイアウト差分を追記。→ 下記「SP 版レイアウト」。**2026-06-12 実装済み**
+
+## SP 版レイアウト（Figma `431:1181` top_sp, 402×4914 — 2026-06-12 実装）
+
+PC と同じ「固定アスペクト比ステージ＋絶対配置(%)＋cqw」方式のまま、`@media (max-width: 960px)` で基準キャンバスを **402px** に切り替える（Figma px ÷ 4.02 = cqw）。どの端末幅でも見た目の比率は変わらない（320/390/768 で検証済み）。実装はすべて [_p-top.scss](../src/scss/object/project/_p-top.scss) の同メディアクエリ内。
+
+| 帯 | Figma y | ステージ | PC との主な違い |
+|:--|:--|:--|:--|
+| S1 Hero | 0–1556 | 402×1556 | ペンギン 5 羽の個別配置 → **一枚画像 `top_penguins.png`**（431:1184 と同構図・既存アセット）。雲は `common/hero-cloud.png`（Group 2184）×2。空グラデは実測 `104.5deg #1081f4→#10aef4`。本文 15px/行送り36px。「さぁ、」(22.78px) は本文直下・CONCEPT MOVIE(30.9px) の上。都市は左右ブリードの全幅（x-21, w450.6）。ムービーは別トリミングのポスター `concept-movie-poster-sp.png`（`<picture>` で切替）＋黒49%オーバーレイ＋白輪郭円・白三角の再生ボタン |
+| S2 PIONEER | 1556–1874 | 402×318 | 見出し 58.1px（Barlow Condensed Light。`BarlowCondensed-Light.woff2` を 2026-06-12 追加）・**#00a0e9**。イラストは `pioneer.png`（同構図・下端揃え全幅）、ボタンは左上 (22,1719) |
+| S3+S4 Trio | 1874–3178 | 402×1304 | `Beyond HOSHIZAKI` → **「世界へ跳べ」**（Noto Light 42.1px）。筆文字 SVG → **テキスト 2 行**（17.2px/24.5px）。英字・テキストは全て **#00a0e9**（`--color-brand-cyan-deep`）。氷キューブは単体画像 `ice_cube_sp.png` ×7（ice 7/10/14/15/16/17/18）。背景に絹布テクスチャ `trio-bg-silk-sp.jpg`（431:4927、CSS グラデマスクで上端フェード近似） |
+| S5 はたらく環境 | 3178–3694 | 402×516 | シアン帯タイトル(23.7px)は写真上の白地、白帯サブ(11.7px)は写真上端に重なる。写真 402×352（既存 jpg を `object-position: 68%` で切り出し）。ボタンは写真右下隅をまたぐ (273,3570) |
+| S6 SPECIAL 以降 | 3694– | — | **未対応**。SpecialContents／BottomCta／Footer は従来の SP スタイルのまま（Figma SP は 280×150 の小型カード案。/special/ ページと共通コンポーネントのため、適用範囲をクライアント確認のうえ別タスクで対応） |
+
+- アイスリンクボタンは Figma では PC コンポーネント 207×200 の **0.449 倍縮小インスタンス（93×90）**。ラベル 6.7px 相当（1.677cqw）＋下線、READ MORE 4.9px 相当。`.p-top` 配下の `--fluid` と env ボタンに適用。
+- SP 専用 DOM（`__penguins-sp` / `__cloud--sp-l/r` / `__silk` / `__cube-sp` / `__ja-beyond` / `__decided-sp`）は PC で `display: none`、PC 専用要素（個別ペンギン・雲 3 つ・PC キューブ・`__en--beyond`・`__decided-lead/koko`）は SP で `display: none`。

@@ -102,6 +102,15 @@ const trioCards = [
           ))
         }
 
+        {/* SP 用ペンギン群（Figma top_sp 431:1184 Group 2379 の一枚画像。PC では非表示） */}
+        <img
+          class="p-top-hero__penguins-sp"
+          src={`${basePath}images/top/top_penguins.png`}
+          alt=""
+          aria-hidden="true"
+        />
+
+
         {/* 本文導入コピー */}
         {/* KV(キャッチコピー)と同じ「白バーで塗ってから抜いて現す」演出を */}
         {/* 行ごとに適用。--body-i は行ごとのディレイ順（0,1,2,…）。 */}
@@ -125,11 +134,18 @@ const trioCards = [
           aria-haspopup="dialog"
           aria-controls="concept-movie-modal"
         >
-          <img
-            class="p-top-hero__movie-poster"
-            src={`${basePath}images/top/concept-movie-poster.png`}
-            alt=""
-          />
+          {/* ポスターは PC / SP でトリミング違いの別画像（Figma top_sp 457:6799） */}
+          <picture>
+            <source
+              media="(max-width: 960px)"
+              srcset={`${basePath}images/top/concept-movie-poster-sp.png`}
+            />
+            <img
+              class="p-top-hero__movie-poster"
+              src={`${basePath}images/top/concept-movie-poster.png`}
+              alt=""
+            />
+          </picture>
           <span class="p-top-hero__movie-overlay"
             >さぁ、その想いを翼に変えて。</span
           >
@@ -169,6 +185,20 @@ const trioCards = [
         <img
           class="p-top-hero__cloud p-top-hero__cloud--right"
           src={`${basePath}images/top/cloud03.png`}
+          alt=""
+          aria-hidden="true"
+        />
+
+        {/* SP 用の雲 2 つ（Figma top_sp 431:2945 / 431:1191 = Group 2184。PC では非表示） */}
+        <img
+          class="p-top-hero__cloud p-top-hero__cloud--sp-l"
+          src={`${basePath}images/common/hero-cloud.png`}
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="p-top-hero__cloud p-top-hero__cloud--sp-r"
+          src={`${basePath}images/common/hero-cloud.png`}
           alt=""
           aria-hidden="true"
         />
@@ -213,6 +243,15 @@ const trioCards = [
       aria-label="ホシザキを知る視点とはたらく人を知る導線"
     >
       <div class="p-top-trio__stage">
+        {/* SP 用の絹布テクスチャ背景（Figma top_sp 431:4925 pixta_115239461。PC では非表示） */}
+        <img
+          class="p-top-trio__silk"
+          src={`${basePath}images/top/trio-bg-silk-sp.jpg`}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+        />
+
         {/* 装飾の氷キューブ（data-parallax: スクロール視差の速度係数） */}
         {
           trioCubeSpeeds.map((speed, idx) => (
@@ -222,6 +261,20 @@ const trioCards = [
               alt=""
               aria-hidden="true"
               data-parallax={speed}
+            />
+          ))
+        }
+
+        {/* SP 用の小さな氷キューブ 7 個（Figma top_sp ice 10/7/14/15/16/17/18。PC では非表示） */}
+        {/* PC 用 ice_cubes_0x.png は 2〜3 個入りのため、単体キューブ画像を使う */}
+        {
+          [1, 2, 3, 4, 5, 6, 7].map((n) => (
+            <img
+              class={`p-top-trio__cube-sp p-top-trio__cube-sp--${n}`}
+              src={`${basePath}images/top/ice_cube_sp.png`}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
             />
           ))
         }
@@ -258,6 +311,12 @@ const trioCards = [
           ))
         }
 
+        {/* SP では Beyond HOSHIZAKI の代わりに「世界へ跳べ」（Figma top_sp 431:4938。PC では非表示） */}
+        {/* PC では display:none なので読み上げが重複することはない */}
+        <p class="p-top-trio__ja-beyond" data-inview style="--inview-i: 1">
+          世界へ跳べ
+        </p>
+
         {/* 先輩たちの「ここに決めた！」 */}
         <img
           class="p-top-trio__img p-top-trio__img--decided"
@@ -276,6 +335,13 @@ const trioCards = [
           data-inview
           style="--inview-i: 2"
         />
+
+        {/* SP では筆文字 SVG ではなくテキスト 2 行（Figma top_sp 431:4974。PC では非表示） */}
+        {/* PC では display:none なので読み上げが重複することはない */}
+        <p class="p-top-trio__decided-sp" data-inview style="--inview-i: 2">
+          <span class="p-top-trio__decided-sp-line1">　先輩たちの</span>
+          <span class="p-top-trio__decided-sp-line2">「ここに決めた！」</span>
+        </p>
         <IceLinkButton
           class="p-top-trio__button p-top-trio__button--decided"
           href={`${basePath}person/`}

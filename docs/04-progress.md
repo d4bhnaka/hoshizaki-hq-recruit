@@ -533,6 +533,16 @@ dist/
 - **メモ**: job/strategy のアセットは 1221×430（= 1600 − x379。キャンバス内の可視域クロップ）だが、1283/430 ボックス＋cover で job と同一レンダリングになるためアセットは変更不要。
 - **検証**: `npm run build` 成功、`data-astro-cid`／インライン style／ルート絶対パス＝全 0。dist を http.server＋Chrome ヘッドレス（1600px）で 4 ページ撮影し、FV 左端が全ページ **x=379** で一致することをピクセル走査で確認。
 
+### 2026-06-12 セッション: トップページ SP レイアウトを Figma top_sp に忠実化
+
+- **指示**: モバイル表示の崩れ（FV ペンギン消失／都市が全幅でない／PIONEER SPIRIT 見切れ／氷山イラストが全幅でない等）を Figma SP 版 `431:1181`（top_sp, 402×4914）どおりに修正。フォント・余白は cqw でコンテナ比率指定し、どの端末幅でも見た目を変えないこと。
+- **実装**: [_p-top.scss](../src/scss/object/project/_p-top.scss) の `≤960px` ブロックを全面書き換え（旧・縦積み簡易レイアウトを廃止）。PC と同じ「固定アスペクト比ステージ＋絶対配置(%)＋cqw」方式で 402px 基準に切替。詳細は [03-spec-top-page.md](./03-spec-top-page.md) の「SP 版レイアウト」を参照。[index.astro](../src/pages/index.astro) に SP 専用要素（ペンギン群一枚画像／雲×2／絹布背景／単体キューブ×7／「世界へ跳べ」／「ここに決めた！」テキスト版／`<picture>` ポスター切替）を追加。
+- **新規アセット**（すべて Figma 書き出し）: `top/concept-movie-poster-sp.png`（SP 用ポスター 2x）／`top/trio-bg-silk-sp.jpg`（絹布テクスチャ 2x）／`top/ice_cube_sp.png`（単体氷キューブ 2x）。既存の `top/top_penguins.png`（未使用だった SP ペンギン群）と `common/hero-cloud.png` を SP で活用。
+- **SP の空グラデ実測**: `get_screenshot` ピクセルの最小二乗フィットで `linear-gradient(104.5deg, #1081f4 0%, #10aef4 100%)`（コード書き出しのハード 2 トーンは PC 同様に誤り）。
+- **検証**: `npm run build` ＋ 禁止事項 grep 全 0。dist を http.server ＋ Chrome ヘッドレス CDP（`Emulation.setDeviceMetricsOverride`）で 320/390/768/1600px 撮影し、Figma レンダと 402px 等倍で並置比較（hero/pioneer/trio/env 一致、PC は無変更を確認）。**注意: ヘッドレス Chrome は `--window-size` 幅 500px 未満を無視するため、500px 未満の検証は CDP のデバイスエミュレーション必須**。
+- **未対応・要確認**: SPECIAL CONTENTS 以降（SpecialContents／BottomCta／Footer）は共通コンポーネントのため未変更（Figma SP は 280×150 の小型カード案。クライアント確認待ち）。
+- **同日追記（クライアント指示反映）**: ①PC の PIONEER 見出し／採用メッセージ／trio 英字／「先輩たちの」を `--color-brand-cyan-deep`(#00a0e9) に統一（Figma と一致。SP 側の重複指定は削除）。②**Barlow Condensed Light(300) を追加** — `fonts/src/BarlowCondensed-Light.ttf`（google/fonts ofl）を取得し woff2 化、`public/css/fonts.css` に @font-face 追記、SP の PIONEER 見出しを weight 300 に変更。`fonts/regenerate.py` も 9 ウェイト対応済みだが、**スキル `~/.claude/skills/webfont-selfhost` が現環境に無く再生成は不可**（今回の woff2 は fontTools+brotli で既存と同仕様＝フルTTF→woff2 変換を直接実施。既存 8 ウェイトとカバレッジ一致を確認済み）。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。

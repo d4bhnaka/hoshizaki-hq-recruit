@@ -423,6 +423,7 @@
     gap: 8px;
   }
 
+  // ラベル（「インターンシップ」「応募はこちら」）はモバイルでも省略せず全文表示する
   .l-header__cta {
     width: auto;
     padding: 0 14px;
@@ -430,12 +431,61 @@
     font-size: 13px;
   }
 
-  .l-header__cta-label {
-    display: none;
-  }
-
   .l-header__menu {
     width: 44px;
     height: 44px;
+  }
+}
+
+// スマホ幅 (Figma 431:1181 top_sp, 402px 基準):
+//   ロゴ 66×53 / CTA 118×30 (#232735, アイス 13.5px, Noto Sans JP Bold ≈10px) / メニュー 30×30
+//   要素間ギャップ ≈6px。ラベル全文をアイコン付きで省略せず表示する。
+// 同じ max-width 系のためファイル末尾に置き、960px ブロックより優先させる。
+@media screen and (max-width: 600px) {
+  .l-header {
+    padding: 11px 11px 0;
+  }
+
+  .l-header__inner {
+    gap: 6px;
+  }
+
+  // ロゴだけ縮小を許可し、360px 級の画面でも CTA 列(固定幅)を押し出さない
+  .l-header__logo {
+    width: 66px;
+    flex-shrink: 1;
+    min-width: 40px;
+  }
+
+  .l-header__actions {
+    margin-top: 0;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .l-header__cta {
+    width: 118px;
+    height: 30px;
+    padding: 0 6px;
+    gap: 5px;
+    font-size: 10px;
+    letter-spacing: 0;
+    white-space: nowrap;
+    text-shadow: 0 -0.276px 4.138px rgba(0, 0, 0, 0.5);
+  }
+
+  .l-header__cta-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .l-header__menu {
+    width: 30px;
+    height: 30px;
+    gap: 5px;
+
+    span {
+      width: 16px;
+    }
   }
 }
