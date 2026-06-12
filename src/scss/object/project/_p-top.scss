@@ -297,38 +297,37 @@
   }
 }
 
-// SP 用ペンギン群 (Figma top_sp 431:1184 Group 2379 を top_penguins.png の一枚画像で再現)。
-// PC では非表示。座標・サイズは ≤960px のメディアクエリ内で指定する。
-.p-top-hero__penguins-sp {
-  display: none;
-  position: absolute;
-  z-index: 6;
-  height: auto;
-  pointer-events: none;
-  user-select: none;
-  filter: drop-shadow(0 1.2cqw 1.6cqw rgba(0, 47, 95, 0.18));
-  // キャッチコピー演出の終盤に重ねて、左下からゆるやかに滑空して現れる
-  animation: p-top-penguins-sp-in 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1.7s both;
-}
-
-@keyframes p-top-penguins-sp-in {
-  from {
+// SP 専用の出現軌道（ap_04 / ap_05 は SP 構図で静的に回転しているため、
+// PC と同じ相対的な動きを回転角に上乗せして、着地後も回転を保つ）。
+@keyframes p-top-penguin-in-4-sp {
+  // 降下＋翼上げ: 左上から滑り込む（-17.96° 基準）。
+  0% {
     opacity: 0;
-    transform: translate(-7%, 4%);
+    transform: translate(-50%, -22%) rotate(-21.5deg);
   }
-  to {
+  100% {
     opacity: 1;
-    transform: translate(0, 0);
+    transform: translate(0, 0) rotate(-17.96deg);
+  }
+}
+@keyframes p-top-penguin-in-5-sp {
+  // 水平な長い滑空: 左から伸びやかに（-5.99° 基準）。
+  0% {
+    opacity: 0;
+    transform: translate(-64%, 10%) rotate(-3.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(-5.99deg);
   }
 }
 
 // アクセシビリティ: 動きを減らす設定では出現アニメを行わず最初から表示。
+// transform は触らない（SP では ap_04 / ap_05 に静的な回転が掛かっている）。
 @media (prefers-reduced-motion: reduce) {
-  .p-top-hero__penguin,
-  .p-top-hero__penguins-sp {
+  .p-top-hero__penguin {
     animation: none;
     opacity: 1;
-    transform: none;
   }
 }
 
@@ -1078,17 +1077,50 @@
     line-height: 1.15; // 92 / 80
   }
 
-  // PC 用の個別ペンギン 5 羽は SP 構図と異なるため非表示
+  // 飛ぶペンギン 5 羽 (Figma 431:1184 Group 2379) — PC と同じ個別出現アニメを
+  // SP 構図の座標で行う。出現順 (--penguin-i) は SP の左の羽から:
+  // ap_04 → ap_05 → ap_02 → ap_03 → ap_01。
   .p-top-hero__penguin {
-    display: none;
-  }
-
-  // SP 用ペンギン群 (Figma 431:1184 x44 y356 w341.9)
-  .p-top-hero__penguins-sp {
-    display: block;
-    left: 10.945%; // 44 / 402
-    top: 22.879%; // 356 / 1556
-    width: 85.052%; // 341.9 / 402
+    // ap_01 (431:1185) x303.82 y466.33 w82.09 — 右側の小さな1羽
+    &--1 {
+      left: 75.577%; // 303.82 / 402
+      top: 29.97%; // 466.33 / 1556
+      width: 20.42%; // 82.09 / 402
+      --penguin-i: 4;
+    }
+    // ap_02 (431:1186) x80.9 y359.39 w100.92
+    &--2 {
+      left: 20.124%; // 80.9 / 402
+      top: 23.097%; // 359.39 / 1556
+      width: 25.104%; // 100.92 / 402
+      --penguin-i: 2;
+    }
+    // ap_03 (431:1187) x241.69 y356 w70.79
+    &--3 {
+      left: 60.122%; // 241.69 / 402
+      top: 22.879%; // 356 / 1556
+      width: 17.61%; // 70.79 / 402
+      --penguin-i: 3;
+    }
+    // ap_04 (431:1188) w94.55 回転 -17.96°（座標は回転前の左上 x56.28 y557.31）
+    &--4 {
+      left: 13.999%; // 56.28 / 402
+      top: 35.817%; // 557.31 / 1556
+      width: 23.521%; // 94.55 / 402
+      transform: rotate(-17.96deg);
+      --penguin-i: 0;
+      animation-name: p-top-penguin-in-4-sp;
+    }
+    // ap_05 (431:1189) w230.24 回転 -5.99° — SP のメイン大ペンギン
+    //（座標は回転前の左上 x67.82 y379.44）
+    &--5 {
+      left: 16.87%; // 67.82 / 402
+      top: 24.386%; // 379.44 / 1556
+      width: 57.273%; // 230.24 / 402
+      transform: rotate(-5.99deg);
+      --penguin-i: 1;
+      animation-name: p-top-penguin-in-5-sp;
+    }
   }
 
   // PC 用の雲 3 つは SP 構図と異なるため非表示
@@ -1146,9 +1178,9 @@
     font-size: 7.691cqw; // 30.92 / 4.02
   }
 
-  // 都市イラスト (Figma 431:4718 x-21 w450.6) — 左右に少しブリードする全幅配置
+  // 都市イラスト (Figma 431:4718 w450.6) — 左端基準で右に少しブリードする全幅配置
   .p-top-hero__city {
-    left: -5.224%; // -21 / 402
+    left: 0;
     width: 112.09%; // 450.6 / 402
   }
 

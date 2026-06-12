@@ -102,15 +102,6 @@ const trioCards = [
           ))
         }
 
-        {/* SP 用ペンギン群（Figma top_sp 431:1184 Group 2379 の一枚画像。PC では非表示） */}
-        <img
-          class="p-top-hero__penguins-sp"
-          src={`${basePath}images/top/top_penguins.png`}
-          alt=""
-          aria-hidden="true"
-        />
-
-
         {/* 本文導入コピー */}
         {/* KV(キャッチコピー)と同じ「白バーで塗ってから抜いて現す」演出を */}
         {/* 行ごとに適用。--body-i は行ごとのディレイ順（0,1,2,…）。 */}
@@ -134,18 +125,11 @@ const trioCards = [
           aria-haspopup="dialog"
           aria-controls="concept-movie-modal"
         >
-          {/* ポスターは PC / SP でトリミング違いの別画像（Figma top_sp 457:6799） */}
-          <picture>
-            <source
-              media="(max-width: 960px)"
-              srcset={`${basePath}images/top/concept-movie-poster-sp.png`}
-            />
-            <img
-              class="p-top-hero__movie-poster"
-              src={`${basePath}images/top/concept-movie-poster.png`}
-              alt=""
-            />
-          </picture>
+          <img
+            class="p-top-hero__movie-poster"
+            src={`${basePath}images/top/concept-movie-poster.png`}
+            alt=""
+          />
           <span class="p-top-hero__movie-overlay"
             >さぁ、その想いを翼に変えて。</span
           >
