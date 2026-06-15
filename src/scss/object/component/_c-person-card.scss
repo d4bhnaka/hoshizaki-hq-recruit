@@ -109,8 +109,8 @@ a.c-person-card:hover {
 
 .c-person-card__text {
   margin: 0;
-  // Figma 24px Noto Bold (318px card) — fluid so it tracks the card width
-  font-size: clamp(18px, 1.5vw, 24px);
+  // Figma 20px Noto Bold (318px card) — fluid so it tracks the card width
+  font-size: clamp(18px, 1.5vw, 20px);
   font-weight: 700;
   line-height: 1.46;
   letter-spacing: 0.01em;
