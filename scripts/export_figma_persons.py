@@ -2,7 +2,7 @@
 """
 Figma → public/images/person/personNN.jpg 書き出しスクリプト（角丸なし・フルブリード）
 
-Person 一覧ページ (Figma node 836:2220 "05_person") の 15 枚の PersonCard
+Person 一覧ページ (Figma node 978:2031 "05_person") の 15 枚の PersonCard
 写真を、**角丸クロップしない**フラットな長方形 JPEG @2x（= 608×376px）として
 書き出す。
 
@@ -24,9 +24,14 @@ Person 一覧ページ (Figma node 836:2220 "05_person") の 15 枚の PersonCar
   画像本体は 1.（正規レンダリング）が 100% 担う。背景は四隅のぼかし部分を
   埋めるだけなので継ぎ目は実質生じない。
 
+トークンの読み取り順（いずれか）:
+    1. 環境変数 FIGMA_TOKEN / FIGMA_ACCESS_TOKEN
+    2. プロジェクト直下 .env の FIGMA_ACCESS_TOKEN= / FIGMA_TOKEN=（gitignore済）
+    3. プロジェクト直下 .figma_token（gitignore済）
+
 使い方:
-    export FIGMA_TOKEN=figd_xxxx      # or プロジェクト直下 .figma_token (gitignore済)
-    python3 scripts/export_figma_persons.py
+    python3 scripts/export_figma_persons.py          # 全 15 枚
+    python3 scripts/export_figma_persons.py 8 13     # person 番号を指定（その枚のみ）
 """
 
 import os
@@ -44,35 +49,49 @@ FILE_KEY = "Q5PQirN5wGl9c1AqJJHZBt"
 SCALE = 2
 JPEG_QUALITY = 90
 
-# person 番号 → (写真ノード, 背景レイヤーノード child[1])
-# Figma metadata (836:2220) 解析で確定。写真ノードは見出しテキストを
-# person.astro の people[] と突き合わせてマッピング。
+# person 番号（掲載順 = Figma 978:2031 のグリッド順）→ (写真ノード, 背景レイヤーノード child[1])
+# Figma metadata (978:2031 "05_person") 解析で確定。各 PersonCard_NN 内の写真
+# "Mask group" を見出しテキストで person.astro の people[] と突合してマッピング。
+# ※ 旧 836:2220 から並び替えられ、写真ノード ID は同一のまま person スロットが
+#    入れ替わっている（例: 837:4553 は旧 person1 → 現 person8、どちらも野村健人）。
 NODES = {
-    1:  ("837:4553", "837:4555"),
-    2:  ("837:4569", "837:4571"),
-    3:  ("837:4585", "837:4587"),
-    4:  ("837:4601", "837:4603"),
-    5:  ("837:4665", "837:4667"),
-    6:  ("837:4697", "837:4699"),
-    7:  ("837:4745", "837:4747"),
-    8:  ("837:4649", "837:4651"),
-    9:  ("837:4617", "837:4619"),
-    10: ("837:4681", "837:4683"),
-    11: ("837:4729", "837:4731"),
-    12: ("837:4777", "837:4779"),
-    13: ("837:4633", "837:4635"),
-    14: ("837:4713", "837:4715"),
-    15: ("837:4761", "837:4763"),
+    1:  ("837:4681", "837:4683"),  # 横山千穂  これはお母さんが作った製品だよ
+    2:  ("837:4665", "837:4667"),  # 山本凌大  確かな土台の上で
+    3:  ("837:4697", "837:4699"),  # 古田彰謙  挑戦できる環境で
+    4:  ("837:4601", "837:4603"),  # 佐々琢磨  暮らしの安心を
+    5:  ("837:4585", "837:4587"),  # 南潤哉    「食」を支える
+    6:  ("837:4649", "837:4651"),  # 勝部葵    島根から世界へ
+    7:  ("837:4745", "837:4747"),  # 武田大地  地元・島根に
+    8:  ("837:4553", "837:4555"),  # 野村健人  地元で、世界で
+    9:  ("837:4617", "837:4619"),  # 山根一眞  安定した会社で
+    10: ("837:4569", "837:4571"),  # 加藤圭二  自分の仕事が
+    11: ("837:4633", "837:4635"),  # 山羽紗由  この人たちと働きたい
+    12: ("837:4713", "837:4715"),  # 東龍吾    海外市場のさらなる拡大
+    13: ("837:4761", "837:4763"),  # 呉瑋芳    限界を決めない
+    14: ("837:4777", "837:4779"),  # 冨江圭佑  人を支える仕事で
+    15: ("837:4729", "837:4731"),  # 河村真由  語学を武器に
 }
 
 OUT_DIR = Path(__file__).resolve().parent.parent / "public" / "images" / "person"
 
 
 def read_token() -> str | None:
-    tok = os.environ.get("FIGMA_TOKEN")
-    if tok:
-        return tok.strip()
-    f = Path(__file__).resolve().parent.parent / ".figma_token"
+    # 1) 環境変数（FIGMA_TOKEN / FIGMA_ACCESS_TOKEN）
+    for var in ("FIGMA_TOKEN", "FIGMA_ACCESS_TOKEN"):
+        tok = os.environ.get(var)
+        if tok:
+            return tok.strip()
+    root = Path(__file__).resolve().parent.parent
+    # 2) プロジェクト直下 .env の FIGMA_ACCESS_TOKEN / FIGMA_TOKEN（gitignore済）
+    env = root / ".env"
+    if env.exists():
+        import re
+        for line in env.read_text(encoding="utf-8").splitlines():
+            m = re.match(r"\s*(?:export\s+)?(FIGMA_ACCESS_TOKEN|FIGMA_TOKEN)\s*=\s*(.+)", line)
+            if m:
+                return m.group(2).strip().strip('"').strip("'")
+    # 3) .figma_token ファイル（gitignore済）
+    f = root / ".figma_token"
     if f.exists():
         return f.read_text(encoding="utf-8").strip()
     return None
@@ -213,10 +232,27 @@ def main() -> int:
               file=sys.stderr)
         return 2
 
+    # 任意: 引数で person 番号を指定すると、その番号だけ書き出す（例: `... 8 13`）。
+    # 無指定なら全 15 枚。一部のカードだけ Figma で差し替わった場合に使う。
+    if len(sys.argv) > 1:
+        try:
+            want = sorted({int(a) for a in sys.argv[1:]})
+        except ValueError:
+            print(f"ERROR: person 番号は整数で指定してください: {sys.argv[1:]}", file=sys.stderr)
+            return 2
+        unknown = [n for n in want if n not in NODES]
+        if unknown:
+            print(f"ERROR: 未知の person 番号 {unknown}（指定可: 1〜15）", file=sys.stderr)
+            return 2
+        targets = {n: NODES[n] for n in want}
+        print(f"対象: person {want}（指定された {len(want)} 枚のみ書き出し）")
+    else:
+        targets = dict(NODES)
+
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    photo_ids = [p for p, _ in NODES.values()]
-    bg_ids = [b for _, b in NODES.values()]
+    photo_ids = [p for p, _ in targets.values()]
+    bg_ids = [b for _, b in targets.values()]
     all_ids = photo_ids + bg_ids
 
     print(f"[1/3] bounds 取得 ({len(all_ids)} ノード) ...")
@@ -235,8 +271,8 @@ def main() -> int:
 
     print(f"[3/3] 合成 → 切り出し → JPEG 保存 → {OUT_DIR}")
     ok = 0
-    for num in sorted(NODES):
-        photo_id, bg_id = NODES[num]
+    for num in sorted(targets):
+        photo_id, bg_id = targets[num]
         win = bounds[photo_id]["bbox"]  # 切り出し窓 = 角丸マスク矩形 (304×188)
         tw, th = round(win["width"] * SCALE), round(win["height"] * SCALE)
 
@@ -261,8 +297,8 @@ def main() -> int:
         print(f"  person{num:02d}.jpg  ✓  {tw}x{th}  {dest.stat().st_size:,} bytes")
         ok += 1
 
-    print(f"\n完了: {ok}/{len(NODES)} 枚（角丸なし・フラット）を書き出しました。")
-    return 0 if ok == len(NODES) else 1
+    print(f"\n完了: {ok}/{len(targets)} 枚（角丸なし・フラット）を書き出しました。")
+    return 0 if ok == len(targets) else 1
 
 
 if __name__ == "__main__":

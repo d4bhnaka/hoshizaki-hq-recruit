@@ -35,3 +35,6 @@ pnpm-debug.log*
 
 # Python bytecode cache
 __pycache__/
+
+# Basic auth password file (never commit)
+.htpasswd
