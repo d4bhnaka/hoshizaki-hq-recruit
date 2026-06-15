@@ -19,7 +19,10 @@ const {
   jaSize = "md",
 } = Astro.props;
 
-const style = bg ? `--page-hero-bg: url('${bg}');` : undefined;
+// 背景画像は直接 background-image で指定する（HTMLドキュメント基準で相対解決され、
+// サブディレクトリ配置でもパスが繋がる）。var() 経由だと外部 style.css 基準で解決され、
+// サブディレクトリでパスがずれるため避ける。
+const style = bg ? `background-image: url('${bg}');` : undefined;
 ---
 
 <section

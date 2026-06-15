@@ -49,7 +49,12 @@
   width: 100%;
   aspect-ratio: var(--bg-aspect);
   margin-top: var(--band-h);
-  background: var(--person-bg) center center / cover no-repeat;
+  // background-image は [slug].astro のインラインスタイルで指定する。
+  // ここで background ショートハンドを使うとインラインの画像指定を打ち消すため、
+  // 位置・サイズ・繰り返しのみを longhand で指定する。
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 // ステージ上に人物を重ねる枠（コンテンツと同じ max-width で中央寄せ）

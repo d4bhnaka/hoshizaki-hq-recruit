@@ -97,8 +97,9 @@
   font-size: clamp(18px, 2.1vw, 30px);
 }
 
+// background-image は PageHero.astro のインラインスタイルで指定する（var() 経由は
+// 外部 style.css 基準で相対解決されサブディレクトリでパスがずれるため避ける）。
 .c-page-hero--has-bg {
-  background-image: var(--page-hero-bg);
   background-size: cover;
   background-position: center;
 }

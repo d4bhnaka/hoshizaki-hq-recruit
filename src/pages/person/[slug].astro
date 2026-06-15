@@ -38,12 +38,19 @@ const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.png$/i, ".j
       <article class="p-person-detail">
         <div
           class="p-person-detail__inner"
-          style={`--person-bg: url(${base}images/person/${bgImage}); --photo-w: ${person.photoWidth}px`}
+          style={`--photo-w: ${person.photoWidth}px`}
         >
           <!-- Sticky full-bleed visual: blue band + 横幅いっぱいの背景写真 + 人物切り抜き。
                人物は背景写真の下端に合わせ、頭が背景写真の上端より少し上にはみ出す。 -->
           <div class="p-person-detail__stage">
-            <div class="p-person-detail__bg"></div>
+            <!-- 背景写真は直接インラインの background-image で指定する（HTMLドキュメント基準で
+                 相対解決されるため、サブディレクトリ配置でもパスが正しく繋がる）。
+                 CSS カスタムプロパティ経由（var()）だと外部 style.css 基準で解決され、
+                 サブディレクトリ配置でパスがずれて 404 になるため避ける。 -->
+            <div
+              class="p-person-detail__bg"
+              style={`background-image: url(${base}images/person/${bgImage})`}
+            ></div>
             <div class="p-person-detail__stage-inner">
               <figure class="p-person-detail__photo">
                 <img
