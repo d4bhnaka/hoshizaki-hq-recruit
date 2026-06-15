@@ -5,6 +5,7 @@ import Footer from "../../components/Footer.astro";
 import BottomCta from "../../components/BottomCta.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import { personDetails } from "../../data/personDetails";
+import { persons, entryLabel } from "../../data/persons";
 
 export function getStaticPaths() {
   return personDetails.map((person) => ({
@@ -16,6 +17,11 @@ export function getStaticPaths() {
 const base = "../../";
 const { person } = Astro.props;
 const titleText = person.title.join("");
+
+// 職種・入社年は一覧データ（persons.ts）を正とし、slug で突き合わせる。
+const card = persons.find((p) => p.slug === person.slug);
+const jobType = card?.jobType ?? "";
+const entry = card ? entryLabel(card) : "";
 // 背景写真は人物切り抜き（person.photo: 例 "p09.png"）のフレーム番号と対応させる。
 // 例: p09.png → p-bg-09.jpg（slug ではなく Figma フレーム番号で対応）。
 const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.png$/i, ".jpg");
@@ -23,8 +29,8 @@ const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.png$/i, ".j
 
 <Layout
   basePath={base}
-  title={`${person.initials}／${person.dept}｜はたらく人を知る｜ホシザキ本社採用サイト`}
-  description={`ホシザキ本社の先輩社員インタビュー。${person.dept}・${person.year}の${person.initials}が語る「${titleText}」｜入社理由とやりがい、これからの目標。`}
+  title={`${person.initials}／${jobType}｜はたらく人を知る｜ホシザキ本社採用サイト`}
+  description={`ホシザキ本社の先輩社員インタビュー。${jobType}・${entry}の${person.initials}が語る「${titleText}」｜入社理由とやりがい、これからの目標。`}
 >
   <div class="l-container">
     <Header basePath={base} />
@@ -67,8 +73,8 @@ const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.png$/i, ".j
 
                 <div class="p-person-detail__meta">
                   <span class="p-person-detail__meta-name">{person.initials}</span>
-                  <span class="p-person-detail__meta-item">{person.dept}</span>
-                  <span class="p-person-detail__meta-item">{person.year}</span>
+                  <span class="p-person-detail__meta-item">{jobType}</span>
+                  <span class="p-person-detail__meta-item">{entry}</span>
                   {person.faculty && (
                     <span class="p-person-detail__meta-item">{person.faculty}</span>
                   )}

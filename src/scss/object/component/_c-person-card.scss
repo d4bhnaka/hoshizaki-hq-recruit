@@ -66,6 +66,47 @@ a.c-person-card:hover {
   padding: 20px 18px 22px;
 }
 
+// --------------------------------------------
+// Meta row : 職種 (left) + 入社年バッジ (right)
+// Figma 837:4547 — 写真とキャッチコピーの間に置く
+// --------------------------------------------
+.c-person-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 8px;
+  margin-bottom: 12px;
+}
+
+.c-person-card__job {
+  min-width: 0;
+  // 職種は1行で表示。狭い2カラム時は折り返さず、代わりにバッジが下段へ回る。
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  // Figma #0177fe（カテゴリの cyan-deep とは別の青）
+  color: var(--color-brand-primary);
+}
+
+.c-person-card__badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background: var(--color-brand-primary);
+  color: var(--color-white);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
 .c-person-card__text {
   margin: 0;
   // Figma 24px Noto Bold (318px card) — fluid so it tracks the card width

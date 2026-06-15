@@ -1,14 +1,19 @@
 ---
 interface Props {
   image: string;
+  /** 職種（メタ行・左）。例「生産管理」 */
+  jobType: string;
+  /** 入社年バッジ（メタ行・右）。例「2024年 新卒入社」 */
+  entry: string;
   body: string;
-  department: string;
+  /** カード左下のカテゴリタグ。例「技術系」 */
+  category: string;
   /** When omitted, the card renders as a non-interactive <article>
    *  (個別詳細ページが未確定のため一覧ページではリンクなし). */
   href?: string;
 }
 
-const { image, body, department, href } = Astro.props;
+const { image, jobType, entry, body, category, href } = Astro.props;
 
 const bodyLines = body.split("／");
 const Tag = href ? "a" : "article";
@@ -24,6 +29,10 @@ const Tag = href ? "a" : "article";
     />
   </figure>
   <div class="c-person-card__body">
+    <div class="c-person-card__meta">
+      <span class="c-person-card__job">{jobType}</span>
+      <span class="c-person-card__badge">{entry}</span>
+    </div>
     <p class="c-person-card__text">
       {
         bodyLines.map((line, i) => (
@@ -35,7 +44,7 @@ const Tag = href ? "a" : "article";
       }
     </p>
     <div class="c-person-card__footer">
-      <span class="c-person-card__tag">{department}</span>
+      <span class="c-person-card__tag">{category}</span>
       <svg
         class="c-person-card__chevron"
         viewBox="0 0 320 512"

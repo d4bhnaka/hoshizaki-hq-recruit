@@ -24,10 +24,6 @@ export interface PersonDetail {
   slug: string;
   /** 表示用イニシャル */
   initials: string;
-  /** 所属部署 */
-  dept: string;
-  /** 入社年（"2024年入社"） */
-  year: string;
   /** 出身学部（Figma 表記「◯◯学部卒」）。空文字なら非表示 */
   faculty: string;
   /** キャッチコピー（改行ごとに配列要素） */
@@ -44,8 +40,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "01",
     initials: "Y.C",
-    dept: "設計部",
-    year: "2014年入社",
     faculty: "工学部卒",
     title: ["「これはお母さんが", "作った製品だよ」と", "言える仕事。"],
     photo: "p07.png",
@@ -87,8 +81,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "02",
     initials: "Y.R",
-    dept: "開発部",
-    year: "2017年入社",
     faculty: "工学研究科卒",
     title: ["確かな土台の上で、", "まだ誰もやっていない", "ことに挑む。"],
     photo: "p05.png",
@@ -126,8 +118,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "03",
     initials: "F.S",
-    dept: "生産技術部",
-    year: "2024年入社",
     faculty: "理工学部卒",
     title: ["挑戦できる環境で、", "ものづくりを", "支える人になる。"],
     photo: "p06.png",
@@ -172,8 +162,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "04",
     initials: "S.T",
-    dept: "品質保証部",
-    year: "2022年 中途入社",
     faculty: "工学研究科卒",
     title: ["暮らしの安心を、", "品質で守る。"],
     photo: "p04.png",
@@ -216,8 +204,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "05",
     initials: "M.J",
-    dept: "情報システム部",
-    year: "2025年入社",
     faculty: "都市情報学部卒",
     title: ["「食」を支える、", "世界で挑み続ける", "強固な企業へ"],
     photo: "p03.png",
@@ -260,8 +246,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "06",
     initials: "K.A",
-    dept: "生産技術部",
-    year: "2024年入社",
     faculty: "情報工学科卒",
     title: ["島根から世界へ。", "ものづくりで", "未来をつくる"],
     photo: "p14.png",
@@ -301,8 +285,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "07",
     initials: "T.D",
-    dept: "品質保証部",
-    year: "2020年入社",
     faculty: "機械工学科卒",
     title: ["地元・島根に", "貢献したい想いが", "私の原点。"],
     photo: "p13.png",
@@ -342,8 +324,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "08",
     initials: "N.K",
-    dept: "生産管理部",
-    year: "2024年入社",
     faculty: "理工学部卒",
     title: ["地元で、世界で。", "長く働ける", "会社を選んだ。"],
     photo: "p01.png",
@@ -385,8 +365,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "09",
     initials: "Y.K",
-    dept: "生産管理部",
-    year: "2024年 中途入社",
     faculty: "",
     title: ["安定供給で、", "お客様の期待に応える。"],
     photo: "p15.png",
@@ -429,8 +407,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "10",
     initials: "K.K",
-    dept: "購買部",
-    year: "2020年入社",
     faculty: "工学部卒",
     title: ["自分の仕事が、", "暮らしの中で、", "形になる。"],
     photo: "p02.png",
@@ -473,8 +449,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "11",
     initials: "Y.S",
-    dept: "製品販売促進部",
-    year: "2025年入社",
     faculty: "法学部卒",
     title: ["この人たちと働きたい。", "そう思えた会社。"],
     photo: "p10.png",
@@ -511,8 +485,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "12",
     initials: "H.R",
-    dept: "海外事業部",
-    year: "2016年入社",
     faculty: "文学部卒",
     title: ["海外事業のさらなる拡大。", "そのミッションを", "実現へ導く。"],
     photo: "p11.png",
@@ -549,8 +521,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "13",
     initials: "W.W",
-    dept: "海外グループ管理部",
-    year: "2025年 中途入社",
     faculty: "語学部卒",
     title: ["限界を決めない。", "挑戦が私の", "世界を広げる。"],
     photo: "p12.png",
@@ -588,8 +558,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "14",
     initials: "T.K",
-    dept: "人事部",
-    year: "2010年入社",
     faculty: "体育学科卒",
     title: ["人を支える仕事で、", "信頼される存在に。"],
     photo: "p09.png",
@@ -626,8 +594,6 @@ export const personDetails: PersonDetail[] = [
   {
     slug: "15",
     initials: "K.M",
-    dept: "経理部",
-    year: "2022年入社",
     faculty: "外国語学部卒",
     title: ["語学を武器に、", "世界No.1へ挑む", "会社を選んだ。"],
     photo: "p08.png",
