@@ -67,7 +67,7 @@
   }
 
   // --------------------------------------------
-  // Header: 200px 以上スクロールで背景ぼかし（backdrop-filter）を切替
+  // Header: 200px 以上スクロールで .is-scrolled を付与（CSS 側でロゴを 80% に縮小）
   // --------------------------------------------
   function initHeaderScroll() {
     var header = document.querySelector(".l-header");

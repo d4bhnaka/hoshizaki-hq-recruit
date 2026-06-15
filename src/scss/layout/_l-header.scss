@@ -20,29 +20,6 @@
   color: var(--color-text-primary);
 }
 
-// 背景ぼかし層（全幅・ヘッダー内容の背面）。
-// backdrop-filter を .l-header 本体に置くと、position:fixed の子であるドロワーの
-// 包含ブロックが .l-header になり全画面オーバーレイが壊れる（CSS 仕様）。
-// そのため専用の ::before に分離する（ドロワーは ::before の子ではないため無影響）。
-// 200px 以上スクロールで JS が .is-scrolled を付与 → blur(0)→blur(5px) を transition で切替。
-.l-header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  backdrop-filter: blur(0);
-  -webkit-backdrop-filter: blur(0);
-  transition:
-    backdrop-filter var(--transition-base),
-    -webkit-backdrop-filter var(--transition-base);
-}
-
-.l-header.is-scrolled::before {
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-}
-
 .l-header__inner {
   display: flex;
   align-items: flex-start;
@@ -56,11 +33,20 @@
   align-items: center;
   width: 135px;
   flex-shrink: 0;
+  // 200px 以上スクロールで JS が .is-scrolled を付与 → ロゴを 60% に縮小（左上基点）。
+  // transform はレイアウトに影響しないため、CTA 列（margin-left:auto）の位置は不変。
+  // ゆっくり滑らかに効かせるため、専用に長め（0.8s）＆イーズアウト寄りのカーブを指定。
+  transform-origin: left top;
+  transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 
   img {
     width: 100%;
     height: auto;
   }
+}
+
+.l-header.is-scrolled .l-header__logo {
+  transform: scale(0.6);
 }
 
 .l-header__logo-fallback {
