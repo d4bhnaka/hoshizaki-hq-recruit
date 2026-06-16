@@ -81,6 +81,20 @@
   }
 }
 
+.l-footer__link--external {
+  // ラベルとアイコンを 1 行に揃え、アイコンを縦中央に配置する
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.l-footer__external-icon {
+  // ラベル右に外部リンクアイコンを 12×12 で添える
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+}
+
 .l-footer__wordmark {
   // ナビ最下行から 64px 下げてワードマーク上端 y=377 に合わせる
   margin: 64px 0 0;

@@ -31,9 +31,15 @@ const columns: FooterColumn[] = [
   {
     heading: { href: `${basePath}special/`, label: "SPECIAL CONTENTS" },
     items: [
-      { href: `${basePath}special/crosstalk/`, label: "クロストーク - 若手が語るはたらく環境" },
+      {
+        href: `${basePath}special/crosstalk/`,
+        label: "クロストーク - 若手が語るはたらく環境",
+      },
       { href: `${basePath}special/project/`, label: "プロジェクトストーリー" },
-      { href: `${basePath}special/special-talk/`, label: "スペシャルトーク - ホシザキの技術と未来" },
+      {
+        href: `${basePath}special/special-talk/`,
+        label: "スペシャルトーク - ホシザキの技術と未来",
+      },
     ],
   },
   {
@@ -42,7 +48,11 @@ const columns: FooterColumn[] = [
       { href: `${basePath}environment/`, label: "はたらく環境を知る" },
       { href: `${basePath}requirement/`, label: "募集要項" },
       { href: `${basePath}internship/`, label: "インターンシップ情報" },
-      { href: "https://www.hoshizaki.co.jp/", label: "ホシザキ企業サイト", external: true },
+      {
+        href: "https://www.hoshizaki.co.jp/",
+        label: "ホシザキ企業サイト",
+        external: true,
+      },
     ],
   },
 ];
@@ -73,11 +83,25 @@ const columns: FooterColumn[] = [
                 {column.items.map((item) => (
                   <li>
                     <a
-                      class="l-footer__link"
+                      class:list={[
+                        "l-footer__link",
+                        { "l-footer__link--external": item.external },
+                      ]}
                       href={item.href}
-                      {...(item.external ? { target: "_blank", rel: "noopener" } : {})}
+                      {...(item.external
+                        ? { target: "_blank", rel: "noopener" }
+                        : {})}
                     >
                       {item.label}
+                      {item.external && (
+                        <img
+                          class="l-footer__external-icon"
+                          src={`${basePath}images/common/external-link.svg`}
+                          alt="（外部サイト）"
+                          width="12"
+                          height="12"
+                        />
+                      )}
                     </a>
                   </li>
                 ))}
