@@ -96,8 +96,9 @@
 
 .c-stat-card__num {
   // DIN Condensed の代替として既読み込みの Barlow Condensed を使用
+  // weight 500（Medium）= Figma の DIN Condensed の見た目に合わせた中字
   font-family: var(--font-family-en);
-  font-weight: 700;
+  font-weight: 500;
   font-size: clamp(60px, 7.6vw, 112px);
   line-height: 0.86;
   letter-spacing: 0.005em;
@@ -114,18 +115,6 @@
   margin-bottom: 0.4em;
   font-size: clamp(12px, 1.1vw, 16px);
   font-weight: 500;
-}
-
-// 単位「回」を四角枠で囲む（受賞歴）
-.c-stat-card__unit--boxed {
-  align-self: center;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.7em;
-  height: 1.7em;
-  font-size: clamp(20px, 2vw, 30px);
-  border: 2px solid var(--stat-ink);
 }
 
 // 大きい「％」
@@ -200,19 +189,30 @@
 .c-stat-card--history .c-stat-card__bg {
   width: clamp(120px, 38%, 200px);
   height: auto;
-  inset: auto 6% auto auto;
-  top: 14%;
+  inset: 3% 4% auto auto; // Figma: 時計はカード右上端付近
   opacity: 1; // svg 自体が淡色
 }
 .c-stat-card--history .c-stat-card__num {
   font-size: clamp(64px, 8vw, 116px);
 }
 
-// 受賞歴：月桂冠を中央背面（opacity 0.35）
+// 受賞歴：月桂冠を中央背面。Figma はカード幅いっぱい近くまで大きく、「15」が冠の中に収まる
 .c-stat-card--award .c-stat-card__bg {
-  width: 74%;
-  height: 70%;
-  opacity: 0.35;
+  width: 88%;
+  height: 80%;
+  opacity: 0.42;
+}
+// Figma: 「受賞回数」を上部へ、「15」を月桂冠の中心に重ねる
+.c-stat-card--award .c-stat-card__main {
+  justify-content: center; // 15 を冠の中心に
+}
+.c-stat-card--award .c-stat-card__sub {
+  position: absolute;
+  top: clamp(56px, 13%, 96px);
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  white-space: nowrap;
 }
 .c-stat-card--award .c-stat-card__num {
   font-size: clamp(80px, 11vw, 168px);
@@ -222,10 +222,10 @@
 .c-stat-card--share .c-stat-card__bg {
   inset: auto 0 5% 0;
   margin-inline: auto;
-  width: 54%;
-  height: 70%;
+  width: 62%;
+  height: 78%;
   object-position: bottom;
-  opacity: 0.2;
+  opacity: 0.16;
 }
 .c-stat-card__crown {
   display: block;
@@ -282,7 +282,7 @@
   justify-content: center;
   gap: clamp(2px, 0.6vw, 8px);
   padding: 0 6%;
-  opacity: 0.2;
+  opacity: 0.16;
   pointer-events: none;
 
   img {

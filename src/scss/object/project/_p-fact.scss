@@ -37,15 +37,20 @@
 // Intro copy
 // --------------------------------------------
 .p-fact__intro {
-  padding: clamp(48px, 6vw, 76px) clamp(20px, 5vw, 40px) clamp(20px, 3vw, 32px);
+  // PageHero に下余白96pxが既にあるので上余白は最小化し、Figma の FV→本文 ≈79px に合わせる
+  margin-top: clamp(-16px, -1vw, -8px);
+  padding: 0 clamp(20px, 5vw, 40px) clamp(20px, 3vw, 32px);
 }
 
 .p-fact__intro-text {
+  // Figma: 本文は左寄せ。ブロック左端を FV（ヒーロー）の左端 x317 に合わせる
+  // 各文を1行に収める（Figma は3文=3行）ため幅は最長文(約1101px)に合わせる
   max-width: 1120px;
-  margin: 0 auto;
-  font-size: clamp(14px, 1.2vw, 16px);
-  line-height: 2.1;
-  text-align: center;
+  margin-left: clamp(0px, 18vw, 277px);
+  margin-right: auto;
+  font-size: clamp(15px, 1.3vw, 18px); // Figma 18px
+  line-height: 2;
+  text-align: left;
   color: var(--color-text-primary);
 }
 
@@ -73,27 +78,28 @@
 .p-fact__heading-title {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 0 0 10px;
-  font-size: clamp(20px, 2.4vw, 30px);
+  gap: clamp(6px, 0.8vw, 10px);
+  margin: 0 0 12px;
+  font-size: clamp(19px, 2.1vw, 26px); // Figma 実測 ≈26px
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--color-text-primary);
 }
 
+// Figma: 見出しの 3D キューブアイコン（淡いブルーの立方体）
 .p-fact__heading-mark {
   flex-shrink: 0;
-  width: 15px;
-  height: 15px;
-  background: var(--color-brand-cyan-deep);
-  transform: rotate(45deg);
+  width: clamp(38px, 3.4vw, 47px);
+  height: auto;
+  display: block;
 }
 
 .p-fact__heading-note {
   margin: 0;
-  padding-left: 27px;
-  font-size: clamp(13px, 1.2vw, 15px);
-  color: var(--color-text-secondary);
+  padding-left: clamp(8px, 3vw, 36px); // Figma: 本文を x152（カード左 +36px）から
+  font-size: clamp(14px, 1.3vw, 18px); // Figma 18px
+  line-height: 2;
+  color: var(--color-text-primary);
 }
 
 // --------------------------------------------
@@ -193,6 +199,7 @@
     grid-column: 1 / -1;
   }
   .p-fact__intro-text {
+    margin-left: 0;
     text-align: left;
   }
 }
