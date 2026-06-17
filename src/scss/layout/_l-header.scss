@@ -18,6 +18,10 @@
   z-index: 20;
   padding: 16px 16px 0;
   color: var(--color-text-primary);
+  // ヘッダー帯は全幅で固定されるが、ロゴと CTA の「間の透明領域」は
+  // 下のメインコンテンツのクリックを妨げないよう、ここでは pointer-events を切る。
+  // 実際に操作する要素（ロゴ／CTA／メニュー／ドロワー）だけ個別に auto で復活させる。
+  pointer-events: none;
 }
 
 .l-header__inner {
@@ -26,6 +30,15 @@
   gap: 16px;
   max-width: var(--page-max-width);
   margin: 0 auto;
+  // 透明なフレックスコンテナ自体はクリックを透過させる（子要素で個別に復活）。
+  pointer-events: none;
+}
+
+// ロゴと CTA 列は実体のある操作要素なのでクリックを受け付ける。
+// （ドロワー .l-drawer は開閉状態に応じて自前で pointer-events を切替えるため対象外）
+.l-header__logo,
+.l-header__actions {
+  pointer-events: auto;
 }
 
 .l-header__logo {
@@ -367,6 +380,46 @@
   position: relative;
 }
 
+// スペシャルコンテンツ配下の子リンク。親ラベルの下にインデントして並べる。
+// アイコン用ガター(32px) + gap(10px) ぶん字下げして親ラベル位置に揃える。
+.l-drawer__sublist {
+  list-style: none;
+  margin: 0.9em 0 0;
+  padding: 0 0 0 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+
+.l-drawer__sublink {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-family-base);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  color: var(--color-brand-navy);
+  text-decoration: none;
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
+
+  &::before {
+    content: "";
+    width: 14px;
+    height: 1px;
+    margin-right: 10px;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    color: var(--color-brand-cyan-deep);
+    transform: translateX(4px);
+  }
+}
+
 @media screen and (max-width: 600px) {
   .l-drawer__panel {
     // アイコン用ガターを狭めに（左 14 + アイコン 36 + gap 12 でラベル x≈62）
@@ -385,6 +438,15 @@
   .l-drawer__link-icon {
     width: 26px;
     height: 26px;
+  }
+
+  .l-drawer__sublist {
+    padding-left: 38px;
+    gap: 12px;
+  }
+
+  .l-drawer__sublink {
+    font-size: 15px;
   }
 
   .l-drawer__close {

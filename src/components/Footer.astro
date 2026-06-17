@@ -10,6 +10,7 @@ type FooterColumn = {
   heading: string | { href: string; label: string } | null;
   href?: string;
   items: FooterItem[];
+  indented?: boolean;
 };
 
 const columns: FooterColumn[] = [
@@ -30,6 +31,7 @@ const columns: FooterColumn[] = [
   },
   {
     heading: { href: `${basePath}special/`, label: "SPECIAL CONTENTS" },
+    indented: true,
     items: [
       {
         href: `${basePath}special/crosstalk/`,
@@ -79,7 +81,12 @@ const columns: FooterColumn[] = [
               </p>
             )}
             {column.items.length > 0 && (
-              <ul class="l-footer__list">
+              <ul
+                class:list={[
+                  "l-footer__list",
+                  { "l-footer__list--indented": column.indented },
+                ]}
+              >
                 {column.items.map((item) => (
                   <li>
                     <a

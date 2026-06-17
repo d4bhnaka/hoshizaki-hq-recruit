@@ -14,6 +14,8 @@
 | 05 | [05-workflow-for-claude.md](./05-workflow-for-claude.md) | Claude の作業手順・着手前／完了時チェックリスト。 |
 | 06 | [06-spec-common.md](./06-spec-common.md) | 共通コンポーネント（Header／Footer／パンくず／氷ボタン／CTA バナー／PageHeader／PersonCard／SpecialStoryCard）の仕様。 |
 | 07 | [07-spec-subpages.md](./07-spec-subpages.md) | 下層 13 ページ（Message／Fact／Strategy／Job／Person 一覧・詳細／Environment／Requirement／Special インデックス・3 ストーリー／Internship）の仕様。 |
+| 08 | [08-hyoki-report.md](./08-hyoki-report.md) | 全原稿の表記揺れ統一方針 決定シート（`/proofread-jp` で検出・重複統合済み）。クライアント判断用の作業レポート。 |
+| 09 | [09-dup-expr-report.md](./09-dup-expr-report.md) | 全原稿の重複表現（二重敬語・重言・近接重複）チェックレポート。クライアント判断用の作業レポート。 |
 
 ## Claude の読む順序
 

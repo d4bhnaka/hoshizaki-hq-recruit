@@ -16,7 +16,7 @@ const {
 // person 詳細などの下層ページも先頭セグメントで親メニュー項目に一致させる。
 const currentKey = Astro.url.pathname.split("/").filter(Boolean)[0] ?? "";
 
-// Figma 518:1195 (Navigation) — 8 項目。
+// Figma 518:1195 (Navigation) をベースに、スペシャルコンテンツを加えた 9 項目。
 // アイスキューブアイコンは「現在表示中のページ」の項目先頭に表示し、現在地を示す。
 const drawerLinks = [
   { href: `${basePath}`, label: "トップページ", key: "" },
@@ -26,6 +26,16 @@ const drawerLinks = [
   { href: `${basePath}job/`, label: "ホシザキの職種紹介", key: "job" },
   { href: `${basePath}person/`, label: "はたらく人を知る", key: "person" },
   { href: `${basePath}environment/`, label: "はたらく環境を知る", key: "environment" },
+  {
+    href: `${basePath}special/`,
+    label: "スペシャルコンテンツ",
+    key: "special",
+    children: [
+      { href: `${basePath}special/crosstalk/`, label: "クロストーク" },
+      { href: `${basePath}special/project/`, label: "プロジェクトストーリー" },
+      { href: `${basePath}special/special-talk/`, label: "スペシャルトーク" },
+    ],
+  },
   { href: `${basePath}requirement/`, label: "募集要項", key: "requirement" },
 ];
 ---
@@ -110,6 +120,18 @@ const drawerLinks = [
                     </span>
                     <span class="l-drawer__link-label">{item.label}</span>
                   </a>
+                  {item.children && (
+                    // スペシャルコンテンツ配下の個別ページへの子リンク。
+                    <ul class="l-drawer__sublist">
+                      {item.children.map((child) => (
+                        <li class="l-drawer__subitem">
+                          <a class="l-drawer__sublink" href={child.href}>
+                            {child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               );
             })
