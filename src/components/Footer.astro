@@ -15,7 +15,7 @@ type FooterColumn = {
 
 const columns: FooterColumn[] = [
   {
-    heading: "採用TOP",
+    heading: "トップページ",
     href: basePath,
     items: [],
   },
@@ -23,25 +23,19 @@ const columns: FooterColumn[] = [
     heading: null,
     items: [
       { href: `${basePath}message/`, label: "採用メッセージ" },
-      { href: `${basePath}fact/`, label: "What's HOSHIZAKI" },
-      { href: `${basePath}strategy/`, label: "Beyond HOSHIZAKI" },
-      { href: `${basePath}job/`, label: "Team HOSHIZAKI" },
-      { href: `${basePath}person/`, label: "先輩たちの「ここに決めた」" },
+      { href: `${basePath}fact/`, label: "数字で見るホシザキ" },
+      { href: `${basePath}strategy/`, label: "ホシザキの事業戦略" },
+      { href: `${basePath}job/`, label: "ホシザキの職種紹介" },
+      { href: `${basePath}person/`, label: "はたらく人を知る" },
     ],
   },
   {
-    heading: { href: `${basePath}special/`, label: "SPECIAL CONTENTS" },
+    heading: { href: `${basePath}special/`, label: "スペシャルコンテンツ" },
     indented: true,
     items: [
-      {
-        href: `${basePath}special/crosstalk/`,
-        label: "クロストーク - 若手が語るはたらく環境",
-      },
+      { href: `${basePath}special/crosstalk/`, label: "クロストーク" },
       { href: `${basePath}special/project/`, label: "プロジェクトストーリー" },
-      {
-        href: `${basePath}special/special-talk/`,
-        label: "スペシャルトーク - ホシザキの技術と未来",
-      },
+      { href: `${basePath}special/special-talk/`, label: "スペシャルトーク" },
     ],
   },
   {
@@ -49,7 +43,7 @@ const columns: FooterColumn[] = [
     items: [
       { href: `${basePath}environment/`, label: "はたらく環境を知る" },
       { href: `${basePath}requirement/`, label: "募集要項" },
-      { href: `${basePath}internship/`, label: "インターンシップ情報" },
+      { href: `${basePath}internship/`, label: "インターンシップ" },
       {
         href: "https://www.hoshizaki.co.jp/",
         label: "ホシザキ企業サイト",
