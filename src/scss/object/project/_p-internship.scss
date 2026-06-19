@@ -272,6 +272,12 @@
 // --------------------------------------------
 // COURSE（Swiper カルーセル）
 // --------------------------------------------
+// フロート「コース一覧」ボタンの戻り先。固定ヘッダー(高さ約109px)に
+// 見出しが隠れないよう scroll-margin-top でオフセットを確保する。
+.p-course {
+  scroll-margin-top: clamp(84px, 10vw, 116px);
+}
+
 .p-course__carousel {
   position: relative;
   width: min(1240px, 100% - var(--ip-gutter) * 2);
@@ -393,6 +399,88 @@
   &:disabled {
     opacity: 0.35;
     cursor: default;
+  }
+}
+
+// --------------------------------------------
+// フロート「コース一覧へ戻る」ボタン
+//   コース詳細を下まで読んだ後、上のカルーセルへワンタップで戻す導線。
+//   出現条件は JS(initCourseBackToTop)が .is-visible で制御する。
+// --------------------------------------------
+.p-course-backtop {
+  position: fixed;
+  right: clamp(16px, 3vw, 32px);
+  bottom: clamp(16px, 3vw, 32px);
+  z-index: 30; // 固定ヘッダー(20)より上・ドロワー(40)/ページ遷移(9000)より下
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--ip-cyan-bright) 0%, var(--ip-cyan) 100%);
+  color: var(--color-white);
+  font-family: var(--font-family-base);
+  font-weight: 700;
+  font-size: clamp(13px, 1.4vw, 15px);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+
+  // 既定は不可視＆操作不可。visibility も切るのでフォーカス順からも外れる。
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition: opacity 0.32s ease, transform 0.32s ease,
+    visibility 0s linear 0.32s, box-shadow var(--transition-fast);
+
+  &.is-visible {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition: opacity 0.32s ease, transform 0.32s ease, visibility 0s,
+      box-shadow var(--transition-fast);
+  }
+
+  // hover は .is-visible より詳細度を上げて transform を確実に上書きする。
+  &.is-visible:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.34);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 3px;
+  }
+}
+
+// 上向きシェブロン（カードの __more chevron と同じ作り）
+.p-course-backtop__icon {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-top: 3px;
+  border-top: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-course-backtop {
+    transform: none;
+    transition: opacity 0.2s linear, visibility 0s linear 0.2s;
+  }
+
+  .p-course-backtop.is-visible {
+    transform: none;
+    transition: opacity 0.2s linear, visibility 0s;
+  }
+
+  .p-course-backtop.is-visible:hover {
+    transform: none;
   }
 }
 

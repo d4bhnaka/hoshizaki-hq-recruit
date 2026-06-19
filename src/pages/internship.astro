@@ -341,7 +341,12 @@ const courses: Course[] = [
         </section>
 
         <!-- COURSE -->
-        <section class="p-internship-section p-course" aria-labelledby="internship-course-title">
+        <section
+          id="internship-course"
+          class="p-internship-section p-course"
+          aria-labelledby="internship-course-title"
+          data-course-anchor
+        >
           <InternshipHeading ja="コース" en="COURSE" />
           <div class="p-course__carousel">
             <div class="swiper p-course__swiper" data-course-swiper>
@@ -422,6 +427,20 @@ const courses: Course[] = [
         <Breadcrumb basePath={base} items={[{ label: "インターンシップ" }]} />
       </article>
     </main>
+
+    <!-- フロート: コース詳細を読み下げた後、コース一覧へワンタップで戻す導線。
+         表示の出し入れは main.js の initCourseBackToTop が .is-visible で制御。
+         .p-internship は overflow:hidden のため、クリップ回避にここ（main の外）へ置く。 -->
+    <button
+      class="p-course-backtop"
+      type="button"
+      data-course-backtop
+      aria-label="コース一覧へ戻る"
+    >
+      <span class="p-course-backtop__icon" aria-hidden="true"></span>
+      <span class="p-course-backtop__label">コース一覧</span>
+    </button>
+
     <Footer basePath={base} />
   </div>
 </Layout>
