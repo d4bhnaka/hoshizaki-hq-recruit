@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
-import SectionHeading from "../components/SectionHeading.astro";
+import IceHeading from "../components/IceHeading.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import BottomCta from "../components/BottomCta.astro";
 
@@ -141,7 +141,7 @@ const groups: JobGroup[] = [
 
         <!-- Job section -->
         <section class="p-job__section" aria-labelledby="p-job-heading">
-          <SectionHeading en="Job" ja="職種紹介" id="p-job-heading" align="left" />
+          <IceHeading en="Job" ja="職種紹介" id="p-job-heading" basePath={base} />
 
           <!-- Org chart -->
           <div class="p-job-chart" aria-label="本社組織の役割">

@@ -2,7 +2,7 @@
 
 13 本の下層ページを 1 ファイルに集約しています。共通構造は必ず先頭の「全ページ共通テンプレート」を読んでから、各ページ固有仕様に進んでください。
 
-**実装状態（2026-04-25 時点）**：13 ページすべて `src/pages/*.astro` として先行実装済み（`[r]` レビュー待ち）。本ドキュメントは実装を反映した最新版。共通コンポーネントの命名は [06-spec-common.md](./06-spec-common.md) の表に従う（`PageHero` / `BottomCta` / `SectionHeading` / `Breadcrumb`）。
+**実装状態（2026-04-25 時点）**：13 ページすべて `src/pages/*.astro` として先行実装済み（`[r]` レビュー待ち）。本ドキュメントは実装を反映した最新版。共通コンポーネントの命名は [06-spec-common.md](./06-spec-common.md) の表に従う（`PageHero` / `BottomCta` / `IceHeading` / `Breadcrumb`）。
 
 ## 目次
 
@@ -35,7 +35,7 @@ import Footer from "../components/Footer.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import BottomCta from "../components/BottomCta.astro";
 import PageHero from "../components/PageHero.astro";
-import SectionHeading from "../components/SectionHeading.astro";
+import IceHeading from "../components/IceHeading.astro";
 
 const base = "../"; // 深さに応じて "../" or "../../"
 ---
@@ -49,7 +49,7 @@ const base = "../"; // 深さに応じて "../" or "../../"
 
         {/* === ページ固有セクション === */}
         <section class="p-<page-slug>__<section>">
-          <SectionHeading en="..." ja="..." />
+          <IceHeading en="..." ja="..." basePath={base} />
           ...
         </section>
         ...

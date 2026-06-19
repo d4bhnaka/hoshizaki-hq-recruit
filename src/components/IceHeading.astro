@@ -1,6 +1,8 @@
 ---
-// Figma 準拠の大見出し: アイスキューブ + 日本語キャッチ + 巨大な英字 + 補足。
-// 既存の小さい SectionHeading とは別系統（はたらく環境ページ等の大見出し用）。
+// Figma 準拠の大見出し（共通セクション見出し）:
+//   アイスキューブ + 日本語キャッチ + 巨大な英字（Barlow Condensed）+ 任意の補足。
+// 英語 + 日本語セットのセクション見出しはこのコンポーネントに一本化している
+// （environment / job / strategy などで共用）。
 interface Props {
   en: string;
   ja?: string;

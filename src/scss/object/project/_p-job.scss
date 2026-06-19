@@ -35,33 +35,13 @@
 }
 
 // --------------------------------------------
-// Section heading override（Figma: 左寄せ・"Job" 約100px・"職種紹介" 黒28px）
+// Section heading: 共通の IceHeading（.c-ice-heading）を使用。
+// セクションが幅可変なため、見出しブロックだけ中央寄せして下の内容と整列させる。
 // --------------------------------------------
-.p-job .c-section-heading {
+.p-job .c-ice-heading {
   max-width: 1180px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.p-job .c-section-heading__ja {
-  color: var(--color-text-primary);
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-.p-job .c-section-heading__icon {
-  width: 16px;
-  height: 16px;
-}
-
-.p-job .c-section-heading__en {
-  font-family: var(--font-family-en);
-  font-weight: 400;
-  font-size: clamp(56px, 6.5vw, 100px);
-  line-height: 1;
-  letter-spacing: 0;
-  color: #1d2527;
 }
 
 // --------------------------------------------
@@ -399,7 +379,7 @@
     margin-right: 0;
   }
 
-  .p-job .c-section-heading {
+  .p-job .c-ice-heading {
     max-width: none;
   }
 }
