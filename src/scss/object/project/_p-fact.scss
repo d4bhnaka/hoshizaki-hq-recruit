@@ -70,24 +70,28 @@
 // --------------------------------------------
 // Section heading（◆ 日本語見出し + 補足）
 // --------------------------------------------
+// Figma: アイコンはカード左端より ~11px はみ出し、タイトル/補足テキストは
+// カード左端 +33px（x152）に揃う
 .p-fact__heading {
-  margin-bottom: clamp(28px, 3.2vw, 44px);
+  position: relative;
+  margin-bottom: clamp(24px, 3vw, 40px);
 }
 
 .p-fact__heading-title {
-  display: flex;
-  align-items: center;
-  gap: clamp(6px, 0.8vw, 10px);
-  margin: 0 0 12px;
-  font-size: clamp(19px, 2.1vw, 26px); // Figma 実測 ≈26px
+  margin: 0 0 clamp(8px, 1vw, 13px);
+  padding-left: clamp(22px, 2.4vw, 33px);
+  font-size: clamp(20px, 1.95vw, 28px); // Figma 28px
   font-weight: 700;
   letter-spacing: 0.02em;
+  line-height: 1.4;
   color: var(--color-text-primary);
 }
 
-// Figma: 見出しの 3D キューブアイコン（淡いブルーの立方体）
+// Figma: 見出しの 3D アイス（氷）アイコン（淡いブルーの立方体）47×47
 .p-fact__heading-mark {
-  flex-shrink: 0;
+  position: absolute;
+  left: clamp(-11px, -0.75vw, -7px);
+  top: clamp(-5px, -0.2vw, -1px);
   width: clamp(38px, 3.4vw, 47px);
   height: auto;
   display: block;
@@ -95,7 +99,7 @@
 
 .p-fact__heading-note {
   margin: 0;
-  padding-left: clamp(8px, 3vw, 36px); // Figma: 本文を x152（カード左 +36px）から
+  padding-left: clamp(22px, 2.4vw, 33px); // Figma: タイトルと同じ x152 に揃える
   font-size: clamp(14px, 1.3vw, 18px); // Figma 18px
   line-height: 2;
   color: var(--color-text-primary);
@@ -140,7 +144,7 @@
 .p-fact__benefits {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: clamp(16px, 1.7vw, 24px);
+  gap: clamp(20px, 2.5vw, 37px) clamp(16px, 1.6vw, 22px); // Figma 行37 / 列22
 }
 
 .p-fact__benefits .c-benefit--tenure {
