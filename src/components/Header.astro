@@ -39,6 +39,17 @@ const drawerLinks = [
   { href: `${basePath}requirement/`, label: "募集要項", key: "requirement" },
   { href: `${basePath}internship/`, label: "インターンシップ", key: "internship" },
 ];
+
+// ヘッダー右上の CTA ボタン。ラベルはホバー時に一文字ずつめくれる
+// ロールオーバー演出をするため、レンダリング側で 1 文字ずつ span に分割する。
+const headerCtas = [
+  { href: `${basePath}internship/`, label: "インターンシップ", external: false },
+  {
+    href: "https://hoshizaki-corporation-hr.snar.jp/index.aspx",
+    label: "応募はこちら",
+    external: true,
+  },
+];
 ---
 
 <header class={`l-header l-header--${variant}`} data-variant={variant}>
@@ -52,19 +63,31 @@ const drawerLinks = [
       <span class="l-header__logo-fallback" style="display:none;">HOSHIZAKI</span>
     </a>
     <div class="l-header__actions">
-      <a class="l-header__cta" href={`${basePath}internship/`}>
-        <span class="l-header__cta-icon" aria-hidden="true"></span>
-        <span class="l-header__cta-label">インターンシップ</span>
-      </a>
-      <a
-        class="l-header__cta"
-        href="https://hoshizaki-corporation-hr.snar.jp/index.aspx"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span class="l-header__cta-icon" aria-hidden="true"></span>
-        <span class="l-header__cta-label">応募はこちら</span>
-      </a>
+      {
+        headerCtas.map((cta) => (
+          <a
+            class="l-header__cta"
+            href={cta.href}
+            aria-label={cta.label}
+            {...(cta.external
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
+          >
+            <span class="l-header__cta-icon" aria-hidden="true" />
+            {/* ラベルは aria-hidden（読み上げは a の aria-label）。
+                各文字は同じ文字を 2 枚重ね、ホバーで上にめくって入れ替える。
+                --i は左からの添字で、ロールのディレイをずらし「一文字ずつ」見せる。 */}
+            <span class="l-header__cta-label" aria-hidden="true">
+              {Array.from(cta.label).map((ch, i) => (
+                <span class="l-header__cta-char" style={`--i:${i}`}>
+                  <span class="l-header__cta-char-text">{ch}</span>
+                  <span class="l-header__cta-char-text">{ch}</span>
+                </span>
+              ))}
+            </span>
+          </a>
+        ))
+      }
       <button
         class="l-header__menu"
         type="button"

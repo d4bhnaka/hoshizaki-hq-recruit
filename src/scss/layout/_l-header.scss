@@ -109,8 +109,52 @@
   flex-shrink: 0;
 }
 
+// ホバー時に一文字ずつめくれるロールオーバー演出。
+//   各文字 .l-header__cta-char は同じ文字を 2 枚（.l-header__cta-char-text）持ち、
+//   overflow:hidden で 1 文字ぶんだけ見せる。2 枚目は 1 文字下に待機させ、
+//   ホバーで両方を上へスライドさせて 1 枚目 → 2 枚目に入れ替える。
+//   --i（左からの添字）で transition-delay をずらし「一文字ずつ」感を出す。
 .l-header__cta-label {
   position: relative;
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.l-header__cta-char {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  line-height: 1.25;
+  vertical-align: top;
+}
+
+.l-header__cta-char-text {
+  display: block;
+  transition: transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 0.03s);
+}
+
+// 2 枚目（複製）は 1 文字ぶん下に待機
+.l-header__cta-char-text + .l-header__cta-char-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(100%);
+}
+
+.l-header__cta:hover .l-header__cta-char-text {
+  transform: translateY(-100%);
+}
+
+.l-header__cta:hover .l-header__cta-char-text + .l-header__cta-char-text {
+  transform: translateY(0);
+}
+
+// モーション軽減設定ではめくり演出を無効化（即時表示）
+@media (prefers-reduced-motion: reduce) {
+  .l-header__cta-char-text {
+    transition: none;
+  }
 }
 
 // Figma 296:12674 (Group 2368) — 50×50 #232735 ボックス + 白 3 本線
