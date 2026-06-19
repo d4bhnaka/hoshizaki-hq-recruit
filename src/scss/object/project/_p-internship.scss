@@ -56,7 +56,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: clamp(360px, 40vw, 600px);
+  min-height: clamp(300px, 32vw, 500px);
   padding: clamp(96px, 12vw, 160px) var(--ip-gutter) clamp(56px, 8vw, 110px);
   overflow: hidden;
   background: #0b3a52;
@@ -66,14 +66,40 @@
 .p-internship-hero__media {
   position: absolute;
   inset: 0;
-  display: flex;
   z-index: -2;
+  overflow: hidden;
+}
+
+// 1 枚画像を 2 枚並べて右から左へ流す電光掲示板風の無限ループ。
+// translateX を 0 → -50%（= 画像 1 枚分）まで等速で動かし、
+// -50% の時点で 2 枚目が 1 枚目の初期位置と一致するため継ぎ目なくループする。
+.p-internship-hero__track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  will-change: transform;
+  animation: p-internship-hero-scroll 90s linear infinite;
 
   img {
-    flex: 1 1 0;
-    min-width: 0;
+    flex: none;
+    width: auto;
     height: 100%;
-    object-fit: cover;
+  }
+}
+
+@keyframes p-internship-hero-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-internship-hero__track {
+    animation: none;
   }
 }
 

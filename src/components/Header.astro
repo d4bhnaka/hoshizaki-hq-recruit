@@ -54,7 +54,11 @@ const headerCtas = [
 
 <header class={`l-header l-header--${variant}`} data-variant={variant}>
   <div class="l-header__inner">
-    <a class="l-header__logo" href={basePath} aria-label="ホシザキ採用サイト トップ">
+    <a
+      class={`l-header__logo${currentKey === "internship" ? " l-header__logo--wide" : ""}`}
+      href={basePath}
+      aria-label="ホシザキ採用サイト トップ"
+    >
       <img
         src={logoSrc}
         alt="HOSHIZAKI"
