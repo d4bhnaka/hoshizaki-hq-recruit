@@ -312,14 +312,14 @@
   }
 }
 
-// 先輩インタビュー導線 (card 01 only)  Figma: ラベル黒18px＋下線#0177fe(50×2)＋丸アバター58px
+// 先輩インタビュー導線  Figma: ラベル黒18px＋下線#0177fe(50×2)＋丸アバター58px
+// 該当職種の先輩を複数並べ、各アバターから個別ページ（/person/<slug>/）へリンク。
 .p-job-card__interview {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: 14px;
   margin-top: 8px;
-  text-decoration: none;
 }
 
 .p-job-card__interview-label {
@@ -329,7 +329,6 @@
   font-weight: 700;
   font-size: 18px;
   letter-spacing: 0.04em;
-  transition: color var(--transition-fast);
 
   &::after {
     content: "";
@@ -342,16 +341,42 @@
   }
 }
 
+.p-job-card__interview-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.p-job-card__interview-link {
+  display: block;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: transform var(--transition-fast);
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-2px);
+  }
+}
+
 .p-job-card__interview-avatar {
+  display: block;
   width: 58px;
   height: 58px;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition-fast);
 }
 
-.p-job-card__interview:hover .p-job-card__interview-label {
-  color: var(--color-brand-primary);
+.p-job-card__interview-link:hover .p-job-card__interview-avatar,
+.p-job-card__interview-link:focus-visible .p-job-card__interview-avatar {
+  box-shadow:
+    0 0 0 2px var(--color-brand-primary),
+    var(--shadow-card);
 }
 
 .p-job-card__figure {

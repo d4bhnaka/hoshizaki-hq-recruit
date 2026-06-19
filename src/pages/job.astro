@@ -6,8 +6,15 @@ import PageHero from "../components/PageHero.astro";
 import IceHeading from "../components/IceHeading.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import BottomCta from "../components/BottomCta.astro";
+import { personDetails } from "../data/personDetails";
 
 const base = "../";
+
+// 先輩インタビュー導線で使う slug → イニシャル（リンクのアクセシブル名に使用。
+// 社員名は非公開だがイニシャルは個別ページで公開している表記）。
+const initialsBySlug = Object.fromEntries(
+  personDetails.map((p) => [p.slug, p.initials]),
+);
 
 const chart = {
   create: {
@@ -30,7 +37,8 @@ interface Job {
   lead: string;
   body?: string;
   image: string;
-  interview?: boolean;
+  /** この職種の先輩社員の slug 一覧（/person/<slug>/ へリンク・アバターは images/person/a<slug>.png） */
+  seniors?: string[];
 }
 
 interface JobGroup {
@@ -49,25 +57,28 @@ const groups: JobGroup[] = [
         lead: "世界No.1を目指す新製品のゼロイチ開発（機械・電気・制御ソフト・化学）。",
         body: "設計から評価まで「1製品丸ごと」担当できる裁量の大きさと、環境対応（自然冷媒など）による社会課題の解決。",
         image: `${base}images/job/card-01.jpg`,
-        interview: true,
+        seniors: ["01", "02"],
       },
       {
         title: "生産技術職",
         lead: "開発アイデアを「高品質かつ効率的に量産」するための製造ライン構築。",
         body: "独自の多品種少量生産（セル生産方式）を支え、最新のロボティクスやIoTを駆使したスマートファクトリー化を牽引する。",
         image: `${base}images/job/card-02.jpg`,
+        seniors: ["03", "06"],
       },
       {
         title: "品質保証職",
         lead: "世界60ヶ国で稼働する製品の安全性を担保する「最後の砦」。",
         body: "各国の厳しい安全規格・環境規制をクリアし、不具合の解析から開発へのフィードバックまで、ブランドの信頼を守り抜く。",
         image: `${base}images/job/card-03.jpg`,
+        seniors: ["04", "07"],
       },
       {
         title: "購買・調達",
         lead: "国内外のサプライヤーから、最適な品質・コストの部品や素材を安定的に調達する。",
         body: "製造業の「利益の源泉」を担い、世界情勢を見極めながら強靭なサプライチェーンを構築する。",
         image: `${base}images/job/card-04.jpg`,
+        seniors: ["10", "08", "09"],
       },
     ],
   },
@@ -80,12 +91,14 @@ const groups: JobGroup[] = [
         lead: "全国展開する大手飲食・小売チェーン「本部」へのソリューション提案、および全国の販売会社への販促支援。",
         body: "日本全国の市場動向を俯瞰し、億単位のダイナミックなビジネスを動かす。",
         image: `${base}images/job/card-05.jpg`,
+        seniors: ["11"],
       },
       {
         title: "海外事業企画・海外営業",
         lead: "海外M&Aの推進、海外拠点（米・欧・アジア）との経営連携、グローバル販売戦略の立案。",
         body: "異文化の市場特性を紐解き、ホシザキブランドを未開拓エリアのインフラへと育てる最前線。",
         image: `${base}images/job/card-06.jpg`,
+        seniors: ["12", "13"],
       },
     ],
   },
@@ -98,12 +111,14 @@ const groups: JobGroup[] = [
         titleNote: "（経営企画・財務・人事・知財など）",
         lead: "グローバル成長を裏方から支える経営基盤の強化、特許戦略による技術の保護。",
         image: `${base}images/job/card-07.jpg`,
+        seniors: ["14", "15"],
       },
       {
         title: "社内SE職（IT戦略）",
         lead: "国内外のグループを繋ぐ基幹システム統合や、製品のIoT化、社内DXの推進。",
         body: "守りの社内インフラ保守にとどまらず、攻めのITでホシザキのビジネスモデル自体を革新する。",
         image: `${base}images/job/card-08.jpg`,
+        seniors: ["05"],
       },
     ],
   },
@@ -202,16 +217,30 @@ const groups: JobGroup[] = [
                             <p>{job.lead}</p>
                             {job.body && <p>{job.body}</p>}
                           </div>
-                          {job.interview && (
-                            <a class="p-job-card__interview" href={`${base}person/`}>
+                          {job.seniors && job.seniors.length > 0 && (
+                            <div class="p-job-card__interview">
                               <span class="p-job-card__interview-label">この職種の先輩インタビュー</span>
-                              <img
-                                class="p-job-card__interview-avatar"
-                                src={`${base}images/person/thumb01.png`}
-                                alt=""
-                                loading="lazy"
-                              />
-                            </a>
+                              <ul class="p-job-card__interview-list">
+                                {job.seniors.map((slug) => (
+                                  <li class="p-job-card__interview-item">
+                                    <a
+                                      class="p-job-card__interview-link"
+                                      href={`${base}person/${slug}/`}
+                                      aria-label={`先輩社員 ${initialsBySlug[slug]} さんのインタビューを見る`}
+                                    >
+                                      <img
+                                        class="p-job-card__interview-avatar"
+                                        src={`${base}images/person/a${slug}.png`}
+                                        alt=""
+                                        loading="lazy"
+                                        width="58"
+                                        height="58"
+                                      />
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
                           )}
                         </div>
                         <figure class="p-job-card__figure">
