@@ -5,8 +5,7 @@
 
 .p-crosstalk {
   display: block;
-  width: 100%;
-  max-width: var(--page-max-width);
+  width: 100%; // Max width は設定しない
   margin: 0 auto;
   // 背景は bg-01.png を固定（Figma のグラデーションと同一の画像）
   background-color: #fff;
