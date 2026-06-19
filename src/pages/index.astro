@@ -347,11 +347,20 @@ const trioCards = [
     {/* S5. はたらく環境を知る (Figma y: 5502–6162 / Group 296:7285) */}
     {/* ============================================ */}
     <section class="p-top-env" aria-label="はたらく環境を知る">
+      {/* 背景写真。SP は Figma top_sp 用に切り出した専用画像へ差し替える */}
+      {/* （PC/SP それぞれ片方を CSS で display:none し入れ替え）。 */}
       <img
-        class="p-top-env__photo"
+        class="p-top-env__photo p-top-env__photo--pc"
         src={`${basePath}images/top/section-bg-environment.jpg`}
         alt=""
         aria-hidden="true"
+      />
+      <img
+        class="p-top-env__photo p-top-env__photo--sp"
+        src={`${basePath}images/top/section-bg-environment_sp.png`}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
       />
       <div class="p-top-env__inner">
         <header class="p-top-env__heading">
