@@ -81,7 +81,7 @@ const iceIcon = `${base}images/requirement/icon-ice.png`;
 
         <!-- Intro -->
         <section class="p-req__intro">
-          <p class="p-req__lead">
+          <p class="p-req__lead" data-inview>
             ホシザキは厨房機器の枠を超え、医療や農業など新たな分野への挑戦を続けています。食材ロスや環境負荷といった社会課題の解決を通じ、世界中の「食」の未来を創ることが私たちの使命です。現状に満足せず、グローバルな舞台で「常識の先へ」跳躍したいと願う、情熱ある皆さんのエントリーをお待ちしています。
           </p>
         </section>
@@ -91,13 +91,13 @@ const iceIcon = `${base}images/requirement/icon-ice.png`;
           class="p-req__section p-req__section--table"
           aria-labelledby="req-general-title"
         >
-          <h2 class="p-req__label" id="req-general-title">
+          <h2 class="p-req__label" id="req-general-title" data-inview style="--inview-i: 0">
             <span class="p-req__icon" aria-hidden="true">
               <img src={iceIcon} alt="" width="48" height="48" />
             </span>
             <span class="p-req__label-text">総合職</span>
           </h2>
-          <div class="p-req__card">
+          <div class="p-req__card" data-inview="pop" style="--inview-i: 1">
             <dl class="p-req__table">
               {
                 generalRows.map((row) => (
@@ -138,13 +138,13 @@ const iceIcon = `${base}images/requirement/icon-ice.png`;
           class="p-req__section p-req__section--note"
           aria-labelledby="req-assignment-title"
         >
-          <h2 class="p-req__label" id="req-assignment-title">
+          <h2 class="p-req__label" id="req-assignment-title" data-inview style="--inview-i: 0">
             <span class="p-req__icon" aria-hidden="true">
               <img src={iceIcon} alt="" width="48" height="48" />
             </span>
             <span class="p-req__label-text">初期配属について</span>
           </h2>
-          <div class="p-req__note">
+          <div class="p-req__note" data-inview style="--inview-i: 1">
             <p>内定通知の際に初期配属（職種・勤務地）をお知らせします</p>
             <p>勤務地については、3年間固定です。</p>
           </div>

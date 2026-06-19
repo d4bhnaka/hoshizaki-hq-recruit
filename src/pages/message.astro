@@ -72,7 +72,7 @@ const heroPenguins = [
           <div class="p-message-body__inner">
             <!-- 採用ペンギン + 導入テキスト -->
             <div class="p-message-body__intro">
-              <figure class="p-message-body__avatar">
+              <figure class="p-message-body__avatar" data-inview="left">
                 <img
                   src={`${base}images/message/img01.png`}
                   alt="スーツを着た採用ペンギン"
@@ -80,10 +80,10 @@ const heroPenguins = [
                 />
               </figure>
               <div class="p-message-body__text">
-                <p class="p-message-body__paragraph">
+                <p class="p-message-body__paragraph" data-inview style="--inview-i: 0">
                   当社が求めるのは、どんなことにも積極的に取り組む姿勢です。任された仕事をただこなすのではなく、自分で考えたり工夫しながら取り組むことが自分の付加価値を高めることにつながります。次に、担当業務に限らず色々なことに興味を持ち学ぶ意欲。幅広い視野と知識を身に付ければ、自分の仕事の質を高めることができます。積極性と学ぶ意欲を持ち続けることで、多様なニーズに柔軟に対応できる提案力を身に付けることができます。
                 </p>
-                <p class="p-message-body__paragraph">
+                <p class="p-message-body__paragraph" data-inview style="--inview-i: 1">
                   当社の良さは、役職や部署などの垣根がなくコミュニケーションがとりやすいこと。
                 </p>
               </div>
@@ -92,21 +92,21 @@ const heroPenguins = [
             <!-- 本文 + 写真 -->
             <div class="p-message-body__main">
               <div class="p-message-body__text p-message-body__text--lower">
-                <p class="p-message-body__paragraph">
+                <p class="p-message-body__paragraph" data-inview style="--inview-i: 0">
                   社内では肩書では呼ばず「さん」付けで呼びあっているほか、役員室がなく社員と経営層の間に壁もありません。
                 </p>
-                <p class="p-message-body__paragraph">
+                <p class="p-message-body__paragraph" data-inview style="--inview-i: 1">
                   性別・年齢・役職に関係なく様々な考え方を認め合う風土なので、誰とでも活発に意見交換できます。
                 </p>
-                <p class="p-message-body__paragraph">
+                <p class="p-message-body__paragraph" data-inview style="--inview-i: 2">
                   企業を選ぶうえでは、自分自身の「感性」も大切です。企業の規模や知名度だけでなく、「そこで活躍している自分自身がイメージできるか」「何を大切にしている会社か」など目に見えない情報を感じとってください。そのためには、直接企業で働く社員と会える機会を積極的に活用し、知りたいことを遠慮なく聞いていただきたいと思います。
                 </p>
-                <p class="p-message-body__paragraph p-message-body__paragraph--close">
+                <p class="p-message-body__paragraph p-message-body__paragraph--close" data-inview style="--inview-i: 3">
                   誰かにとってのいい会社ではなく、「あなたが自分らしく活躍できる会社」に出会えるよう、皆さんの就職活動の成功を心より応援しています。
                 </p>
               </div>
 
-              <div class="p-message-body__photos" aria-hidden="true">
+              <div class="p-message-body__photos" aria-hidden="true" data-inview="right">
                 <figure class="p-message-body__photo p-message-body__photo--upper">
                   <img
                     src={`${base}images/message/img02.png`}

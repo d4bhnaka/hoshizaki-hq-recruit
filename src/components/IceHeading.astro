@@ -15,7 +15,7 @@ const { en, ja, note, id, basePath = "./" } = Astro.props;
 <header class="c-ice-heading" id={id}>
   {
     ja && (
-      <p class="c-ice-heading__ja">
+      <p class="c-ice-heading__ja" data-inview style="--inview-i: 0">
         <img
           class="c-ice-heading__ice"
           src={`${basePath}images/common/ice-01.png`}
@@ -29,7 +29,7 @@ const { en, ja, note, id, basePath = "./" } = Astro.props;
     )
   }
   <div class="c-ice-heading__main">
-    <h2 class="c-ice-heading__en">{en}</h2>
-    {note && <p class="c-ice-heading__note">{note}</p>}
+    <h2 class="c-ice-heading__en" data-inview style="--inview-i: 1">{en}</h2>
+    {note && <p class="c-ice-heading__note" data-inview style="--inview-i: 2">{note}</p>}
   </div>
 </header>

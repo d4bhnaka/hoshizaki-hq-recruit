@@ -37,14 +37,14 @@ interface Props {
 }
 ```
 
-- 左：ホシザキロゴ（`images/common/logo-hoshizaki.svg`）＋テキストフォールバック。
+- 左：ホシザキロゴ（`images/common/hoshizaki-logo-mark-header.png`）＋テキストフォールバック（`onerror` で "HOSHIZAKI" テキスト表示）。
 - 右：インターンシップ CTA ボタン／応募はこちら CTA ボタン／ハンバーガー（3 本線）。
 - `variant="solid"` は現状スタイル側のみ対応。ハンバーガー展開メニューの中身は未実装。
+- **注（2026-06-19）**：旧仕様にあった `logo-hoshizaki.svg` は不要（クライアント確認済み）。実装は PNG マーク `hoshizaki-logo-mark-header.png` を使用しており、別途 SVG を用意する必要はない。
 
 ### 残タスク
 
 - [ ] ハンバーガータップで展開ナビを出す（Figma `425:1440` 他の `Navigation` frame を参考）。
-- [ ] `logo-hoshizaki.svg` が実ファイルで存在することを確認（`onerror` でテキストフォールバック）。
 
 ---
 

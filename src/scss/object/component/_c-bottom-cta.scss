@@ -20,10 +20,18 @@
   display: block;
   border-radius: 4px;
   overflow: hidden;
-  transition: transform var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
 
   &:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card);
+  }
+
+  // ホバーで内側の画像をゆっくりズーム（overflow:hidden の枠内で拡大）
+  &:hover .c-bottom-cta__image {
+    transform: scale(1.04);
   }
 }
 
@@ -31,6 +39,7 @@
   display: block;
   width: 100%;
   height: auto;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media screen and (max-width: 768px) {

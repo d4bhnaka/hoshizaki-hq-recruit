@@ -663,6 +663,77 @@
     update(); // 初期表示時点の変位を即適用（最初のスクロールでの跳びを防ぐ）
   }
 
+  // --------------------------------------------
+  // Count-up — 数値がビューポートに入ったら 0 から実値までカウントアップ。
+  //   対象は [data-countup] 要素。表示テキストの数字を最終値として読み取り、
+  //   桁区切り（カンマ）や小数も復元する。検知は IntersectionObserver。
+  //   低モーション設定 / IO 非対応では一切いじらず最初から実値を表示する。
+  // --------------------------------------------
+  function initCountUp() {
+    var targets = document.querySelectorAll("[data-countup]");
+    if (!targets.length) return;
+
+    var reduce =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // 低モーション・未対応では実値のまま（テキストを書き換えない）
+    if (reduce || !("IntersectionObserver" in window)) return;
+
+    var DURATION = 1400; // ms
+
+    function format(value, hasComma, decimals) {
+      var s =
+        decimals > 0 ? value.toFixed(decimals) : String(Math.round(value));
+      if (hasComma) {
+        var parts = s.split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        s = parts.join(".");
+      }
+      return s;
+    }
+
+    function run(el) {
+      var orig = el.textContent;
+      var digits = orig.replace(/[^0-9.]/g, "");
+      var target = parseFloat(digits);
+      if (!isFinite(target)) return; // 数字を含まなければ何もしない
+      var hasComma = orig.indexOf(",") !== -1;
+      var dotIdx = digits.indexOf(".");
+      var decimals = dotIdx === -1 ? 0 : digits.length - dotIdx - 1;
+      var start = null;
+
+      // easeOutCubic（最後に向かってゆっくり止まる）
+      function ease(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+      function step(now) {
+        if (start === null) start = now;
+        var t = Math.min(1, (now - start) / DURATION);
+        el.textContent = format(target * ease(t), hasComma, decimals);
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.textContent = orig; // 最終フレームは元テキストを厳密復元
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          run(entry.target);
+          io.unobserve(entry.target); // カウントは 1 回だけ
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.4 }
+    );
+    targets.forEach(function (el) {
+      io.observe(el);
+    });
+  }
+
   function init() {
     initDrawer();
     initHeaderScroll();
@@ -674,6 +745,7 @@
     initInview();
     initHeroReveals();
     initParallax();
+    initCountUp();
   }
 
   if (document.readyState === "loading") {

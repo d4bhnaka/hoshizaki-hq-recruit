@@ -306,14 +306,14 @@ const courses: Course[] = [
             alt=""
             aria-hidden="true"
           />
-          <h1 class="p-internship-hero__title" id="internship-hero-title">
+          <h1 class="p-internship-hero__title" id="internship-hero-title" data-inview="fade">
             常識の先へ、一歩。<br />未知の自分に、跳びこもう。
           </h1>
         </section>
 
         <!-- Hero CTA -->
         <div class="p-internship-cta">
-          <a class="p-internship-entry" href={entryHref}>
+          <a class="p-internship-entry" href={entryHref} data-inview="fade">
             <span class="p-internship-entry__sub">冒険を始める</span>
             <span class="p-internship-entry__main">ENTRY</span>
           </a>
@@ -321,7 +321,7 @@ const courses: Course[] = [
 
         <!-- Intro -->
         <section class="p-internship-intro">
-          <p class="p-internship-intro__text">
+          <p class="p-internship-intro__text" data-inview>
             日本初の全自動製氷機を生み出したホシザキ。<br />
             私たちの開発は、一部の設計だけを担う歯車ではありません。<br />
             構想からリリースまでのすべての工程に携わるからこそ味わえる、<br />
@@ -380,7 +380,7 @@ const courses: Course[] = [
           aria-labelledby="internship-message-title"
         >
           <InternshipHeading ja="採用担当からのメッセージ" en="MESSAGE" />
-          <p class="p-internship-message__body">
+          <p class="p-internship-message__body" data-inview style="--inview-i: 0">
             「ホシザキを、ただの厨房機器メーカーだと思っていないか。」<br />
             私たちが求めているのは、既存の枠を超え、<br />
             新しい「食の当たり前」を創り出すパイオニア精神です。<br />
@@ -388,12 +388,12 @@ const courses: Course[] = [
             どのような思考と情熱から生まれるのか。<br />
             この5日間で、あなたの「常識」を塗り替える体験が待っています。
           </p>
-          <p class="p-internship-message__lead">
+          <p class="p-internship-message__lead" data-inview style="--inview-i: 1">
             さあ、その想いを翼に変えて。<br />
             エントリーはマイページから。
           </p>
           <div class="p-internship-cta">
-            <a class="p-internship-entry" href={entryHref}>
+            <a class="p-internship-entry" href={entryHref} data-inview="fade" style="--inview-i: 2">
               <span class="p-internship-entry__sub">冒険を始める</span>
               <span class="p-internship-entry__main">ENTRY</span>
             </a>

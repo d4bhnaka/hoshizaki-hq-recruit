@@ -116,7 +116,9 @@ const trioCards = [
         </ol>
 
         {/* CONCEPT MOVIE */}
-        <p class="p-top-hero__movie-label">CONCEPT MOVIE</p>
+        {/* ヒーローステージ上の絶対配置のため、座標を動かさない "fade"（不透明度のみ）で
+            ゆっくりフェードイン（M3-A1）。 */}
+        <p class="p-top-hero__movie-label" data-inview="fade" style="--inview-i: 0">CONCEPT MOVIE</p>
         <button
           type="button"
           class="p-top-hero__movie"
@@ -124,6 +126,8 @@ const trioCards = [
           data-movie-open
           aria-haspopup="dialog"
           aria-controls="concept-movie-modal"
+          data-inview="fade"
+          style="--inview-i: 1"
         >
           <img
             class="p-top-hero__movie-poster"

@@ -113,7 +113,7 @@ const qa = [
       <article class="p-project-story">
         <section class="p-project-story__hero">
           <div class="p-project-story__hero-inner">
-            <figure class="p-project-story__kv">
+            <figure class="p-project-story__kv" data-inview="pop">
               <img
                 src={`${base}images/special/project/kv.png`}
                 alt="生産技術のベテラン社員と設計の若手社員が対談する様子"
@@ -121,18 +121,18 @@ const qa = [
               />
             </figure>
             <div class="p-project-story__hero-head">
-              <p class="p-project-story__kicker"><span>プロジェクトストーリー</span></p>
-              <h1 class="p-project-story__title">
+              <p class="p-project-story__kicker" data-inview="fade" style="--inview-i: 0"><span>プロジェクトストーリー</span></p>
+              <h1 class="p-project-story__title" data-inview style="--inview-i: 1">
                 <span class="p-project-story__title-text"
                   >互いの知恵を重ね、<br />前例なきモノづくりへ。</span
                 >
               </h1>
             </div>
             <div class="p-project-story__hero-body">
-              <p class="p-project-story__subtitle">
+              <p class="p-project-story__subtitle" data-inview style="--inview-i: 0">
                 ホシザキ初の「測定孔」、前例なき開発の舞台裏。
               </p>
-              <div class="p-project-story__lead">
+              <div class="p-project-story__lead" data-inview style="--inview-i: 1">
                 <p>
                   2022年から動き出した、薬用保冷庫・薬用ショーケースの開発プロジェクト。病院や薬局で薬品の品質を守るため、一般的な厨房製品とは比べものにならないほどシビアな温度管理が求められる製品だ。中でも最大のテーマとなったのが、扉を開けずに庫内の温度を測る「測定孔」——ホシザキにとって前例のない構造の実現だった。設計と生産技術、立場の異なる二人が、いかにして“前例なき穴”を形にしたのか。その舞台裏を語ってもらった。
                 </p>
@@ -143,7 +143,7 @@ const qa = [
 
         <section class="p-project-story__members" aria-label="参加メンバー">
           <div class="p-project-story__members-panel">
-            <p class="p-project-story__members-badge">
+            <p class="p-project-story__members-badge" data-inview="fade">
               <span class="p-project-story__members-badge-shadow" aria-hidden="true"
               ></span>
               <span class="p-project-story__members-badge-face">
@@ -153,8 +153,8 @@ const qa = [
             </p>
             <ul class="p-project-story__members-list">
               {
-                members.map((m) => (
-                  <li class="p-project-story__member">
+                members.map((m, i) => (
+                  <li class="p-project-story__member" data-inview style={`--inview-i: ${i}`}>
                     <figure class="p-project-story__member-photo">
                       <img
                         src={m.photo}
@@ -178,10 +178,10 @@ const qa = [
           {
             qa.map((block) => (
               <section class="p-project-story__qa">
-                <h2 class="p-project-story__q">{block.q}</h2>
+                <h2 class="p-project-story__q" data-inview>{block.q}</h2>
                 <ul class="p-project-story__comments">
-                  {block.comments.map((c) => (
-                    <li class="p-project-story__comment">
+                  {block.comments.map((c, i) => (
+                    <li class="p-project-story__comment" data-inview style={`--inview-i: ${i}`}>
                       <figure class="p-project-story__comment-avatar">
                         <img
                           src={avatarSrc(c.avatar)}
@@ -193,7 +193,7 @@ const qa = [
                     </li>
                   ))}
                 </ul>
-                <figure class="p-project-story__scene">
+                <figure class="p-project-story__scene" data-inview="pop">
                   <img src={block.image} alt="" loading="lazy" />
                 </figure>
               </section>
@@ -201,7 +201,7 @@ const qa = [
           }
         </div>
 
-        <p class="p-project-story__cta">
+        <p class="p-project-story__cta" data-inview="fade">
           <a href={`${base}special/`} class="p-project-story__cta-link">
             スペシャルコンテンツ一覧を見る
             <span class="p-project-story__cta-icon" aria-hidden="true">

@@ -225,14 +225,14 @@ const sections: QaSection[] = [
       <article class="p-crosstalk">
         <section class="p-crosstalk__hero">
           <div class="p-crosstalk__hero-inner">
-            <figure class="p-crosstalk__kv">
+            <figure class="p-crosstalk__kv" data-inview="pop">
               <img
                 src={`${base}images/special/crosstalk/kv.png`}
                 alt="社員4名がテーブルを囲んで談笑するクロストークの様子"
                 loading="eager"
               />
             </figure>
-            <div class="p-crosstalk__hero-head">
+            <div class="p-crosstalk__hero-head" data-inview style="--inview-i: 0">
               <p class="p-crosstalk__kicker"><span>クロストーク</span></p>
               <h1 class="p-crosstalk__title">
                 <span class="p-crosstalk__title-text"
@@ -241,10 +241,14 @@ const sections: QaSection[] = [
               </h1>
             </div>
             <div class="p-crosstalk__hero-body">
-              <p class="p-crosstalk__subtitle">
+              <p
+                class="p-crosstalk__subtitle"
+                data-inview
+                style="--inview-i: 1"
+              >
                 常識を跳び越え、高め合う。入社3年目が語るホシザキの『リアル』と『チームワーク』
               </p>
-              <div class="p-crosstalk__lead">
+              <div class="p-crosstalk__lead" data-inview style="--inview-i: 2">
                 <p>
                   「厨房機器メーカー」という枠組みを跳び越え、世界中の「食」を支えるインフラ企業へと進化を続けるホシザキ。<br
                   />そこでは一体どんな人たちが、どのような想いで働いているのでしょうか？
@@ -274,8 +278,12 @@ const sections: QaSection[] = [
             </p>
             <ul class="p-crosstalk__members-list">
               {
-                members.map((m) => (
-                  <li class="p-crosstalk__member">
+                members.map((m, i) => (
+                  <li
+                    class="p-crosstalk__member"
+                    data-inview="pop"
+                    style={`--inview-i: ${i}`}
+                  >
                     <figure class="p-crosstalk__member-photo">
                       <img
                         src={m.photo}
@@ -300,16 +308,34 @@ const sections: QaSection[] = [
           {
             sections.map((block) => (
               <section class="p-crosstalk__qa">
-                <h2 class="p-crosstalk__q">{block.q}</h2>
-                {block.lead && <p class="p-crosstalk__lead-q">{block.lead}</p>}
+                <h2 class="p-crosstalk__q" data-inview style="--inview-i: 0">
+                  {block.q}
+                </h2>
+                {block.lead && (
+                  <p
+                    class="p-crosstalk__lead-q"
+                    data-inview
+                    style="--inview-i: 1"
+                  >
+                    {block.lead}
+                  </p>
+                )}
                 <div class="p-crosstalk__stream">
-                  {block.items.map((item) =>
+                  {block.items.map((item, i) =>
                     "img" in item ? (
-                      <figure class="p-crosstalk__scene">
+                      <figure
+                        class="p-crosstalk__scene"
+                        data-inview="pop"
+                        style={`--inview-i: ${i % 6}`}
+                      >
                         <img src={sceneSrc(item.img)} alt="" loading="lazy" />
                       </figure>
                     ) : (
-                      <div class="p-crosstalk__comment">
+                      <div
+                        class="p-crosstalk__comment"
+                        data-inview="left"
+                        style={`--inview-i: ${i % 6}`}
+                      >
                         <figure class="p-crosstalk__comment-avatar">
                           <img
                             src={avatarSrc(item.who)}
@@ -327,7 +353,7 @@ const sections: QaSection[] = [
           }
         </div>
 
-        <p class="p-crosstalk__cta">
+        <p class="p-crosstalk__cta" data-inview="fade">
           <a href={`${base}special/`} class="p-crosstalk__cta-link">
             スペシャルコンテンツ一覧を見る
             <span class="p-crosstalk__cta-icon" aria-hidden="true">

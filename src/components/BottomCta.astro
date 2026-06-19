@@ -8,7 +8,7 @@ const { basePath = "./" } = Astro.props;
 
 <section class="c-bottom-cta" aria-label="採用CTA">
   <div class="c-bottom-cta__inner">
-    <a class="c-bottom-cta__item" href={`${basePath}internship/`} aria-label="インターンシップ情報">
+    <a class="c-bottom-cta__item" href={`${basePath}internship/`} aria-label="インターンシップ情報" data-inview="fade" style="--inview-i: 0">
       <img
         class="c-bottom-cta__image"
         src={`${basePath}images/common/bnr_internship.png`}
@@ -23,6 +23,8 @@ const { basePath = "./" } = Astro.props;
       target="_blank"
       rel="noopener noreferrer"
       aria-label="採用エントリーはこちら"
+      data-inview="fade"
+      style="--inview-i: 1"
     >
       <img
         class="c-bottom-cta__image"

@@ -60,8 +60,8 @@
 
 ### スクリプト基盤
 
-- [ ] M2-S1 Lenis のスムーススクロール初期化を `src/scripts/lenis.ts` に実装し、`Layout.astro` から読み込む。
-- [ ] M2-S2 GSAP の共通セットアップ（`src/scripts/gsap.ts`）。ScrollTrigger の共通設定を用意。
+- [x] M2-S1 ~~Lenis のスムーススクロール初期化~~ → **不採用に確定（2026-06-19）**。納品制約（クライアントが生成物を手編集・FTP配布。重いランタイム依存を足さない）＋ユーザー確認により、Lenis は導入しない。スムーススクロールはブラウザ標準に委ねる（固定ヘッダー／ページ遷移シャッター／パララックスとの競合も回避）。
+- [x] M2-S2 ~~GSAP の共通セットアップ~~ → **不採用に確定（2026-06-19）**。スクロール出現・パララックス・各種演出はすべて**素のバニラ CSS＋IntersectionObserver＋rAF**で実装済み（[`_u-inview.scss`](../src/scss/object/utility/_u-inview.scss) ＋ [`main.js`](../public/js/main.js) の `initInview` / `initHeroReveals` / `initParallax` / `initCountUp`）。GSAP/ScrollTrigger は既存バニラ実装と二重化し納品物に重い依存を持ち込むため導入しない。ユーザー確認済み（「素のJSで実装できるならそれに越したことはない」）。
 - [ ] M2-S3 Swiper は使用セクションで個別初期化する方針を合意（共通化しない）。
 - [r] M2-S4 Person 一覧のクライアントサイドフィルター。**実装済み**：`src/scripts/person-filter.ts` ではなく [`public/js/main.js`](../public/js/main.js) の `initPersonFilter()`（`data-person-tags` による 7 種絞り込み＋空状態トグル）。
 - [r] M2-S5 全ページ共通のページ遷移アニメーション（斜めシアーシャッター）。**2026-06-09 実装**：[`public/js/main.js`](../public/js/main.js) の `initPageTransition()` ＋ [`_c-page-transition.scss`](../src/scss/object/component/_c-page-transition.scss)（[style.scss](../src/scss/style.scss) に `@use` 登録）、[Layout.astro](../src/layouts/Layout.astro) の `head` インラインガード＋`body` のシャッター/`.pt-page` ラッパー。参考サイト `~/Projects/sok-c.com/` の遷移を、納品制約に合わせ**バニラ CSS+JS** で移植。サイト内リンク遷移時にシアン2トーンの平行四辺形シャッターが左→右へスイープ（覆う→見せる）。詳細は下のセッションログ参照。
@@ -85,16 +85,16 @@
 
 ### アニメーション
 
-- [ ] M3-A1 Hero のタグライン／ムービーのフェードインアニメーション（GSAP）。
-- [ ] M3-A2 Hero のペンギン微小浮遊（GSAP `yoyo`）。
-- [ ] M3-A3 IceLinkButton のスクロール進入演出（ScrollTrigger）。
-- [ ] M3-A4 S6 カードの順次フェード（ScrollTrigger）。
+- [r] M3-A1 Hero のタグライン／ムービーのフェードイン。**2026-06-19 バニラ実装**：タグライン／本文は `initHeroReveals` ＋ 白バー keyframe（既存）。CONCEPT MOVIE は絶対配置のため座標を動かさない `data-inview="fade"`（不透明度のみ）でフェードイン（[index.astro](../src/pages/index.astro)）。※ GSAP は不採用（M2-S2 参照）。
+- [~] M3-A2 Hero のペンギン微小浮遊。**意図的に保留（2026-06-19）**：各羽の出現アニメ（`p-top-penguin-in-N`）は `both` で着地姿勢を保持しており、PC は rotate(0)・SP 版（`-sp`）は rotate(-17.96°/-5.99°）と着地角が異なる。浮遊を transform で重ねると着地角を壊す危険が高く、雲のドリフト強化で十分な空気感が出ているため見送り。実装する場合はラッパー要素を介して着地姿勢と分離すること。
+- [r] M3-A3 IceLinkButton のスクロール進入演出。**2026-06-19 バニラ実装**：`IceLinkButton` 等のホバー transform を持つ要素は `data-inview="fade"`（不透明度のみ）でスクロール進入。トップ＋strategy 地図＋各下層ページで適用。
+- [r] M3-A4 S6 カードの順次フェード。SPECIAL CONTENTS（[`SpecialContents.astro`](../src/components/SpecialContents.astro)）は既存の **`position: sticky` スタックスクロール演出＋ホバー（写真ズーム／矢印スライド）** で順次的に立ち上がるため、reveal は二重化回避で付与せず本タスクを充足とする。
 - [r] M3-A5 S3 帯の装飾氷キューブ（`.p-top-trio__cube--1〜4`）のスクロール視差（パララックス）。**2026-06-10 実装**：[`public/js/main.js`](../public/js/main.js) の `initParallax()`（汎用 `[data-parallax]` 機構・バニラ JS）。属性値が速度係数（正＝スクロールより遅い＝奥、負＝速い＝手前。現値 `-0.18 / 0.14 / 0.1 / -0.24`）で、「ビューポート中央と要素基準中央の差分 × 係数」を `translate3d` で適用（中央で変位 0 のため Figma 配置座標は不変）。rAF スロットル＋`prefers-reduced-motion` で無効化＋resize/load で基準再計測。SP はキューブ自体が `display:none` のため対象外。CDP 実機検証で 4 キューブが係数どおりの速度・方向で移動することを確認。
 
 ### アセット配置
 
 - [~] M3-A-1 トップページのアセットを [../public/images/top/](../public/images/top/) に配置（ap_01〜05 / cloud01〜03 / ice_cubes_01〜04 / bg-city / pioneer / top_penguins / section-bg-environment 等は配置済み。不足分は Figma から追加書き出し）。
-- [ ] M3-A-2 ロゴ 2 種を [../public/images/common/](../public/images/common/) に配置：ヘッダー用 `logo-hoshizaki.svg`（マーク）／フッター下部の大型ワードマーク（現状 CSS テキスト）。
+- [x] M3-A-2 ヘッダーロゴは `hoshizaki-logo-mark-header.png`（マーク・配置済み）を使用。**2026-06-19 クライアント確認**：旧案の `logo-hoshizaki.svg` は不要。フッター下部の大型ワードマークは現状 CSS テキストのまま据え置き。
 - [r] M3-A-3 共通バナー（`images/common/bnr_entry.png` / `bnr_internship.png` / `skelton-penguin.png`）配置済み。
 
 ---
@@ -543,15 +543,26 @@ dist/
 - **未対応・要確認**: SPECIAL CONTENTS 以降（SpecialContents／BottomCta／Footer）は共通コンポーネントのため未変更（Figma SP は 280×150 の小型カード案。クライアント確認待ち）。
 - **同日追記（クライアント指示反映）**: ①PC の PIONEER 見出し／採用メッセージ／trio 英字／「先輩たちの」を `--color-brand-cyan-deep`(#00a0e9) に統一（Figma と一致。SP 側の重複指定は削除）。②**Barlow Condensed Light(300) を追加** — `fonts/src/BarlowCondensed-Light.ttf`（google/fonts ofl）を取得し woff2 化、`public/css/fonts.css` に @font-face 追記、SP の PIONEER 見出しを weight 300 に変更。`fonts/regenerate.py` も 9 ウェイト対応済みだが、**スキル `~/.claude/skills/webfont-selfhost` が現環境に無く再生成は不可**（今回の woff2 は fontTools+brotli で既存と同仕様＝フルTTF→woff2 変換を直接実施。既存 8 ウェイトとカバレッジ一致を確認済み）。
 
+### 2026-06-19 セッション: サイト全体のインタラクティブアニメーション（全ページ・バニラ実装）
+
+- **着手範囲**: ユーザー指示「サイト全体にインタラクティブなアニメーション（ポップでおしゃれに）」。**方針確認の結果、GSAP / Lenis は不採用とし、既存のバニラ基盤を全面拡張する方向に確定**（納品制約＝クライアントが生成物を手編集・FTP配布／重い依存を足さない。ユーザー明言「素のJSで実装できるならそれに越したことはない」）。M2-S1／M2-S2 を「不採用」、M3-A1／A3／A4 を実装済みに更新。
+- **① スクロール出現（reveal）を全28ページへ展開**: 既存の `[data-inview]` 基盤（[`_u-inview.scss`](../src/scss/object/utility/_u-inview.scss) ＋ `main.js` の `initInview`）は従来トップのみだったが、下層13ページ＋共通コンポーネントに展開。バリアントを追加（`pop`＝拡大しながら出現／`left`・`right`＝横スライド／既存 `fade`）。**:hover で transform を使う要素（リンク／ボタン／静的 skew・rotate・translate を持つバッジや見出し）は必ず `fade`** にして変形リセットによる位置崩れを回避（並列実装の検証段で strategy バッジ・project/special-talk/internship のキッカー・見出しの transform 競合を検出・修正済み）。dist 集計: 既定264 / fade98 / pop36 / left31 / right1。
+- **共通コンポーネントへ中央集約**: [`PageHero`](../src/components/PageHero.astro)・[`SectionHeading`](../src/components/SectionHeading.astro)・[`IceHeading`](../src/components/IceHeading.astro) の見出しに stagger 付き reveal、[`BottomCta`](../src/components/BottomCta.astro) のバナーに `fade` reveal ＋ホバーズーム（[`_c-bottom-cta.scss`](../src/scss/object/component/_c-bottom-cta.scss)）。これで全ページのヒーロー／見出し／末尾 CTA が一貫して出現演出される。
+- **② トップ背景雲を常時浮遊に強化**（[`_p-top.scss`](../src/scss/object/project/_p-top.scss)）: 旧 `from→to` の alternate 往復から、**4点を巡る閉ループ（0%==100% で必ず Figma 原点へ戻る）＋微小スケールの呼吸感**へ刷新。雲ごとに周期(19〜28s)・振幅(±2〜3%)・向きを変えて非同期。`prefers-reduced-motion` で静止。
+- **③ 数値カウントアップ**: `main.js` に `initCountUp()` を新規実装（IntersectionObserver で進入時に 0→実値、カンマ・小数を復元、easeOutCubic、低モーション/IO非対応では実値即表示）。fact の主要統計13箇所に `data-countup` 付与（年号 `1947`・`No.1` は除外）。
+- **その他**: M3-A1 ＝ CONCEPT MOVIE を `fade` でフェードイン（絶対配置のため座標不変）。M3-A2 ペンギン浮遊は着地姿勢（PC/SP で角度差）を壊す危険のため意図的保留。`logo-hoshizaki.svg` はクライアント確認で不要と確定し docs から撤去（実装は `hoshizaki-logo-mark-header.png`）。
+- **実装手法**: 共通基盤（SCSS バリアント・コンポーネント reveal・雲・count-up JS・fact 属性）を先に手実装→ビルド検証。下層13ページの `data-inview` 付与は**ワークフロー（1エージェント=1ファイルの適用→別エージェントが規約遵守・JSX妥当性・transform競合を検証し小修正）で並列実行**。検証段が transform 競合4件を自動修正。
+- **検証**: `npm run build` **28ページ クリーンビルド**。`data-astro-cid`＝0、ルート絶対パス＝0、インライン `<style>`＝0、ファイル名ハッシュ無し。全28ページに `[data-inview]` 出力、`inview-ready` ガード健全、fact に `data-countup`×13。`node --check public/js/main.js` OK。※ ブラウザ実機での目視（出現タイミング・カウントアップの体感）はアセット入稿後の `npm run preview` で要確認。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。
-   - 特に必須：`public/images/common/logo-hoshizaki.svg`（ヘッダーロゴ／不在時は CSS フォールバックの "HOSHIZAKI" テキストが表示される）。
+   - ヘッダーロゴは `public/images/common/hoshizaki-logo-mark-header.png` を使用（配置済み）。旧案の `logo-hoshizaki.svg` は **2026-06-19 にクライアント確認で不要と確定**。不在時は CSS フォールバックの "HOSHIZAKI" テキストが表示される。
 2. **ブラウザ目視確認（M4-6 / M4-8）** — `npm run preview` で実機レイアウトを確認。アセット入稿後でないと意味のある検証にならない。
 3. **クライアント仕様確認（M5-4 / M5-5 / M5-6 / M5-7）** — Footer の SPECIAL タイトル正式名称、Internship v1/v2 の正版、採用メッセージの写真方針、Strategy 飲食市場本文。
 4. ~~**Web フォントのローカル化（M2-F4）**~~ — **2026-06-09 完了**。Google Fonts CDN を撤去しセルフホスト化（`public/fonts/` woff2 ＋ `public/css/fonts.css`）。詳細は M2-F4 ／ [`fonts/README.md`](../fonts/README.md)。
-5. **JS 基盤（M2-S1〜S2）** — Lenis / GSAP は未着手。※ Swiper（M2-S3）は vendored（`public/js|css/swiper-bundle.min.*`）で internship／environment が個別初期化済み、Person フィルター（M2-S4）も `public/js/main.js` の `initPersonFilter()` で実装済み。実装済み挙動は `main.js` の `init()` に集約（`initDrawer` / `initPersonFilter` / `initInternship` / `initOfficeTour` / `initPageTransition`〔M2-S5・全ページ遷移アニメ〕/ `initMovieModal`〔トップのコンセプトムービー〕）。
-6. **アニメーション（M3-A1〜A4）** — トップページの GSAP アニメーション。アセット入稿後に着手。
+5. ~~**JS 基盤（M2-S1〜S2）** — Lenis / GSAP は未着手~~ → **2026-06-19 方針確定：Lenis / GSAP は不採用**（納品制約＋ユーザー確認。M2-S1／M2-S2 参照）。サイトのアニメーションはすべて素のバニラで実装。※ Swiper（M2-S3）は vendored（`public/js|css/swiper-bundle.min.*`）で internship／environment が個別初期化済み、Person フィルター（M2-S4）も `public/js/main.js` の `initPersonFilter()` で実装済み。実装済み挙動は `main.js` の `init()` に集約（`initDrawer` / `initHeaderScroll` / `initPersonFilter` / `initInternship` / `initOfficeTour` / `initPageTransition`〔M2-S5・全ページ遷移アニメ〕/ `initMovieModal` / `initInview` / `initHeroReveals` / `initParallax` / `initCountUp`）。
+6. ~~**アニメーション（M3-A1〜A4）**~~ → **2026-06-19 バニラで実装完了**（M3-A1／A3／A4 ＝ `[r]`、M3-A2 ペンギン浮遊のみ意図的保留）。加えて**全28ページにスクロール出現（`[data-inview]`）を展開**、トップ背景雲を常時浮遊に強化、fact 統計に数値カウントアップを実装。詳細は下記 2026-06-19 セッションログ。
 7. ~~**共通化リファクタ候補** — `IceLinkButton.astro`（M2-C4）~~ — **2026-06-11 完了**。`IceLinkButton.astro` ＋ `_c-ice-link.scss` に共通化（トップ 6 個＋strategy 地図 7 個）。※ SPECIAL CONTENTS は `SpecialContents.astro` で共通化済み（M2-C8／M2-C13 完了）。
 
 ### 開始時に走らせるコマンド

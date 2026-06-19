@@ -66,8 +66,8 @@ const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.png$/i, ".j
           <div class="p-person-detail__flow">
             <section class="p-person-detail__split">
               <div class="p-person-detail__left">
-                <p class="p-person-detail__label">Person</p>
-                <h1 class="p-person-detail__title">
+                <p class="p-person-detail__label" data-inview style="--inview-i: 0">Person</p>
+                <h1 class="p-person-detail__title" data-inview style="--inview-i: 1">
                   {
                     person.title.map((line, i) => (
                       <>
@@ -78,7 +78,7 @@ const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.png$/i, ".j
                   }
                 </h1>
 
-                <div class="p-person-detail__meta">
+                <div class="p-person-detail__meta" data-inview style="--inview-i: 2">
                   <span class="p-person-detail__meta-name">{person.initials}</span>
                   <span class="p-person-detail__meta-item">{jobType}</span>
                   <span class="p-person-detail__meta-item">{entry}</span>
@@ -89,8 +89,8 @@ const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.png$/i, ".j
 
                 <div class="p-person-detail__qa-list">
                   {
-                    person.qa.map((block) => (
-                      <div class="p-person-detail__qa">
+                    person.qa.map((block, i) => (
+                      <div class="p-person-detail__qa" data-inview style={`--inview-i: ${i}`}>
                         <p class="p-person-detail__q">
                           <span class="p-person-detail__q-tick" aria-hidden="true" />
                           {block.question}
@@ -113,7 +113,7 @@ const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.png$/i, ".j
 
             <!-- Back to list -->
             <div class="p-person-detail__list">
-              <a class="p-person-detail__list-btn" href="../">
+              <a class="p-person-detail__list-btn" href="../" data-inview="fade">
                 <span class="p-person-detail__list-label">社員インタビュー一覧を見る</span>
                 <span class="p-person-detail__list-chevron" aria-hidden="true">
                   <svg

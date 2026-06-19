@@ -10,17 +10,22 @@
 //   prefers-reduced-motion 非該当かつ IntersectionObserver 対応時のみ。
 //   → JS 無効・低モーション設定では隠さず即表示（コンテンツが消えない）。
 //
-//   使い方:
-//     data-inview            … フェード + 上昇（transform を持たない要素向け）
+//   使い方（バリアント = data-inview の値）:
+//     data-inview            … フェード + 下から上昇（既定。transform 不使用の要素向け）
 //     data-inview="fade"     … フェードのみ（hover 等で transform を使う
 //                              アイスリンクボタン等向け。transform は触らない）
+//     data-inview="pop"      … 少し小さい状態から拡大しながらポンッと出現（見せ場の図版・数値向け）
+//     data-inview="left"     … 左からスライドイン（画像＋テキストの交互行などに）
+//     data-inview="right"    … 右からスライドイン
 //     style="--inview-i: 2"  … 同じ塊の中での表示順（スタッガー段数。0 始まり）
 //
 //   調整用カスタムプロパティ（任意で上書き可）:
-//     --inview-rise     上昇量（既定 2.4rem）
-//     --inview-duration 所要時間（既定 0.8s）
-//     --inview-stagger  1 段あたりの遅延（既定 0.09s）
-//     --inview-ease     イージング（既定 cubic-bezier(0.22, 1, 0.36, 1)）
+//     --inview-rise      上昇量（既定 2.4rem）
+//     --inview-shift     左右スライド量（既定 3rem）
+//     --inview-pop-scale ポップ時の開始スケール（既定 0.92）
+//     --inview-duration  所要時間（既定 0.8s）
+//     --inview-stagger   1 段あたりの遅延（既定 0.09s）
+//     --inview-ease      イージング（既定 cubic-bezier(0.22, 1, 0.36, 1)）
 // ============================================
 
 .inview-ready [data-inview] {
@@ -30,7 +35,8 @@
   opacity: 1;
 }
 
-// 既定: フェード + 下からの上昇
+// フェード + 変形（既定 = 下からの上昇）。fade 以外のすべてに
+// 共通の transition と「出現完了で transform を素に戻す」を適用する。
 .inview-ready [data-inview]:not([data-inview="fade"]) {
   transform: translateY(var(--inview-rise, 2.4rem));
   transition:
@@ -43,7 +49,20 @@
   will-change: opacity, transform;
 }
 .inview-ready [data-inview]:not([data-inview="fade"]).is-inview {
-  transform: translateY(0);
+  transform: none;
+}
+
+// バリアントごとの開始位置（出現前の transform を上書き）。
+// pop: わずかに上昇しつつ縮小状態から拡大して「ポンッ」と出す。
+.inview-ready [data-inview="pop"] {
+  transform: translateY(calc(var(--inview-rise, 2.4rem) * 0.4))
+    scale(var(--inview-pop-scale, 0.92));
+}
+.inview-ready [data-inview="left"] {
+  transform: translateX(calc(-1 * var(--inview-shift, 3rem)));
+}
+.inview-ready [data-inview="right"] {
+  transform: translateX(var(--inview-shift, 3rem));
 }
 
 // フェードのみ: transform は要素自身の hover 等に委ねる（競合回避）。

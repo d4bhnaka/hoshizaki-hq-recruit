@@ -192,7 +192,7 @@ const offices: OfficeBlock[] = [
     <main class="l-main">
       <article class="p-env">
         <PageHero en="Environment" ja="はたらく環境を知る" variant="cloud" jaSize="lg">
-          <div class="p-env__fv">
+          <div class="p-env__fv" data-inview="pop">
             <img
               src={`${base}images/environment/page-fv.png`}
               alt="ホシザキ本社（愛知県豊明市）の外観"
@@ -214,7 +214,7 @@ const offices: OfficeBlock[] = [
               id="env-training"
             />
 
-            <figure class="p-env-matrix">
+            <figure class="p-env-matrix" data-inview="pop">
               <img
                 src={`${base}images/environment/training-system.png`}
                 alt="教育研修体系図。キャリアステージ（役員/部長・課長・係長/主任・若手/新入社員・全階層共通）ごとに、階層別研修・幹部人材育成・女性活躍推進・能力開発の研修を整理した一覧。"
@@ -226,8 +226,8 @@ const offices: OfficeBlock[] = [
 
             <ul class="p-env-training">
               {
-                trainingCards.map((card) => (
-                  <li class="p-env-training__item">
+                trainingCards.map((card, i) => (
+                  <li class="p-env-training__item" data-inview style={`--inview-i: ${i}`}>
                     <div class="p-env-training__body">
                       <h3 class="p-env-training__title">
                         <img
@@ -265,8 +265,8 @@ const offices: OfficeBlock[] = [
 
             <ul class="p-env-benefits">
               {
-                benefits.map((item) => (
-                  <li class="p-env-benefits__item">
+                benefits.map((item, i) => (
+                  <li class="p-env-benefits__item" data-inview style={`--inview-i: ${i % 4}`}>
                     <span class="p-env-benefits__icon" set:html={benefitIcons[item.icon]} />
                     <h3 class="p-env-benefits__title">{item.title}</h3>
                     <p class="p-env-benefits__text">{item.body}</p>

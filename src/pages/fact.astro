@@ -33,7 +33,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
 
         <!-- Intro -->
         <section class="p-fact__intro">
-          <p class="p-fact__intro-text">
+          <p class="p-fact__intro-text" data-inview>
             街中で見かける「ペンギンマーク」。その親しみやすさの裏側には、あなたの想像を超えるダイナミックな世界が広がっています。<br
             />
             製氷機国内シェアNo.1という盤石な基盤、世界五大陸を舞台にしたグローバルな躍進、そして一人ひとりの挑戦を支える確かな環境。<br
@@ -45,7 +45,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
         <!-- Section A: Growth -->
         <section class="p-fact__section" aria-labelledby="fact-growth-title">
           <div class="p-fact__inner">
-            <header class="p-fact__heading" id="fact-growth-title">
+            <header class="p-fact__heading" id="fact-growth-title" data-inview>
               <p class="p-fact__heading-title">
                 <img
                   class="p-fact__heading-mark"
@@ -67,6 +67,8 @@ const img = (name: string) => `${base}images/fact/${name}`;
                 <!-- 歴史 -->
                 <article
                   class="c-stat-card c-stat-card--history c-stat-card--short"
+                  data-inview="pop"
+                  style="--inview-i: 0"
                 >
                   <span class="c-stat-card__label">歴史</span>
                   <img
@@ -87,6 +89,8 @@ const img = (name: string) => `${base}images/fact/${name}`;
                 <!-- 受賞歴 / 製品の評価 -->
                 <article
                   class="c-stat-card c-stat-card--award c-stat-card--tall"
+                  data-inview="pop"
+                  style="--inview-i: 1"
                 >
                   <span class="c-stat-card__label">製品の評価</span>
                   <img
@@ -98,7 +102,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
                   <div class="c-stat-card__main">
                     <p class="c-stat-card__sub">受賞回数</p>
                     <p class="c-stat-card__figure">
-                      <span class="c-stat-card__num">15</span>
+                      <span class="c-stat-card__num" data-countup>15</span>
                       <span class="c-stat-card__unit">回</span>
                     </p>
                   </div>
@@ -107,11 +111,13 @@ const img = (name: string) => `${base}images/fact/${name}`;
                 <!-- 社員数 -->
                 <article
                   class="c-stat-card c-stat-card--staff c-stat-card--mid"
+                  data-inview="pop"
+                  style="--inview-i: 2"
                 >
                   <span class="c-stat-card__label">社員数</span>
                   <div class="c-stat-card__main">
                     <p class="c-stat-card__figure">
-                      <span class="c-stat-card__num">1,157</span>
+                      <span class="c-stat-card__num" data-countup>1,157</span>
                       <span class="c-stat-card__suffix">名（単体）</span>
                     </p>
                     <span class="c-stat-card__people" aria-hidden="true">
@@ -128,6 +134,8 @@ const img = (name: string) => `${base}images/fact/${name}`;
                 <!-- 業界シェア No.1 -->
                 <article
                   class="c-stat-card c-stat-card--share c-stat-card--tall"
+                  data-inview="pop"
+                  style="--inview-i: 0"
                 >
                   <span class="c-stat-card__label">業界シェア</span>
                   <img
@@ -155,6 +163,8 @@ const img = (name: string) => `${base}images/fact/${name}`;
                 <!-- 売上高 -->
                 <article
                   class="c-stat-card c-stat-card--sales c-stat-card--short"
+                  data-inview="pop"
+                  style="--inview-i: 1"
                 >
                   <span class="c-stat-card__label">売上高</span>
                   <img
@@ -165,9 +175,9 @@ const img = (name: string) => `${base}images/fact/${name}`;
                   />
                   <div class="c-stat-card__main">
                     <p class="c-stat-card__figure c-stat-card__figure--sales">
-                      <span class="c-stat-card__num">4,858</span><span
+                      <span class="c-stat-card__num" data-countup>4,858</span><span
                         class="c-stat-card__unit">億</span
-                      ><span class="c-stat-card__num">9,000</span><span
+                      ><span class="c-stat-card__num" data-countup>9,000</span><span
                         class="c-stat-card__unit">万円</span
                       ><span class="c-stat-card__suffix">（連結）</span>
                     </p>
@@ -177,6 +187,8 @@ const img = (name: string) => `${base}images/fact/${name}`;
                 <!-- 国内ネットワーク -->
                 <article
                   class="c-stat-card c-stat-card--domestic c-stat-card--mid"
+                  data-inview="pop"
+                  style="--inview-i: 2"
                 >
                   <span class="c-stat-card__label">国内ネットワーク</span>
                   <img
@@ -187,7 +199,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
                   />
                   <div class="c-stat-card__main">
                     <p class="c-stat-card__figure c-stat-card__figure--stack">
-                      <span class="c-stat-card__num">427</span>
+                      <span class="c-stat-card__num" data-countup>427</span>
                       <span class="c-stat-card__unit">ヶ所の営業拠点</span>
                     </p>
                   </div>
@@ -199,6 +211,8 @@ const img = (name: string) => `${base}images/fact/${name}`;
                 <!-- 製品機種 -->
                 <article
                   class="c-stat-card c-stat-card--products c-stat-card--short"
+                  data-inview="pop"
+                  style="--inview-i: 0"
                 >
                   <span class="c-stat-card__label">製品機種</span>
                   <span class="c-stat-card__products" aria-hidden="true">
@@ -209,7 +223,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
                   </span>
                   <div class="c-stat-card__main">
                     <p class="c-stat-card__figure">
-                      <span class="c-stat-card__num">600</span>
+                      <span class="c-stat-card__num" data-countup>600</span>
                       <span class="c-stat-card__unit">種以上</span>
                     </p>
                   </div>
@@ -218,6 +232,8 @@ const img = (name: string) => `${base}images/fact/${name}`;
                 <!-- 海外売上比率 -->
                 <article
                   class="c-stat-card c-stat-card--overseas c-stat-card--tall"
+                  data-inview="pop"
+                  style="--inview-i: 1"
                 >
                   <span class="c-stat-card__label">海外売上比率</span>
                   <div class="c-stat-card__main">
@@ -232,7 +248,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
                       >
                     </div>
                     <p class="c-stat-card__figure">
-                      <span class="c-stat-card__num">45.9</span>
+                      <span class="c-stat-card__num" data-countup>45.9</span>
                       <span class="c-stat-card__unit c-stat-card__unit--pct"
                         >％</span
                       >
@@ -243,6 +259,8 @@ const img = (name: string) => `${base}images/fact/${name}`;
                 <!-- グローバル展開 -->
                 <article
                   class="c-stat-card c-stat-card--global c-stat-card--mid"
+                  data-inview="pop"
+                  style="--inview-i: 2"
                 >
                   <span class="c-stat-card__label">グローバル展開</span>
                   <img
@@ -254,7 +272,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
                   <div class="c-stat-card__main">
                     <p class="c-stat-card__figure c-stat-card__figure--global">
                       <span class="c-stat-card__prefix">世界</span>
-                      <span class="c-stat-card__num">120</span>
+                      <span class="c-stat-card__num" data-countup>120</span>
                       <span class="c-stat-card__unit c-stat-card__unit--stack"
                         >ヶ国以上の<br />ネットワーク</span
                       >
@@ -264,7 +282,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
               </div>
             </div>
 
-            <p class="p-fact__note">
+            <p class="p-fact__note" data-inview>
               <span class="p-fact__note-ref">※</span>製氷機の国内シェアNo.1は自社調べ（2022年度）によるものです。
             </p>
           </div>
@@ -273,7 +291,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
         <!-- Section B: Benefits -->
         <section class="p-fact__section" aria-labelledby="fact-benefits-title">
           <div class="p-fact__inner">
-            <header class="p-fact__heading" id="fact-benefits-title">
+            <header class="p-fact__heading" id="fact-benefits-title" data-inview>
               <p class="p-fact__heading-title">
                 <img
                   class="p-fact__heading-mark"
@@ -293,6 +311,8 @@ const img = (name: string) => `${base}images/fact/${name}`;
               <!-- 平均勤続年数 -->
               <article
                 class="c-stat-card c-stat-card--benefit c-benefit--tenure"
+                data-inview="pop"
+                style="--inview-i: 0"
               >
                 <span class="c-stat-card__label">平均勤続年数</span>
                 <div class="c-benefit__row">
@@ -303,7 +323,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
                     aria-hidden="true"
                   />
                   <p class="c-stat-card__figure">
-                    <span class="c-stat-card__num">17.5</span>
+                    <span class="c-stat-card__num" data-countup>17.5</span>
                     <span class="c-stat-card__unit">年</span>
                   </p>
                 </div>
@@ -315,11 +335,13 @@ const img = (name: string) => `${base}images/fact/${name}`;
               <!-- 平均残業時間 -->
               <article
                 class="c-stat-card c-stat-card--benefit c-benefit--overtime"
+                data-inview="pop"
+                style="--inview-i: 1"
               >
                 <span class="c-stat-card__label">平均残業時間</span>
                 <div class="c-benefit__row">
                   <p class="c-stat-card__figure">
-                    <span class="c-stat-card__num">13.1</span>
+                    <span class="c-stat-card__num" data-countup>13.1</span>
                     <span class="c-stat-card__unit">時間 / 月</span>
                   </p>
                   <img
@@ -337,11 +359,13 @@ const img = (name: string) => `${base}images/fact/${name}`;
               <!-- 有給休暇取得率 -->
               <article
                 class="c-stat-card c-stat-card--benefit c-benefit--vacation"
+                data-inview="pop"
+                style="--inview-i: 2"
               >
                 <span class="c-stat-card__label">有給休暇取得率</span>
                 <div class="c-benefit__row">
                   <p class="c-stat-card__figure">
-                    <span class="c-stat-card__num">68.4</span>
+                    <span class="c-stat-card__num" data-countup>68.4</span>
                     <span class="c-stat-card__unit c-stat-card__unit--pct"
                       >％</span
                     >
@@ -361,12 +385,14 @@ const img = (name: string) => `${base}images/fact/${name}`;
               <!-- 育児休暇取得率 -->
               <article
                 class="c-stat-card c-stat-card--benefit c-benefit--childcare"
+                data-inview="pop"
+                style="--inview-i: 3"
               >
                 <span class="c-stat-card__label">育児休暇取得率</span>
                 <div class="c-benefit__row c-benefit__split">
                   <p class="c-stat-card__figure">
                     <span class="c-stat-card__figure-label">女性</span>
-                    <span class="c-stat-card__num">100</span>
+                    <span class="c-stat-card__num" data-countup>100</span>
                     <span class="c-stat-card__unit c-stat-card__unit--pct"
                       >％</span
                     >
@@ -379,7 +405,7 @@ const img = (name: string) => `${base}images/fact/${name}`;
                   />
                   <p class="c-stat-card__figure">
                     <span class="c-stat-card__figure-label">男性</span>
-                    <span class="c-stat-card__num">51.9</span>
+                    <span class="c-stat-card__num" data-countup>51.9</span>
                     <span class="c-stat-card__unit c-stat-card__unit--pct"
                       >％</span
                     >

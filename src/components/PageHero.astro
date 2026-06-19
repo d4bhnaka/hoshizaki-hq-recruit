@@ -31,8 +31,8 @@ const style = bg ? `background-image: url('${bg}');` : undefined;
 >
   <div class="c-page-hero__inner">
     <h1 class="c-page-hero__title">
-      <span class="c-page-hero__en">{en}</span>
-      {ja && <span class="c-page-hero__ja">{ja}</span>}
+      <span class="c-page-hero__en" data-inview style="--inview-i: 0">{en}</span>
+      {ja && <span class="c-page-hero__ja" data-inview style="--inview-i: 1">{ja}</span>}
     </h1>
     <slot />
   </div>

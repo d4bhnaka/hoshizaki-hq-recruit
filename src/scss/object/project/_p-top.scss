@@ -88,17 +88,18 @@
 
   // ── 出現＋漂いアニメーション ──
   // 出現: ゆっくりフェードイン（透明 → Figma の不透明度 0.8 へ）。
-  // その後: 自身のサイズ基準で 1〜2% だけ往復する、ごくゆっくりした漂い。
+  // その後: 自身のサイズ基準で 2〜3% ほどを、止まることなくゆっくり回遊する
+  // 「ふわふわ」とした常時ドリフト（4 点を巡る閉ループ。必ず Figma 原点へ戻る）。
   // 周期・振幅・向きは雲ごとに変え、同期して見えないようにする。
   --cloud-in-duration: 3.6s;
   --cloud-in-delay: 0s;
-  --cloud-drift-duration: 22s;
-  --cloud-drift-x: 1.6%;
-  --cloud-drift-y: -1%;
+  --cloud-drift-duration: 24s;
+  --cloud-drift-x: 2.4%;
+  --cloud-drift-y: -1.6%;
   animation:
     p-top-cloud-in var(--cloud-in-duration) ease-out var(--cloud-in-delay) both,
     p-top-cloud-drift var(--cloud-drift-duration) ease-in-out
-      var(--cloud-in-delay) infinite alternate;
+      var(--cloud-in-delay) infinite;
 }
 
 // Group 2188 (296:10806) x-667.39 y668.24 w1022.89 — 左端で見切れる雲
@@ -106,9 +107,9 @@
   left: -41.7116%;
   top: 26.083%;
   width: 63.9304%;
-  --cloud-drift-duration: 26s;
-  --cloud-drift-x: 1.8%;
-  --cloud-drift-y: -0.9%;
+  --cloud-drift-duration: 28s;
+  --cloud-drift-x: 2.6%;
+  --cloud-drift-y: -1.4%;
 }
 // Group 2286 (296:9053) x779 y601 w1185.11 — 右中央・ペンギンの背後
 .p-top-hero__cloud--center {
@@ -116,9 +117,9 @@
   top: 23.458%;
   width: 74.0694%;
   --cloud-in-delay: 0.5s;
-  --cloud-drift-duration: 21s;
-  --cloud-drift-x: -1.4%;
-  --cloud-drift-y: 1.1%;
+  --cloud-drift-duration: 22s;
+  --cloud-drift-x: -2.2%;
+  --cloud-drift-y: 1.8%;
 }
 // Group 2184 (296:7300) x1179.34 y1405.81 w924.66 — 右下・都市の上に重なる
 .p-top-hero__cloud--right {
@@ -126,9 +127,9 @@
   top: 54.872%;
   width: 57.7912%;
   --cloud-in-delay: 1s;
-  --cloud-drift-duration: 17s;
-  --cloud-drift-x: 1.5%;
-  --cloud-drift-y: -1.2%;
+  --cloud-drift-duration: 19s;
+  --cloud-drift-x: 2.4%;
+  --cloud-drift-y: -2%;
 }
 
 // SP 用の雲 2 つ (Figma top_sp 431:2945 / 431:1191 = Group 2184 を hero-cloud.png で再現)。
@@ -145,14 +146,35 @@
   }
 }
 
-// 漂い。alternate 往復なので必ず Figma の原点位置に戻ってくる。
+// 漂い。4 点を巡る閉ループ（0%==100% で必ず Figma の原点位置に戻る）。
 // translate は要素サイズ基準(%)なのでレスポンシブでも振幅バランスを保つ。
+// ごく僅かな scale で「ふわっと膨らむ」呼吸感を添える。
 @keyframes p-top-cloud-drift {
-  from {
-    transform: translate3d(0, 0, 0);
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
   }
-  to {
-    transform: translate3d(var(--cloud-drift-x), var(--cloud-drift-y), 0);
+  20% {
+    transform: translate3d(var(--cloud-drift-x), var(--cloud-drift-y), 0)
+      scale(1.015);
+  }
+  45% {
+    transform: translate3d(
+        calc(var(--cloud-drift-x) * 0.3),
+        calc(var(--cloud-drift-y) * -0.9),
+        0
+      )
+      scale(1.008);
+  }
+  70% {
+    transform: translate3d(
+        calc(var(--cloud-drift-x) * -0.7),
+        calc(var(--cloud-drift-y) * 0.6),
+        0
+      )
+      scale(1.012);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 

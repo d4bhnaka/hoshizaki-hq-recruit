@@ -185,10 +185,10 @@ const pioneers = [
         <!-- Intro -->
         <section class="p-strategy-intro" aria-labelledby="strategy-intro-title">
           <div class="p-strategy-intro__inner">
-            <h2 class="p-strategy-intro__lead" id="strategy-intro-title">
+            <h2 class="p-strategy-intro__lead" id="strategy-intro-title" data-inview style="--inview-i: 0">
               ホシザキの挑戦は、飲食業界にとどまらず、<br />新たな領域へ広がっています。
             </h2>
-            <p class="p-strategy-intro__text">
+            <p class="p-strategy-intro__text" data-inview style="--inview-i: 1">
               ホシザキは、製氷機や業務用冷蔵庫などで国内トップクラスのシェアを誇る総合フードサービス機器メーカーです。しかし、私たちのフィールドは飲食業界だけにとどまりません。医療や農業など、社会課題を解決する新たな領域への挑戦。そして、海外売上が約半数を占めるグローバル展開。私たちは既存の常識を打ち破り、世界規模で次世代の「食のインフラ」を創り出しています。
             </p>
           </div>
@@ -198,11 +198,11 @@ const pioneers = [
         <section class="p-strategy-field" aria-labelledby="strategy-field-title">
           <div class="p-strategy-field__inner">
             <SectionHeading en="Business Field" ja="事業領域" id="strategy-field-title" />
-            <p class="p-strategy-field__intro">
+            <p class="p-strategy-field__intro" data-inview>
               飲食店の厨房を支え続けてきた確かな技術力。私たちは今、その強みを武器に「未知の事業領域」へと進出しています。医療・福祉や第一次産業など、その技術を応用して社会課題の解決へ。同時にグローバル市場においては、当社の代名詞である「製氷機」に次ぐ第二・第三の柱として、地域ごとの課題に合わせた冷蔵庫や食器洗浄機の拡販ネットワークを急速に広げています。既存の枠組みを超え、常に新しい市場を開拓し続けるのがホシザキのビジネスです。
             </p>
 
-            <div class="p-strategy-field__card">
+            <div class="p-strategy-field__card" data-inview="pop">
               <p class="p-strategy-field__card-title">国内での飲食市場と飲食外市場の売上高割合</p>
 
               <div class="p-strategy-field__ratio" role="img" aria-label={`飲食市場 ${ratio.food.pct}%、飲食外市場 ${ratio.beyond.pct}%`}>
@@ -234,7 +234,7 @@ const pioneers = [
               </div>
             </div>
 
-            <div class="p-strategy-field__people">
+            <div class="p-strategy-field__people" data-inview>
               <img
                 class="p-strategy-field__people-img"
                 src={`${base}images/strategy/people-illust.png`}
@@ -254,8 +254,8 @@ const pioneers = [
         <section class="p-strategy-global" aria-labelledby="strategy-global-title">
           <div class="p-strategy-global__inner">
             <SectionHeading en="Global Market" ja="海外展開" id="strategy-global-title" />
-            <p class="p-strategy-global__subtitle">五大陸をつなぐ、世界No.1ブランドへ</p>
-            <p class="p-strategy-global__intro">
+            <p class="p-strategy-global__subtitle" data-inview style="--inview-i: 0">五大陸をつなぐ、世界No.1ブランドへ</p>
+            <p class="p-strategy-global__intro" data-inview style="--inview-i: 1">
               ホシザキを、日本を代表する厨房機器メーカーだと思っているなら、それはまだ半分の姿にすぎません。現在、私たちの舞台は世界60カ国以上。海外売上比率は50％に迫り、名実ともにグローバル企業へと進化を遂げました。しかし、私たちが海を越えて届けているのは、単に「日本でつくられた製品」ではありません。湿度、電圧、水質、そして何よりその土地に根付く独自の「食文化」。世界中の多種多様なニーズを汲み取り、現地で開発し、現地で支える。「Global HOSHIZAKI」が追求するのは、その街の、その厨房の、かけがえのないパートナーになることです。常識を跳び越え、世界のスタンダードを塗り替えていく。その最前線を紹介します。
             </p>
 
@@ -313,8 +313,8 @@ const pioneers = [
 
             <ul class="p-strategy-global__markets">
               {
-                globalMarkets.map((market) => (
-                  <li class="p-strategy-market" id={market.id}>
+                globalMarkets.map((market, i) => (
+                  <li class="p-strategy-market" id={market.id} data-inview style={`--inview-i: ${i % 4}`}>
                     <span class="p-strategy-market__badge">{market.title}</span>
                     <p class="p-strategy-market__body">{market.body}</p>
                   </li>
@@ -327,11 +327,11 @@ const pioneers = [
         <!-- Global Pioneers / Life Across Borders -->
         <section class="p-strategy-pioneers" aria-labelledby="strategy-pioneers-title">
           <div class="p-strategy-pioneers__inner">
-            <header class="p-strategy-pioneers__heading" id="strategy-pioneers-title">
+            <header class="p-strategy-pioneers__heading" id="strategy-pioneers-title" data-inview="pop">
               <h2 class="p-strategy-pioneers__en">Life Across Borders</h2>
               <p class="p-strategy-pioneers__ja">国境を越えて、働く。暮らす。</p>
             </header>
-            <p class="p-strategy-pioneers__intro">
+            <p class="p-strategy-pioneers__intro" data-inview>
               フィリピン、イギリス、アメリカ。ホシザキの社員は、世界のさまざまな場所で、それぞれの毎日を送っています。<br />
               言葉も文化も違う環境で、現地の仲間とどんな関係を築き、どんなふうに働き、休日をどう過ごしているのか。<br />
               「世界No.1ブランド」を目指す挑戦の裏側には、その土地に根を下ろした等身大の働き方と暮らしがあります。<br />
@@ -342,10 +342,14 @@ const pioneers = [
               {
                 pioneers.map((pioneer) => (
                   <li class="p-strategy-pioneers__card">
-                    <span class="p-strategy-market__badge p-strategy-pioneers__badge">{pioneer.market}</span>
+                    <span class="p-strategy-market__badge p-strategy-pioneers__badge" data-inview="fade">{pioneer.market}</span>
                     <div class="p-strategy-pioneers__topics">
-                      {pioneer.topics.map((topic) => (
-                        <div class={`p-strategy-pioneers__topic${topic.image ? " p-strategy-pioneers__topic--media" : ""}`}>
+                      {pioneer.topics.map((topic, ti) => (
+                        <div
+                          class={`p-strategy-pioneers__topic${topic.image ? " p-strategy-pioneers__topic--media" : ""}`}
+                          data-inview
+                          style={`--inview-i: ${ti}`}
+                        >
                           <div class="p-strategy-pioneers__topic-main">
                             <h3 class="p-strategy-pioneers__topic-heading">{topic.heading}</h3>
                             <p class="p-strategy-pioneers__body">{topic.body}</p>

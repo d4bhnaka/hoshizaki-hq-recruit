@@ -133,7 +133,7 @@ const groups: JobGroup[] = [
 
         <!-- Intro copy -->
         <section class="p-job__intro" aria-label="イントロダクション">
-          <p class="p-job__intro-text">
+          <p class="p-job__intro-text" data-inview>
             ホシザキグループは、最前線でお客様を支える「販売会社」と、グローバル戦略の司令塔である「ホシザキ株式会社（本社）」で構成されています。本社には、次世代製品を生む開発設計、世界品質の量産を担う生産技術、IT基盤を支える社内SE、海外市場を拓く海外事業企画など多様なプロが集結。部門を超えた連携「Team
             HOSHIZAKI」で、世界No.1の食のインフラ創りに挑む本社の職種をご紹介します。
           </p>
@@ -146,7 +146,7 @@ const groups: JobGroup[] = [
           <!-- Org chart -->
           <div class="p-job-chart" aria-label="本社組織の役割">
             <div class="p-job-chart__top">
-              <div class="p-job-chart__box p-job-chart__box--create">
+              <div class="p-job-chart__box p-job-chart__box--create" data-inview="pop" style="--inview-i: 0">
                 <h3 class="p-job-chart__box-title">{chart.create.title}</h3>
                 <ul class="p-job-chart__box-list">
                   {chart.create.items.map((item) => <li>{item}</li>)}
@@ -155,7 +155,7 @@ const groups: JobGroup[] = [
 
               <span class="p-job-chart__link p-job-chart__link--renkei" aria-hidden="true">連携</span>
 
-              <div class="p-job-chart__box p-job-chart__box--spread">
+              <div class="p-job-chart__box p-job-chart__box--spread" data-inview="pop" style="--inview-i: 1">
                 <h3 class="p-job-chart__box-title">{chart.spread.title}</h3>
                 <ul class="p-job-chart__box-list">
                   {chart.spread.items.map((item) => <li>{item}</li>)}
@@ -165,7 +165,7 @@ const groups: JobGroup[] = [
 
             <span class="p-job-chart__link p-job-chart__link--support" aria-hidden="true">サポート</span>
 
-            <div class="p-job-chart__box p-job-chart__box--support">
+            <div class="p-job-chart__box p-job-chart__box--support" data-inview="pop" style="--inview-i: 2">
               <h3 class="p-job-chart__box-title">{chart.support.title}</h3>
               <ul class="p-job-chart__box-list">
                 {chart.support.items.map((item) => <li>{item}</li>)}
@@ -185,12 +185,12 @@ const groups: JobGroup[] = [
                       alt=""
                       loading="lazy"
                     />
-                    <h3 class="p-job-group__label">{group.label}</h3>
+                    <h3 class="p-job-group__label" data-inview>{group.label}</h3>
                   </div>
 
                   <ul class="p-job-group__list">
-                    {group.jobs.map((job) => (
-                      <li class="p-job-card">
+                    {group.jobs.map((job, i) => (
+                      <li class="p-job-card" data-inview style={`--inview-i: ${i}`}>
                         <div class="p-job-card__body">
                           <h4 class="p-job-card__title">
                             {job.title}

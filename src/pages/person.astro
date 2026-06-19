@@ -40,7 +40,7 @@ const filters = [
     <main class="l-main">
       <article class="p-person">
         <PageHero en="Person" ja="はたらく人を知る" variant="cloud">
-          <p class="p-person__catch">
+          <p class="p-person__catch" data-inview="pop">
             <img
               class="p-person__catch-img"
               src={`${base}images/person/copy.png`}
@@ -55,13 +55,15 @@ const filters = [
         <section class="p-person__filter" aria-label="職種・属性で絞り込み">
           <ul class="p-person__filter-list">
             {
-              filters.map((f) => (
+              filters.map((f, i) => (
                 <li class="p-person__filter-item">
                   <button
                     type="button"
                     class="p-person__filter-btn"
                     data-person-filter={f.value}
                     aria-pressed={f.active ? "true" : "false"}
+                    data-inview="fade"
+                    style={`--inview-i: ${Math.min(i, 5)}`}
                   >
                     {f.label}
                   </button>

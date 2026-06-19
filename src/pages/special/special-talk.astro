@@ -79,7 +79,7 @@ const sections = [
       <article class="p-special-talk">
         <section class="p-special-talk__hero">
           <div class="p-special-talk__hero-inner">
-            <figure class="p-special-talk__kv">
+            <figure class="p-special-talk__kv" data-inview="pop">
               <img
                 src={`${base}images/special/special-talk/kv.png`}
                 alt="腕を組んで佇むホシザキ執行役員 中央研究所所長 佐々木誠"
@@ -87,20 +87,20 @@ const sections = [
               />
             </figure>
             <div class="p-special-talk__hero-head">
-              <p class="p-special-talk__kicker">
+              <p class="p-special-talk__kicker" data-inview="fade" style="--inview-i: 0">
                 <span>スペシャルトーク</span>
               </p>
-              <h1 class="p-special-talk__title">
+              <h1 class="p-special-talk__title" data-inview style="--inview-i: 1">
                 <span class="p-special-talk__title-text"
                   >ホシザキの技術、その未来とは？</span
                 >
               </h1>
             </div>
             <div class="p-special-talk__hero-body">
-              <p class="p-special-talk__subtitle">
+              <p class="p-special-talk__subtitle" data-inview style="--inview-i: 0">
                 ホシザキの開発責任者が語る、技術開発とものづくりへの想い。
               </p>
-              <div class="p-special-talk__lead">
+              <div class="p-special-talk__lead" data-inview style="--inview-i: 1">
                 <p>
                   製氷機や業務用冷蔵庫で高いシェアを誇るホシザキ。しかし今、その姿は「厨房機器メーカー」という枠を超え、「食」を支える技術企業へと大きく変わろうとしています。人手不足、フードロス、衛生管理——複雑さを増す社会課題に、どのような技術で応えていくのか。そして、その先にどんな未来を描いているのか。1990年の入社以来、開発・設計の最前線から部門運営までを歩み、現在は技術開発全体の方向性をリードする佐々木が、これからのものづくりへの想いを語ります。
                 </p>
@@ -110,10 +110,10 @@ const sections = [
         </section>
 
         <div class="p-special-talk__profile">
-          <p class="p-special-talk__profile-label">
+          <p class="p-special-talk__profile-label" data-inview style="--inview-i: 0">
             <span>{profile.label}</span>
           </p>
-          <div class="p-special-talk__profile-card">
+          <div class="p-special-talk__profile-card" data-inview style="--inview-i: 1">
             <div class="p-special-talk__profile-meta">
               <figure class="p-special-talk__profile-avatar">
                 <img src={profile.avatar} alt={profile.name} loading="lazy" />
@@ -137,14 +137,16 @@ const sections = [
           {
             sections.map((block) => (
               <section class="p-special-talk__section">
-                <h2 class="p-special-talk__heading">{block.heading}</h2>
-                <div class="p-special-talk__text">
+                <h2 class="p-special-talk__heading" data-inview style="--inview-i: 0">
+                  {block.heading}
+                </h2>
+                <div class="p-special-talk__text" data-inview style="--inview-i: 1">
                   {block.body.map((p) => (
                     <p>{p}</p>
                   ))}
                 </div>
                 {block.image && (
-                  <figure class="p-special-talk__scene">
+                  <figure class="p-special-talk__scene" data-inview style="--inview-i: 2">
                     <img src={block.image} alt="" loading="lazy" />
                   </figure>
                 )}
@@ -154,7 +156,7 @@ const sections = [
         </div>
 
         <p class="p-special-talk__cta">
-          <a href={`${base}special/`} class="p-special-talk__cta-link">
+          <a href={`${base}special/`} class="p-special-talk__cta-link" data-inview="fade">
             スペシャルコンテンツ一覧を見る
             <span class="p-special-talk__cta-icon" aria-hidden="true">
               <svg
