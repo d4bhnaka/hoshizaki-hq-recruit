@@ -4,5 +4,9 @@
       "Bash(npm run build:*)",
       "Bash(npx prettier:*)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "playwright"
+  ],
+  "enableAllProjectMcpServers": true
 }

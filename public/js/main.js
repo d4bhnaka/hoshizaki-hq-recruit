@@ -179,6 +179,7 @@
           600: { slidesPerView: 2.2, spaceBetween: 20 },
           900: { slidesPerView: 3, spaceBetween: 24 },
           1200: { slidesPerView: 3.4, spaceBetween: 28 },
+          1500: { slidesPerView: 3.8, spaceBetween: 32 },
         },
         navigation: {
           nextEl: "[data-course-next]",

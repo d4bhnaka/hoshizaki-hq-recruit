@@ -204,6 +204,13 @@
 }
 
 .p-course__swiper {
+  // 見出し・ナビはコンテンツ幅のまま、カードスライダーだけウィンドウ全幅（フルブリード）。
+  // 中途半端な位置で左右が切れず、画面幅いっぱいにカードが流れて見える。
+  // 負マージンと 100vw のはみ出しは .p-internship の overflow:hidden がクリップする。
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  // 先頭カードが画面端に張り付かないよう左右に余白（見出しのガターと揃える）
+  padding-inline: var(--ip-gutter);
   padding-bottom: 8px;
 }
 
