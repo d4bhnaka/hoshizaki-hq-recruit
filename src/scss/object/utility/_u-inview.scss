@@ -15,6 +15,10 @@
 //     data-inview="fade"     … フェードのみ（hover 等で transform を使う
 //                              アイスリンクボタン等向け。transform は触らない）
 //     data-inview="pop"      … 少し小さい状態から拡大しながらポンッと出現（見せ場の図版・数値向け）
+//     data-inview="shine"    … グレー(#ebebeb)のプレースホルダーを最初から見せ、
+//                              斜めに左→右へワイプして退かせて画像を出現させる。
+//                              境界に沿って斜めの光が一閃する（キラッ）。
+//                              （<figure data-inview="shine"><img></figure> 構造の図版向け）
 //     data-inview="left"     … 左からスライドイン（画像＋テキストの交互行などに）
 //     data-inview="right"    … 右からスライドイン
 //     style="--inview-i: 2"  … 同じ塊の中での表示順（スタッガー段数。0 始まり）
@@ -35,9 +39,10 @@
   opacity: 1;
 }
 
-// フェード + 変形（既定 = 下からの上昇）。fade 以外のすべてに
+// フェード + 変形（既定 = 下からの上昇）。fade / shine 以外のすべてに
 // 共通の transition と「出現完了で transform を素に戻す」を適用する。
-.inview-ready [data-inview]:not([data-inview="fade"]) {
+// shine は独自のキーフレーム（プレースホルダー→光→画像）で出すため除外。
+.inview-ready [data-inview]:not([data-inview="fade"]):not([data-inview="shine"]) {
   transform: translateY(var(--inview-rise, 2.4rem));
   transition:
     opacity var(--inview-duration, 0.8s)
@@ -48,7 +53,8 @@
       calc(var(--inview-i, 0) * var(--inview-stagger, 0.09s));
   will-change: opacity, transform;
 }
-.inview-ready [data-inview]:not([data-inview="fade"]).is-inview {
+.inview-ready
+  [data-inview]:not([data-inview="fade"]):not([data-inview="shine"]).is-inview {
   transform: none;
 }
 
@@ -74,4 +80,90 @@
       calc(var(--inview-i, 0) * var(--inview-stagger, 0.09s)),
     transform var(--transition-base);
   will-change: opacity;
+}
+
+// --------------------------------------------
+// Shine reveal（グレーのプレースホルダー → 斜めワイプ ＋ キラッ）
+//   図版は最初から #ebebeb のプレースホルダーで覆われている。
+//   ビューポートに入ると、その幕が斜めに左→右へワイプして退き、
+//   画像が現れる。ワイプの境界に沿って斜めの光が一閃する（キラッ）。
+//     ::before … グレーの幕（最初から表示。clip-path を斜めにワイプ）
+//     ::after  … 斜めに走る光の帯（キラッ）
+//     > img    … 下に常時敷かれ、幕が退くと現れる
+//   調整用: --inview-shine-duration（既定 1.1s）/ --inview-i でスタッガー。
+// --------------------------------------------
+.inview-ready [data-inview="shine"] {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate; // 擬似要素の重なりを図版内に閉じる
+  opacity: 1; // プレースホルダーを最初から見せる（共通の opacity:0 を打ち消す）
+}
+
+.inview-ready [data-inview="shine"]::before,
+.inview-ready [data-inview="shine"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+// グレーの幕（最初から表示）。斜めの境界で右側を覆う。
+.inview-ready [data-inview="shine"]::before {
+  z-index: 2;
+  background: #ebebeb;
+  clip-path: polygon(-30% 0, 100% 0, 100% 100%, -52% 100%);
+}
+
+// 斜めの光の帯（キラッ）。最初は左外で待機。
+.inview-ready [data-inview="shine"]::after {
+  z-index: 3;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 38%,
+    rgba(255, 255, 255, 0.85) 50%,
+    rgba(255, 255, 255, 0) 62%
+  );
+  transform: translateX(-80%) skewX(-18deg);
+  opacity: 0;
+}
+
+// is-inview でグレー幕が斜めにワイプして退く
+.inview-ready [data-inview="shine"].is-inview::before {
+  animation: inview-shine-wipe var(--inview-shine-duration, 1.1s)
+    cubic-bezier(0.76, 0, 0.24, 1)
+    calc(var(--inview-i, 0) * var(--inview-stagger, 0.09s)) both;
+}
+// 同時に、境界に沿って斜めの光が一閃する
+.inview-ready [data-inview="shine"].is-inview::after {
+  animation: inview-shine-glint var(--inview-shine-duration, 1.1s)
+    cubic-bezier(0.76, 0, 0.24, 1)
+    calc(var(--inview-i, 0) * var(--inview-stagger, 0.09s)) both;
+}
+
+// グレー幕が斜めの境界を保ったまま左→右へワイプして退く
+@keyframes inview-shine-wipe {
+  0% {
+    clip-path: polygon(-30% 0, 100% 0, 100% 100%, -52% 100%);
+  }
+  100% {
+    clip-path: polygon(130% 0, 100% 0, 100% 100%, 108% 100%);
+  }
+}
+
+// 斜めの光がワイプ境界を追うように一閃する（キラッ）
+@keyframes inview-shine-glint {
+  0% {
+    transform: translateX(-80%) skewX(-18deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(80%) skewX(-18deg);
+    opacity: 0;
+  }
 }
