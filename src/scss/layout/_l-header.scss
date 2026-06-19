@@ -62,6 +62,15 @@
   transform: scale(0.6);
 }
 
+// インターンシップページの横長ロゴ (internship-logo.png 896×124)。
+// PC は Figma 指定の 448px。狭い画面では同じ縦横比のまま縮小し、
+// 固定幅の CTA 列を押し出さないよう shrink を許可する。
+.l-header__logo--wide {
+  width: 448px;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
 .l-header__logo-fallback {
   font-family: var(--font-family-en);
   font-weight: 900;
@@ -466,6 +475,11 @@
     width: 108px;
   }
 
+  // 横長ロゴも標準ロゴと同じ比率 (×0.8) で縮小
+  .l-header__logo--wide {
+    width: 358px;
+  }
+
   .l-header__actions {
     margin-top: 4px;
     gap: 8px;
@@ -503,6 +517,13 @@
     width: 66px;
     flex-shrink: 1;
     min-width: 40px;
+  }
+
+  // 横長ロゴも標準ロゴと同じ比率 (×0.489) で縮小。狭い画面では
+  // flex-shrink でさらに縮み、CTA 列(固定幅)を押し出さない。
+  .l-header__logo--wide {
+    width: 219px;
+    min-width: 0;
   }
 
   .l-header__actions {
