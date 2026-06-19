@@ -291,13 +291,13 @@ const courses: Course[] = [
           <div class="p-internship-hero__overlay" aria-hidden="true"></div>
           <img
             class="p-internship-hero__ice p-internship-hero__ice--a"
-            src={`${base}images/internship/ice.png`}
+            src={`${base}images/internship/ice-cubes-02.png`}
             alt=""
             aria-hidden="true"
           />
           <img
             class="p-internship-hero__ice p-internship-hero__ice--b"
-            src={`${base}images/internship/ice.png`}
+            src={`${base}images/internship/ice-cubes-01.png`}
             alt=""
             aria-hidden="true"
           />
@@ -308,13 +308,23 @@ const courses: Course[] = [
             aria-hidden="true"
           />
           <h1 class="p-internship-hero__title" id="internship-hero-title" data-inview="fade">
-            常識の先へ、一歩。<br />未知の自分に、跳びこもう。
+            <img
+              src={`${base}images/internship/main-copy.png`}
+              alt="常識の先へ、一歩。未知の自分に、跳びこもう。"
+            />
           </h1>
         </section>
 
-        <!-- Hero CTA -->
+        <!-- Hero scroll hint + CTA -->
+        <div class="p-internship-scrollline" aria-hidden="true"></div>
         <div class="p-internship-cta">
-          <a class="p-internship-entry" href={entryHref} data-inview="fade">
+          <a
+            class="p-internship-entry"
+            href={entryHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-inview="fade"
+          >
             <span class="p-internship-entry__sub">冒険を始める</span>
             <span class="p-internship-entry__main">ENTRY</span>
           </a>
@@ -393,8 +403,16 @@ const courses: Course[] = [
             さあ、その想いを翼に変えて。<br />
             エントリーはマイページから。
           </p>
+          <div class="p-internship-scrollline" aria-hidden="true"></div>
           <div class="p-internship-cta">
-            <a class="p-internship-entry" href={entryHref} data-inview="fade" style="--inview-i: 2">
+            <a
+              class="p-internship-entry"
+              href={entryHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-inview="fade"
+              style="--inview-i: 2"
+            >
               <span class="p-internship-entry__sub">冒険を始める</span>
               <span class="p-internship-entry__main">ENTRY</span>
             </a>

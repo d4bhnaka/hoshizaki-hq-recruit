@@ -114,46 +114,50 @@
   );
 }
 
+// メインコピーは Figma で文字をアウトライン化した装飾なので画像（main-copy.png）で配置。
+// h1 は構造として残し、読み上げ・SEO 用テキストは img の alt に持たせる。
 .p-internship-hero__title {
+  position: relative;
+  z-index: 2;
   margin: 0;
-  color: var(--color-white);
-  font-family: "A-OTF Midashi Go MB31 Pro", var(--font-family-base);
-  font-weight: 900;
-  font-size: clamp(26px, 5.2vw, 60px);
-  line-height: 1.35;
-  text-align: center;
-  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
-  transform: rotate(-4deg) skewX(-9deg);
+  width: clamp(260px, 60vw, 890px);
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
 }
 
 .p-internship-hero__penguin {
   position: absolute;
-  left: clamp(8px, 4vw, 90px);
-  bottom: clamp(-12px, 1vw, 16px);
-  width: clamp(80px, 13vw, 200px);
+  left: clamp(12px, 7vw, 120px);
+  bottom: clamp(-6px, 0.5vw, 12px);
+  width: clamp(96px, 13vw, 210px);
   height: auto;
-  transform: rotate(-6deg);
   z-index: 1;
   pointer-events: none;
 }
 
+// ice-cubes-01 / ice-cubes-02 は複数キューブのクラスター画像なので回転させず原寸比で配置。
 .p-internship-hero__ice {
   position: absolute;
-  width: clamp(28px, 4vw, 56px);
   height: auto;
   pointer-events: none;
   z-index: 1;
 
+  // ice-cubes-02：右上
   &--a {
-    top: clamp(70px, 9vw, 120px);
-    right: clamp(20px, 6vw, 90px);
-    transform: rotate(-30deg);
+    top: clamp(8px, 1.6vw, 28px);
+    right: clamp(16px, 3vw, 52px);
+    width: clamp(58px, 7vw, 112px);
   }
 
+  // ice-cubes-01：左下（ペンギンの左上に重なる）
   &--b {
-    bottom: clamp(20px, 5vw, 70px);
-    left: clamp(40px, 16vw, 240px);
-    transform: rotate(20deg);
+    bottom: clamp(28px, 5vw, 80px);
+    left: clamp(6px, 1.6vw, 28px);
+    width: clamp(72px, 8.5vw, 136px);
   }
 }
 
@@ -180,7 +184,7 @@
   font-family: var(--font-family-base);
   font-weight: 700;
   text-align: center;
-  text-shadow: 0 -0.5px 7px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 -0.5px 7px rgba(0, 0, 0, 0.5);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 
@@ -190,16 +194,61 @@
   }
 }
 
+// Figma 446:5294 — 「冒険を始める」「ENTRY」とも 26px / tracking 2.6px(=0.1em)。
 .p-internship-entry__sub {
-  font-size: clamp(14px, 1.5vw, 18px);
-  letter-spacing: 0.16em;
-  line-height: 1.2;
+  font-size: clamp(18px, 2.2vw, 26px);
+  letter-spacing: 0.1em;
+  line-height: 1.25;
 }
 
 .p-internship-entry__main {
-  font-size: clamp(20px, 2.2vw, 26px);
-  letter-spacing: 0.22em;
-  line-height: 1.2;
+  font-size: clamp(20px, 2.4vw, 26px);
+  letter-spacing: 0.1em;
+  line-height: 1.25;
+}
+
+// --------------------------------------------
+// スクロールヒント（ENTRY ボタン上の白い縦線・Figma Line 507/508）
+// --------------------------------------------
+.p-internship-scrollline {
+  position: relative;
+  width: 2px;
+  height: clamp(64px, 8vw, 110px);
+  margin: clamp(20px, 4vw, 64px) auto 0;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.28);
+
+  // 明るいセグメントが上から下へ繰り返し流れるスクロール誘導アニメーション
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 42%;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      var(--color-white) 50%,
+      transparent 100%
+    );
+    animation: p-internship-scrollline 1.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+}
+
+@keyframes p-internship-scrollline {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(250%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-internship-scrollline::before {
+    animation: none;
+  }
 }
 
 // --------------------------------------------
@@ -419,6 +468,7 @@
   font-size: clamp(56px, 6.4vw, 98px);
   line-height: 1;
   color: var(--ip-ink);
+  text-align: center;
 }
 
 .p-point__title {
@@ -605,12 +655,16 @@
   }
 }
 
+// ボーダーはシアンのグラデーション。角丸を保ったまま枠だけグラデにするため
+// padding-box（白い本体）と border-box（グラデ枠）の二層背景で表現する。
 .p-voices__bubble {
   flex: 1;
   padding: clamp(18px, 2vw, 26px) clamp(20px, 2.2vw, 30px);
-  border: 3px solid var(--ip-cyan);
+  border: 3px solid transparent;
   border-radius: 0 20px 20px 20px;
-  background: var(--color-white);
+  background:
+    linear-gradient(var(--color-white), var(--color-white)) padding-box,
+    linear-gradient(135deg, var(--ip-cyan-bright) 0%, var(--ip-cyan) 100%) border-box;
   color: #000;
   font-weight: 400;
   font-size: clamp(14px, 1.2vw, 16px);
@@ -622,7 +676,7 @@
 // --------------------------------------------
 .p-internship-message__body {
   width: min(950px, 100% - var(--ip-gutter) * 2);
-  margin-inline: auto;
+  margin: clamp(20px, 3vw, 40px) auto 0;
   color: var(--color-white);
   font-weight: 700;
   font-size: clamp(16px, 1.9vw, 28px);
@@ -632,7 +686,7 @@
 
 .p-internship-message__lead {
   width: min(950px, 100% - var(--ip-gutter) * 2);
-  margin: clamp(32px, 4vw, 56px) auto 0;
+  margin: clamp(56px, 7.5vw, 112px) auto 0;
   color: var(--color-white);
   font-weight: 700;
   font-size: clamp(22px, 3.2vw, 40px);
