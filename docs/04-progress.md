@@ -50,11 +50,11 @@
 - [r] M2-C7 [`PersonCard.astro`](../src/components/PersonCard.astro) ＋ `_c-person-card.scss`（2026-04-25 にコンポーネント化）。`person.astro` から 14 回呼出し。Props: `image`, `quote`, `body`, `department`, `href?`。
 - [r] M2-C8 SPECIAL CONTENTS の共通化。データは [`src/data/specialStories.ts`](../src/data/specialStories.ts)（3 件、`slug: crosstalk | project | special-talk`）。**2026-06-08 時点で見た目も [`SpecialContents.astro`](../src/components/SpecialContents.astro) ＋ `_p-special.scss` で共通化済み**：トップ S6 と `/special/` インデックスが同一のスタックカード UI を共有し、`basePath` / `storyBase` / `headingTag` プロップで差分を吸収する。当初の「見た目は意図的に非共通化」方針からコンポーネント共通化へ移行した。
 - [r] M2-C9 新規 SCSS partial をすべて [style.scss](../src/scss/style.scss) に `@use` 登録。
-- [r] M2-C10 `SectionHeading.astro` ＋ `_c-section-heading.scss`（新規）。日本語＋英語セクション見出し。
+- [r] M2-C10 ~~`SectionHeading.astro` ＋ `_c-section-heading.scss`（新規）。日本語＋英語セクション見出し。~~ **2026-06-19 に [`IceHeading`](../src/components/IceHeading.astro) へ統合し削除**（見出し共通化。C6 参照）。
 - [r] M2-C11 `.c-interview-block` ＋ `_c-interview-block.scss`（新規）。Person 詳細・Special 各ページの Q+A ブロック。
 - [r] M2-C12 `.c-stat-card` ＋ `_c-stat-card.scss`（新規）。Fact ページの数値カード。
 - [r] M2-C13 [`SpecialContents.astro`](../src/components/SpecialContents.astro)（新規）。SPECIAL CONTENTS のヒーロー見出し＋スクロール連動スタックカード。トップ `/` と `/special/` で共有（M2-C8 の見た目共通化の実体）。
-- [r] M2-C14 [`IceHeading.astro`](../src/components/IceHeading.astro) ＋ `_c-ice-heading.scss`（新規・2026-06-04）。アイスキューブ＋日本語28px＋巨大英字（Barlow Condensed 100px）の大見出し。environment ほかで使用。`SectionHeading`（小見出し）とは別系統。
+- [r] M2-C14 [`IceHeading.astro`](../src/components/IceHeading.astro) ＋ `_c-ice-heading.scss`（新規・2026-06-04）。アイスキューブ＋日本語28px＋巨大英字（Barlow Condensed 100px）の大見出し。**2026-06-19 以降、EN+JA セクション見出しはこのコンポーネントに一本化**（environment / job / strategy で共用。旧 `SectionHeading` は削除）。
 - [r] M2-C15 [`OfficeTourCarousel.astro`](../src/components/OfficeTourCarousel.astro) ＋ `_c-office-tour.scss`（新規・2026-06-04）。中央スライド強調の Swiper カルーセル。environment の拠点紹介（豊明本社／島根工場）で再利用。
 - [r] M2-C16 インターンシップ専用コンポーネント 3 種（2026-05-28）：[`CourseCard.astro`](../src/components/CourseCard.astro)（コース選択スライド）／[`CourseDetail.astro`](../src/components/CourseDetail.astro)（選択コースのタブパネル、`Course` 型を export）／[`InternshipHeading.astro`](../src/components/InternshipHeading.astro)（ja 小＋en 特大見出し）。
 
@@ -199,7 +199,7 @@
 - **着手範囲**：M6b（残り 13 ページ＝トップ＋12 下層）の一括実装。
 - **共通コンポーネント追加**：
   - [PageHero.astro](../src/components/PageHero.astro)（`en` / `ja` / `variant: light|blue|cloud` / `compact` / `align` / `bg`）
-  - [SectionHeading.astro](../src/components/SectionHeading.astro)（`en` / `ja` / `note` / `id` / `align` / `size`）
+  - `SectionHeading.astro`（`en` / `ja` / `note` / `id` / `align` / `size`）※2026-06-19 に [`IceHeading`](../src/components/IceHeading.astro) へ統合し削除
   - [Breadcrumb.astro](../src/components/Breadcrumb.astro)（`basePath` 付与で 採用TOP を自動先頭付与）
   - [BottomCta.astro](../src/components/BottomCta.astro)（INTERNSHIP + ENTRY 横並びバナー）
   - 対応 SCSS：`_c-page-hero.scss` / `_c-section-heading.scss` / `_c-breadcrumb.scss` / `_c-bottom-cta.scss` / `_c-stat-card.scss` / `_c-person-card.scss` / `_c-interview-block.scss`
@@ -547,12 +547,20 @@ dist/
 
 - **着手範囲**: ユーザー指示「サイト全体にインタラクティブなアニメーション（ポップでおしゃれに）」。**方針確認の結果、GSAP / Lenis は不採用とし、既存のバニラ基盤を全面拡張する方向に確定**（納品制約＝クライアントが生成物を手編集・FTP配布／重い依存を足さない。ユーザー明言「素のJSで実装できるならそれに越したことはない」）。M2-S1／M2-S2 を「不採用」、M3-A1／A3／A4 を実装済みに更新。
 - **① スクロール出現（reveal）を全28ページへ展開**: 既存の `[data-inview]` 基盤（[`_u-inview.scss`](../src/scss/object/utility/_u-inview.scss) ＋ `main.js` の `initInview`）は従来トップのみだったが、下層13ページ＋共通コンポーネントに展開。バリアントを追加（`pop`＝拡大しながら出現／`left`・`right`＝横スライド／既存 `fade`）。**:hover で transform を使う要素（リンク／ボタン／静的 skew・rotate・translate を持つバッジや見出し）は必ず `fade`** にして変形リセットによる位置崩れを回避（並列実装の検証段で strategy バッジ・project/special-talk/internship のキッカー・見出しの transform 競合を検出・修正済み）。dist 集計: 既定264 / fade98 / pop36 / left31 / right1。
-- **共通コンポーネントへ中央集約**: [`PageHero`](../src/components/PageHero.astro)・[`SectionHeading`](../src/components/SectionHeading.astro)・[`IceHeading`](../src/components/IceHeading.astro) の見出しに stagger 付き reveal、[`BottomCta`](../src/components/BottomCta.astro) のバナーに `fade` reveal ＋ホバーズーム（[`_c-bottom-cta.scss`](../src/scss/object/component/_c-bottom-cta.scss)）。これで全ページのヒーロー／見出し／末尾 CTA が一貫して出現演出される。
+- **共通コンポーネントへ中央集約**: [`PageHero`](../src/components/PageHero.astro)・[`IceHeading`](../src/components/IceHeading.astro)（当時は小見出し `SectionHeading` も対象だったが後述の見出し共通化で削除）の見出しに stagger 付き reveal、[`BottomCta`](../src/components/BottomCta.astro) のバナーに `fade` reveal ＋ホバーズーム（[`_c-bottom-cta.scss`](../src/scss/object/component/_c-bottom-cta.scss)）。これで全ページのヒーロー／見出し／末尾 CTA が一貫して出現演出される。
 - **② トップ背景雲を常時浮遊に強化**（[`_p-top.scss`](../src/scss/object/project/_p-top.scss)）: 旧 `from→to` の alternate 往復から、**4点を巡る閉ループ（0%==100% で必ず Figma 原点へ戻る）＋微小スケールの呼吸感**へ刷新。雲ごとに周期(19〜28s)・振幅(±2〜3%)・向きを変えて非同期。`prefers-reduced-motion` で静止。
 - **③ 数値カウントアップ**: `main.js` に `initCountUp()` を新規実装（IntersectionObserver で進入時に 0→実値、カンマ・小数を復元、easeOutCubic、低モーション/IO非対応では実値即表示）。fact の主要統計13箇所に `data-countup` 付与（年号 `1947`・`No.1` は除外）。
 - **その他**: M3-A1 ＝ CONCEPT MOVIE を `fade` でフェードイン（絶対配置のため座標不変）。M3-A2 ペンギン浮遊は着地姿勢（PC/SP で角度差）を壊す危険のため意図的保留。`logo-hoshizaki.svg` はクライアント確認で不要と確定し docs から撤去（実装は `hoshizaki-logo-mark-header.png`）。
 - **実装手法**: 共通基盤（SCSS バリアント・コンポーネント reveal・雲・count-up JS・fact 属性）を先に手実装→ビルド検証。下層13ページの `data-inview` 付与は**ワークフロー（1エージェント=1ファイルの適用→別エージェントが規約遵守・JSX妥当性・transform競合を検証し小修正）で並列実行**。検証段が transform 競合4件を自動修正。
 - **検証**: `npm run build` **28ページ クリーンビルド**。`data-astro-cid`＝0、ルート絶対パス＝0、インライン `<style>`＝0、ファイル名ハッシュ無し。全28ページに `[data-inview]` 出力、`inview-ready` ガード健全、fact に `data-countup`×13。`node --check public/js/main.js` OK。※ ブラウザ実機での目視（出現タイミング・カウントアップの体感）はアセット入稿後の `npm run preview` で要確認。
+
+### 2026-06-19 セッション: EN+JA セクション見出しを共通コンポーネントへ一本化（`IceHeading`）
+
+- **背景**: ユーザー指摘「事業領域（strategy）ページの見出しデザインが違う。英語＋日本語セットの見出しは職種紹介（job）の "Job" と同じにしたい。見出し専用の共通コンポーネント化＋他ページも共通化を」。調査の結果、job は小見出し `SectionHeading`（`c-section-heading`）を `.p-job` 側 CSS で大きく上書きして "Job" を約100px化していた（ただしアイコンは Figma のアイスキューブではなく**シアンの菱形のまま**で不忠実）。strategy は上書きなしの小見出しのまま＝両者が不一致だった。
+- **対応**: Figma の大見出し（アイスキューブ＋太字和文＋特大 Barlow Condensed 英字）は既存 [`IceHeading`](../src/components/IceHeading.astro)（`_c-ice-heading.scss`、environment が使用）が正。**job・strategy をともに `IceHeading` へ移行**（strategy: Business Field／Global Market、job: Job）。`basePath` を渡してアイスキューブの相対パスを解決。
+- **不要コードの削除**: 小見出し `SectionHeading.astro` ＋ `_c-section-heading.scss` を**削除**し `style.scss` の `@use` も撤去（移行後は未使用）。job の `.p-job .c-section-heading*` 上書き群は撤去し、幅可変セクション用の中央寄せ1行 `.p-job .c-ice-heading { max-width:1180px; margin-inline:auto }` のみ残置。
+- **共通化しなかった見出し（意図的に別デザインのため据え置き）**: internship `InternshipHeading`（中央寄せ・青地に白・英字先頭 COURSE/MESSAGE・アイコン無し＝独立レイアウト）、strategy "Life Across Borders" `p-strategy-pioneers__heading`（英字先頭・アイコン無し）、fact `p-fact__heading`（和文のみ＋専用の大きめ `fact/heading-icon.png`・特大英字無し）。
+- **検証**: `npm run build` 28ページ クリーンビルド。strategy／job の出力が `c-ice-heading`（`c-section-heading`＝0）、`ice-01.png` が `../images/common/` で解決、`style.css` から `c-section-heading` 消失。`data-astro-cid`／ルート絶対パス／インライン `<style>`（SVG内除く）＝0。ヘッドレス Chrome で strategy "Business Field"・job "Job" がアイスキューブ大見出しで描画されることを目視確認。
 
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
@@ -582,7 +590,7 @@ npm run watch:scss                               # SCSS 変更の即時反映（
 ### ファイルインベントリ（2026-06-08 時点）
 
 - **Astro ページ**：14 ファイル（[src/pages/](../src/pages/)）。うち [`person/[slug].astro`](../src/pages/person/) は動的ルートで 15 ページを生成するため**ビルド出力は 28 ルート**。`about.astro` は削除済み（Astro デフォルトの残置物だった）。
-- **共通コンポーネント**：14 ファイル（[src/components/](../src/components/)）。`Welcome.astro` は削除済み。一覧：BottomCta / Breadcrumb / CourseCard / CourseDetail / Footer / Header / IceHeading / IceLinkButton / InternshipHeading / OfficeTourCarousel / PageHero / PersonCard / SectionHeading / SpecialContents。
+- **共通コンポーネント**：13 ファイル（[src/components/](../src/components/)）。`Welcome.astro` は削除済み。`SectionHeading.astro` は 2026-06-19 に `IceHeading` へ統合し削除。一覧：BottomCta / Breadcrumb / CourseCard / CourseDetail / Footer / Header / IceHeading / IceLinkButton / InternshipHeading / OfficeTourCarousel / PageHero / PersonCard / SpecialContents。
 - **データモジュール**：[src/data/](../src/data/) に `personDetails.ts`（Person 詳細 15 名）／`specialStories.ts`（SPECIAL 3 本）。
 - **SCSS**：foundation 3 + layout 5 + component 13 + project 14 + utility 1 = **36 partials**（2026-06-11 時点）＋エントリ [style.scss](../src/scss/style.scss)
 - **画像ディレクトリ**：[public/images/](../public/images/) 配下に 11 サブディレクトリ（common / environment / fact / internship / job / message / person / requirement / special / strategy / top）。多くは Figma 書き出し済み・一部は実アセット入稿待ちのプレースホルダ。

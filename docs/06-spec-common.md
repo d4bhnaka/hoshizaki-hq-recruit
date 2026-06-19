@@ -11,7 +11,7 @@
 | C3 | Breadcrumb | [`src/components/Breadcrumb.astro`](../src/components/Breadcrumb.astro) | `object/component/_c-breadcrumb.scss` | component | `.c-breadcrumb` | Header バリアント 2（要確認） | 実装済み |
 | C4 | PageHero | [`src/components/PageHero.astro`](../src/components/PageHero.astro) | `object/component/_c-page-hero.scss` | component | `.c-page-hero` | 各下層ページ共通帯 | 実装済み |
 | C5 | BottomCta | [`src/components/BottomCta.astro`](../src/components/BottomCta.astro) | `object/component/_c-bottom-cta.scss` | component | `.c-bottom-cta` | `367:815` / `367:869` のペア | 実装済み |
-| C6 | SectionHeading | [`src/components/SectionHeading.astro`](../src/components/SectionHeading.astro) | `object/component/_c-section-heading.scss` | component | `.c-section-heading` | — | 実装済み |
+| C6 | IceHeading | [`src/components/IceHeading.astro`](../src/components/IceHeading.astro) | `object/component/_c-ice-heading.scss` | component | `.c-ice-heading` | — | 実装済み。EN+JA セクション見出しの共通版（旧 `SectionHeading` を 2026-06-19 に統合し削除） |
 | C7 | IceLinkButton | [`src/components/IceLinkButton.astro`](../src/components/IceLinkButton.astro) | `object/component/_c-ice-link.scss` | component | `.c-ice-link` | `365:16915` | 実装済み（2026-06-11 コンポーネント化）。トップ 6 個＋strategy 地図 7 個で使用 |
 | C8 | PersonCard | [`src/components/PersonCard.astro`](../src/components/PersonCard.astro) | `object/component/_c-person-card.scss` | component | `.c-person-card` | `365:655` | 実装済み（2026-04-25） |
 | C9 | SPECIAL ストーリーデータ | [`src/data/specialStories.ts`](../src/data/specialStories.ts) | — | data | — | トップ S6 / SC index で共用 | **データのみ共通化**（コンポーネントは統合せず、`.p-top-special__card` と `.p-special__card` は別構造を維持） |
@@ -158,11 +158,13 @@ interface Props { basePath?: string; }
 
 ---
 
-## C6 SectionHeading — `.c-section-heading`
+## C6 IceHeading — `.c-ice-heading`
 
-### 実装（[src/components/SectionHeading.astro](../src/components/SectionHeading.astro)）
+### 実装（[src/components/IceHeading.astro](../src/components/IceHeading.astro)）
 
-セクション冒頭の見出しブロック。**日本語サブ（氷アイコン付き）＋英字大見出し＋注釈** の 3 パーツ構成。
+EN+JA セットのセクション見出しを一本化した共通コンポーネント。**アイスキューブ（`images/common/ice-01.png`）＋太字の日本語キャッチ＋特大の英字（Barlow Condensed, clamp 48–100px）＋任意の注釈** 構成。注釈は巨大英字の右にベースライン揃えで並ぶ。`basePath` を渡してアイスキューブの相対パスを解決する。
+
+> 旧 `SectionHeading`（小さい14px和文＋シアン菱形＋40px英字）は 2026-06-19 にこの `IceHeading` へ統合し削除。job はかつて `.p-job .c-section-heading` を上書きして大型化していたが、共通化に伴い `IceHeading` へ移行済み。
 
 ```astro
 interface Props {
@@ -170,18 +172,17 @@ interface Props {
   ja?: string;
   note?: string;
   id?: string;
-  align?: "left" | "center";
-  size?: "md" | "lg";
+  basePath?: string; // 例: "../"（アイスキューブ画像の相対パス解決用）
 }
 ```
 
 ### 使用例
 
-- `Fact` ページの `HOSHIZAKIの成長を知る` / `長く、自分らしく働く【環境・福利厚生】`。
-- `Strategy` ページの `Business Field` / `Global Market` / `Global Pioneers`。
+- `Environment` ページの `Training` / `Benefits` / `Office Tour`（注釈付き）。
 - `Job` ページの `Job`。
-- `Environment` ページの `Training` / `Benefits` / `Office Tour`。
-- `Internship` ページの `COURSE` / `POINT` / `PROGRAM` / `REQUIREMENTS` / `VOICES` / `MESSAGE`。
+- `Strategy` ページの `Business Field` / `Global Market`。
+
+> EN+JA でも**別デザイン**のため統合していない見出し：`Internship`（`InternshipHeading`：中央寄せ・青地に白・英字先頭・アイコン無し）、`Strategy` の `Life Across Borders`（英字先頭・アイコン無し）、`Fact`（和文のみ＋専用アイコン `fact/heading-icon.png`・特大英字無し）。
 
 ---
 
