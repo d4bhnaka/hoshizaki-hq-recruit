@@ -11,7 +11,7 @@ import { persons, entryLabel } from "../data/persons";
 const base = "../";
 
 // --------------------------------------------------------------------------
-// 絞り込みフィルター（Figma 978-2031 の ToggleButton 9 個に対応）
+// 絞り込みフィルター（職種・属性で絞り込み）
 // 値はカードの data-person-tags（英語トークン）と突き合わせる。
 // 新卒入社 / 中途入社 は persons.ts の tags（newgrad|midcareer）と対応。
 // --------------------------------------------------------------------------
@@ -21,8 +21,6 @@ const filters = [
   { label: "企画管理系", value: "admin" },
   { label: "理系", value: "science" },
   { label: "文系", value: "humanities" },
-  { label: "男性", value: "male" },
-  { label: "女性", value: "female" },
   { label: "新卒入社", value: "newgrad" },
   { label: "中途入社", value: "midcareer" },
 ];
