@@ -164,9 +164,28 @@
       });
     }
 
+    // 選択コースの詳細バー上端を、sticky 固定位置（ヘッダー直下）へスムーズに合わせる。
+    // オフセットは CSS の sticky top を getComputedStyle で読み、二重管理を避ける。
+    function scrollToCourseDetail(id) {
+      var panel = document.querySelector(
+        '[data-course-panel="' + id + '"]'
+      );
+      if (!panel) return;
+      var bar = panel.querySelector(".p-course-detail__pillwrap");
+      if (!bar) return;
+      var offset = parseFloat(getComputedStyle(bar).top) || 0;
+      var top = bar.getBoundingClientRect().top + window.scrollY - offset;
+      var reduce =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: top, behavior: reduce ? "auto" : "smooth" });
+    }
+
     cards.forEach(function (card) {
       card.addEventListener("click", function () {
-        selectCourse(card.getAttribute("data-course-tab"));
+        var id = card.getAttribute("data-course-tab");
+        selectCourse(id);
+        scrollToCourseDetail(id);
       });
     });
 
