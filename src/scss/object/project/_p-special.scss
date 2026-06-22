@@ -106,16 +106,12 @@
   z-index: 1;
   margin-top: -96px; // ヒーロー下端にカードを少し重ねる（Figma 準拠）
   padding: 0 64px 80px;
-
-  // sticky スタック用のトークン（子の .p-special__card に継承させる）
-  --special-stack-base: 88px; // 先頭カードがビューポート上端から離れる距離
-  --special-stack-step: 0px; // カードごとの段差（0 = 同じ位置に固定し、後のカードで前を完全に覆う）
 }
 
 .p-special__list {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 20px;
   max-width: var(--page-max-width);
   margin: 0 auto;
   list-style: none;
@@ -123,22 +119,10 @@
 }
 
 .p-special__card {
-  // スクロールに合わせてビューポート上部に固定し、次のカードが上に重なっていく。
-  // top は nth-child ごとに段差を付け、後ろのカードの上端が少しずつ覗くようにする。
-  position: sticky;
-  top: var(--special-stack-top, var(--special-stack-base));
+  position: relative;
   overflow: hidden;
   background: var(--color-brand-navy-deep);
-}
-
-// カードごとに sticky の top を段階的に下げてスタック段差を作る。
-// DOM 後方のカードほど上に描画されるため、後のカードが前のカードを覆って重なる。
-@for $i from 1 through 6 {
-  .p-special__card:nth-child(#{$i}) {
-    --special-stack-top: calc(
-      var(--special-stack-base) + var(--special-stack-step) * #{$i - 1}
-    );
-  }
+  container-type: inline-size;
 }
 
 .p-special__card-link {
@@ -149,6 +133,34 @@
   padding: 0 64px;
   color: var(--color-text-inverse);
   isolation: isolate;
+  box-shadow: inset 0 0 0 0 transparent;
+  transition: box-shadow var(--transition-base);
+
+  &:hover {
+    box-shadow: inset 0 5px 0 0 #00a0e9;
+  }
+
+  // 光が走るシャインエフェクト
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background: linear-gradient(
+      112deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.13) 48%,
+      rgba(255, 255, 255, 0.22) 50%,
+      rgba(255, 255, 255, 0.13) 52%,
+      transparent 75%
+    );
+    transform: translateX(-130%);
+    pointer-events: none;
+  }
+
+  &:hover::before {
+    animation: p-special-card-shine 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
 }
 
 // 写真をカード全面に敷く（パネルはこの上に重なる）
@@ -159,10 +171,11 @@
   background-size: cover;
   background-position: center;
   background-color: var(--color-brand-blue-300);
-  transition: transform var(--transition-base);
+  transition: transform var(--transition-base), filter var(--transition-base);
 
   .p-special__card-link:hover & {
-    transform: scale(1.035);
+    transform: scale(1.04);
+    filter: brightness(1.1);
   }
 }
 
@@ -179,7 +192,7 @@
 }
 
 .p-special__card-category {
-  font-size: 16px;
+  font-size: clamp(13px, 1.1cqw, 16px);
   font-weight: 600;
   letter-spacing: 0.1em;
   color: var(--color-brand-blue-200);
@@ -187,7 +200,7 @@
 }
 
 .p-special__card-title {
-  font-size: 42px;
+  font-size: clamp(24px, 2.2cqw, 42px);
   font-weight: 500;
   line-height: 1.2;
   margin: 0;
@@ -195,7 +208,7 @@
 }
 
 .p-special__card-sub {
-  font-size: 18px;
+  font-size: clamp(14px, 1.2cqw, 18px);
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--color-brand-blue-100);
@@ -303,8 +316,6 @@
   .p-special__cards {
     margin-top: -56px;
     padding: 0 16px 48px;
-    --special-stack-base: 64px;
-    --special-stack-step: 0px;
   }
 
   .p-special__card-link {
@@ -315,10 +326,6 @@
   .p-special__card-panel {
     width: 100%;
     padding: 28px 24px;
-  }
-
-  .p-special__card-title {
-    font-size: 24px;
   }
 
   .p-special__card-more {
@@ -341,6 +348,11 @@
   }
 }
 
+@keyframes p-special-card-shine {
+  from { transform: translateX(-130%); }
+  to   { transform: translateX(130%); }
+}
+
 // モーション抑制設定の利用者には背景動画を非表示にし、
 // 下地グラデーション＋ペンギンシルエットのみのファーストビューにする。
 @media (prefers-reduced-motion: reduce) {
@@ -348,8 +360,7 @@
     display: none;
   }
 
-  // スクロール連動の重なり演出を避け、通常の縦並びカードに戻す。
-  .p-special__card {
-    position: static;
+  .p-special__card-link::before {
+    display: none;
   }
 }

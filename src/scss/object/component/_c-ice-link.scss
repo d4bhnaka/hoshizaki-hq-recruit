@@ -19,6 +19,10 @@
   &:hover {
     transform: translateY(-4px);
   }
+
+  &:hover .c-ice-link__shine::after {
+    animation: c-ice-shimmer 0.55s ease-out forwards;
+  }
 }
 
 // ステージ内で使うときはステージ幅に比例して拡縮する流体サイズ版。
@@ -33,7 +37,43 @@
   }
 
   .c-ice-link__more {
-    font-size: 0.6875cqw; // 11 / 16
+    font-size: 1cqw;
+    line-height: 1;
+  }
+}
+
+.c-ice-link__shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-mask-image: url(../images/common/link-button-ice.png);
+  mask-image: url(../images/common/link-button-ice.png);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    translate: -140%;
+    background: linear-gradient(
+      105deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.5) 38%,
+      rgba(255, 255, 255, 0.9) 50%,
+      rgba(255, 255, 255, 0.5) 62%,
+      transparent 80%
+    );
+  }
+}
+
+@keyframes c-ice-shimmer {
+  to {
+    translate: 140%;
   }
 }
 
@@ -70,7 +110,12 @@
 .c-ice-link__more {
   font-family: var(--font-family-display), var(--font-family-en);
   font-weight: 500;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.24em;
   color: var(--color-text-muted);
+
+  &::after {
+    content: ' ›';
+    letter-spacing: 0;
+  }
 }

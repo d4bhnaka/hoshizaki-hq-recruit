@@ -1,7 +1,7 @@
 // ============================================
 // Component: Office Tour カルーセル (c-office-tour)
 // Figma node: 242:446（拠点紹介）/ 666:1519・743:1676（写真一覧）
-// 中央のスライドが選択中（active）で、両隣より一回り大きく表示される。
+// 中央のスライドが選択中（active）で、両隣より一回り大きく＆最前面に重なって表示される。
 // 豊明本社・島根工場の 2 拠点で再利用（src/components/OfficeTourCarousel.astro）。
 // ============================================
 .c-office-tour {
@@ -94,15 +94,10 @@
 
 .c-office-tour__slide {
   height: auto;
-  // 既定（両隣）は一回り小さく。中央（active）だけ等倍に戻して大きく見せる。
-  // Figma 準拠で両隣も色は落とさず（不透明度はそのまま）、サイズ差のみで中央を強調。
-  transform: scale(0.81);
-  transform-origin: center center;
-  transition: transform 0.4s ease;
-}
-
-.c-office-tour__slide.swiper-slide-active {
-  transform: scale(1);
+  // 大きさ（中央=等倍／外側ほど縮小）・重なり・z-index は Swiper の coverflow
+  // エフェクトが transform / z-index をインライン付与して制御する（main.js の
+  // initOfficeTour 参照）。ここで transform を指定するとインライン値と競合するため
+  // 触らない。
 }
 
 .c-office-tour__figure {
@@ -115,6 +110,9 @@
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   background: #b3b3b3;
+  // カードを浮かせて見せるドロップシャドウ。中央スライドが最前面（z-index 最大）
+  // なので、その影が両隣に落ちて重なりの奥行きが強調される（参考デザイン準拠）。
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 
   img {
     width: 100%;

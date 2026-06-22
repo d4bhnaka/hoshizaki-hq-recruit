@@ -45,8 +45,7 @@
   // Figma: 本文は左寄せ。ブロック左端を FV（ヒーロー）の左端 x317 に合わせる
   // 各文を1行に収める（Figma は3文=3行）ため幅は最長文(約1101px)に合わせる
   max-width: 1120px;
-  margin-left: clamp(0px, 18vw, 277px);
-  margin-right: auto;
+  margin-inline: auto;
   font-size: clamp(15px, 1.3vw, 18px); // Figma 18px
   line-height: 2;
   text-align: left;

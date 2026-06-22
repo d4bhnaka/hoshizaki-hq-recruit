@@ -388,15 +388,17 @@ const trioCards = [
     {/* 見出し・カード・スクロール連動スタック演出は特集ページ（/special/）と */}
     {/* 共通の SpecialContents コンポーネントを使用する。 */}
     {/* ============================================ */}
-    <div class="p-special">
-      <SpecialContents
-        basePath={basePath}
-        storyBase={`${basePath}special/`}
-        headingTag="h2"
-      />
-    </div>
+    <section class="p-top-special" aria-label="特集コンテンツとエントリー導線">
+      <div class="p-special">
+        <SpecialContents
+          basePath={basePath}
+          storyBase={`${basePath}special/`}
+          headingTag="h2"
+        />
+      </div>
 
-    <BottomCta basePath={basePath} />
+      <BottomCta basePath={basePath} />
+    </section>
 
     {/* ============================================ */}
     {/* コンセプトムービー モーダル */}

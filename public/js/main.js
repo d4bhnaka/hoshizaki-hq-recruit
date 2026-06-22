@@ -192,7 +192,7 @@
   // --------------------------------------------
   // Internship: コース詳細を読み下げた後、コース一覧（カルーセル）へ
   //   ワンタップで戻すフロートボタン。COURSE カルーセルを上に通り過ぎたら
-  //   出現し、以降は最下部（MESSAGE / footer）までずっと表示し続ける。
+  //   出現し、フッターと重なる位置まで来たら隠す（フッターの上に被せない）。
   //   判定は rAF スロットルのスクロール監視（initHeaderScroll と同方式）。
   //   IntersectionObserver は「交差の有無」しか分からず、上に抜けたか下に
   //   あるかを高速スクロールで取りこぼすため使わない。見た目の出入りは
@@ -203,15 +203,18 @@
     var anchor = document.querySelector("[data-course-anchor]");
     if (!btn || !anchor) return;
 
+    var footer = document.querySelector(".l-footer");
     var ticking = false;
 
     function update() {
       ticking = false;
-      // COURSE カルーセルが画面上端より上に完全に出たら表示。最下部まで保持する。
-      btn.classList.toggle(
-        "is-visible",
-        anchor.getBoundingClientRect().bottom < 0
-      );
+      // COURSE カルーセルが画面上端より上に完全に出たら表示する。
+      var passedCourse = anchor.getBoundingClientRect().bottom < 0;
+      // ただしフッター上端がボタン下端より上へ来たら（＝重なるなら）隠す。
+      var overlapsFooter = footer
+        ? footer.getBoundingClientRect().top < btn.getBoundingClientRect().bottom
+        : false;
+      btn.classList.toggle("is-visible", passedCourse && !overlapsFooter);
     }
 
     function requestUpdate() {
@@ -249,12 +252,25 @@
       if (!swiperEl) return;
 
       new Swiper(swiperEl, {
-        // 中央のスライドが選択中（.swiper-slide-active）＝一回り大きく表示。
-        // CSS 側で active 以外を scale(0.81) に縮小して中央を強調する。
+        // 隣り合うスライドを重ねて表示し、中央（active）を最前面で大きく見せる。
+        // coverflow エフェクトで実現：
+        //   - stretch（正・スライド幅に対する%）で隣を中央側へ寄せて重ねる
+        //   - scale で中央＝等倍／外側ほど縮小（b = 1 - (1-scale)*|距離|）
+        //   - z-index は Swiper が自動付与（中央=最前面、外側ほど背面）
+        // 重なり量を変えたいときは stretch の値だけ調整する（正を強める＝重なり増）。
         centeredSlides: true,
         loop: true,
         slideToClickedSlide: true,
         grabCursor: true,
+        effect: "coverflow",
+        coverflowEffect: {
+          rotate: 0, // 3D 傾けはしない（フラットなカード）
+          depth: 0, // 奥行き(translateZ)は使わず、縮小は scale に一本化
+          stretch: "33%", // 正の値で隣を中央側へ寄せて重ねる。外側まで重なるよう強め
+          scale: 0.88, // 中央=1.0／隣=0.88。外側の縮小を緩めて隙間が開くのを抑える
+          modifier: 1,
+          slideShadows: false,
+        },
         // 自動ループ再生。操作後も再開させ、ホバー中は一時停止する。
         autoplay: {
           delay: 3500,
@@ -262,14 +278,14 @@
           pauseOnMouseEnter: true,
         },
         // フルブリード（ウィンドウ全幅）表示のため、画面が広いほど枚数を増やして
-        // 1枚あたりのサイズが過大にならないようにする。
+        // 1枚あたりのサイズが過大にならないようにする。spaceBetween は使わず
+        // （0）、間隔・重なりは coverflow の stretch で一括制御する。
         slidesPerView: 1.3,
-        spaceBetween: 16,
         breakpoints: {
-          600: { slidesPerView: 2.0, spaceBetween: 20 },
-          900: { slidesPerView: 2.6, spaceBetween: 28 },
-          1280: { slidesPerView: 3.0, spaceBetween: 32 },
-          1600: { slidesPerView: 3.4, spaceBetween: 36 },
+          600: { slidesPerView: 2.6 },
+          900: { slidesPerView: 3.2 },
+          1280: { slidesPerView: 3.6 },
+          1600: { slidesPerView: 4.2 },
         },
         navigation: {
           prevEl: block.querySelector("[data-office-prev]"),

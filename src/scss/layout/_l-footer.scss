@@ -94,8 +94,28 @@
 .l-footer__list--indented {
   // SPECIAL CONTENTS 配下のページであることを示すため 1 段下げて表示する
   padding-left: 1em;
-  list-style-type: disc;
+  list-style: none;
   color: #a9a9a9;
+
+  > li {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      flex-shrink: 0;
+      width: 0.5em;
+      height: 1px;
+      background-color: #555;
+    }
+  }
+
+  .l-footer__link {
+    font-size: 12px;
+    white-space: normal;
+  }
 }
 
 .l-footer__link {
