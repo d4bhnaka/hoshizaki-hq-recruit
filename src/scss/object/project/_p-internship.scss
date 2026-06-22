@@ -15,7 +15,9 @@
   position: relative;
   background: var(--ip-blue);
   color: var(--color-white);
-  overflow: hidden;
+  // 横方向の 100vw はみ出し（penguins・全幅セクションの負マージン）はクリップしつつ、
+  // overflow:hidden が作る縦スクロールコンテナを避け、子孫の position:sticky を有効化する。
+  overflow-x: clip;
 }
 
 // 共通セクション余白
@@ -497,20 +499,27 @@
 }
 
 .p-course-detail__pillwrap {
-  width: min(1240px, 100% - var(--ip-gutter) * 2);
-  margin-inline: auto;
-  text-align: left;
+  // コース詳細パネルをスクロール中、上部に固定される全幅バー。
+  // sticky の封じ込めは親 .p-course-detail が担い、パネル末尾で自然解除される。
+  position: sticky;
+  top: clamp(72px, 9vw, 100px); // 透過 fixed ヘッダーのロゴ／CTA を避ける高さ
+  z-index: 5; // ヘッダー(z-index:20)より下。コース詳細の本文より上。
+  width: 100%;
+  padding-block: clamp(14px, 1.8vw, 22px);
+  background: var(--ip-blue);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
 .p-course-detail__pill {
-  display: inline-block;
-  padding: 16px 28px;
-  border-radius: 12px;
-  background: var(--ip-card-active);
-  color: #000;
+  // バー内側の見出しテキスト（旧ピル）。コンテナ幅で中央寄せし、大きく表示する。
+  display: block;
+  max-width: min(1240px, 100% - var(--ip-gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--ip-gutter);
+  color: var(--color-white);
   font-weight: 700;
-  font-size: clamp(13px, 1.2vw, 16px);
-  line-height: 1.5;
+  font-size: clamp(16px, 2.2vw, 26px);
+  line-height: 1.4;
 }
 
 // --------------------------------------------
