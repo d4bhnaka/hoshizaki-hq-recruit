@@ -347,12 +347,15 @@
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: 12px;
 }
 
 .p-job-card__interview-link {
-  display: block;
-  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   text-decoration: none;
   transition: transform var(--transition-fast);
 
@@ -377,6 +380,26 @@
   box-shadow:
     0 0 0 2px var(--color-brand-primary),
     var(--shadow-card);
+}
+
+.p-job-card__interview-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.p-job-card__interview-initials {
+  color: var(--color-text-primary);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.p-job-card__interview-year {
+  color: var(--color-text-secondary);
+  font-size: 12px;
 }
 
 .p-job-card__figure {
