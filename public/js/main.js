@@ -207,6 +207,12 @@
         loop: true,
         slideToClickedSlide: true,
         grabCursor: true,
+        // 自動ループ再生。操作後も再開させ、ホバー中は一時停止する。
+        autoplay: {
+          delay: 3500,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        },
         // フルブリード（ウィンドウ全幅）表示のため、画面が広いほど枚数を増やして
         // 1枚あたりのサイズが過大にならないようにする。
         slidesPerView: 1.3,
