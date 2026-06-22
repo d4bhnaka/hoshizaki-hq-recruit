@@ -190,6 +190,54 @@
   }
 
   // --------------------------------------------
+  // Internship: コース詳細を読み下げた後、コース一覧（カルーセル）へ
+  //   ワンタップで戻すフロートボタン。COURSE カルーセルを上に通り過ぎたら
+  //   出現し、以降は最下部（MESSAGE / footer）までずっと表示し続ける。
+  //   判定は rAF スロットルのスクロール監視（initHeaderScroll と同方式）。
+  //   IntersectionObserver は「交差の有無」しか分からず、上に抜けたか下に
+  //   あるかを高速スクロールで取りこぼすため使わない。見た目の出入りは
+  //   CSS（.p-course-backtop.is-visible）。
+  // --------------------------------------------
+  function initCourseBackToTop() {
+    var btn = document.querySelector("[data-course-backtop]");
+    var anchor = document.querySelector("[data-course-anchor]");
+    if (!btn || !anchor) return;
+
+    var ticking = false;
+
+    function update() {
+      ticking = false;
+      // COURSE カルーセルが画面上端より上に完全に出たら表示。最下部まで保持する。
+      btn.classList.toggle(
+        "is-visible",
+        anchor.getBoundingClientRect().bottom < 0
+      );
+    }
+
+    function requestUpdate() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate, { passive: true });
+
+    btn.addEventListener("click", function () {
+      var reduce =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      anchor.scrollIntoView({
+        behavior: reduce ? "auto" : "smooth",
+        block: "start",
+      });
+    });
+
+    update(); // 初期化（リロード時に既にスクロール済みでも正しい状態に）
+  }
+
+  // --------------------------------------------
   // Environment: Office Tour 写真カルーセル（拠点ごとに Swiper）
   // --------------------------------------------
   function initOfficeTour() {
@@ -746,6 +794,7 @@
     initHeaderScroll();
     initPersonFilter();
     initInternship();
+    initCourseBackToTop();
     initOfficeTour();
     initPageTransition();
     initMovieModal();

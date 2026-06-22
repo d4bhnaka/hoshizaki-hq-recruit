@@ -259,6 +259,71 @@
 }
 
 // --------------------------------------------
+// Product（このプロジェクトの製品）
+//   参加メンバーと Q&A の間に挟む製品紹介。透過 PNG の製品図 → 見出し →
+//   本文の縦並び。Q&A 本文と同じ 1040px のコンテンツ幅・左揃えに合わせる。
+//   製品図は透過カットアウトのため、shine（グレー幕）ではなく素直な fade+rise。
+// --------------------------------------------
+.p-project-story__product {
+  max-width: 1040px;
+  margin: 112px auto 0;
+  padding: 0 40px;
+}
+
+.p-project-story__product-image {
+  margin: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+// 見出しは他ページ（requirement の p-req__label / fact）と同じ
+// 「3Dキューブ + 日本語見出し」の共通様式に揃える（アイコン 48px・本文 28px/700）。
+.p-project-story__product-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  margin: 44px 0 0;
+}
+
+.p-project-story__product-heading-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-top: -0.3em;
+  flex-shrink: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.p-project-story__product-heading-text {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary);
+}
+
+.p-project-story__product-text {
+  margin: 22px 0 0;
+  font-size: 16px;
+  line-height: 1.9;
+  color: #000;
+
+  p {
+    margin: 0;
+  }
+}
+
+// --------------------------------------------
 // Body (Q&A)
 // --------------------------------------------
 .p-project-story__body {
@@ -430,6 +495,20 @@
     row-gap: 48px;
   }
 
+  .p-project-story__product {
+    margin-top: 88px;
+    padding: 0 20px;
+  }
+
+  .p-project-story__product-heading-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .p-project-story__product-heading-text {
+    font-size: 22px;
+  }
+
   .p-project-story__body {
     padding: 80px 20px 0;
     gap: 64px;
@@ -527,6 +606,30 @@
   .p-project-story__member-meta {
     flex-wrap: wrap;
     gap: 0.31em 0.62em;
+  }
+
+  .p-project-story__product {
+    margin-top: 3.73em;
+    padding: 0 1.07em;
+  }
+
+  .p-project-story__product-heading {
+    margin-top: 1.6em;
+    gap: 0.5em;
+  }
+
+  .p-project-story__product-heading-icon {
+    width: 6.2vw;
+    height: 6.2vw;
+  }
+
+  .p-project-story__product-heading-text {
+    font-size: 4.8vw;
+  }
+
+  .p-project-story__product-text {
+    margin-top: 1.07em;
+    font-size: 3.5vw;
   }
 
   .p-project-story__body {

@@ -67,7 +67,9 @@ const headerCtas = [
       <span class="l-header__logo-fallback" style="display:none;">HOSHIZAKI</span>
     </a>
     <div class="l-header__actions">
+      {/* インターンシップページのヘッダーには CTA を出さない（Figma 09_internship 準拠） */}
       {
+        currentKey !== "internship" &&
         headerCtas.map((cta) => (
           <a
             class="l-header__cta"

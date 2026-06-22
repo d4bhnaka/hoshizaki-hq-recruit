@@ -93,7 +93,7 @@
 
 ### アセット配置
 
-- [~] M3-A-1 トップページのアセットを [../public/images/top/](../public/images/top/) に配置（ap_01〜05 / cloud01〜03 / ice_cubes_01〜04 / bg-city / pioneer / top_penguins / section-bg-environment 等は配置済み。不足分は Figma から追加書き出し）。
+- [r] M3-A-1 トップページのアセットを [../public/images/top/](../public/images/top/) に配置（ap_01〜05 / cloud01〜03 / ice_cubes_01〜04 / bg-city / pioneer / top_penguins / section-bg-environment 等）。**2026-06-19：アセット入稿すべて完了**（不足分なし）。
 - [x] M3-A-2 ヘッダーロゴは `hoshizaki-logo-mark-header.png`（マーク・配置済み）を使用。**2026-06-19 クライアント確認**：旧案の `logo-hoshizaki.svg` は不要。フッター下部の大型ワードマークは現状 CSS テキストのまま据え置き。
 - [r] M3-A-3 共通バナー（`images/common/bnr_entry.png` / `bnr_internship.png` / `skelton-penguin.png`）配置済み。
 
@@ -106,9 +106,9 @@
 - [r] M4-3 `grep -rE 'href="/|src="/' dist/ --include='*.html'` が 0 件。
 - [r] M4-4 `dist/assets/` 内のファイル名にハッシュが付いていない。
 - [r] M4-5 `head -30 dist/index.html` でインデントが保持されている。
-- [ ] M4-6 `dist/index.html` をブラウザで開き、PC 幅でレイアウト崩れがない。※ Figma アセット入稿後に要確認。
+- [~] M4-6 `dist/index.html` をブラウザで開き、PC 幅でレイアウト崩れがない。**2026-06-19：アセット入稿完了を受けてユーザーがブラウザ目視確認中**。
 - [ ] M4-7 任意のサブディレクトリでもリンクが機能する。
-- [ ] M4-8 主要ブラウザ（Chrome／Safari／Edge）で目視チェック。
+- [~] M4-8 主要ブラウザ（Chrome／Safari／Edge）で目視チェック。**2026-06-19：ユーザーが目視確認中**。
 
 ---
 
