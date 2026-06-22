@@ -352,6 +352,15 @@
 .l-drawer__nav {
   position: relative;
   z-index: 1;
+  // ビューポートが低い時はナビ項目がパネル高さを超えるため、
+  // この領域だけを縦スクロールさせて下部の項目にも到達できるようにする。
+  // （閉じるボタン・背景画像は absolute なので追従せず固定のまま）
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  // 末尾の項目がパネル下端に張り付かないよう余白を確保
+  padding-bottom: 8px;
 }
 
 .l-drawer__list {
