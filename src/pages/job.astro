@@ -7,6 +7,7 @@ import IceHeading from "../components/IceHeading.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import BottomCta from "../components/BottomCta.astro";
 import { personDetails } from "../data/personDetails";
+import { persons } from "../data/persons";
 
 const base = "../";
 
@@ -14,6 +15,10 @@ const base = "../";
 // 社員名は非公開だがイニシャルは個別ページで公開している表記）。
 const initialsBySlug = Object.fromEntries(
   personDetails.map((p) => [p.slug, p.initials]),
+);
+// slug → 入社年（"2014年"）。persons.ts が入社年の単一ソース。表示時に「入社」を付与。
+const yearBySlug = Object.fromEntries(
+  persons.map((p) => [p.slug, p.year]),
 );
 
 const chart = {
@@ -226,7 +231,7 @@ const groups: JobGroup[] = [
                                     <a
                                       class="p-job-card__interview-link"
                                       href={`${base}person/${slug}/`}
-                                      aria-label={`先輩社員 ${initialsBySlug[slug]} さんのインタビューを見る`}
+                                      aria-label={`先輩社員 ${initialsBySlug[slug]} さん（${yearBySlug[slug]}入社）のインタビューを見る`}
                                     >
                                       <img
                                         class="p-job-card__interview-avatar"
@@ -236,6 +241,10 @@ const groups: JobGroup[] = [
                                         width="58"
                                         height="58"
                                       />
+                                      <span class="p-job-card__interview-meta">
+                                        <span class="p-job-card__interview-initials">{initialsBySlug[slug]}</span>
+                                        <span class="p-job-card__interview-year">{yearBySlug[slug]}入社</span>
+                                      </span>
                                     </a>
                                   </li>
                                 ))}
