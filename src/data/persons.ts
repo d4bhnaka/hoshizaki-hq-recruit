@@ -8,7 +8,7 @@
 //     一覧カードと個別ページ（person/[slug].astro）のプロフィール双方で「職種」として表示する。
 //     ここが職種・入社年の単一ソース（旧 personDetails.dept / year は廃止）。
 //   - category（技術系 / 企画管理系）は Figma のカード左下タグ表記。
-//   - tags = 絞り込みトークン: カテゴリ / 文理 / 性別 / 入社区分(newgrad|midcareer)。
+//   - tags = 絞り込みトークン: カテゴリ / 文理 / 入社区分(newgrad|midcareer)。
 //     新卒/中途バッジ（「2024年 新卒入社」等）は year と tags の newgrad|midcareer から生成する
 //     ため、入社区分の真実の置き場所は tags 側に一本化している（フィルターと表示を同期）。
 // ============================================================================
@@ -26,7 +26,7 @@ export interface Person {
   body: string;
   /** カード左下のカテゴリタグ。Figma 表記に忠実（技術系 / 企画管理系） */
   category: string;
-  /** 絞り込み用トークン: カテゴリ / 文理 / 性別 / 入社区分(newgrad|midcareer) */
+  /** 絞り込み用トークン: カテゴリ / 文理 / 入社区分(newgrad|midcareer) */
   tags: string[];
   /** 参考：社員名（writing/sources のデータ。カードには非表示） */
   name: string;
@@ -51,7 +51,7 @@ export const persons: Person[] = [
     year: "2014年",
     body: "「これはお母さんが／作った製品だよ」と／言える仕事。",
     category: "技術系",
-    tags: ["tech", "science", "female", "newgrad"],
+    tags: ["tech", "science", "newgrad"],
   },
   {
     slug: "02",
@@ -61,7 +61,7 @@ export const persons: Person[] = [
     year: "2017年",
     body: "確かな土台の上で、／まだ誰もやっていない／ことに挑む。",
     category: "技術系",
-    tags: ["tech", "science", "male", "newgrad"],
+    tags: ["tech", "science", "newgrad"],
   },
   {
     slug: "03",
@@ -71,7 +71,7 @@ export const persons: Person[] = [
     year: "2024年",
     body: "挑戦できる環境で、／ものづくりを／支える人になる。",
     category: "技術系",
-    tags: ["tech", "science", "male", "newgrad"],
+    tags: ["tech", "science", "newgrad"],
   },
   {
     slug: "04",
@@ -81,7 +81,7 @@ export const persons: Person[] = [
     year: "2022年",
     body: "暮らしの安心を、／品質で守る。",
     category: "技術系",
-    tags: ["tech", "science", "male", "midcareer"],
+    tags: ["tech", "science", "midcareer"],
   },
   {
     slug: "05",
@@ -91,7 +91,7 @@ export const persons: Person[] = [
     year: "2025年",
     body: "「食」を支える、／世界で挑み続ける／強固な企業へ",
     category: "技術系",
-    tags: ["tech", "humanities", "male", "newgrad"],
+    tags: ["tech", "humanities", "newgrad"],
   },
   {
     slug: "06",
@@ -101,7 +101,7 @@ export const persons: Person[] = [
     year: "2024年",
     body: "島根から世界へ。／ものづくりで／未来をつくる",
     category: "技術系",
-    tags: ["tech", "science", "female", "newgrad"],
+    tags: ["tech", "science", "newgrad"],
   },
   {
     slug: "07",
@@ -111,7 +111,7 @@ export const persons: Person[] = [
     year: "2020年",
     body: "地元・島根に／貢献したい想いが／私の原点。",
     category: "技術系",
-    tags: ["tech", "science", "male", "newgrad"],
+    tags: ["tech", "science", "newgrad"],
   },
   {
     slug: "08",
@@ -121,7 +121,7 @@ export const persons: Person[] = [
     year: "2024年",
     body: "地元で、世界で。／長く働ける／会社を選んだ。",
     category: "技術系",
-    tags: ["tech", "science", "male", "newgrad"],
+    tags: ["tech", "science", "newgrad"],
   },
   {
     slug: "09",
@@ -131,7 +131,7 @@ export const persons: Person[] = [
     year: "2024年",
     body: "安定供給で、／お客様の期待に応える。",
     category: "技術系",
-    tags: ["tech", "science", "male", "midcareer"],
+    tags: ["tech", "science", "midcareer"],
   },
   {
     slug: "10",
@@ -141,7 +141,7 @@ export const persons: Person[] = [
     year: "2020年",
     body: "自分の仕事が、／暮らしの中で、／形になる。",
     category: "技術系",
-    tags: ["tech", "science", "male", "newgrad"],
+    tags: ["tech", "science", "newgrad"],
   },
   {
     slug: "11",
@@ -151,7 +151,7 @@ export const persons: Person[] = [
     year: "2025年",
     body: "この人たちと働きたい。／そう思えた会社。",
     category: "企画管理系",
-    tags: ["admin", "humanities", "female", "newgrad"],
+    tags: ["admin", "humanities", "newgrad"],
   },
   {
     slug: "12",
@@ -161,7 +161,7 @@ export const persons: Person[] = [
     year: "2016年",
     body: "海外事業のさらなる拡大。／そのミッションを／実現へ導く。",
     category: "企画管理系",
-    tags: ["admin", "humanities", "male", "newgrad"],
+    tags: ["admin", "humanities", "newgrad"],
   },
   {
     slug: "13",
@@ -171,7 +171,7 @@ export const persons: Person[] = [
     year: "2025年",
     body: "限界を決めない。／挑戦が私の／世界を広げる。",
     category: "企画管理系",
-    tags: ["admin", "humanities", "female", "midcareer"],
+    tags: ["admin", "humanities", "midcareer"],
   },
   {
     slug: "14",
@@ -181,7 +181,7 @@ export const persons: Person[] = [
     year: "2010年",
     body: "人を支える仕事で、／信頼される存在に。",
     category: "企画管理系",
-    tags: ["admin", "humanities", "male", "newgrad"],
+    tags: ["admin", "humanities", "newgrad"],
   },
   {
     slug: "15",
@@ -191,6 +191,6 @@ export const persons: Person[] = [
     year: "2022年",
     body: "語学を武器に、／世界No.1へ挑む／会社を選んだ。",
     category: "企画管理系",
-    tags: ["admin", "humanities", "female", "newgrad"],
+    tags: ["admin", "humanities", "newgrad"],
   },
 ];
