@@ -148,6 +148,37 @@
   }
 
   // --------------------------------------------
+  // Person grid 初回表示 stagger
+  //   グリッドセクションが初めてビューポートに入った瞬間、
+  //   全表示カードを triggerCardStagger で波状に登場させる（1回限り）。
+  //   reduced-motion は CSS 側（@media no-preference）が吸収するため JS 判定不要。
+  // --------------------------------------------
+  function initPersonGridReveal() {
+    var section = document.querySelector(".p-person__grid-section");
+    var cards = document.querySelectorAll("[data-person-card]");
+    if (!section || !cards.length) return;
+    if (!("IntersectionObserver" in window)) return;
+
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          // display:none でないカードだけ対象
+          // （フィルタータブがスクロール前に操作された場合に備える）
+          var visible = Array.prototype.filter.call(cards, function (c) {
+            return c.style.display !== "none";
+          });
+          triggerCardStagger(visible);
+          io.unobserve(section); // 1回限り再生
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0 }
+    );
+
+    io.observe(section);
+  }
+
+  // --------------------------------------------
   // Internship: course carousel (Swiper) + tab content switching
   // --------------------------------------------
   function initInternship() {
@@ -957,6 +988,7 @@
     initDrawer();
     initHeaderScroll();
     initPersonFilter();
+    initPersonGridReveal();
     initInternship();
     initCourseBackToTop();
     initOfficeTour();
