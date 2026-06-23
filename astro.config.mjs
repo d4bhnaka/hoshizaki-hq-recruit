@@ -2,7 +2,7 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import { execSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
@@ -43,6 +43,35 @@ function getLastModFromGit(pathname) {
   }
 }
 
+// @astrojs/sitemap はサイトマップ index（sitemap-index.xml）の子参照を
+// site の「ホスト部分」だけから生成するため、サブディレクトリ配置だと
+// <loc>https://host/sitemap-0.xml</loc> のように /saiyou/ が欠落して 404 になる。
+// serialize() は各 URL 単位（sitemap-0.xml の中身）にしか効かず index には届かないので、
+// ビルド後に index 内の子サイトマップ参照を site のフルURL（パス込み）へ書き換える。
+/** @param {string} site フルURL（例 https://www.hoshizaki.co.jp/saiyou/） */
+function fixSitemapIndex(site) {
+  const base = site.replace(/\/$/, "");
+  return {
+    name: "fix-sitemap-index",
+    hooks: {
+      /** @param {{ dir: URL, logger: { info: (m: string) => void } }} ctx */
+      "astro:build:done"({ dir, logger }) {
+        const indexPath = fileURLToPath(new URL("sitemap-index.xml", dir));
+        if (!existsSync(indexPath)) return;
+        const before = readFileSync(indexPath, "utf8");
+        const after = before.replace(
+          /<loc>[^<]*?(sitemap-[\w-]+\.xml)<\/loc>/g,
+          (_, file) => `<loc>${base}/${file}</loc>`
+        );
+        if (after !== before) {
+          writeFileSync(indexPath, after);
+          logger.info(`sitemap-index.xml の子サイトマップ参照を ${base}/ に修正`);
+        }
+      },
+    },
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
   // 本番ビルド時のみ site を設定（sitemap.xml に絶対URLを埋め込むため）
@@ -69,6 +98,8 @@ export default defineConfig({
               };
             },
           }),
+          // sitemap の後に実行し、生成済み sitemap-index.xml を後処理する
+          fixSitemapIndex(siteUrl),
         ]
       : [],
   build: {

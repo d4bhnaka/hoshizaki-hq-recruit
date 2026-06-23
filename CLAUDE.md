@@ -23,7 +23,9 @@ Reading order for a fresh session:
 - `npm run dev` — Astro dev server at `localhost:4321`
 - `npm run build:scss` — compile `src/scss/style.scss` → `public/css/style.css` (expanded, no source map)
 - `npm run watch:scss` — same, with file watching
-- `npm run build` — full production build: runs `build:scss`, then `astro build`, then runs `js-beautify` over every `*.html` in `dist/` to re-indent them. SCSS must be compiled before Astro builds because `public/css/style.css` is served as-is.
+- `npm run build` (= `npm run build:staging`) — **staging build, for local verification only.** Runs `clean`, then `build:scss`, `astro build` with `BUILD_ENV=staging` (no `SITE_URL`), `js-beautify`, and `build:strip-junk`. Because it is not a production build, `robots.txt` is emitted as `Disallow: /` and **no sitemap is generated**. Do **not** hand this output to the client.
+- `npm run build:production` — **the client handoff / production build.** Same pipeline but with `BUILD_ENV=production` and `SITE_URL=https://www.hoshizaki.co.jp/saiyou/`, so `robots.txt` allows crawling and a sitemap (`sitemap-index.xml` + `sitemap-0.xml`, both with the `/saiyou/` subdirectory path) is generated. **Use this for delivery.**
+- Both build targets: SCSS must be compiled before Astro builds because `public/css/style.css` is served as-is; `clean` removes the previous `dist/` (avoids orphan assets); `build:strip-junk` removes `.DS_Store` files so macOS metadata never ships.
 - `npm run preview` — preview the built `dist/` locally
 
 There is no lint, typecheck, or test setup. `tsconfig.json` extends Astro's strict config but nothing runs it.
