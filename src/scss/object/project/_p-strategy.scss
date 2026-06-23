@@ -305,7 +305,7 @@
 }
 
 .c-ice-link.c-ice-link--map {
-  width: clamp(46px, 5.84%, 84px);
+  width: clamp(70px, 8.2%, 118px);
   height: auto;
   aspect-ratio: 82 / 79;
   filter: drop-shadow(0 3px 6px rgba(0, 47, 95, 0.16));
@@ -317,22 +317,21 @@
 
 .c-ice-link--map .c-ice-link__inner {
   justify-content: center;
-  padding: 16% 6% 6%;
+  padding: 14% 6% 8%;
   gap: 1px;
 }
 
 .c-ice-link--map .c-ice-link__label {
-  font-size: clamp(7px, 0.62vw, 10px);
+  font-size: clamp(10px, 0.95vw, 15px);
+  font-weight: 700;
   letter-spacing: 0;
-  line-height: 1.15;
-  color: var(--color-text-primary);
-  text-decoration: underline;
-}
-
-.c-ice-link--map .c-ice-link__more {
-  font-size: clamp(5px, 0.42vw, 7px);
-  letter-spacing: 0.12em;
-  color: var(--color-text-primary);
+  line-height: 1.25;
+  text-decoration: none;
+  color: var(--color-brand-navy);
+  background: rgba(255, 255, 255, 0.86);
+  border-radius: 6px;
+  padding: 2px 6px;
+  box-shadow: 0 1px 3px rgba(0, 47, 95, 0.18);
 }
 
 // 市場別カード
