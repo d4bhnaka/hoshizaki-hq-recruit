@@ -264,10 +264,16 @@
 //   本文の縦並び。Q&A 本文と同じ 1040px のコンテンツ幅・左揃えに合わせる。
 //   製品図は透過カットアウトのため、shine（グレー幕）ではなく素直な fade+rise。
 // --------------------------------------------
+// PC・タブレット（>600px）は 2カラム（左:見出し+本文 ≒6 / 右:画像 ≒4）。
+// 画像は align-items: center でテキストブロックに対して縦中央揃え。
 .p-project-story__product {
   max-width: 1040px;
   margin: 112px auto 0;
   padding: 0 40px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  column-gap: 48px;
+  align-items: center;
 }
 
 .p-project-story__product-image {
@@ -286,7 +292,7 @@
   display: flex;
   align-items: flex-start;
   gap: 5px;
-  margin: 44px 0 0;
+  margin: 0;
 }
 
 .p-project-story__product-heading-icon {
@@ -498,6 +504,7 @@
   .p-project-story__product {
     margin-top: 88px;
     padding: 0 20px;
+    column-gap: 32px;
   }
 
   .p-project-story__product-heading-icon {
@@ -608,13 +615,20 @@
     gap: 0.31em 0.62em;
   }
 
+  // スマホは 1カラム縦積み（見出し → 本文 → 画像）。
   .p-project-story__product {
+    grid-template-columns: 1fr;
+    column-gap: 0;
     margin-top: 3.73em;
     padding: 0 1.07em;
   }
 
-  .p-project-story__product-heading {
+  .p-project-story__product-image {
     margin-top: 1.6em;
+  }
+
+  .p-project-story__product-heading {
+    margin-top: 0;
     gap: 0.5em;
   }
 
