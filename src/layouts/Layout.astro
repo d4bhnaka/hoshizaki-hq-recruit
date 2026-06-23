@@ -3,12 +3,17 @@ interface Props {
   basePath?: string;
   title?: string;
   description?: string;
+  /** OGP/Twitter 画像（site ルートからの相対パス）。本番のみ絶対URL化して出力 */
+  ogImage?: string;
 }
 
 const {
   basePath = "./",
   title = "ホシザキ本社採用サイト",
   description = "ホシザキ株式会社 本社採用情報。新卒採用・インターンシップ情報を掲載しています。",
+  // 既定はトップのコンセプトキービジュアル。専用 OGP 画像（1200×630 推奨）を
+  // 用意したら images/common/ に置き、ここを差し替える。ページ側で上書きも可。
+  ogImage = "images/top/concept-movie-poster.png",
 } = Astro.props;
 
 // 本番ビルド以外（staging / dev）はクローラーをブロック
@@ -21,6 +26,12 @@ const siteUrl = process.env.SITE_URL ?? "";
 const canonicalUrl =
   isProduction && siteUrl
     ? new URL(Astro.url.pathname.replace(/^\//, ""), siteUrl).toString()
+    : null;
+
+// OGP 画像は SNS クローラ向けに絶対URL必須。canonical 同様、本番のみ出力する
+const ogImageUrl =
+  isProduction && siteUrl
+    ? new URL(ogImage.replace(/^\//, ""), siteUrl).toString()
     : null;
 ---
 
@@ -78,9 +89,14 @@ const canonicalUrl =
     <meta property="og:description" content={description} />
     <meta property="og:site_name" content="ホシザキ本社採用サイト" />
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
-    <meta name="twitter:card" content="summary" />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    <meta
+      name="twitter:card"
+      content={ogImageUrl ? "summary_large_image" : "summary"}
+    />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
     <link rel="icon" href={`${basePath}favicon.ico`} sizes="any" />
     <link
       rel="icon"
