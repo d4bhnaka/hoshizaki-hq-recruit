@@ -45,8 +45,11 @@
 }
 
 .p-req__lead {
-  margin: 0;
-  font-size: 18px;
+  // 下層ページ共通の本文帯（1120px）に揃える
+  max-width: 1120px;
+  margin: 0 auto;
+  // 下層ページ共通のリード文サイズ（Figma 18px）
+  font-size: clamp(15px, 1.3vw, 18px);
   line-height: 2;
   color: var(--color-text-primary);
 }
@@ -225,11 +228,6 @@
 @media screen and (max-width: 600px) {
   .p-req__intro {
     padding-top: 40px;
-  }
-
-  .p-req__lead {
-    font-size: 15px;
-    line-height: 1.9;
   }
 
   .p-req__icon {

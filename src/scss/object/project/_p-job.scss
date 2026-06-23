@@ -48,17 +48,18 @@
 // Intro copy
 // --------------------------------------------
 .p-job__intro {
-  max-width: 1000px;
+  // 下層ページ共通の本文帯（1120px / fact・requirement と統一）
+  max-width: 1120px;
   margin: 0 auto;
   padding: 80px 32px 40px;
   text-align: left;
 }
 
 .p-job__intro-text {
-  font-size: 16px;
+  // 下層ページ共通のリード文サイズ（Figma 18px）
+  font-size: clamp(15px, 1.3vw, 18px);
   line-height: 2;
   color: var(--color-text-primary);
-  letter-spacing: 0.04em;
 }
 
 // --------------------------------------------

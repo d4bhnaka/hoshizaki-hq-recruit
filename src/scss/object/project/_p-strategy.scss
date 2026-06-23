@@ -17,11 +17,18 @@
 }
 
 // 共通コンテンツ幅（Figma の本文帯 ≈ 300–1300 / 1600）
-.p-strategy-intro__inner,
 .p-strategy-field__inner,
 .p-strategy-global__inner,
 .p-strategy-pioneers__inner {
   max-width: 1040px;
+  margin: 0 auto;
+  padding-inline: clamp(20px, 5vw, 40px);
+  box-sizing: border-box;
+}
+
+// イントロのリード文は全下層ページ共通の本文帯（1120px）に揃える
+.p-strategy-intro__inner {
+  max-width: 1120px;
   margin: 0 auto;
   padding-inline: clamp(20px, 5vw, 40px);
   box-sizing: border-box;
@@ -68,7 +75,8 @@
 
 .p-strategy-intro__text {
   margin: 0;
-  font-size: var(--font-size-base);
+  // 下層ページ共通のリード文サイズ（Figma 18px / fact・requirement と統一）
+  font-size: clamp(15px, 1.3vw, 18px);
   line-height: 2;
   color: var(--color-text-primary);
 }
@@ -547,7 +555,6 @@
 }
 
 @media screen and (max-width: 600px) {
-  .p-strategy-intro__text,
   .p-strategy-field__intro,
   .p-strategy-global__intro,
   .p-strategy-pioneers__intro {
