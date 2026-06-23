@@ -266,7 +266,7 @@
   display: block;
   width: clamp(180px, 28%, 320px);
   height: auto;
-  margin: 0 0 -1% auto;
+  margin: 0 5% 1% auto;
   position: relative;
   z-index: 1;
 }
@@ -329,68 +329,9 @@
   text-decoration: none;
   color: var(--color-brand-navy);
   background: rgba(255, 255, 255, 0.86);
-  border-radius: 6px;
-  padding: 2px 6px;
+  border-radius: 5px;
+  padding: 2px 1px;
   box-shadow: 0 1px 3px rgba(0, 47, 95, 0.18);
-}
-
-// ペンギンの操作ナビ吹き出し（右上の集団から「クリックしてね！」）
-.p-strategy-global__map-cue {
-  position: absolute;
-  right: 19%;
-  top: 1%;
-  z-index: 4; // 右上の空いた海。アイコン(2)・ペンギン(3)より前面
-  padding: 9px 18px;
-  background: var(--color-white);
-  color: var(--color-brand-navy);
-  font-family: var(--font-family-base);
-  font-weight: 700;
-  font-size: clamp(11px, 1vw, 16px);
-  line-height: 1;
-  white-space: nowrap;
-  border: 2px solid var(--color-brand-cyan);
-  border-radius: 999px;
-  box-shadow: 0 6px 14px rgba(0, 47, 95, 0.2);
-  pointer-events: none;
-}
-
-// 吹き出しの尾（上向き＝ペンギン集団を指す）。シアン縁取りの三角に白の三角を重ねる
-.p-strategy-global__map-cue::after {
-  content: "";
-  position: absolute;
-  top: -9px;
-  right: 26px;
-  border: 9px solid transparent;
-  border-top: 0;
-  border-bottom-color: var(--color-brand-cyan);
-}
-
-.p-strategy-global__map-cue::before {
-  content: "";
-  position: absolute;
-  top: -6px;
-  right: 28px;
-  z-index: 1;
-  border: 7px solid transparent;
-  border-top: 0;
-  border-bottom-color: var(--color-white);
-}
-
-// 視線誘導のゆるやかなバウンド（reduced-motion では静止）
-@media (prefers-reduced-motion: no-preference) {
-  .p-strategy-global__map-cue {
-    animation: p-strategy-cue-bob 2.4s ease-in-out infinite;
-  }
-}
-
-@keyframes p-strategy-cue-bob {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
 }
 
 // 市場別カード
@@ -419,7 +360,8 @@
   position: absolute;
   inset: 0 0 0 auto;
   width: 42%;
-  background: url("../images/strategy/card-texture.jpg") right center / cover no-repeat;
+  background: url("../images/strategy/card-texture.jpg") right center / cover
+    no-repeat;
   opacity: 0.35;
   -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 65%);
   mask-image: linear-gradient(to right, transparent 0%, #000 65%);
@@ -651,24 +593,8 @@
     padding-left: 62px;
   }
 
-  // 海外展開マップ：スマホはアイコンのみ（市場名は地図直下のカードが担う）
-  // 幅は base の .c-ice-link.c-ice-link--map(0-2-0) と同特異度＋後勝ちで上書き
-  .c-ice-link.c-ice-link--map {
-    width: clamp(44px, 13%, 60px);
-  }
-
-  // ラベルは視覚的に隠すが、<a> のアクセシブルネームとして DOM には残す（sr-only 相当）
-  .c-ice-link--map .c-ice-link__label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-    border: 0;
-    background: none;
-    box-shadow: none;
+  // 海外展開マップ：スマホでは地図上の氷アイコンを非表示（市場名は地図直下のカードが担う）
+  .p-strategy-global__map-link {
+    display: none;
   }
 }

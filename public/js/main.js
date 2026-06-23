@@ -598,6 +598,121 @@
   }
 
   // --------------------------------------------
+  // Info modal (strategy: 海外展開マップ)
+  //   PC で地図の氷アイコン([data-info-trigger])を押すと、その href が
+  //   指す市場カードの「市場名＋本文」をモーダルへ流し込んで開く。
+  //   内容の単一ソースはカード一覧なので、文言修正は HTML 側だけで済む。
+  //   スマホはアイコン自体が CSS で非表示＝クリック不可のため発火せず、
+  //   JS が無い環境ではアンカーの既定動作（カードへスクロール）に委ねる。
+  // --------------------------------------------
+  function initInfoModal() {
+    var modal = document.querySelector("[data-info-modal]");
+    if (!modal) return;
+    var triggers = document.querySelectorAll("[data-info-trigger]");
+    if (!triggers.length) return;
+
+    var titleEl = modal.querySelector("[data-info-title]");
+    var bodyEl = modal.querySelector("[data-info-body]");
+    var closeTargets = modal.querySelectorAll("[data-info-close]");
+    var lastFocused = null;
+
+    // --- フォーカストラップ ----------------------------------------------
+    function getFocusable() {
+      var nodes = modal.querySelectorAll(
+        'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
+      );
+      return Array.prototype.filter.call(nodes, function (el) {
+        return el.offsetWidth > 0 || el.offsetHeight > 0;
+      });
+    }
+
+    function trapTab(event) {
+      if (event.key !== "Tab") return;
+      var focusable = getFocusable();
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      var active = document.activeElement;
+
+      if (event.shiftKey) {
+        if (active === first || !modal.contains(active)) {
+          event.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (active === last || !modal.contains(active)) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    function open(card) {
+      var badge = card.querySelector(".p-strategy-market__badge");
+      var body = card.querySelector(".p-strategy-market__body");
+      if (titleEl) titleEl.textContent = badge ? badge.textContent : "";
+      if (bodyEl) bodyEl.textContent = body ? body.textContent : "";
+
+      lastFocused = document.activeElement;
+      modal.removeAttribute("hidden");
+      // 1フレーム遅らせて data-open を付け、CSS のフェードイン遷移を効かせる。
+      requestAnimationFrame(function () {
+        modal.setAttribute("data-open", "true");
+        // data-open で visibility:hidden→visible になるが、フォーカス可能に
+        // なるには算出スタイルの反映が要る。reflow を強制してから移す。
+        var firstClose = modal.querySelector(".c-info-modal__close");
+        if (firstClose) {
+          void modal.offsetWidth;
+          firstClose.focus();
+        }
+      });
+      document.body.style.overflow = "hidden";
+    }
+
+    function close() {
+      modal.setAttribute("data-open", "false");
+      document.body.style.overflow = "";
+
+      // フェードアウト後に hidden を付ける
+      setTimeout(function () {
+        if (modal.getAttribute("data-open") === "false") {
+          modal.setAttribute("hidden", "");
+        }
+      }, 320);
+
+      // 起点のアイコンへフォーカスを戻す
+      if (lastFocused && typeof lastFocused.focus === "function") {
+        lastFocused.focus();
+      }
+    }
+
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener("click", function (event) {
+        var href = trigger.getAttribute("href") || "";
+        var id = href.charAt(0) === "#" ? href.slice(1) : "";
+        var card = id ? document.getElementById(id) : null;
+        // 対応カードが見つからなければ既定のアンカー動作に任せる
+        if (!card) return;
+        event.preventDefault();
+        open(card);
+      });
+    });
+
+    closeTargets.forEach(function (el) {
+      el.addEventListener("click", close);
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (modal.getAttribute("data-open") !== "true") return;
+      if (event.key === "Escape") {
+        close();
+      } else if (event.key === "Tab") {
+        trapTab(event);
+      }
+    });
+  }
+
+  // --------------------------------------------
   // Inview reveal — スクロールでビューポートに入った要素を
   //   ふわっとフェードイン（+上昇）させる。
   //   検知は IntersectionObserver、見た目の動きは CSS
@@ -838,6 +953,7 @@
     initOfficeTour();
     initPageTransition();
     initMovieModal();
+    initInfoModal();
     initInview();
     initHeroReveals();
     initParallax();

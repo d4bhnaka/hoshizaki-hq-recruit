@@ -1,0 +1,118 @@
+// ============================================
+// c-info-modal — 汎用テキスト情報モーダル
+//   背景を暗くした全画面オーバーレイの中央に白いカードを表示し、
+//   見出し＋本文を載せる。現在は strategy（海外展開マップ）の
+//   市場詳細表示に使用。内容は JS が流し込む（main.js initInfoModal）。
+// ============================================
+
+.c-info-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100; // ドロワー(40)より前面
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 48px);
+  // フェード遷移（data-open で切り替え）
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-base),
+    visibility var(--transition-base);
+}
+
+.c-info-modal[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.c-info-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 18, 40, 0.82);
+  cursor: pointer;
+}
+
+.c-info-modal__dialog {
+  position: relative;
+  width: min(100%, 680px);
+  // 縦長画面でも収まるよう高さに上限を設け、溢れた本文はスクロール
+  max-height: calc(100vh - clamp(32px, 8vw, 96px));
+  overflow-y: auto;
+  padding: clamp(28px, 4vw, 48px);
+  background: var(--color-white);
+  border-radius: 16px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+  // 開くときに少しせり上がる
+  transform: translateY(1.2rem);
+  transition: transform var(--transition-base);
+}
+
+.c-info-modal[data-open="true"] .c-info-modal__dialog {
+  transform: translateY(0);
+}
+
+.c-info-modal__title {
+  margin: 0 0 20px;
+  padding-right: 2.5rem; // 右上の閉じるボタンと重ならないように
+  font-size: clamp(20px, 2.6vw, 28px);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-brand-navy);
+}
+
+.c-info-modal__body {
+  margin: 0;
+  font-size: clamp(14px, 1.4vw, 16px);
+  line-height: 2;
+  color: var(--color-text-primary);
+}
+
+// 閉じるボタン（カード右上の内側）
+.c-info-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 47, 95, 0.08);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(0, 47, 95, 0.18);
+  }
+}
+
+.c-info-modal__close-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.1rem;
+  height: 2px;
+  background: var(--color-brand-navy);
+  transform: translate(-50%, -50%) rotate(45deg);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--color-brand-navy);
+    transform: rotate(-90deg);
+  }
+}
+
+// アニメーション抑制設定を尊重
+@media (prefers-reduced-motion: reduce) {
+  .c-info-modal,
+  .c-info-modal__dialog {
+    transition: none;
+  }
+  .c-info-modal__dialog {
+    transform: none;
+  }
+}

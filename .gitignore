@@ -1,6 +1,11 @@
 # build output
 dist/
 
+# 大容量の動画アセットは Git 管理しない（別途管理し、ビルド/納品前に public/videos/ へ配置する）
+public/videos/*.mp4
+public/videos/*.mov
+public/videos/*.webm
+
 # compiled CSS (generated from src/scss/style.scss)
 public/css/style.css
 
