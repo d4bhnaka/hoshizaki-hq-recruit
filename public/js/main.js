@@ -223,6 +223,7 @@
     if (!btn || !anchor) return;
 
     var footer = document.querySelector(".l-footer");
+    var header = document.querySelector(".l-header");
     var ticking = false;
 
     function update() {
@@ -250,9 +251,13 @@
       var reduce =
         window.matchMedia &&
         window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      anchor.scrollIntoView({
+      // 固定ヘッダーの高さ分だけ上にオフセットし、COURSE 見出しがヘッダー裏に
+      // 隠れないようにする（scrollToCourseDetail と挙動を揃える）。
+      var offset = header ? header.getBoundingClientRect().height : 0;
+      var top = anchor.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({
+        top: top < 0 ? 0 : top,
         behavior: reduce ? "auto" : "smooth",
-        block: "start",
       });
     });
 

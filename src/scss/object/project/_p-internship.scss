@@ -17,7 +17,10 @@
   color: var(--color-white);
   // 横方向の 100vw はみ出し（penguins・全幅セクションの負マージン）はクリップしつつ、
   // overflow:hidden が作る縦スクロールコンテナを避け、子孫の position:sticky を有効化する。
-  overflow-x: clip;
+  // clip 未対応の旧 Safari (<16) では hidden へフォールバックする：横スクロールは防げ、
+  // その環境でだけ sticky バーが通常フローに退避する（許容できる劣化）。
+  overflow-x: hidden; // 旧 Safari フォールバック
+  overflow-x: clip; // モダン：スクロールコンテナを作らずクリップし sticky を維持
 }
 
 // 共通セクション余白
