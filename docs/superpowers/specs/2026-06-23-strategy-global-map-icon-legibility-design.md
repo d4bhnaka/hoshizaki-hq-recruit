@@ -71,7 +71,7 @@
 `src/components/IceLinkButton.astro`:
 
 - `__more` span を **`sublabel` が空文字列でないときだけ描画**する（`{sublabel && <span class="c-ice-link__more">{sublabel}</span>}`）。
-- デフォルト値 `"READ MORE"` は維持。special 系ページなど既存の呼び出しは影響を受けない。
+- デフォルト値 `"READ MORE"` は維持。`IceLinkButton` の他の呼び出し元はトップページ（`index.astro`）の各ボタンで、いずれも `sublabel` を渡さずデフォルトの READ MORE を表示するため影響を受けない。（special 系ページの「READ MORE」は `SpecialContents.astro` / `_p-special.scss` 由来で本コンポーネントとは無関係。）
 
 `src/pages/strategy.astro` の地図リンク（`globalMarkets.map(...)` 内の `IceLinkButton`）に **`sublabel=""`** を渡す。
 
@@ -110,4 +110,4 @@
 
 - `npm run build:scss` でコンパイルが通ること。
 - デスクトップ（1440px）・タブレット（768px）・スマホ（390px）で、ラベル可読性・アイコンの非衝突・吹き出し位置・READ MORE が出力 HTML に残っていないことを確認。
-- special 系ページの `.c-ice-link`（READ MORE あり）が従来どおり表示されること（リグレッション確認）。
+- `IceLinkButton` の他の呼び出し元＝トップページ（`index.astro`）の各ボタンが従来どおり READ MORE を表示すること（`sublabel` 無し＝デフォルト維持。リグレッション確認）。
