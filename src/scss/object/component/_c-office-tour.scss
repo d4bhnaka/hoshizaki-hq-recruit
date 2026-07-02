@@ -102,6 +102,10 @@
 
 .c-office-tour__figure {
   margin: 0;
+  // PC で中央（active）を拡大する際のトランジション基準。
+  // ease-out（減速）で、通常オートプレイ／イントロ着地の切り替わりが自然に馴染む。
+  transform-origin: center center;
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .c-office-tour__media {
@@ -120,6 +124,23 @@
     object-fit: cover;
     display: block;
   }
+
+  // 中央（active）以外を約50%暗くして、選択中の写真を際立たせる。
+  // フィルタだと box-shadow まで暗くなるため、オーバーレイで覆う。
+  // 中央スライドは下の .swiper-slide-active ルールでオーバーレイを消す。
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    transition: opacity 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+    pointer-events: none;
+  }
+}
+
+.swiper-slide-active .c-office-tour__media::after {
+  opacity: 0;
 }
 
 .c-office-tour__placeholder {
@@ -139,10 +160,54 @@
   font-size: clamp(14px, 1.4vw, 16px);
   color: var(--color-text-primary);
   text-align: center;
+  // キャプションは中央（active）スライドのみ表示。非選択は透過で隠すが
+  // 高さは保持し、選択の切り替わりでレイアウトがガタつかないようにする。
+  // フェードはオーバーレイ（__media::after）・拡大と同じ 0.5s ease-out で揃える。
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.swiper-slide-active .c-office-tour__caption {
+  opacity: 1;
+}
+
+// 初回イントロ演出中（起動アニメーション）は、中央強調（拡大・キャプション・暗転）を
+// いったん止めて全カードを均一に見せ、“流れる”動きだけを見せる。演出後にこの状態を
+// 外すと、静止スライドの中央強調が 0.4s でフェードインして落ち着く。
+// （active クラスより指定子を 1 つ多くして確実に上書きする）
+.c-office-tour__swiper.is-intro-playing {
+  .c-office-tour__figure {
+    transform: none;
+    transition: none;
+  }
+
+  .c-office-tour__media::after {
+    opacity: 0; // 全カードを明るく（暗転なし）
+    transition: none;
+  }
+
+  .c-office-tour__caption {
+    opacity: 0;
+    transition: none;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .c-office-tour__head {
     margin-bottom: 16px;
+  }
+}
+
+// PC（769px 以上）のみ、中央（active）スライドを一回り大きく（1.2 倍）表示して
+// 選択中の写真をより際立たせる。Swiper の coverflow が付与するインライン
+// transform は .c-office-tour__slide に掛かるため、内側の __figure を拡大しても
+// 競合しない。拡大分とドロップシャドウが上下で見切れないよう swiper に余白を足す。
+@media screen and (min-width: 769px) {
+  .c-office-tour__swiper {
+    padding-block: clamp(24px, 3vw, 44px);
+  }
+
+  .swiper-slide-active .c-office-tour__figure {
+    transform: scale(1.2);
   }
 }

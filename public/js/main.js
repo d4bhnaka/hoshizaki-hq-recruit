@@ -62,7 +62,10 @@
     });
 
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+      if (
+        event.key === "Escape" &&
+        toggle.getAttribute("aria-expanded") === "true"
+      ) {
         setOpen(false);
       }
     });
@@ -90,7 +93,7 @@
           requestAnimationFrame(update);
         }
       },
-      { passive: true }
+      { passive: true },
     );
 
     update(); // 初期化（リロード時に既にスクロール済みでも正しい状態に）
@@ -172,7 +175,7 @@
           io.unobserve(section); // 1回限り再生
         });
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0 }
+      { rootMargin: "0px 0px -8% 0px", threshold: 0 },
     );
 
     io.observe(section);
@@ -192,7 +195,7 @@
       cards.forEach(function (card) {
         card.setAttribute(
           "aria-pressed",
-          card.getAttribute("data-course-tab") === id ? "true" : "false"
+          card.getAttribute("data-course-tab") === id ? "true" : "false",
         );
       });
       panels.forEach(function (panel) {
@@ -207,9 +210,7 @@
     // 選択コースの詳細バー上端を、sticky 固定位置（ヘッダー直下）へスムーズに合わせる。
     // オフセットは CSS の sticky top を getComputedStyle で読み、二重管理を避ける。
     function scrollToCourseDetail(id) {
-      var panel = document.querySelector(
-        '[data-course-panel="' + id + '"]'
-      );
+      var panel = document.querySelector('[data-course-panel="' + id + '"]');
       if (!panel) return;
       var bar = panel.querySelector(".p-course-detail__pillwrap");
       if (!bar) return;
@@ -272,7 +273,8 @@
       var passedCourse = anchor.getBoundingClientRect().bottom < 0;
       // ただしフッター上端がボタン下端より上へ来たら（＝重なるなら）隠す。
       var overlapsFooter = footer
-        ? footer.getBoundingClientRect().top < btn.getBoundingClientRect().bottom
+        ? footer.getBoundingClientRect().top <
+          btn.getBoundingClientRect().bottom
         : false;
       btn.classList.toggle("is-visible", passedCourse && !overlapsFooter);
     }
@@ -315,7 +317,10 @@
       var swiperEl = block.querySelector("[data-office-swiper]");
       if (!swiperEl) return;
 
-      new Swiper(swiperEl, {
+      // ループ複製が追加される前に実スライド枚数を控える（イントロ 1 周の回数に使う）。
+      var slideCount = swiperEl.querySelectorAll(".swiper-slide").length;
+
+      var swiper = new Swiper(swiperEl, {
         // 隣り合うスライドを重ねて表示し、中央（active）を最前面で大きく見せる。
         // coverflow エフェクトで実現：
         //   - stretch（正・スライド幅に対する%）で隣を中央側へ寄せて重ねる
@@ -324,6 +329,9 @@
         // 重なり量を変えたいときは stretch の値だけ調整する（正を強める＝重なり増）。
         centeredSlides: true,
         loop: true,
+        // イントロの高速フロー中に端でスライドが尽きて空白が出ないよう、
+        // 両側に数枚の余分を確保しておく（通常再生時も無害）。
+        loopAdditionalSlides: 3,
         slideToClickedSlide: true,
         grabCursor: true,
         effect: "coverflow",
@@ -356,6 +364,140 @@
           nextEl: block.querySelector("[data-office-next]"),
         },
       });
+
+      // 初回スクロールインで演出を再生するまで、通常オートプレイは止めておく。
+      swiper.autoplay.stop();
+
+      // ---- 初回イントロ演出 ----
+      // カルーセルが画面内に入ったら、全スライドを 1 周だけ“流れるように”送る
+      // 起動アニメーションを再生し、そのまま通常オートプレイへ移行する。
+      //
+      // 実装方針：Swiper 14 のループは実スライド 11 枚を再配置する方式で、複数枚の
+      // 一括ジャンプはクランプされ、手動 translate + loopFix はスナップで打ち消される。
+      // 一方 autoplay を delay:0＋linear で回すと、Swiper 自身が 1 枚ずつを継ぎ目なく
+      // 連結して“止まらない連続スクロール（マーキー）”になる（実測でコマ落ち・
+      // 停止フレームなし）。これを土台に、1 枚あたりの送り時間を後半ほど長くして
+      // 速度を徐々に落とし、ease-out で滑らかに減速して停止させる。
+      var reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      var introStarted = false;
+
+      function playOfficeIntro() {
+        if (introStarted) return;
+        introStarted = true;
+
+        // reduced-motion 指定時・2 枚未満は演出を飛ばして通常再生へ直行。
+        if (reduceMotion || slideCount < 2) {
+          swiper.autoplay.start();
+          return;
+        }
+
+        // 演出は「フロー（等速寄りの連続送り）」＋「最後の1枚を ease-out で減速停止」
+        // の 2 段構成。フロー部は autoplay の delay:0＋linear で継ぎ目なく連結し、
+        // 最後の 1 枚だけ手動 slideNext の ease-out で、直前フローと同じ速度から
+        // 0 まで滑らかに減速して止める（＝再加速せず自然に静止 → 通常再生へ）。
+        var FLOW_MS = 620; // フロー（最後の1枚を除く）に充てる合計時間の目安
+        var MIN_MS = 60; // 1 枚が速すぎてブレないよう下限
+        var flowCount = slideCount - 1; // 最後の 1 枚は settle で個別に減速停止
+
+        // フローの送り時間：後半ほど少しだけ長く（緩やかに減速しながら流す）。
+        var weights = [];
+        var i;
+        for (i = 0; i < flowCount; i++) {
+          var f = flowCount > 1 ? i / (flowCount - 1) : 1; // 0→1
+          weights.push(1 + 2 * f * f);
+        }
+        var sumW = weights.reduce(function (a, b) {
+          return a + b;
+        }, 0);
+        var flowSpeeds = weights.map(function (w) {
+          return Math.max(MIN_MS, Math.round((FLOW_MS * w) / sumW));
+        });
+        var lastFlowSpeed = flowSpeeds[flowSpeeds.length - 1] || MIN_MS;
+
+        // 最後の 1 枚（settle）の ease-out。初速がその曲線の初期傾き slope に比例する
+        // ため、送り時間を slope×直前フロー速度 に合わせると、フロー終速と settle 初速が
+        // ほぼ一致して継ぎ目が消える（少しだけ長めにして“わずかに遅く始まる”＝再加速回避）。
+        // easeOutCubic：速度が最初から最後まで単調に減少する（＝再加速しない）ので、
+        // フロー終速から 0 へ滑らかに着地できる。
+        var SETTLE_EASE = "cubic-bezier(0.33, 1, 0.68, 1)"; // 初期傾き ≒ 1/0.33 ≈ 3.03
+        var SETTLE_SLOPE = 3.03;
+        var SETTLE_MS = Math.round(lastFlowSpeed * SETTLE_SLOPE * 1.05);
+
+        // wrapper と全スライドのイージングを差し替えるヘルパ。
+        function setTiming(v) {
+          swiper.wrapperEl.style.transitionTimingFunction = v;
+          swiper.slides.forEach(function (s) {
+            s.style.transitionTimingFunction = v;
+          });
+        }
+
+        var origSpeed = swiper.params.speed;
+
+        // 演出中は中央強調（拡大・キャプション・暗転）を止め、全カード均一に流す。
+        swiperEl.classList.add("is-intro-playing");
+        swiper.allowTouchMove = false;
+        setTiming("linear");
+
+        // --- フロー：delay:0 で 1 枚送りを継ぎ目なく連結（一つずつ止まらない流れ）---
+        var idx = 0;
+        swiper.params.speed = flowSpeeds[0];
+        swiper.params.autoplay.delay = 0;
+
+        function onFlowEnd() {
+          idx += 1;
+          if (idx < flowSpeeds.length) {
+            swiper.params.speed = flowSpeeds[idx]; // 次のコマの送り時間（緩やかに減速）
+          } else {
+            // フロー終了 → 最後の 1 枚を ease-out で減速停止（settle）。
+            swiper.off("slideChangeTransitionEnd", onFlowEnd);
+            swiper.autoplay.stop();
+
+            // ここで中央強調を復帰。最後の着地（減速）と拡大・暗転・キャプションの
+            // フェードが重なり、通常再生へ自然に溶け込む。
+            swiperEl.classList.remove("is-intro-playing");
+            setTiming(SETTLE_EASE);
+            swiper.params.speed = SETTLE_MS;
+
+            swiper.once("slideChangeTransitionEnd", function () {
+              // 完全停止。イージングと送り時間を通常へ戻し、REST 後に通常オートプレイを
+              // 開始する（stop 直後に start すると即時 1 枚送られる Swiper の癖を回避し、
+              // 静止 → 余韻 → 通常再生 の自然な間を作る）。
+              setTiming("");
+              swiper.params.speed = origSpeed;
+              swiper.params.autoplay.delay = 3500;
+              swiper.allowTouchMove = true;
+              swiper.updateSlidesClasses();
+              window.setTimeout(function () {
+                swiper.autoplay.start();
+              }, 3500);
+            });
+
+            swiper.slideNext(SETTLE_MS);
+          }
+        }
+
+        swiper.on("slideChangeTransitionEnd", onFlowEnd);
+        swiper.autoplay.start();
+      }
+
+      if ("IntersectionObserver" in window) {
+        var officeIo = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              officeIo.unobserve(entry.target); // 初回のみ
+              playOfficeIntro();
+            });
+          },
+          { threshold: 0.3 },
+        );
+        officeIo.observe(swiperEl);
+      } else {
+        // IntersectionObserver 非対応環境は演出を飛ばして通常再生。
+        swiper.autoplay.start();
+      }
     });
   }
 
@@ -541,7 +683,7 @@
     // --- フォーカストラップ ----------------------------------------------
     function getFocusable() {
       var nodes = modal.querySelectorAll(
-        'button:not([disabled]), [href], video[controls], [tabindex]:not([tabindex="-1"])'
+        'button:not([disabled]), [href], video[controls], [tabindex]:not([tabindex="-1"])',
       );
       return Array.prototype.filter.call(nodes, function (el) {
         return el.offsetWidth > 0 || el.offsetHeight > 0;
@@ -659,7 +801,7 @@
     // --- フォーカストラップ ----------------------------------------------
     function getFocusable() {
       var nodes = modal.querySelectorAll(
-        'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
+        'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
       );
       return Array.prototype.filter.call(nodes, function (el) {
         return el.offsetWidth > 0 || el.offsetHeight > 0;
@@ -784,7 +926,7 @@
         });
       },
       // 少し見えてから（下端から12%手前で）発火させる
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.12 }
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.12 },
     );
 
     targets.forEach(function (el) {
@@ -801,7 +943,7 @@
   // --------------------------------------------
   function initHeroReveals() {
     var targets = document.querySelectorAll(
-      ".p-top-hero__body, .p-top-hero__outro"
+      ".p-top-hero__body, .p-top-hero__outro",
     );
     if (!targets.length) return;
 
@@ -826,7 +968,7 @@
         });
       },
       // 少し見えてから（下端から12%手前で）発火させる（他のリビールと揃える）
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.12 }
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.12 },
     );
     targets.forEach(function (el) {
       io.observe(el);
@@ -977,7 +1119,7 @@
           io.unobserve(entry.target); // カウントは 1 回だけ
         });
       },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.4 }
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.4 },
     );
     targets.forEach(function (el) {
       io.observe(el);
