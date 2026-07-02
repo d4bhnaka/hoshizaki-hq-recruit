@@ -6,6 +6,8 @@
 (function () {
   "use strict";
 
+  var CARD_STAGGER = 0.035; // 1枚あたりのアニメーション開始遅延（秒）
+
   // --------------------------------------------
   // Drawer (hamburger menu)
   // --------------------------------------------
@@ -95,6 +97,20 @@
   }
 
   // --------------------------------------------
+  // triggerCardStagger — カードリストに stagger アニメーションを付与する共通ヘルパー。
+  //   visibleCards: display:none 以外のカード要素の配列。
+  //   表示順インデックス × CARD_STAGGER 秒の遅延で is-filtering を付け直す。
+  // --------------------------------------------
+  function triggerCardStagger(visibleCards) {
+    visibleCards.forEach(function (card, i) {
+      card.classList.remove("is-filtering");
+      void card.offsetWidth; // reflow でアニメーションリセット
+      card.style.animationDelay = i * CARD_STAGGER + "s";
+      card.classList.add("is-filtering");
+    });
+  }
+
+  // --------------------------------------------
   // Person filter (client-side, no JS frameworks)
   // --------------------------------------------
   function initPersonFilter() {
@@ -103,28 +119,21 @@
     if (!tabs.length || !cards.length) return;
     var empty = document.querySelector("[data-person-empty]");
 
-    var CARD_STAGGER = 0.035; // 1 枚あたりの遅延（秒）
-
     function applyFilter(value) {
-      var visible = 0;
+      var matched = [];
       cards.forEach(function (card) {
         var tags = (card.getAttribute("data-person-tags") || "").split(/\s+/);
         var match = value === "all" || tags.indexOf(value) !== -1;
         if (match) {
-          card.style.display = "";
-          // マイクロインタラクション: 一致カードを表示順にスタッガーで再生。
-          // クラスを一旦外し、リフローを挟んでから付け直して再アニメーションさせる。
-          card.classList.remove("is-filtering");
-          void card.offsetWidth;
-          card.style.animationDelay = visible * CARD_STAGGER + "s";
-          card.classList.add("is-filtering");
-          visible++;
+          card.style.display = ""; // display を先に戻してから stagger へ渡す
+          matched.push(card);
         } else {
           card.style.display = "none";
           card.classList.remove("is-filtering");
         }
       });
-      if (empty) empty.hidden = visible !== 0;
+      if (empty) empty.hidden = matched.length !== 0;
+      triggerCardStagger(matched);
     }
 
     tabs.forEach(function (tab) {
@@ -136,6 +145,37 @@
         applyFilter(value);
       });
     });
+  }
+
+  // --------------------------------------------
+  // Person grid 初回表示 stagger
+  //   グリッドセクションが初めてビューポートに入った瞬間、
+  //   全表示カードを triggerCardStagger で波状に登場させる（1回限り）。
+  //   reduced-motion は CSS 側（@media no-preference）が吸収するため JS 判定不要。
+  // --------------------------------------------
+  function initPersonGridReveal() {
+    var section = document.querySelector(".p-person__grid-section");
+    var cards = document.querySelectorAll("[data-person-card]");
+    if (!section || !cards.length) return;
+    if (!("IntersectionObserver" in window)) return;
+
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          // display:none でないカードだけ対象
+          // （フィルタータブがスクロール前に操作された場合に備える）
+          var visible = Array.prototype.filter.call(cards, function (c) {
+            return c.style.display !== "none";
+          });
+          triggerCardStagger(visible);
+          io.unobserve(section); // 1回限り再生
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0 }
+    );
+
+    io.observe(section);
   }
 
   // --------------------------------------------
@@ -948,6 +988,7 @@
     initDrawer();
     initHeaderScroll();
     initPersonFilter();
+    initPersonGridReveal();
     initInternship();
     initCourseBackToTop();
     initOfficeTour();
