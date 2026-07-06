@@ -15,7 +15,7 @@ const heroBodyLines = [
   "国内のフードサービス機器でトップクラスのシェア。",
   "でも、それだけではない。",
   "世界120ヵ国以上に広がるネットワーク、",
-  "海外売上比率50％にも迫るグローバル企業。",
+  "海外売上比率50％を超えるグローバル企業。",
   "食材ロス削減、環境負荷軽減、",
   "そして医療や食品加工といった新分野への挑戦。",
   "常識や思い込みに縛られるな。",
@@ -50,7 +50,7 @@ const trioCards = [
     pos: "beyond",
     href: `${basePath}strategy/`,
     en: ["Beyond", "HOSHIZAKI"],
-    label: "ホシザキの海外展開",
+    label: "ホシザキの事業戦略",
     img: `${basePath}images/top/sec02_img.png`,
     imgAlt: "地球儀の中を泳ぐペンギン",
   },
@@ -58,7 +58,7 @@ const trioCards = [
     pos: "team",
     href: `${basePath}job/`,
     en: ["Team", "HOSHIZAKI"],
-    label: "グループの役割",
+    label: "職種紹介",
     img: `${basePath}images/top/sec03_img.png`,
     imgAlt: "寄り添う3羽のペンギン",
   },
@@ -116,9 +116,17 @@ const trioCards = [
         </ol>
 
         {/* CONCEPT MOVIE */}
-        {/* ヒーローステージ上の絶対配置のため、座標を動かさない "fade"（不透明度のみ）で
-            ゆっくりフェードイン（M3-A1）。 */}
-        <p class="p-top-hero__movie-label" data-inview="fade" style="--inview-i: 0">CONCEPT MOVIE</p>
+        {
+          /* ヒーローステージ上の絶対配置のため、座標を動かさない "fade"（不透明度のみ）で
+            ゆっくりフェードイン（M3-A1）。 */
+        }
+        <p
+          class="p-top-hero__movie-label"
+          data-inview="fade"
+          style="--inview-i: 0"
+        >
+          CONCEPT MOVIE
+        </p>
         <button
           type="button"
           class="p-top-hero__movie"
@@ -145,7 +153,9 @@ const trioCards = [
         {/* 「さぁ、その想いを翼に変えて。」(都市の上) */}
         {/* 本文導入コピーと同じ「白バーで塗ってから抜いて現す」演出。 */}
         <p class="p-top-hero__outro">
-          <span class="p-top-hero__outro-text">さぁ、その想いを翼に変えて。</span>
+          <span class="p-top-hero__outro-text"
+            >さぁ、その想いを翼に変えて。</span
+          >
         </p>
 
         {/* 都市イラスト（下端・背景） */}
@@ -177,7 +187,9 @@ const trioCards = [
           aria-hidden="true"
         />
 
-        {/* SP 用の雲 2 つ（Figma top_sp 431:2945 / 431:1191 = Group 2184。PC では非表示） */}
+        {
+          /* SP 用の雲 2 つ（Figma top_sp 431:2945 / 431:1191 = Group 2184。PC では非表示） */
+        }
         <img
           class="p-top-hero__cloud p-top-hero__cloud--sp-l"
           src={`${basePath}images/common/hero-cloud.png`}
@@ -224,14 +236,18 @@ const trioCards = [
     </section>
 
     {/* ============================================ */}
-    {/* S3+S4. KNOW HOSHIZAKI / ここに決めた! (Figma y: 3283–5502 / 365:13388 帯) */}
+    {
+      /* S3+S4. KNOW HOSHIZAKI / ここに決めた! (Figma y: 3283–5502 / 365:13388 帯) */
+    }
     {/* ============================================ */}
     <section
       class="p-top-trio"
       aria-label="ホシザキを知る視点とはたらく人を知る導線"
     >
       <div class="p-top-trio__stage">
-        {/* SP 用の絹布テクスチャ背景（Figma top_sp 431:4925 pixta_115239461。PC では非表示） */}
+        {
+          /* SP 用の絹布テクスチャ背景（Figma top_sp 431:4925 pixta_115239461。PC では非表示） */
+        }
         <img
           class="p-top-trio__silk"
           src={`${basePath}images/top/trio-bg-silk-sp.jpg`}
@@ -253,8 +269,12 @@ const trioCards = [
           ))
         }
 
-        {/* SP 用の小さな氷キューブ 7 個（Figma top_sp ice 10/7/14/15/16/17/18。PC では非表示） */}
-        {/* PC 用 ice_cubes_0x.png は 2〜3 個入りのため、単体キューブ画像を使う */}
+        {
+          /* SP 用の小さな氷キューブ 7 個（Figma top_sp ice 10/7/14/15/16/17/18。PC では非表示） */
+        }
+        {
+          /* PC 用 ice_cubes_0x.png は 2〜3 個入りのため、単体キューブ画像を使う */
+        }
         {
           [1, 2, 3, 4, 5, 6, 7].map((n) => (
             <img
@@ -299,7 +319,9 @@ const trioCards = [
           ))
         }
 
-        {/* SP では Beyond HOSHIZAKI の代わりに「世界へ跳べ」（Figma top_sp 431:4938。PC では非表示） */}
+        {
+          /* SP では Beyond HOSHIZAKI の代わりに「世界へ跳べ」（Figma top_sp 431:4938。PC では非表示） */
+        }
         {/* PC では display:none なので読み上げが重複することはない */}
         <p class="p-top-trio__ja-beyond" data-inview style="--inview-i: 1">
           世界へ跳べ
@@ -324,10 +346,12 @@ const trioCards = [
           style="--inview-i: 2"
         />
 
-        {/* SP では筆文字 SVG ではなくテキスト 2 行（Figma top_sp 431:4974。PC では非表示） */}
+        {
+          /* SP では筆文字 SVG ではなくテキスト 2 行（Figma top_sp 431:4974。PC では非表示） */
+        }
         {/* PC では display:none なので読み上げが重複することはない */}
         <p class="p-top-trio__decided-sp" data-inview style="--inview-i: 2">
-          <span class="p-top-trio__decided-sp-line1">　先輩たちの</span>
+          <span class="p-top-trio__decided-sp-line1"> 先輩たちの</span>
           <span class="p-top-trio__decided-sp-line2">「ここに決めた！」</span>
         </p>
         <IceLinkButton
@@ -385,7 +409,9 @@ const trioCards = [
 
     {/* ============================================ */}
     {/* S6. SPECIAL CONTENTS (Figma y: 6162–8450) */}
-    {/* 見出し・カード・スクロール連動スタック演出は特集ページ（/special/）と */}
+    {
+      /* 見出し・カード・スクロール連動スタック演出は特集ページ（/special/）と */
+    }
     {/* 共通の SpecialContents コンポーネントを使用する。 */}
     {/* ============================================ */}
     <section class="p-top-special" aria-label="特集コンテンツとエントリー導線">
@@ -433,7 +459,10 @@ const trioCards = [
             preload="none"
             poster={`${basePath}images/top/concept-movie-poster.png`}
           >
-            <source src={`${basePath}videos/hoshizaki_01.mp4`} type="video/mp4" />
+            <source
+              src={`${basePath}videos/hoshizaki_01.mp4`}
+              type="video/mp4"
+            />
             お使いのブラウザは動画の再生に対応していません。
           </video>
         </div>

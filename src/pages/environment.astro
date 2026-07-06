@@ -44,28 +44,28 @@ const svg = (inner: string) =>
 
 const benefitIcons: Record<string, string> = {
   gift: svg(
-    '<polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>'
+    '<polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>',
   ),
   award: svg(
-    '<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>'
+    '<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>',
   ),
   pieChart: svg(
-    '<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>'
+    '<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>',
   ),
   trendingUp: svg(
-    '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>'
+    '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
   ),
   book: svg(
-    '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'
+    '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
   ),
   key: svg(
-    '<path d="M21 2l-2 2"/><path d="M19 4l3 3-3.5 3.5-3-3z"/><path d="M11.39 11.61a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78z"/><path d="M11.39 11.61L15.5 7.5"/>'
+    '<path d="M21 2l-2 2"/><path d="M19 4l3 3-3.5 3.5-3-3z"/><path d="M11.39 11.61a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78z"/><path d="M11.39 11.61L15.5 7.5"/>',
   ),
   home: svg(
-    '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'
+    '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
   ),
   coffee: svg(
-    '<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>'
+    '<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>',
   ),
 };
 
@@ -156,7 +156,6 @@ const offices: OfficeBlock[] = [
     label: "島根工場",
     photos: [
       { src: `${officeBase}/unnan/u01.jpg`, caption: "社屋外観" },
-      { src: `${officeBase}/unnan/u02.jpg`, caption: "社屋外観" },
       { src: `${officeBase}/unnan/u03.jpg`, caption: "社屋外観" },
       { src: `${officeBase}/unnan/u04.jpg`, caption: "事務フロア" },
       { src: `${officeBase}/unnan/u05.jpg`, caption: "設計フロア" },
@@ -185,13 +184,19 @@ const offices: OfficeBlock[] = [
     rel="stylesheet"
     href={`${base}css/swiper-bundle.min.css`}
   />
-  <script slot="head" src={`${base}js/swiper-bundle.min.js`} defer is:inline></script>
+  <script slot="head" src={`${base}js/swiper-bundle.min.js`} defer is:inline
+  ></script>
 
   <div class="l-container">
     <Header basePath={base} />
     <main class="l-main">
       <article class="p-env">
-        <PageHero en="Environment" ja="はたらく環境を知る" variant="cloud" jaSize="lg">
+        <PageHero
+          en="Environment"
+          ja="はたらく環境を知る"
+          variant="cloud"
+          jaSize="lg"
+        >
           <div class="p-env__fv" data-inview="pop">
             <img
               src={`${base}images/environment/page-fv.png`}
@@ -209,7 +214,7 @@ const offices: OfficeBlock[] = [
             <IceHeading
               en="Training"
               ja="教育研修制度"
-              note="ホシザキでは、新人をしっかりと育成し長く働けるよう体制を整えています。"
+              note="ホシザキでは、充実した教育・研修制度のもと、社員一人ひとりの成長を支援し、安心して長く活躍できる環境を整えています。"
               basePath={base}
               id="env-training"
             />
@@ -227,7 +232,11 @@ const offices: OfficeBlock[] = [
             <ul class="p-env-training">
               {
                 trainingCards.map((card, i) => (
-                  <li class="p-env-training__item" data-inview style={`--inview-i: ${i}`}>
+                  <li
+                    class="p-env-training__item"
+                    data-inview
+                    style={`--inview-i: ${i}`}
+                  >
                     <div class="p-env-training__body">
                       <h3 class="p-env-training__title">
                         <img
@@ -243,7 +252,13 @@ const offices: OfficeBlock[] = [
                       <p class="p-env-training__text">{card.body}</p>
                     </div>
                     <figure class="p-env-training__thumb">
-                      <img src={card.image} alt="" loading="lazy" width="309" height="179" />
+                      <img
+                        src={card.image}
+                        alt=""
+                        loading="lazy"
+                        width="309"
+                        height="179"
+                      />
                     </figure>
                   </li>
                 ))
@@ -266,8 +281,15 @@ const offices: OfficeBlock[] = [
             <ul class="p-env-benefits">
               {
                 benefits.map((item, i) => (
-                  <li class="p-env-benefits__item" data-inview style={`--inview-i: ${i % 4}`}>
-                    <span class="p-env-benefits__icon" set:html={benefitIcons[item.icon]} />
+                  <li
+                    class="p-env-benefits__item"
+                    data-inview
+                    style={`--inview-i: ${i % 4}`}
+                  >
+                    <span
+                      class="p-env-benefits__icon"
+                      set:html={benefitIcons[item.icon]}
+                    />
                     <h3 class="p-env-benefits__title">{item.title}</h3>
                     <p class="p-env-benefits__text">{item.body}</p>
                   </li>
@@ -290,7 +312,10 @@ const offices: OfficeBlock[] = [
 
             {
               offices.map((office) => (
-                <OfficeTourCarousel label={office.label} photos={office.photos} />
+                <OfficeTourCarousel
+                  label={office.label}
+                  photos={office.photos}
+                />
               ))
             }
           </div>
@@ -301,7 +326,10 @@ const offices: OfficeBlock[] = [
 
         <!-- Breadcrumb -->
         <div class="p-env__breadcrumb">
-          <Breadcrumb basePath={base} items={[{ label: "はたらく環境を知る" }]} />
+          <Breadcrumb
+            basePath={base}
+            items={[{ label: "はたらく環境を知る" }]}
+          />
         </div>
       </article>
     </main>

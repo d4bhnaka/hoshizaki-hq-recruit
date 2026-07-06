@@ -423,7 +423,7 @@ const { href, photo, title, dept, highlightPhoto } = Astro.props;
 |:--|:--|:--|:--|
 | E-1 | `PageHeader` | — | 英字 `Environment` ／サブ「はたらく環境を知る」／薄青空背景 |
 | E-2 | ヒーロー写真 | `.p-environment__hero-visual` | 本社外観（道路＋緑地＋社名サイン） |
-| E-3 | 教育研修制度 / Training | `.p-environment__training` | 見出し「教育研修制度／Training」／リード「ホシザキでは、新人をしっかりと育成し長く働けるよう体制を整えています。」／**研修体系図**（マトリックス：キャリアステージ × 研修カテゴリ） |
+| E-3 | 教育研修制度 / Training | `.p-environment__training` | 見出し「教育研修制度／Training」／リード「ホシザキでは、充実した教育・研修制度のもと、社員一人ひとりの成長を支援し、安心して長く活躍できる環境を整えています。」／**研修体系図**（マトリックス：キャリアステージ × 研修カテゴリ） |
 | E-4 | 4 つの制度カード | `.p-environment__training-cards` | 縦並びカード × 4：若手を支えるメンター制度／語学研修制度／社内検定制度／選抜型研修制度（各 2〜3 行本文＋右に写真） |
 | E-5 | 福利厚生 / Benefits | `.p-environment__benefits` | 見出し「福利厚生／Benefits」／リード「ホシザキの充実した福利厚生制度の一部をご紹介します。」／アイコン付きカードグリッド（4 列 × 2 行＝8 枚 ×2 セット） |
 | E-6 | 拠点紹介 / Office Tour | `.p-environment__tour` | 見出し「拠点紹介／Office Tour」／リード「愛知本社と島根工場のはたらく環境を紹介します。」／**タブ or 縦並び**：愛知（本社）／島根工場。各ブロックは横スクロール可能な写真ギャラリー（Swiper） |
