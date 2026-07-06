@@ -16,6 +16,7 @@
 | 07 | [07-spec-subpages.md](./07-spec-subpages.md) | 下層 13 ページ（Message／Fact／Strategy／Job／Person 一覧・詳細／Environment／Requirement／Special インデックス・3 ストーリー／Internship）の仕様。 |
 | 08 | [08-hyoki-report.md](./08-hyoki-report.md) | 全原稿の表記揺れ統一方針 決定シート（`/proofread-jp` で検出・重複統合済み）。クライアント判断用の作業レポート。 |
 | 09 | [09-dup-expr-report.md](./09-dup-expr-report.md) | 全原稿の重複表現（二重敬語・重言・近接重複）チェックレポート。クライアント判断用の作業レポート。 |
+| 10 | [10-hyoki-summary.md](./10-hyoki-summary.md) | 誤字脱字修正・表記揺れ統一・重複表現チェックの対応状況まとめ（Git履歴ベース）。08・09 のうち何が実施済みで何が未着手かを横断的に把握するための要約。 |
 
 ## Claude の読む順序
 
