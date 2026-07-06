@@ -161,6 +161,14 @@
   color: var(--color-text-secondary);
 }
 
+.p-req__tier-group {
+  display: block;
+
+  & + & {
+    margin-top: 16px;
+  }
+}
+
 .p-req__tiers {
   display: grid;
   gap: 8px;
@@ -179,24 +187,31 @@
 }
 
 // --------------------------------------------
-// Initial assignment: heading + note (no card)
+// Initial assignment card content (lead text / sub-heading / flow)
+// カードの見た目・タイポグラフィは総合職テーブルと共通化する
 // --------------------------------------------
-.p-req__section--note {
-  display: block;
-  padding-top: 24px;
-  padding-bottom: 64px;
-}
-
-.p-req__note {
-  max-width: 880px;
-  margin: 18px 0 0;
-  font-size: 18px;
-  line-height: 2;
+.p-req__card-lead {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.8;
   color: var(--color-text-primary);
 }
 
-.p-req__note p {
-  margin: 0;
+.p-req__card-heading {
+  margin: 24px 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.7;
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+}
+
+.p-req__flow {
+  margin: 12px 0 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.8;
+  color: var(--color-text-primary);
 }
 
 // --------------------------------------------
@@ -258,8 +273,8 @@
     line-height: 1.8;
   }
 
-  .p-req__note {
-    font-size: 15px;
-    line-height: 1.9;
+  .p-req__card-lead,
+  .p-req__flow {
+    font-size: 14px;
   }
 }

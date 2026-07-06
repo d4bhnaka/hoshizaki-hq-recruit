@@ -13,11 +13,15 @@ interface Tier {
   amount: string;
 }
 
+interface TierGroup {
+  note?: string;
+  tiers: Tier[];
+}
+
 interface Row {
   label: string;
   value?: string;
-  note?: string;
-  tiers?: Tier[];
+  groups?: TierGroup[];
 }
 
 // 総合職の募集要項テーブル。値はこの配列を編集するだけで差し替え可能。
@@ -25,18 +29,21 @@ interface Row {
 const generalRows: Row[] = [
   {
     label: "初任給",
-    note: "（2025年4月実績）",
-    tiers: [
-      { target: "総合職 修士了（愛知本社勤務）", amount: "月給 270,000円" },
-      { target: "総合職 学部卒（愛知本社勤務）", amount: "月給 248,400円" },
-      { target: "総合職 修士了（島根勤務）", amount: "月給 240,100円" },
-      { target: "総合職 学部卒（島根勤務）", amount: "月給 219,900円" },
+    groups: [
+      {
+        note: "（2026年4月実績）",
+        tiers: [
+          { target: "総合職 修士了（愛知勤務）", amount: "月給 293,900円" },
+          { target: "総合職 学部卒（愛知勤務）", amount: "月給 272,300円" },
+          { target: "総合職 修士了（島根勤務）", amount: "月給 263,100円" },
+          { target: "総合職 学部卒（島根勤務）", amount: "月給 242,900円" },
+        ],
+      },
     ],
   },
   {
     label: "諸手当",
-    value:
-      "時間外・休日・深夜勤務手当、住宅手当、通勤手当、家族手当、役付手当 他",
+    value: "時間外手当、住宅手当、通勤手当、家族手当、役付手当 他",
   },
   {
     label: "昇給",
@@ -44,7 +51,7 @@ const generalRows: Row[] = [
   },
   {
     label: "賞与",
-    value: "年2回（7月、12月） ※2024年度実績 年間6.7ヵ月",
+    value: "年2回（7月、12月） ※2025年度実績 年間6.7ヵ月",
   },
   { label: "勤務地", value: "愛知、島根" },
   {
@@ -52,16 +59,16 @@ const generalRows: Row[] = [
     value:
       "8:05〜17:00／実働7.83時間／1日／休憩時間：65分／※国内営業部門 9:00〜17:50（実働7.83時間）",
   },
-  { label: "年間休日数", value: "122日" },
+  { label: "年間休日数", value: "123日" },
   {
     label: "休日・休暇",
     value:
-      "完全週休2日制（企業カレンダーに基づく）／ゴールデンウィーク・夏季・年末年始休暇、産前産後・育児・介護休暇、慶弔など各種特別休暇、年次有給休暇（半日・時間単位制度含む）",
+      "完全週休2日制（企業カレンダーに基づく）／ゴールデンウィーク・夏季・年末年始休暇、産前産後・育児・介護休暇、慶弔など各種特別休暇、年次有給休暇（半日・時間単位取得可）",
   },
   {
     label: "待遇・福利厚生・社内制度",
     value:
-      "福利厚生倶楽部（リロクラブ）、退職金制度、財形貯蓄制度、社員持株会制度、資格取得補助制度、独身寮制度（入寮要件あり）、社宅制度、会社保養施設（山荘）、クラブ活動補助（野球、バスケット、テニス、卓球、茶華道など）、慶弔見舞金、食事補助 他",
+      "福利厚生倶楽部（リロクラブ）、退職金制度、財形貯蓄制度、社員持株会制度、資格取得補助制度、独身寮/借り上げ社宅（入寮要件あり）、会社保養施設（山荘）、クラブ活動補助、慶弔見舞金、食事補助 他",
   },
 ];
 
@@ -91,7 +98,12 @@ const iceIcon = `${base}images/requirement/icon-ice.png`;
           class="p-req__section p-req__section--table"
           aria-labelledby="req-general-title"
         >
-          <h2 class="p-req__label" id="req-general-title" data-inview style="--inview-i: 0">
+          <h2
+            class="p-req__label"
+            id="req-general-title"
+            data-inview
+            style="--inview-i: 0"
+          >
             <span class="p-req__icon" aria-hidden="true">
               <img src={iceIcon} alt="" width="48" height="48" />
             </span>
@@ -104,27 +116,29 @@ const iceIcon = `${base}images/requirement/icon-ice.png`;
                   <div class="p-req__row">
                     <dt class="p-req__term">{row.label}</dt>
                     <dd class="p-req__desc">
-                      {row.tiers ? (
-                        <>
-                          {row.note && (
-                            <span class="p-req__desc-note">{row.note}</span>
-                          )}
-                          <span class="p-req__tiers">
-                            {row.tiers.map((tier) => (
-                              <span class="p-req__tier">
-                                <span class="p-req__tier-target">
-                                  {tier.target}
+                      {row.groups
+                        ? row.groups.map((group) => (
+                            <span class="p-req__tier-group">
+                              {group.note && (
+                                <span class="p-req__desc-note">
+                                  {group.note}
                                 </span>
-                                <span class="p-req__tier-amount">
-                                  {tier.amount}
-                                </span>
+                              )}
+                              <span class="p-req__tiers">
+                                {group.tiers.map((tier) => (
+                                  <span class="p-req__tier">
+                                    <span class="p-req__tier-target">
+                                      {tier.target}
+                                    </span>
+                                    <span class="p-req__tier-amount">
+                                      {tier.amount}
+                                    </span>
+                                  </span>
+                                ))}
                               </span>
-                            ))}
-                          </span>
-                        </>
-                      ) : (
-                        row.value
-                      )}
+                            </span>
+                          ))
+                        : row.value}
                     </dd>
                   </div>
                 ))
@@ -133,20 +147,62 @@ const iceIcon = `${base}images/requirement/icon-ice.png`;
           </div>
         </section>
 
-        <!-- Initial assignment: heading + note (no card) -->
+        <!-- Initial assignment: heading (left) + card (right) -->
         <section
-          class="p-req__section p-req__section--note"
+          class="p-req__section p-req__section--table"
           aria-labelledby="req-assignment-title"
         >
-          <h2 class="p-req__label" id="req-assignment-title" data-inview style="--inview-i: 0">
+          <h2
+            class="p-req__label"
+            id="req-assignment-title"
+            data-inview
+            style="--inview-i: 0"
+          >
             <span class="p-req__icon" aria-hidden="true">
               <img src={iceIcon} alt="" width="48" height="48" />
             </span>
             <span class="p-req__label-text">初期配属について</span>
           </h2>
-          <div class="p-req__note" data-inview style="--inview-i: 1">
-            <p>内定通知の際に初期配属（職種・勤務地）をお知らせします</p>
-            <p>勤務地については、3年間固定です。</p>
+          <div class="p-req__card" data-inview="pop" style="--inview-i: 1">
+            <p class="p-req__card-lead">
+              初期配属の職種と勤務地は、内定通知の際にお知らせします。
+            </p>
+            <p class="p-req__card-lead">
+              そのため、二次面接以降はコース別で選考を行います。
+            </p>
+
+            <p class="p-req__card-heading">選考の流れ</p>
+            <p class="p-req__card-lead">
+              まずは当社の新卒採用マイページへご登録ください。
+            </p>
+            <p class="p-req__card-lead">
+              WEBエントリーシートの提出や選考連絡はマイページを通して行います。
+            </p>
+            <p class="p-req__flow">
+              ES提出 → 一次面接・適性検査 → 二次面接 → 最終面接
+            </p>
+
+            <p class="p-req__card-heading">選考コースと職種</p>
+            <dl class="p-req__table">
+              <div class="p-req__row">
+                <dt class="p-req__term">開発設計コース</dt>
+                <dd class="p-req__desc">開発設計</dd>
+              </div>
+              <div class="p-req__row">
+                <dt class="p-req__term">工場技術コース</dt>
+                <dd class="p-req__desc">生産技術、品質保証</dd>
+              </div>
+              <div class="p-req__row">
+                <dt class="p-req__term">社内SEコース</dt>
+                <dd class="p-req__desc">社内SE</dd>
+              </div>
+              <div class="p-req__row">
+                <dt class="p-req__term">企画管理コース</dt>
+                <dd class="p-req__desc">
+                  国内販売促進、海外事業企画、生産管理、購買、コーポレート（経理・人事・総務等）
+                </dd>
+              </div>
+            </dl>
           </div>
         </section>
 

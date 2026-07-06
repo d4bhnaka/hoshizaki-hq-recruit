@@ -81,10 +81,14 @@
 .c-page-hero--cloud::before {
   content: "";
   position: absolute;
-  top: clamp(-20px, -1.4vw, 0px);
+  // 高さをヒーロー自体の高さ（100%）に収め、幅は74%を上限としつつ
+  // background-size: contain でアスペクト比を保って縮小させる。
+  // 幅基準のみだと横長ビューポートで画像の高さがヒーローの高さを超え、
+  // overflow: hidden の下端で雲が切れてしまうため。
+  top: 0;
   left: 49%;
   width: 74%;
-  aspect-ratio: 1185 / 586;
+  height: 100%;
   background: url("../images/common/hero-cloud.png") no-repeat left top / contain;
   mix-blend-mode: screen;
   opacity: 0.78;
