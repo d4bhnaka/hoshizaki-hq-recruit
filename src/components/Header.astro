@@ -22,28 +22,53 @@ const drawerLinks = [
   { href: `${basePath}`, label: "トップページ", key: "" },
   { href: `${basePath}message/`, label: "採用メッセージ", key: "message" },
   { href: `${basePath}fact/`, label: "数字で見るホシザキ", key: "fact" },
-  { href: `${basePath}strategy/`, label: "ホシザキの事業戦略", key: "strategy" },
+  {
+    href: `${basePath}strategy/`,
+    label: "ホシザキの事業戦略",
+    key: "strategy",
+  },
   { href: `${basePath}job/`, label: "ホシザキの職種紹介", key: "job" },
   { href: `${basePath}person/`, label: "はたらく人を知る", key: "person" },
-  { href: `${basePath}environment/`, label: "はたらく環境を知る", key: "environment" },
+  {
+    href: `${basePath}environment/`,
+    label: "はたらく環境を知る",
+    key: "environment",
+  },
   {
     href: `${basePath}special/`,
     label: "スペシャルコンテンツ",
     key: "special",
     children: [
-      { href: `${basePath}special/crosstalk/`, label: "クロストーク‐若手が語るはたらく環境" },
-      { href: `${basePath}special/project/`, label: "プロジェクトストーリー‐設計×生産技術" },
-      { href: `${basePath}special/special-talk/`, label: "スペシャルトーク‐ホシザキの技術と未来を語る" },
+      {
+        href: `${basePath}special/crosstalk/`,
+        label: "クロストーク‐若手が語るはたらく環境",
+      },
+      {
+        href: `${basePath}special/project/`,
+        label: "プロジェクトストーリー‐開発設計×生産技術",
+      },
+      {
+        href: `${basePath}special/special-talk/`,
+        label: "スペシャルトーク‐ホシザキの技術と未来を語る",
+      },
     ],
   },
   { href: `${basePath}requirement/`, label: "募集要項", key: "requirement" },
-  { href: `${basePath}internship/`, label: "インターンシップ", key: "internship" },
+  {
+    href: `${basePath}internship/`,
+    label: "インターンシップ",
+    key: "internship",
+  },
 ];
 
 // ヘッダー右上の CTA ボタン。ラベルはホバー時に一文字ずつめくれる
 // ロールオーバー演出をするため、レンダリング側で 1 文字ずつ span に分割する。
 const headerCtas = [
-  { href: `${basePath}internship/`, label: "インターンシップ", external: false },
+  {
+    href: `${basePath}internship/`,
+    label: "インターンシップ",
+    external: false,
+  },
   {
     href: "https://hoshizaki-corporation-hr.snar.jp/index.aspx",
     label: "応募はこちら",
@@ -64,35 +89,39 @@ const headerCtas = [
         alt="HOSHIZAKI"
         onerror="this.style.display='none';this.nextElementSibling.style.display='inline';"
       />
-      <span class="l-header__logo-fallback" style="display:none;">HOSHIZAKI</span>
+      <span class="l-header__logo-fallback" style="display:none;"
+        >HOSHIZAKI</span
+      >
     </a>
     <div class="l-header__actions">
-      {/* インターンシップページのヘッダーには CTA を出さない（Figma 09_internship 準拠） */}
+      {
+        /* インターンシップページのヘッダーには CTA を出さない（Figma 09_internship 準拠） */
+      }
       {
         currentKey !== "internship" &&
-        headerCtas.map((cta) => (
-          <a
-            class="l-header__cta"
-            href={cta.href}
-            aria-label={cta.label}
-            {...(cta.external
-              ? { target: "_blank", rel: "noopener noreferrer" }
-              : {})}
-          >
-            <span class="l-header__cta-icon" aria-hidden="true" />
-            {/* ラベルは aria-hidden（読み上げは a の aria-label）。
+          headerCtas.map((cta) => (
+            <a
+              class="l-header__cta"
+              href={cta.href}
+              aria-label={cta.label}
+              {...(cta.external
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
+            >
+              <span class="l-header__cta-icon" aria-hidden="true" />
+              {/* ラベルは aria-hidden（読み上げは a の aria-label）。
                 各文字は同じ文字を 2 枚重ね、ホバーで上にめくって入れ替える。
                 --i は左からの添字で、ロールのディレイをずらし「一文字ずつ」見せる。 */}
-            <span class="l-header__cta-label" aria-hidden="true">
-              {Array.from(cta.label).map((ch, i) => (
-                <span class="l-header__cta-char" style={`--i:${i}`}>
-                  <span class="l-header__cta-char-text">{ch}</span>
-                  <span class="l-header__cta-char-text">{ch}</span>
-                </span>
-              ))}
-            </span>
-          </a>
-        ))
+              <span class="l-header__cta-label" aria-hidden="true">
+                {Array.from(cta.label).map((ch, i) => (
+                  <span class="l-header__cta-char" style={`--i:${i}`}>
+                    <span class="l-header__cta-char-text">{ch}</span>
+                    <span class="l-header__cta-char-text">{ch}</span>
+                  </span>
+                ))}
+              </span>
+            </a>
+          ))
       }
       <button
         class="l-header__menu"
@@ -121,7 +150,8 @@ const headerCtas = [
         class="l-drawer__close"
         type="button"
         aria-label="メニューを閉じる"
-        data-drawer-close>
+        data-drawer-close
+      >
         <span class="l-drawer__close-x" aria-hidden="true"></span>
       </button>
       <nav class="l-drawer__nav">

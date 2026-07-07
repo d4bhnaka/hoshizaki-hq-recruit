@@ -27,7 +27,7 @@ export const specialStories: SpecialStory[] = [
     category: "クロストーク",
     title: "若手が語るはたらく環境",
     titleLines: ["若手が語る", "はたらく環境"],
-    sub: "入社3年目社員に聞いてみた！会社のリアル",
+    sub: "入社4年目社員に聞いてみた！会社のリアル",
     avatars: 4,
   },
   {
@@ -36,7 +36,7 @@ export const specialStories: SpecialStory[] = [
     category: "プロジェクトストーリー",
     title: "互いの知恵を重ね、前例なきものづくりへ。",
     titleLines: ["互いの知恵を重ね、", "前例なきものづくりへ。"],
-    sub: "設計×生産技術、職種を越えた共創",
+    sub: "開発設計×生産技術、知見を持ち寄り課題を突破",
     avatars: 2,
   },
   {
