@@ -17,9 +17,7 @@ const initialsBySlug = Object.fromEntries(
   personDetails.map((p) => [p.slug, p.initials]),
 );
 // slug → 入社年（"2014年"）。persons.ts が入社年の単一ソース。表示時に「入社」を付与。
-const yearBySlug = Object.fromEntries(
-  persons.map((p) => [p.slug, p.year]),
-);
+const yearBySlug = Object.fromEntries(persons.map((p) => [p.slug, p.year]));
 
 const chart = {
   create: {
@@ -58,30 +56,30 @@ const groups: JobGroup[] = [
     penguin: `${base}images/job/penguin-create.png`,
     jobs: [
       {
-        title: "開発設計職",
-        lead: "世界No.1を目指す新製品のゼロイチ開発（機械・電気・制御ソフト・化学）。",
-        body: "設計から評価まで「1製品丸ごと」担当できる裁量の大きさと、環境対応（自然冷媒など）による社会課題の解決。",
+        title: "開発設計",
+        lead: "主力製品のモデルチェンジや新製品の企画・開発・設計を担当。",
+        body: "少人数チームで製品丸ごと担当するため製品開発の上流工程から設計、試作、評価、量産化にいたるまでトータルに携われる環境です。",
         image: `${base}images/job/card-01.jpg`,
         seniors: ["01", "02"],
       },
       {
-        title: "生産技術職",
-        lead: "開発アイデアを「高品質かつ効率的に量産」するための製造ライン構築。",
-        body: "独自の多品種少量生産（セル生産方式）を支え、最新のロボティクスやIoTを駆使したスマートファクトリー化を牽引する。",
+        title: "生産技術",
+        lead: "新製品の生産ライン立ち上げ、既存ラインの補修・改善などを担当。",
+        body: "円滑な量産体制を確立するため、治具の設計や生産設備の導入・保全を行います。",
         image: `${base}images/job/card-02.jpg`,
         seniors: ["03", "06"],
       },
       {
-        title: "品質保証職",
-        lead: "世界120ヵ国で稼働する製品の安全性を担保する「最後の砦」。",
-        body: "各国の厳しい安全規格・環境規制をクリアし、不具合の解析から開発へのフィードバックまで、ブランドの信頼を守り抜く。",
+        title: "品質保証",
+        lead: "製品認定や海外認証の取得、品質検査などを担当。",
+        body: "お客様視点で製品と向き合い、製品開発時から出荷後まで製品の品質向上に貢献しています。",
         image: `${base}images/job/card-03.jpg`,
         seniors: ["04", "07"],
       },
       {
-        title: "購買・調達",
-        lead: "国内外のサプライヤーから、最適な品質・コストの部品や素材を安定的に調達する。",
-        body: "製造業の「利益の源泉」を担い、世界情勢を見極めながら強靭なサプライチェーンを構築する。",
+        title: "生産管理・購買",
+        lead: "生産管理では、工場の司令塔として、生産計画の立案、資材・部品の調達などを担当。",
+        body: "購買では、製品に使用される部品の購入を担当。品質・コストともに優れたものを購入するための原価低減活動も行います。",
         image: `${base}images/job/card-04.jpg`,
         seniors: ["10", "08", "09"],
       },
@@ -92,16 +90,16 @@ const groups: JobGroup[] = [
     penguin: `${base}images/job/penguin-spread.png`,
     jobs: [
       {
-        title: "国内広域営業・営業企画",
-        lead: "全国展開する大手飲食・小売チェーン「本部」へのソリューション提案、および全国の販売会社への販促支援。",
-        body: "日本全国の市場動向を俯瞰し、億単位のダイナミックなビジネスを動かす。",
+        title: "国内販売促進",
+        lead: "国内グループの販売会社の営業支援やアフターサービス活動の支援、営業施策や製品仕様の企画立案などを担当します。",
+        body: "",
         image: `${base}images/job/card-05.jpg`,
         seniors: ["11"],
       },
       {
-        title: "海外事業企画・海外営業",
-        lead: "海外M&Aの推進、海外拠点（米・欧・アジア）との経営連携、グローバル販売戦略の立案。",
-        body: "異文化の市場特性を紐解き、ホシザキブランドを未開拓エリアのインフラへと育てる最前線。",
+        title: "海外事業企画",
+        lead: "海外事業拡大に向けた方針や構想の策定・海外グループ会社の支援、経営管理を担当します。",
+        body: "",
         image: `${base}images/job/card-06.jpg`,
         seniors: ["12", "13"],
       },
@@ -113,15 +111,16 @@ const groups: JobGroup[] = [
     jobs: [
       {
         title: "コーポレート",
-        titleNote: "（経営企画・財務・人事・知財など）",
-        lead: "グローバル成長を裏方から支える経営基盤の強化、特許戦略による技術の保護。",
+        titleNote: "（経理・人事・総務 他）",
+        lead: "経営企画、決算書作成、人事制度設計、国内外グループの管理、社内環境の整備などを担当。ホシザキだけでなく、国内外のホシザキグループ全体に関わる業務も行います。",
+        body: "",
         image: `${base}images/job/card-07.jpg`,
         seniors: ["14", "15"],
       },
       {
-        title: "社内SE職（IT戦略）",
-        lead: "国内外のグループを繋ぐ基幹システム統合や、製品のIoT化、社内DXの推進。",
-        body: "守りの社内インフラ保守にとどまらず、攻めのITでホシザキのビジネスモデル自体を革新する。",
+        title: "社内SE",
+        lead: "国内・海外グループに向けたITシステムの導入・運用・管理を担当。",
+        body: "営業や生産を支える業務システムやITインフラの導入・運用を行う社内SEのお仕事です。",
         image: `${base}images/job/card-08.jpg`,
         seniors: ["05"],
       },
@@ -161,21 +160,37 @@ const groups: JobGroup[] = [
 
         <!-- Job section -->
         <section class="p-job__section" aria-labelledby="p-job-heading">
-          <IceHeading en="Job" ja="職種紹介" id="p-job-heading" basePath={base} />
+          <IceHeading
+            en="Job"
+            ja="職種紹介"
+            id="p-job-heading"
+            basePath={base}
+          />
 
           <!-- Org chart -->
           <div class="p-job-chart" aria-label="本社組織の役割">
             <div class="p-job-chart__top">
-              <div class="p-job-chart__box p-job-chart__box--create" data-inview="pop" style="--inview-i: 0">
+              <div
+                class="p-job-chart__box p-job-chart__box--create"
+                data-inview="pop"
+                style="--inview-i: 0"
+              >
                 <h3 class="p-job-chart__box-title">{chart.create.title}</h3>
                 <ul class="p-job-chart__box-list">
                   {chart.create.items.map((item) => <li>{item}</li>)}
                 </ul>
               </div>
 
-              <span class="p-job-chart__link p-job-chart__link--renkei" aria-hidden="true">連携</span>
+              <span
+                class="p-job-chart__link p-job-chart__link--renkei"
+                aria-hidden="true">連携</span
+              >
 
-              <div class="p-job-chart__box p-job-chart__box--spread" data-inview="pop" style="--inview-i: 1">
+              <div
+                class="p-job-chart__box p-job-chart__box--spread"
+                data-inview="pop"
+                style="--inview-i: 1"
+              >
                 <h3 class="p-job-chart__box-title">{chart.spread.title}</h3>
                 <ul class="p-job-chart__box-list">
                   {chart.spread.items.map((item) => <li>{item}</li>)}
@@ -183,9 +198,16 @@ const groups: JobGroup[] = [
               </div>
             </div>
 
-            <span class="p-job-chart__link p-job-chart__link--support" aria-hidden="true">サポート</span>
+            <span
+              class="p-job-chart__link p-job-chart__link--support"
+              aria-hidden="true">サポート</span
+            >
 
-            <div class="p-job-chart__box p-job-chart__box--support" data-inview="pop" style="--inview-i: 2">
+            <div
+              class="p-job-chart__box p-job-chart__box--support"
+              data-inview="pop"
+              style="--inview-i: 2"
+            >
               <h3 class="p-job-chart__box-title">{chart.support.title}</h3>
               <ul class="p-job-chart__box-list">
                 {chart.support.items.map((item) => <li>{item}</li>)}
@@ -205,17 +227,25 @@ const groups: JobGroup[] = [
                       alt=""
                       loading="lazy"
                     />
-                    <h3 class="p-job-group__label" data-inview>{group.label}</h3>
+                    <h3 class="p-job-group__label" data-inview>
+                      {group.label}
+                    </h3>
                   </div>
 
                   <ul class="p-job-group__list">
                     {group.jobs.map((job, i) => (
-                      <li class="p-job-card" data-inview style={`--inview-i: ${i}`}>
+                      <li
+                        class="p-job-card"
+                        data-inview
+                        style={`--inview-i: ${i}`}
+                      >
                         <div class="p-job-card__body">
                           <h4 class="p-job-card__title">
                             {job.title}
                             {job.titleNote && (
-                              <span class="p-job-card__title-note">{job.titleNote}</span>
+                              <span class="p-job-card__title-note">
+                                {job.titleNote}
+                              </span>
                             )}
                           </h4>
                           <div class="p-job-card__text">
@@ -224,7 +254,9 @@ const groups: JobGroup[] = [
                           </div>
                           {job.seniors && job.seniors.length > 0 && (
                             <div class="p-job-card__interview">
-                              <span class="p-job-card__interview-label">この職種の先輩インタビュー</span>
+                              <span class="p-job-card__interview-label">
+                                この職種の先輩インタビュー
+                              </span>
                               <ul class="p-job-card__interview-list">
                                 {job.seniors.map((slug) => (
                                   <li class="p-job-card__interview-item">
@@ -242,8 +274,12 @@ const groups: JobGroup[] = [
                                         height="58"
                                       />
                                       <span class="p-job-card__interview-meta">
-                                        <span class="p-job-card__interview-initials">{initialsBySlug[slug]}</span>
-                                        <span class="p-job-card__interview-year">{yearBySlug[slug]}入社</span>
+                                        <span class="p-job-card__interview-initials">
+                                          {initialsBySlug[slug]}
+                                        </span>
+                                        <span class="p-job-card__interview-year">
+                                          {yearBySlug[slug]}入社
+                                        </span>
                                       </span>
                                     </a>
                                   </li>
