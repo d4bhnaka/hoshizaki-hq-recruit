@@ -346,17 +346,40 @@
 .c-stat-card--overseas .c-stat-card__main {
   gap: clamp(14px, 2vw, 26px);
 }
+// 円グラフの海外側（濃い）の到達割合。@property 登録で
+// キーフレーム補間できる＝扇形が滑らかに満ちるアニメーションに使う。
+// 既定は最終値なので、JS 無効・低モーション時は静止して 53.3% を表示。
+@property --pie-fill {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 53.3%;
+}
 .c-stat-card__pie {
   position: relative;
   width: clamp(150px, 17vw, 222px); // Figma 222×222
   aspect-ratio: 1;
   border-radius: 50%;
-  // Figma: 海外 45.9%（上から時計回り・濃い #B9D7FF） / 国内 54.1%（淡い #E1EDFF）
+  --pie-fill: 53.3%;
+  // 海外 53.3%（上から時計回り・濃い #B9D7FF） / 国内 46.7%（淡い #E1EDFF）
   background: conic-gradient(
     from 0deg,
-    #b9d7ff 0 45.9%,
-    #e1edff 45.9% 100%
+    #b9d7ff 0 var(--pie-fill),
+    #e1edff var(--pie-fill) 100%
   );
+}
+// カードが画面に入ったら、扇形を 0 → 53.3% へ時計回りに満たす。
+// .inview-ready ゲートにより低モーション/未対応時は発火せず静止表示。
+// 速度・イージングは数字のカウントアップ（1.4s / easeOutCubic）に合わせる。
+.inview-ready .c-stat-card--overseas.is-inview .c-stat-card__pie {
+  animation: pie-fill 1.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0.1s both;
+}
+@keyframes pie-fill {
+  from {
+    --pie-fill: 0%;
+  }
+  to {
+    --pie-fill: 53.3%;
+  }
 }
 .c-stat-card__pie-label {
   position: absolute;
