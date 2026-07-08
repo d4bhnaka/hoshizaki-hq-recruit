@@ -202,48 +202,57 @@ const qa = [
           class="p-project-story__product"
           aria-label="このプロジェクトの製品"
         >
-          <div class="p-project-story__product-body">
-            <h2
-              class="p-project-story__product-heading"
-              data-inview
-              style="--inview-i: 0"
-            >
-              <span
-                class="p-project-story__product-heading-icon"
-                aria-hidden="true"
+          <div class="p-project-story__product-card" data-inview="pop">
+            <div class="p-project-story__product-body">
+              <p
+                class="p-project-story__product-eyebrow"
+                data-inview="fade"
+                style="--inview-i: 0"
               >
-                <img
-                  src={`${base}images/special/project/icon-ice.png`}
-                  alt=""
-                  width="48"
-                  height="48"
-                />
-              </span>
-              <span class="p-project-story__product-heading-text"
-                >このプロジェクトの製品</span
-              >
-            </h2>
-            <div
-              class="p-project-story__product-text"
-              data-inview
-              style="--inview-i: 1"
-            >
-              <p>
-                薬用保冷庫は、薬品の保管に適した2〜8℃を安定的に維持します。庫内が高温・低温になった際にはブザーで警報を発し、扉の閉め忘れも警報でお知らせ。カギ付きの扉ロックにより、安全な保管を実現します。加えて、移動を容易にするキャスター、視認性を高めるLED照明、収納物の落下を防ぐ棚網など、使う人への配慮を随所に備えています。食の現場で磨いた「冷やす技術」を、医療の現場へ。その挑戦が、この一台に込められています。
+                <span>PRODUCT</span>
               </p>
+              <h2
+                class="p-project-story__product-heading"
+                data-inview
+                style="--inview-i: 1"
+              >
+                <span
+                  class="p-project-story__product-heading-icon"
+                  aria-hidden="true"
+                >
+                  <img
+                    src={`${base}images/special/project/icon-ice.png`}
+                    alt=""
+                    width="48"
+                    height="48"
+                  />
+                </span>
+                <span class="p-project-story__product-heading-text"
+                  >このプロジェクトの製品</span
+                >
+              </h2>
+              <div
+                class="p-project-story__product-text"
+                data-inview
+                style="--inview-i: 2"
+              >
+                <p>
+                  薬用保冷庫は、薬品の保管に適した2〜8℃を安定的に維持します。庫内が高温・低温になった際にはブザーで警報を発し、扉の閉め忘れも警報でお知らせ。カギ付きの扉ロックにより、安全な保管を実現します。加えて、移動を容易にするキャスター、視認性を高めるLED照明、収納物の落下を防ぐ棚網など、使う人への配慮を随所に備えています。食の現場で磨いた「冷やす技術」を、医療の現場へ。その挑戦が、この一台に込められています。
+                </p>
+              </div>
             </div>
+            <figure
+              class="p-project-story__product-image"
+              data-inview
+              style="--inview-i: 3"
+            >
+              <img
+                src={`${base}images/special/project/product.png`}
+                alt="薬品の保管に使われる薬用保冷庫と、保管対象の薬瓶・注射器"
+                loading="lazy"
+              />
+            </figure>
           </div>
-          <figure
-            class="p-project-story__product-image"
-            data-inview
-            style="--inview-i: 2"
-          >
-            <img
-              src={`${base}images/special/project/product.png`}
-              alt="薬品の保管に使われる薬用保冷庫と、保管対象の薬瓶・注射器"
-              loading="lazy"
-            />
-          </figure>
         </section>
 
         <div class="p-project-story__body">

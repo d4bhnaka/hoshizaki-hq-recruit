@@ -260,29 +260,64 @@
 
 // --------------------------------------------
 // Product（このプロジェクトの製品）
-//   参加メンバーと Q&A の間に挟む製品紹介。透過 PNG の製品図 → 見出し →
-//   本文の縦並び。Q&A 本文と同じ 1040px のコンテンツ幅・左揃えに合わせる。
-//   製品図は透過カットアウトのため、shine（グレー幕）ではなく素直な fade+rise。
+//   参加メンバーと Q&A の間に挟む製品紹介。背景から浮かぶ白い角丸カードに収め、
+//   英字ラベル（PRODUCT）＋見出し＋本文の左カラムと、淡い水色パネルに載せた
+//   透過 PNG の製品図の右カラムで構成する、コラム（エディトリアル）調のレイアウト。
+//   コンテンツ幅は Q&A 本文と同じ 1040px に合わせる。
 // --------------------------------------------
-// PC・タブレット（>600px）は 2カラム（左:見出し+本文 ≒6 / 右:画像 ≒4）。
-// 画像は align-items: center でテキストブロックに対して縦中央揃え。
+// 外側は中央寄せのラッパーのみ。実体の 2カラムは白カードが担う。
 .p-project-story__product {
   max-width: 1040px;
   margin: 112px auto 0;
   padding: 0 40px;
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  column-gap: 48px;
-  align-items: center;
 }
 
+// 背景から浮かび上がる白の角丸カード。柔らかく深いシャドウで洗練感を出す。
+// PC・タブレット（>600px）は 2カラム（左:ラベル+見出し+本文 ≒6 / 右:画像 ≒4）。
+.p-project-story__product-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  column-gap: 56px;
+  align-items: center;
+  padding: 56px 64px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-xl);
+  box-shadow: 0 24px 60px rgba(0, 47, 95, 0.1);
+}
+
+// 透過カットアウトの製品図は、ごく淡い水色パネルに載せて背景から独立させる。
 .p-project-story__product-image {
   margin: 0;
+  padding: 28px;
+  background: var(--color-brand-blue-50);
+  border-radius: var(--border-radius-lg);
 
   img {
     display: block;
     width: 100%;
     height: auto;
+  }
+}
+
+// 英字ラベル：短いシアンの罫線＋レタースペースを効かせた小さな見出し。
+.p-project-story__product-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 18px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  line-height: 1;
+  color: var(--color-brand-cyan-deep);
+
+  &::before {
+    content: "";
+    display: block;
+    width: 36px;
+    height: 2px;
+    background: var(--color-brand-cyan-deep);
   }
 }
 
@@ -318,8 +353,11 @@
   color: var(--color-text-primary);
 }
 
+// 見出しと本文の間に細い区切り罫を入れ、コラムらしい間（ま）をつくる。
 .p-project-story__product-text {
-  margin: 22px 0 0;
+  margin: 24px 0 0;
+  padding: 24px 0 0;
+  border-top: 1px solid var(--color-border);
   font-size: 16px;
   line-height: 1.9;
   color: #000;
@@ -504,7 +542,15 @@
   .p-project-story__product {
     margin-top: 88px;
     padding: 0 20px;
-    column-gap: 32px;
+  }
+
+  .p-project-story__product-card {
+    column-gap: 36px;
+    padding: 44px 40px;
+  }
+
+  .p-project-story__product-image {
+    padding: 20px;
   }
 
   .p-project-story__product-heading-icon {
@@ -615,16 +661,34 @@
     gap: 0.31em 0.62em;
   }
 
-  // スマホは 1カラム縦積み（見出し → 本文 → 画像）。
+  // スマホは 1カラム縦積み（ラベル → 見出し → 本文 → 画像）。
   .p-project-story__product {
-    grid-template-columns: 1fr;
-    column-gap: 0;
     margin-top: 3.73em;
     padding: 0 1.07em;
   }
 
+  .p-project-story__product-card {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    padding: 2.13em 1.6em;
+    border-radius: 1.07em;
+    box-shadow: 0 1.07em 2.67em rgba(0, 47, 95, 0.1);
+  }
+
+  .p-project-story__product-eyebrow {
+    gap: 0.8em;
+    margin-bottom: 1.2em;
+    font-size: 3.03vw;
+
+    &::before {
+      width: 2.4em;
+    }
+  }
+
   .p-project-story__product-image {
     margin-top: 1.6em;
+    padding: 1.2em;
+    border-radius: 0.8em;
   }
 
   .p-project-story__product-heading {
@@ -642,7 +706,8 @@
   }
 
   .p-project-story__product-text {
-    margin-top: 1.07em;
+    margin-top: 1.2em;
+    padding-top: 1.2em;
     font-size: 3.5vw;
   }
 
