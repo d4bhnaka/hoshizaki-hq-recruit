@@ -182,7 +182,7 @@ interface Props {
 - `Job` ページの `Job`。
 - `Strategy` ページの `Business Field` / `Global Market`。
 
-> EN+JA でも**別デザイン**のため統合していない見出し：`Internship`（`InternshipHeading`：中央寄せ・青地に白・英字先頭・アイコン無し）、`Strategy` の `Life Across Borders`（英字先頭・アイコン無し）、`Fact`（和文のみ＋専用アイコン `fact/heading-icon.png`・特大英字無し）。
+> EN+JA でも**別デザイン**のため統合していない見出し：`Internship`（`InternshipHeading`：中央寄せ・青地に白・英字先頭・アイコン無し）、`Strategy` の `Life Beyond Borders`（英字先頭・アイコン無し）、`Fact`（和文のみ＋専用アイコン `fact/heading-icon.png`・特大英字無し）。
 
 ---
 

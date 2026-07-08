@@ -351,7 +351,7 @@ dist/
 
 ### 2026-06-04 セッション: Strategy ページ「Global Pioneers」を Figma 836:2191 に差し替え
 
-- **着手範囲**: `/strategy/` 末尾の **Global Pioneers** セクションを、新デザイン（Figma `836:2191`「海外駐在社員メッセージ」1600×2916）へ内容・レイアウトとも全面差し替え。見出しは `Life Across Borders` ＋ `国境を越えて、働く。暮らす。`、本文は 4 行イントロに更新。
+- **着手範囲**: `/strategy/` 末尾の **Global Pioneers** セクションを、新デザイン（Figma `836:2191`「海外駐在社員メッセージ」1600×2916）へ内容・レイアウトとも全面差し替え。見出しは `Life Beyond Borders` ＋ `国境を越えて、働く。暮らす。`、本文は 4 行イントロに更新。
 - **構成**: 駐在員 3 人（フィリピン・マニラ／英国・テルフォード／米国・ジョージア州）を白カード（角丸 20px・上辺をまたぐ六角バッジ）で表示。各カードは「短い罫線＋見出し＋本文」のトピックを 3 つ持ち、一部トピックは右側に写真サムネイル（マニラ＝1 / テルフォード＝1 / ジョージア＝2、計 4 枚）。テキストは Figma `get_design_context` から正確に転記。
 - **修正ファイル**:
   - [src/pages/strategy.astro](../src/pages/strategy.astro) — `pioneers` データ配列を `market`＋`topics[{heading, body, image?, alt?}]` 構造へ刷新し、マークアップを `p-strategy-pioneers__card / __badge / __topics / __topic(--media) / __topic-heading / __media` で再構成。
@@ -361,7 +361,7 @@ dist/
 
 ### 2026-06-04 セッション: Strategy ページ全体を Figma 245:557 に突き合わせ（地図アイスボタン追加）
 
-- **着手範囲**: `/strategy/` 全体を最新 Figma `245:557`（03_strategy / 1600×**10271**）と突き合わせ。Hero／Intro／Business Field／市場カードのテキスト・構成は既に忠実だったため据え置き。Life Across Borders（別ノード `836:2191`）はユーザー確認済みで現状維持。
+- **着手範囲**: `/strategy/` 全体を最新 Figma `245:557`（03_strategy / 1600×**10271**）と突き合わせ。Hero／Intro／Business Field／市場カードのテキスト・構成は既に忠実だったため据え置き。Life Beyond Borders（別ノード `836:2191`）はユーザー確認済みで現状維持。
 - **主な差分＝Global Market の世界地図**: Figma では各市場（ヨーロッパ／中国・香港／アメリカ／東南アジア／オセアニア／中米／南米）の位置に **アイスキューブ型「READ MORE」リンクボタン**（`LinkButtonIce`）が置かれ、その上にペンギンが立つ構成。現行はペンギンのみでボタンが欠落していたため、7 つのボタンを地図上の Figma 座標（map ノード 1405×773 基準の %）に追加。
   - 既存の共通コンポーネント **`.c-ice-link`**（top ページ流用、`images/common/link-button-ice.png`）を再利用し、地図用の縮小モディファイア **`.c-ice-link--map`** を `_p-strategy.scss` に追加（ラベル下線＋READ MORE、`clamp()` で小サイズ対応）。
   - **リンク先はユーザー選択により「下の該当市場カードへスクロール」**（同ページ内アンカー）。各市場カード `<li>` に `id`（`market-america` 等）を付与し、ボタンは `href="#…"`。`scroll-margin-top:96px` でヘッダー分を確保。
@@ -559,7 +559,7 @@ dist/
 - **背景**: ユーザー指摘「事業領域（strategy）ページの見出しデザインが違う。英語＋日本語セットの見出しは職種紹介（job）の "Job" と同じにしたい。見出し専用の共通コンポーネント化＋他ページも共通化を」。調査の結果、job は小見出し `SectionHeading`（`c-section-heading`）を `.p-job` 側 CSS で大きく上書きして "Job" を約100px化していた（ただしアイコンは Figma のアイスキューブではなく**シアンの菱形のまま**で不忠実）。strategy は上書きなしの小見出しのまま＝両者が不一致だった。
 - **対応**: Figma の大見出し（アイスキューブ＋太字和文＋特大 Barlow Condensed 英字）は既存 [`IceHeading`](../src/components/IceHeading.astro)（`_c-ice-heading.scss`、environment が使用）が正。**job・strategy をともに `IceHeading` へ移行**（strategy: Business Field／Global Market、job: Job）。`basePath` を渡してアイスキューブの相対パスを解決。
 - **不要コードの削除**: 小見出し `SectionHeading.astro` ＋ `_c-section-heading.scss` を**削除**し `style.scss` の `@use` も撤去（移行後は未使用）。job の `.p-job .c-section-heading*` 上書き群は撤去し、幅可変セクション用の中央寄せ1行 `.p-job .c-ice-heading { max-width:1180px; margin-inline:auto }` のみ残置。
-- **共通化しなかった見出し（意図的に別デザインのため据え置き）**: internship `InternshipHeading`（中央寄せ・青地に白・英字先頭 COURSE/MESSAGE・アイコン無し＝独立レイアウト）、strategy "Life Across Borders" `p-strategy-pioneers__heading`（英字先頭・アイコン無し）、fact `p-fact__heading`（和文のみ＋専用の大きめ `fact/heading-icon.png`・特大英字無し）。
+- **共通化しなかった見出し（意図的に別デザインのため据え置き）**: internship `InternshipHeading`（中央寄せ・青地に白・英字先頭 COURSE/MESSAGE・アイコン無し＝独立レイアウト）、strategy "Life Beyond Borders" `p-strategy-pioneers__heading`（英字先頭・アイコン無し）、fact `p-fact__heading`（和文のみ＋専用の大きめ `fact/heading-icon.png`・特大英字無し）。
 - **検証**: `npm run build` 28ページ クリーンビルド。strategy／job の出力が `c-ice-heading`（`c-section-heading`＝0）、`ice-01.png` が `../images/common/` で解決、`style.css` から `c-section-heading` 消失。`data-astro-cid`／ルート絶対パス／インライン `<style>`（SVG内除く）＝0。ヘッドレス Chrome で strategy "Business Field"・job "Job" がアイスキューブ大見出しで描画されることを目視確認。
 
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
