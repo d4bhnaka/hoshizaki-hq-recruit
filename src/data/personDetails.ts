@@ -163,7 +163,7 @@ export const personDetails: PersonDetail[] = [
     slug: "04",
     initials: "S.T",
     faculty: "工学研究科卒",
-    title: ["暮らしの安心を、", "品質で守る。"],
+    title: ["お客様の安心を、", "品質で支える。"],
     photo: "p04.png",
     photoWidth: 600,
     qa: [
