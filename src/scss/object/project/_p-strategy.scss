@@ -1,7 +1,7 @@
 // ============================================
 // Project: Strategy (Beyond HOSHIZAKI)
 // Figma node: 245:557 (03_strategy / 1600x10271)
-// ※ Global Pioneers セクションは別ノード 836:2191（Life Across Borders）を正版として実装
+// ※ Global Pioneers セクションは別ノード 836:2191（Life Beyond Borders）を正版として実装
 // ============================================
 
 .p-strategy {
@@ -394,7 +394,7 @@
 }
 
 // --------------------------------------------
-// Global Pioneers / Life Across Borders
+// Global Pioneers / Life Beyond Borders
 // Figma node: 836:2191（海外駐在社員メッセージ）
 // --------------------------------------------
 .p-strategy-pioneers {
@@ -459,6 +459,23 @@
   top: 0;
   left: clamp(24px, 4vw, 48px);
   transform: translateY(-50%);
+}
+
+// エリア名バッジ直下の駐在社員プロフィール（社員紹介の __meta と同形式・縦積み）
+.p-strategy-pioneers__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0 0 clamp(28px, 3.5vw, 40px);
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--color-text-secondary);
+}
+
+.p-strategy-pioneers__meta-name {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary);
 }
 
 .p-strategy-pioneers__topics {
