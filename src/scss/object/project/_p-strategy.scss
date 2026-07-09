@@ -305,7 +305,7 @@
 }
 
 .c-ice-link.c-ice-link--map {
-  width: clamp(70px, 8.2%, 118px);
+  width: clamp(74px, 8.8%, 128px);
   height: auto;
   aspect-ratio: 82 / 79;
   filter: drop-shadow(0 3px 6px rgba(0, 47, 95, 0.16));
@@ -317,12 +317,14 @@
 
 .c-ice-link--map .c-ice-link__inner {
   justify-content: center;
-  padding: 14% 6% 8%;
+  padding: 14% 4% 8%;
   gap: 1px;
 }
 
+// 「中国・香港市場」など7文字ラベルが1文字だけ次行に溢れないよう、
+// 通常より小さめのフォント + 横パディング縮小で1〜2行に収まる幅を確保
 .c-ice-link--map .c-ice-link__label {
-  font-size: clamp(10px, 0.95vw, 15px);
+  font-size: clamp(9px, 0.85vw, 13px);
   font-weight: 700;
   letter-spacing: 0;
   line-height: 1.25;
@@ -332,6 +334,7 @@
   border-radius: 5px;
   padding: 2px 1px;
   box-shadow: 0 1px 3px rgba(0, 47, 95, 0.18);
+  text-wrap: balance;
 }
 
 // 市場別カード

@@ -67,6 +67,15 @@ const benefitIcons: Record<string, string> = {
   coffee: svg(
     '<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>',
   ),
+  clock: svg(
+    '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  ),
+  users: svg(
+    '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  ),
+  monitor: svg(
+    '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
+  ),
 };
 
 interface BenefitItem {
@@ -115,6 +124,21 @@ const benefits: BenefitItem[] = [
     title: "会社保養施設",
     body: "休暇を利用して心身をリフレッシュできる社員向けの保養施設です。",
     icon: "coffee",
+  },
+  {
+    title: "時間単位有給取得",
+    body: "1時間単位で有給休暇を取得でき、通院や急な用事にも柔軟に対応できます。",
+    icon: "clock",
+  },
+  {
+    title: "単身赴任者サポート",
+    body: "単身赴任者に毎週末の帰宅補助などを行い、家族と過ごす時間を支えます。",
+    icon: "users",
+  },
+  {
+    title: "テレワーク勤務制度",
+    body: "在宅勤務などを導入し、柔軟で働きやすい環境づくりを進めています。",
+    icon: "monitor",
   },
 ];
 
