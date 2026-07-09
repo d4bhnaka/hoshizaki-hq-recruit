@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>ホシザキ本社採用サイト 文字校正 ご報告書</title>
+    <style>
+      :root {
+        --ink: #1c2530;
+        --sub: #5b6875;
+        --line: #d8dee6;
+        --line-soft: #e9edf2;
+        --cyan: #00a0e9;
+        --cyan-d: #0a6f9d;
+        --cyan-soft: #e6f6fd;
+        --ok: #1f9d6b;
+        --ok-soft: #e5f5ee;
+        --hold: #c07b12;
+        --hold-soft: #fbf1dd;
+        --paper: #ffffff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      body {
+        margin: 0;
+        font-family:
+          "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", YuGothic,
+          Meiryo, sans-serif;
+        color: var(--ink);
+        font-size: 10.2px;
+        line-height: 1.78;
+        background: #eef1f4;
+      }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        padding: 15mm 15mm 14mm;
+        margin: 0 auto;
+        background: var(--paper);
+        position: relative;
+      }
+      @media print {
+        body {
+          background: #fff;
+        }
+        .page {
+          margin: 0;
+          width: auto;
+          min-height: auto;
+          padding: 13mm 14mm 6mm;
+        }
+        .page + .page {
+          page-break-before: always;
+        }
+        .page:last-child {
+          padding-top: 8mm;
+          padding-bottom: 0;
+        }
+        .page:last-child h2 {
+          margin-top: 13px;
+        }
+        .page:last-child .foot {
+          margin-top: 7px;
+        }
+      }
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      /* ---- masthead ---- */
+      .addressee {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        font-size: 8.6px;
+        color: var(--sub);
+        margin-bottom: 12px;
+      }
+      .addressee .to {
+        font-size: 12px;
+        color: var(--ink);
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .addressee .to small {
+        font-size: 8.4px;
+        color: var(--sub);
+        font-weight: 500;
+        margin-left: 6px;
+      }
+      .addressee .doc {
+        text-align: right;
+        line-height: 1.7;
+      }
+
+      .mast {
+        background: linear-gradient(
+          105deg,
+          #eaf7fe 0%,
+          #f4fbff 55%,
+          #ffffff 100%
+        );
+        border: 1px solid #d4ecf9;
+        border-radius: 10px;
+        padding: 16px 20px 15px;
+        margin-bottom: 15px;
+        position: relative;
+        overflow: hidden;
+      }
+      .mast::after {
+        content: "";
+        position: absolute;
+        right: -40px;
+        top: -40px;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          #cdeefc 0%,
+          rgba(205, 238, 252, 0) 70%
+        );
+      }
+      .mast .kicker {
+        font-size: 8.6px;
+        letter-spacing: 0.24em;
+        color: var(--cyan-d);
+        font-weight: 700;
+        margin: 0 0 5px;
+      }
+      .mast h1 {
+        font-size: 21px;
+        margin: 0;
+        letter-spacing: 0.01em;
+        font-weight: 800;
+        position: relative;
+      }
+      .mast .sub {
+        margin: 7px 0 0;
+        font-size: 9px;
+        color: var(--sub);
+      }
+
+      .lead {
+        color: #33404d;
+        margin: 0 0 11px;
+      }
+      .lead b {
+        color: var(--ink);
+      }
+
+      h2 {
+        font-size: 12.5px;
+        margin: 17px 0 8px;
+        font-weight: 800;
+        line-height: 1.3;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+      h2 .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+        background: var(--cyan);
+        color: #fff;
+        font-size: 11px;
+        font-weight: 800;
+        flex: none;
+        font-family: "Barlow", sans-serif;
+      }
+      h3 {
+        font-size: 10.4px;
+        margin: 11px 0 4px;
+        font-weight: 800;
+        color: #2a3542;
+        padding-left: 9px;
+        border-left: 3px solid var(--cyan);
+      }
+      p {
+        margin: 0 0 7px;
+      }
+
+      /* ---- summary stat row ---- */
+      .stats {
+        display: flex;
+        gap: 9px;
+        margin: 2px 0 4px;
+      }
+      .stat {
+        flex: 1;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px 11px 9px;
+        background: #fbfcfe;
+      }
+      .stat .num {
+        font-size: 21px;
+        font-weight: 800;
+        line-height: 1;
+        color: var(--cyan);
+        font-family: "Barlow Condensed", "Barlow", sans-serif;
+      }
+      .stat .num small {
+        font-size: 10px;
+        font-weight: 700;
+        margin-left: 1px;
+      }
+      .stat .lab {
+        font-size: 8.2px;
+        color: var(--sub);
+        margin-top: 6px;
+        line-height: 1.55;
+      }
+
+      /* ---- timeline ---- */
+      .tl {
+        position: relative;
+        margin: 6px 0 2px;
+      }
+      .tl-row {
+        display: grid;
+        grid-template-columns: 78px 15px 1fr;
+        align-items: start;
+      }
+      .tl-date {
+        font-size: 8.4px;
+        color: var(--cyan-d);
+        font-weight: 700;
+        text-align: right;
+        padding-right: 11px;
+        padding-top: 2px;
+        white-space: nowrap;
+      }
+      .tl-rail {
+        position: relative;
+      }
+      .tl-num {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: #fff;
+        border: 2px solid var(--cyan);
+        color: var(--cyan-d);
+        font-size: 8px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 0;
+        top: 1px;
+        z-index: 2;
+        font-family: "Barlow", sans-serif;
+      }
+      .tl-line {
+        position: absolute;
+        left: 6.5px;
+        top: 2px;
+        bottom: -6px;
+        width: 1.5px;
+        background: var(--line);
+      }
+      .tl-row:last-child .tl-line {
+        display: none;
+      }
+      .tl-body {
+        padding: 0 0 12px 10px;
+      }
+      .tl-body .t {
+        font-weight: 800;
+        font-size: 10.2px;
+      }
+      .tl-body .d {
+        color: #41505d;
+        font-size: 9px;
+        margin-top: 2px;
+      }
+
+      /* ---- principle cards ---- */
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+      }
+      .pcard {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px 12px 11px;
+        background: #fff;
+        position: relative;
+      }
+      .pcard .no {
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        font-size: 16px;
+        font-weight: 800;
+        color: #dfe6ec;
+        font-family: "Barlow", sans-serif;
+        line-height: 1;
+      }
+      .pcard h4 {
+        margin: 0 0 4px;
+        font-size: 10px;
+        font-weight: 800;
+        padding-right: 22px;
+        color: var(--cyan-d);
+      }
+      .pcard p {
+        margin: 0;
+        font-size: 8.8px;
+        color: #41505d;
+        line-height: 1.68;
+      }
+
+      /* ---- tables ---- */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 5px 0 10px;
+        font-size: 8.7px;
+      }
+      th,
+      td {
+        border: 1px solid var(--line-soft);
+        padding: 5px 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+      thead th {
+        background: var(--cyan-soft);
+        color: var(--cyan-d);
+        font-weight: 700;
+        font-size: 8.4px;
+        border-color: #c9e9f7;
+      }
+      tbody tr:nth-child(even) {
+        background: #fafcfd;
+      }
+      td .old {
+        color: #b03a3a;
+      }
+      td .new {
+        color: var(--ok);
+        font-weight: 700;
+      }
+
+      .tag {
+        display: inline-block;
+        font-size: 7.8px;
+        font-weight: 700;
+        padding: 1px 7px;
+        border-radius: 20px;
+        line-height: 1.5;
+        white-space: nowrap;
+      }
+      .tag.ok {
+        background: var(--ok-soft);
+        color: var(--ok);
+      }
+      .tag.hold {
+        background: var(--hold-soft);
+        color: var(--hold);
+      }
+
+      .note {
+        background: #f6f8fa;
+        border: 1px solid var(--line-soft);
+        border-left: 3px solid var(--cyan);
+        border-radius: 5px;
+        padding: 8px 12px;
+        font-size: 8.8px;
+        color: #41505d;
+        margin: 8px 0;
+      }
+      .note b {
+        color: var(--ink);
+      }
+
+      ul.clean {
+        margin: 3px 0 6px;
+        padding-left: 16px;
+      }
+      ul.clean li {
+        margin-bottom: 2px;
+      }
+
+      .foot {
+        margin-top: 12px;
+        padding-top: 7px;
+        border-top: 1px solid var(--line);
+        font-size: 7.8px;
+        color: #94a1ae;
+        display: flex;
+        justify-content: space-between;
+      }
+      .basis {
+        font-size: 8.3px;
+        color: var(--sub);
+        margin-top: 6px;
+      }
+
+      .kanamap {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3px 16px;
+        font-size: 8.7px;
+        margin: 5px 0 8px;
+      }
+      .kanamap span {
+        white-space: nowrap;
+      }
+      .kanamap .k-old {
+        color: #b03a3a;
+      }
+      .kanamap .k-new {
+        color: var(--ok);
+        font-weight: 700;
+      }
+      .kanamap .k-ar {
+        color: #9aa6b2;
+        padding: 0 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============ PAGE 1 ============ -->
+    <section class="page">
+      <div class="mast">
+        <p class="kicker">HOSHIZAKI RECRUIT SITE</p>
+        <h1>文字校正 ご報告書</h1>
+        <p class="sub">
+          対象：ホシザキ本社採用サイト
+          全ページの掲載文章　／　実施期間：2026年6月5日〜7月9日
+        </p>
+      </div>
+
+      <p class="lead">
+        本書は、その実施内容を「<b>どのような手順で</b>」「<b>どのような基準で</b>」進めたかにまとめ、ご報告するものです。<br />校正は、<b
+          >①明らかな誤りをすぐに直す → ②サイト全体を一括で点検する →
+          ③統一方針を貴社にお選びいただく一覧にまとめる →
+          ④ご決定いただいた方針をサイトへ反映する</b
+        >という段階を踏んで、丁寧に進めてまいりました。
+      </p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="num">51<small>件</small></div>
+          <div class="lab">
+            全文点検で見つかった表記のゆれ（43の論点に整理）
+          </div>
+        </div>
+        <div class="stat">
+          <div class="num">27<small>論点</small></div>
+          <div class="lab">貴社のご方針にもとづき統一・反映が完了</div>
+        </div>
+        <div class="stat">
+          <div class="num">12<small>件+</small></div>
+          <div class="lab">誤字・脱字・文法・事実の誤りを個別に修正</div>
+        </div>
+        <div class="stat">
+          <div class="num">67<small>件</small></div>
+          <div class="lab">重複した言い回しを検出し、改善案として整理</div>
+        </div>
+      </div>
+
+      <h2><span class="badge">1</span>校正の進め方（全体の流れ）</h2>
+      <p>
+        校正は、サイト制作と並行して段階的に進めました。まず読み合わせで気づいた「明らかな誤り」をすぐに直し、次に専用の校正ツールで全ページをもれなく点検、その結果を<b>貴社に表記の方針をお選びいただくための一覧表</b>にまとめ、ご返答をいただいた段階でサイトへ反映する、という流れです。
+      </p>
+
+      <div class="tl">
+        <div class="tl-row">
+          <div class="tl-date">6月5日</div>
+          <div class="tl-rail">
+            <span class="tl-num">1</span><span class="tl-line"></span>
+          </div>
+          <div class="tl-body">
+            <div class="t">原稿の読み合わせによる、明らかな誤りの修正</div>
+            <div class="d">
+              社員紹介・特集記事の原稿を読み合わせ、誤字・脱字・助詞の抜け・文のねじれを修正しました。あわせて、一部の見出しや紹介文を、より自然で読みやすい日本語へ整えました。
+            </div>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-date">6月8日</div>
+          <div class="tl-rail">
+            <span class="tl-num">2</span><span class="tl-line"></span>
+          </div>
+          <div class="tl-body">
+            <div class="t">景品表示法への配慮（言い切り表現の見直し）</div>
+            <div class="d">
+              「業界トップ」「No.1」など、根拠を示さずに断定していた表現を、誤解を招かないよう範囲を限定・調整し、数値には出典（自社調べ・2022年度）を添えました。
+            </div>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-date">6月17日</div>
+          <div class="tl-rail">
+            <span class="tl-num">3</span><span class="tl-line"></span>
+          </div>
+          <div class="tl-body">
+            <div class="t">サイト全体の一括点検と、統一方針の一覧表づくり</div>
+            <div class="d">
+              専用の校正ツールでサイト全体の文章をもれなく点検しました。見つかった表記のゆれ（全51件）を43の論点に整理し、「どの表記に統一するか」を貴社にお選びいただく一覧表にまとめました。ご判断が必要な項目は、この段階ではあえて直さず保留としました。
+            </div>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-date">7月6日</div>
+          <div class="tl-rail">
+            <span class="tl-num">4</span><span class="tl-line"></span>
+          </div>
+          <div class="tl-body">
+            <div class="t">ご決定いただいた方針の、サイトへの反映</div>
+            <div class="d">
+              貴社よりいただいた方針にもとづき、ひらがな・漢字の統一、単位の表記、数値の言い回しなど24の論点をサイトへ反映しました。国数（60→120ヵ国）や海外売上比率（50％を超える）は、事実確認を経て確定しています。
+            </div>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-date">7月7〜9日</div>
+          <div class="tl-rail"><span class="tl-num">5</span></div>
+          <div class="tl-body">
+            <div class="t">いただいたご指摘の、継続的な反映</div>
+            <div class="d">
+              座談会記事の文章調整、英語表記の統一（「Life Beyond
+              Borders」へ統一）、職種紹介の刷新など、貴社からのご指摘を継続して反映いたしました。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span>ホシザキ本社採用サイト｜文字校正 ご報告書</span>
+        <span>1 / 3</span>
+      </div>
+    </section>
+
+    <!-- ============ PAGE 2 ============ -->
+    <section class="page">
+      <h2><span class="badge">2</span>校正の判断基準（5つの原則）</h2>
+      <p>
+        一つひとつの修正は、次の5つの基準に沿って行いました。核となる考え方は「<b>明らかな誤りは制作側で確実に直し、判断が分かれる表記や、事実に関わる項目は貴社のご確認をいただく</b>」という切り分けです。
+      </p>
+
+      <div class="grid2">
+        <div class="pcard">
+          <span class="no">01</span>
+          <h4>明らかな誤りは、すぐに修正</h4>
+          <p>
+            誤字・脱字・助詞の抜け・文のねじれ・事実の誤りなど、確信の持てる「明らかな間違い」は、方針の決定を待たずにすぐ修正。読み手に誤解を与えない状態を最優先しました。
+          </p>
+        </div>
+        <div class="pcard">
+          <span class="no">02</span>
+          <h4>表記のゆれは「ひらがなに開く」を基本に統一</h4>
+          <p>
+            形式的に使われる言葉（例：等→など、為→ため）は、原則ひらがなへ統一。ただし、どの形に統一するかは提案にとどめ、<b>最終判断は貴社のご方針を優先</b>いたしました。
+          </p>
+        </div>
+        <div class="pcard">
+          <span class="no">03</span>
+          <h4>事実・固有名詞は、必ずご確認をいただく</h4>
+          <p>
+            数値（国数・売上比率）、部署名、職種名、ブランド名など「事実」に関わる表記は、制作側で決めず必ず貴社にご確認。確定しない項目は、保留として明示しました。
+          </p>
+        </div>
+        <div class="pcard">
+          <span class="no">04</span>
+          <h4>景品表示法に配慮した表現へ</h4>
+          <p>
+            根拠を示さない最上級の表現（No.1・世界トップ等）は範囲を限定・調整し、数値の主張には出典を添えました。誤解を避け、公開後のリスクを抑える表現に整えています。
+          </p>
+        </div>
+        <div class="pcard" style="grid-column: 1 / span 2">
+          <span class="no">05</span>
+          <h4>不自然な文章を避け、自然な日本語へ。文章の粒度も揃える</h4>
+          <p>
+            ダッシュ記号「——」の多用や、体言止め・文の断片が続く読みづらい書き方を整え、人が語りかけるような自然な文章へ整えました。あわせて、社員紹介15名の文章は、詳しさ・具体性・敬語のレベルがばらつかないよう統一しています（例：「志望いたしました」→「志望しました」の過剰な敬語の調整）。
+          </p>
+        </div>
+      </div>
+      <p class="basis">
+        ※
+        これらの基準は、貴社からの「記事文章で『——』区切りや、体言止め・文の断片を避けたい」等のご要望と、公用文・新聞表記の一般的な統一原則を土台にしています。
+      </p>
+
+      <h2>
+        <span class="badge">3</span>誤字・脱字・明らかな誤りの修正（対応済み）
+      </h2>
+      <p>
+        方針の決定に先立ち、確信の持てる明らかな誤りを先行して修正しました（原則01）。
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 16%">対象</th>
+            <th style="width: 28%">修正前</th>
+            <th style="width: 29%">修正後</th>
+            <th style="width: 15%">種別</th>
+            <th style="width: 12%">状態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>冨江圭佑さま</td>
+            <td><span class="old">働きたい感じた</span></td>
+            <td><span class="new">働きたいと感じた</span></td>
+            <td>助詞の抜け</td>
+            <td><span class="tag ok">修正済</span></td>
+          </tr>
+          <tr>
+            <td>野村健人さま</td>
+            <td><span class="old">決めて</span></td>
+            <td><span class="new">決め手</span></td>
+            <td>誤字</td>
+            <td><span class="tag ok">修正済</span></td>
+          </tr>
+          <tr>
+            <td>小畑さま（特集記事）</td>
+            <td><span class="old">2022年10頃</span></td>
+            <td><span class="new">2022年10月頃</span></td>
+            <td>脱字</td>
+            <td><span class="tag ok">修正済</span></td>
+          </tr>
+          <tr>
+            <td>山本凌大さま</td>
+            <td><span class="old">業界No1</span></td>
+            <td><span class="new">業界No.1</span></td>
+            <td>記号の統一</td>
+            <td><span class="tag ok">修正済</span></td>
+          </tr>
+          <tr>
+            <td>佐々木誠さま</td>
+            <td><span class="old">肩書きに表記のゆれ</span></td>
+            <td><span class="new">中央研究所所長 に統一</span></td>
+            <td>肩書きの統一</td>
+            <td><span class="tag ok">修正済</span></td>
+          </tr>
+          <tr>
+            <td>呉 瑋芳さま</td>
+            <td>
+              <span class="old">文のねじれ・改行の欠落で見出しが重複</span>
+            </td>
+            <td><span class="new">文章・改行を修正</span></td>
+            <td>文法／レイアウト</td>
+            <td><span class="tag ok">修正済</span></td>
+          </tr>
+          <tr>
+            <td>M.Jさま（座談会）</td>
+            <td>
+              <span class="old">電子開発科（肩書）／電子開発課（本文）</span>
+            </td>
+            <td><span class="new">電子開発課 に統一</span></td>
+            <td>同じ方の中での不一致</td>
+            <td><span class="tag ok">修正済</span></td>
+          </tr>
+          <tr>
+            <td>インターンシップ 会場表記</td>
+            <td><span class="old">島根工場（中央研究所）</span></td>
+            <td><span class="new">島根工場</span></td>
+            <td>事実の誤り</td>
+            <td><span class="tag ok">修正済</span></td>
+          </tr>
+          <tr>
+            <td>事業戦略ページ</td>
+            <td><span class="old">海外売上比率の約半数を占める</span></td>
+            <td><span class="new">海外売上が約半数を占める</span></td>
+            <td>主語と述語のねじれ</td>
+            <td><span class="tag ok">修正済</span></td>
+          </tr>
+          <tr>
+            <td>南潤哉さま</td>
+            <td><span class="old">…世界トップの安定に決めた</span></td>
+            <td><span class="new">…世界トップの安定企業へ。</span></td>
+            <td>不自然な言い回し</td>
+            <td><span class="tag ok">修正済</span></td>
+          </tr>
+          <tr>
+            <td>武田大地さま</td>
+            <td><span class="old">志望いたしました</span></td>
+            <td><span class="new">志望しました</span></td>
+            <td>過剰な敬語の調整</td>
+            <td><span class="tag ok">修正済</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="foot">
+        <span>ホシザキ本社採用サイト｜文字校正 ご報告書</span>
+        <span>2 / 3</span>
+      </div>
+    </section>
+
+    <!-- ============ PAGE 3 ============ -->
+    <section class="page">
+      <h2>
+        <span class="badge">4</span>表記のゆれの統一（ひらがなに開く方針）
+      </h2>
+      <p>
+        全文点検で見つかった43の論点のうち、貴社にご決定いただいた27の論点を反映済みです。基本方針は「形式的に使われる言葉は、ひらがなに開く」。ただし、熟語・慣用表現・デザイン上あえてカタカナにしている表記など、意味や意図が変わるものは<b>例外として、そのまま残しました</b>。
+      </p>
+
+      <div class="kanamap">
+        <span
+          ><span class="k-old">等</span><span class="k-ar">→</span
+          ><span class="k-new">など</span></span
+        >
+        <span
+          ><span class="k-old">上で</span><span class="k-ar">→</span
+          ><span class="k-new">うえで</span></span
+        >
+        <span
+          ><span class="k-old">時</span><span class="k-ar">→</span
+          ><span class="k-new">とき</span></span
+        >
+        <span
+          ><span class="k-old">為</span><span class="k-ar">→</span
+          ><span class="k-new">ため</span></span
+        >
+        <span
+          ><span class="k-old">事</span><span class="k-ar">→</span
+          ><span class="k-new">こと</span></span
+        >
+        <span
+          ><span class="k-old">分かる</span><span class="k-ar">→</span
+          ><span class="k-new">わかる</span></span
+        >
+        <span
+          ><span class="k-old">様々</span><span class="k-ar">→</span
+          ><span class="k-new">さまざま</span></span
+        >
+        <span
+          ><span class="k-old">色々</span><span class="k-ar">→</span
+          ><span class="k-new">いろいろ</span></span
+        >
+        <span
+          ><span class="k-old">中でも</span><span class="k-ar">→</span
+          ><span class="k-new">なかでも</span></span
+        >
+        <span
+          ><span class="k-old">共に</span><span class="k-ar">→</span
+          ><span class="k-new">ともに</span></span
+        >
+        <span
+          ><span class="k-old">是非</span><span class="k-ar">→</span
+          ><span class="k-new">ぜひ</span></span
+        >
+        <span
+          ><span class="k-old">良かった</span><span class="k-ar">→</span
+          ><span class="k-new">よかった</span></span
+        >
+        <span
+          ><span class="k-old">一つ／1つ</span><span class="k-ar">→</span
+          ><span class="k-new">ひとつ</span></span
+        >
+        <span
+          ><span class="k-old">作る／創る</span><span class="k-ar">→</span
+          ><span class="k-new">つくる</span></span
+        >
+        <span
+          ><span class="k-old">モノづくり</span><span class="k-ar">→</span
+          ><span class="k-new">ものづくり</span></span
+        >
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%">論点</th>
+            <th style="width: 51%">ご決定・統一の方針</th>
+            <th style="width: 12%">優先度</th>
+            <th style="width: 12%">状態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>国を数える単位＋国数</td>
+            <td>
+              「ヵ国」に統一。国数は貴社のご確認により
+              <b>60→120ヵ国</b> に修正（東南アジア限定の6ヵ国は別の数値）
+            </td>
+            <td>高</td>
+            <td><span class="tag ok">反映済</span></td>
+          </tr>
+          <tr>
+            <td>場所・月を数える単位</td>
+            <td>「ヵ所／ヵ月」に統一（国数の方針と連動）</td>
+            <td>中</td>
+            <td><span class="tag ok">反映済</span></td>
+          </tr>
+          <tr>
+            <td>海外売上比率の数値表現</td>
+            <td>
+              「50％を超える」に統一（トップ・事業戦略ページ
+              計3箇所）。特集ページの「半分以上」は別の指標のため対象外
+            </td>
+            <td>中</td>
+            <td><span class="tag ok">反映済</span></td>
+          </tr>
+          <tr>
+            <td>インターンシップ日数の数字</td>
+            <td>英字に隣り合う数字は半角へ（5Days／2Days／1Day）</td>
+            <td>高</td>
+            <td><span class="tag ok">反映済</span></td>
+          </tr>
+          <tr>
+            <td>波ダッシュ「〜」の種類</td>
+            <td>見た目の似た別の記号が混在していたため、1種類に統一</td>
+            <td>高</td>
+            <td><span class="tag ok">反映済</span></td>
+          </tr>
+          <tr>
+            <td>「食器洗浄機／食洗機」</td>
+            <td>正式名称「食器洗浄機」に統一</td>
+            <td>低</td>
+            <td><span class="tag ok">反映済</span></td>
+          </tr>
+          <tr>
+            <td>「皆さん／みなさん／みんな」</td>
+            <td>
+              多数派の「皆さん」に統一。口語の「みんな」は文脈上そのまま維持
+            </td>
+            <td>中</td>
+            <td><span class="tag ok">反映済</span></td>
+          </tr>
+          <tr>
+            <td>英語表記「Life Beyond Borders」</td>
+            <td>表記の異なりを「Life Beyond Borders」へ統一</td>
+            <td>中</td>
+            <td><span class="tag ok">反映済</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note">
+        <b>そのまま残した例外：</b>
+        「一つひとつ」の慣用表現、未来を語る抽象的な「創る（未来を創る）」、熟語の「仕事・事業」、動詞的な「共にする」、デザイン上あえてカタカナにしている記事タイトルの「モノづくり」等は、機械的に統一せず、元のかたちを大切に残しました。
+      </div>
+
+      <h2>
+        <span class="badge">5</span>景品表示法への配慮・文章の整え・重複表現
+      </h2>
+      <h3>景品表示法への配慮（対応済み）</h3>
+      <ul class="clean">
+        <li>
+          社員紹介の「業界トップ／世界トップ／No.1」など、根拠を示さず断定していた表現を、範囲を限定・調整しました（南・佐々木・山本・横山・呉の各社員さま）。
+        </li>
+        <li>
+          「製氷機
+          国内シェアNo.1」には出典（自社調べ・2022年度）を添え、断定の範囲を明確にしました。
+        </li>
+      </ul>
+      <h3>文章の整え（対応済み）</h3>
+      <ul class="clean">
+        <li>
+          機械的で不自然に見えるダッシュ記号「——」の多用などを、自然な文章へ書き換えました。
+        </li>
+        <li>
+          各社員ページに共通する説明文の区切り記号を「——」から「｜」へ統一しました。
+        </li>
+      </ul>
+      <h3>重複した言い回しのチェック（改善案として整理）</h3>
+      <p>
+        同じ意味の言葉が重なる表現を全67件検出しました（「必ず必要」「達成感を感じる」など、読み手に不自然さが伝わりやすいものを優先課題として抽出済み）。これらは文章ごとの判断が必要なため一括では直さず、<b>改善案の一覧として別途整理</b>しています。
+      </p>
+
+      <h2><span class="badge">6</span>現在お預かりしている事項（要ご確認）</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 30%">項目</th>
+            <th style="width: 52%">内容・お預かりしている理由</th>
+            <th style="width: 18%">状態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>表記のゆれ 残り15論点</td>
+            <td>
+              ％の全角／半角、コロン、記号まわりの体裁など細かな判断、および事実確認が必要な項目（部署名・職種名・指標名・ブランドの正式表記）
+            </td>
+            <td><span class="tag hold">ご決定待ち</span></td>
+          </tr>
+          <tr>
+            <td>部署・職種の正式名称</td>
+            <td>
+              近い名称の部署・職種で表記に食い違いがあり、正式名称のご確認をお願いしております
+            </td>
+            <td><span class="tag hold">ご確認待ち</span></td>
+          </tr>
+          <tr>
+            <td>重複した言い回し 67件</td>
+            <td>改善案の一覧は作成済み。文脈に応じた個別の判断が必要です</td>
+            <td><span class="tag hold">検討中</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note">
+        明らかな誤りと、ご決定いただいた方針は反映を完了しており、公開に耐える状態です。残る事項は、いずれも<b>「制作側では決められない＝貴社の事実確認・ご判断が必要」なもの</b>に限られます。今後は、事実確認が必要な項目のご確認と、記号まわりの体裁についての方針決定をお願いできればと存じます。引き続き、丁寧に対応してまいります。
+      </div>
+
+      <div class="foot">
+        <span
+          >ホシザキ本社採用サイト｜文字校正 ご報告書　作成日：2026年7月9日</span
+        >
+        <span>3 / 3</span>
+      </div>
+    </section>
+  </body>
+</html>

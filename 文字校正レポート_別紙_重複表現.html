@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>別紙：重複した言い回し 改善提案書</title>
+<style>
+  :root{
+    --ink:#1c2530; --sub:#5b6875; --line:#d8dee6; --line-soft:#e9edf2;
+    --cyan:#00a0e9; --cyan-d:#0a6f9d; --cyan-soft:#e6f6fd;
+    --ok:#1f9d6b; --ok-soft:#e5f5ee; --hold:#c07b12; --hold-soft:#fbf1dd;
+    --hi:#c0392b; --hi-soft:#fbeae7; --paper:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{
+    margin:0;
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",YuGothic,Meiryo,sans-serif;
+    color:var(--ink); font-size:10.2px; line-height:1.78; background:#eef1f4;
+  }
+  .page{ width:210mm; min-height:297mm; padding:15mm 15mm 14mm; margin:0 auto; background:var(--paper); position:relative; }
+  @media print{
+    body{ background:#fff; }
+    .page{ margin:0; width:auto; min-height:auto; padding:13mm 14mm 6mm; }
+    .page + .page{ page-break-before:always; }
+    .page:last-child{ padding-top:8mm; padding-bottom:0; }
+    .page:last-child .foot{ margin-top:7px; }
+  }
+  @page{ size:A4; margin:0; }
+
+  /* ---- masthead (matches main report, no addressee) ---- */
+  .mast{ background:linear-gradient(105deg,#eaf7fe 0%,#f4fbff 55%,#ffffff 100%); border:1px solid #d4ecf9; border-radius:10px; padding:16px 20px 15px; margin-bottom:15px; position:relative; overflow:hidden; }
+  .mast::after{ content:""; position:absolute; right:-40px; top:-40px; width:150px; height:150px; border-radius:50%; background:radial-gradient(circle,#cdeefc 0%,rgba(205,238,252,0) 70%); }
+  .mast .kicker{ font-size:8.6px; letter-spacing:.24em; color:var(--cyan-d); font-weight:700; margin:0 0 5px; }
+  .mast h1{ font-size:20px; margin:0; letter-spacing:.01em; font-weight:800; position:relative; }
+  .mast .sub{ margin:7px 0 0; font-size:9px; color:var(--sub); }
+
+  .lead{ color:#33404d; margin:0 0 11px; }
+  .lead b{ color:var(--ink); }
+
+  h2{ font-size:12.5px; margin:16px 0 8px; font-weight:800; line-height:1.3; display:flex; align-items:center; gap:9px; }
+  h2 .badge{ display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:6px; background:var(--cyan); color:#fff; font-size:11px; font-weight:800; flex:none; font-family:"Barlow",sans-serif; }
+  p{ margin:0 0 7px; }
+
+  .stats{ display:flex; gap:9px; margin:2px 0 4px; }
+  .stat{ flex:1; border:1px solid var(--line); border-radius:8px; padding:10px 11px 9px; background:#fbfcfe; }
+  .stat.hl{ border-color:#bfe6cf; background:var(--ok-soft); }
+  .stat .num{ font-size:21px; font-weight:800; line-height:1; color:var(--cyan); font-family:"Barlow Condensed","Barlow",sans-serif; }
+  .stat.hl .num{ color:var(--ok); }
+  .stat .num small{ font-size:10px; font-weight:700; margin-left:1px; }
+  .stat .lab{ font-size:8.2px; color:var(--sub); margin-top:6px; line-height:1.55; }
+
+  .grid3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px; }
+  .tcard{ border:1px solid var(--line); border-radius:8px; padding:10px 12px 11px; background:#fff; position:relative; }
+  .tcard .ic{ width:22px; height:22px; border-radius:6px; background:var(--cyan-soft); color:var(--cyan-d); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; margin-bottom:6px; }
+  .tcard h4{ margin:0 0 4px; font-size:10px; font-weight:800; color:var(--cyan-d); }
+  .tcard p{ margin:0; font-size:8.7px; color:#41505d; line-height:1.65; }
+  .tcard .cnt{ position:absolute; top:11px; right:12px; font-size:8px; font-weight:700; color:var(--sub); }
+
+  table{ width:100%; border-collapse:collapse; margin:5px 0 10px; font-size:8.6px; }
+  th,td{ border:1px solid var(--line-soft); padding:5px 8px; text-align:left; vertical-align:top; }
+  thead th{ background:var(--cyan-soft); color:var(--cyan-d); font-weight:700; font-size:8.4px; border-color:#c9e9f7; }
+  tbody tr:nth-child(even){ background:#fafcfd; }
+  tbody tr.done{ background:#f2faf6; }
+  td .old{ color:#b03a3a; }
+  td .new{ color:var(--ok); font-weight:700; }
+  td .page-n{ font-weight:700; color:#2a3542; }
+  td .page-n small{ display:block; font-weight:600; color:var(--cyan-d); font-size:8px; margin-top:1px; }
+
+  .ty{ display:inline-block; font-size:7.4px; font-weight:700; padding:0 5px; border-radius:4px; margin-right:5px; vertical-align:1px; }
+  .ty.a{ background:var(--hi-soft); color:var(--hi); }
+  .ty.b{ background:#e8eefc; color:#3550a8; }
+
+  .tag{ display:inline-block; font-size:7.6px; font-weight:700; padding:1px 6px; border-radius:20px; line-height:1.5; white-space:nowrap; }
+  .tag.chk{ background:var(--hold-soft); color:var(--hold); }
+  .tag.low{ background:#eef1f4; color:var(--sub); }
+  .tag.done{ background:var(--ok-soft); color:var(--ok); }
+  .tag.part{ background:#eaf3fb; color:var(--cyan-d); }
+
+  .note{ background:#f6f8fa; border:1px solid var(--line-soft); border-left:3px solid var(--cyan); border-radius:5px; padding:8px 12px; font-size:8.8px; color:#41505d; margin:8px 0; }
+  .note.ok{ border-left-color:var(--ok); background:var(--ok-soft); }
+  .note b{ color:var(--ink); }
+
+  .foot{ margin-top:12px; padding-top:7px; border-top:1px solid var(--line); font-size:7.8px; color:#94a1ae; display:flex; justify-content:space-between; }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 ============ -->
+<section class="page">
+  <div class="mast">
+    <p class="kicker">HOSHIZAKI RECRUIT SITE ─ 別紙</p>
+    <h1>重複した言い回し 改善提案書</h1>
+    <p class="sub">「文字校正 ご報告書」5章 掲載の「重複した言い回しのチェック」の詳細版です　／　2026年7月9日</p>
+  </div>
+
+  <p class="lead">本書は、ご報告書でお伝えした「重複した言い回しのチェック」について、その内容を詳しくまとめた別紙です。サイト全体の文章から、<b>同じ意味の言葉が重なっている箇所</b>や、<b>近い場所で同じ言い回しが繰り返されている箇所</b>を洗い出しました。なお、洗い出し以降の一括修正の中で<b>すでに解消できた箇所もあり</b>、本書はその最新状況を反映しています。残る箇所は、文章ごとに最適な言い換えの判断が必要なため、<b>改善案としてご提案する形</b>で整理しています。</p>
+
+  <div class="stats">
+    <div class="stat"><div class="num">67<small>件</small></div><div class="lab">検出した重複した言い回し（全体）</div></div>
+    <div class="stat hl"><div class="num">4<small>件</small></div><div class="lab">優先箇所のうち、すでに解消済み</div></div>
+    <div class="stat"><div class="num">4<small>件</small></div><div class="lab">現在ご確認いただきたい優先箇所</div></div>
+    <div class="stat"><div class="num">3<small>類型</small></div><div class="lab">重複のタイプ（下記で説明）</div></div>
+  </div>
+
+  <h2><span class="badge">1</span>重複した言い回しの3つのタイプ</h2>
+  <p>今回検出した重複は、大きく次の3つのタイプに分けられます。読み手に与える不自然さの度合いが異なるため、タイプごとに優先度を分けてご提案します。</p>
+
+  <div class="grid3">
+    <div class="tcard">
+      <div class="ic">A</div><span class="cnt">優先度：高</span>
+      <h4>意味の重なり（重言）</h4>
+      <p>「必ず必要」「達成感を感じる」のように、同じ意味の言葉が重なっているもの。読み手に不自然さが伝わりやすいため、優先的な調整をおすすめします。</p>
+    </div>
+    <div class="tcard">
+      <div class="ic">B</div><span class="cnt">優先度：高〜中</span>
+      <h4>見出しと本文の重複</h4>
+      <p>見出しのフレーズを、本文の一文目がほぼそのまま繰り返しているもの。並べて読むと繰り返し感が強いため、本文側の言い換えをおすすめします。</p>
+    </div>
+    <div class="tcard">
+      <div class="ic">C</div><span class="cnt">優先度：低</span>
+      <h4>近い箇所での繰り返し</h4>
+      <p>近い文の中で、同じ語尾や同じ言葉が繰り返されているもの。多くは軽微で、文章の流れを見ながら個別に整える形が適しています。</p>
+    </div>
+  </div>
+
+  <div class="note ok"><b>これまでの対応：</b> 上記のうち、意味の重なり（タイプA）を中心に、7月上旬の一括修正で <b>4つの箇所をすでに解消</b> しました（南潤哉さま「必ず必要」→「必ず求められ続ける」、勝部葵さま「達成感を感じる」→「達成感を得られます」、事業戦略ページ「日々／日常」→「何気ない会話」、南潤哉さま「入社を決めました」の二重使用を一つに整理）。</div>
+
+  <div class="note"><b>ご提案の考え方：</b> リズムを生むためにあえて繰り返している表現（修辞的な反復）は、無理に直さずそのまま残すことも可能です。改善案はあくまで一例であり、原稿の意図を最優先に、貴社のご判断で採否をお決めいただけます。</div>
+
+  <div class="foot">
+    <span>ホシザキ本社採用サイト｜重複した言い回し 改善提案書（別紙）</span>
+    <span>1 / 3</span>
+  </div>
+</section>
+
+<!-- ============ PAGE 2 ============ -->
+<section class="page">
+  <h2><span class="badge">2</span>優先箇所（タイプA・B）の状況</h2>
+  <p>意味の重なり（A）と、見出しと本文の重複（B）のうち、特に効果が大きい箇所です。すでに解消した4件と、現在ご確認いただきたい4件を一覧にまとめます。</p>
+  <table>
+    <thead><tr><th style="width:16%">ページ</th><th style="width:36%">現状（重なっている表現）</th><th style="width:34%">改善案 ／ 対応内容</th><th style="width:14%">状態</th></tr></thead>
+    <tbody>
+      <tr><td class="page-n">事業戦略ページ</td><td><span class="ty b">B</span>見出し「無駄のない筋肉質な組織」を、本文末尾が<span class="old">そのまま繰り返し</span></td><td>本文を<span class="new">「筋肉質な組織づくりを目指しています。」</span>に</td><td><span class="tag chk">要ご確認</span></td></tr>
+      <tr><td class="page-n">事業戦略ページ</td><td><span class="ty b">B</span>見出し「休日は、筋トレとお笑いに捧げる」を、本文冒頭が<span class="old">ほぼ同一文で繰り返し</span></td><td>本文冒頭を<span class="new">別の書き出しに変更</span></td><td><span class="tag chk">要ご確認</span></td></tr>
+      <tr><td class="page-n">社員紹介ページ<br><small>呉 瑋芳さま</small></td><td><span class="ty b">B</span>見出し「本社と海外グループ会社をつなぐ橋渡し役」を本文が<span class="old">ほぼ同一で繰り返し</span></td><td>本文を<span class="new">「両者の架け橋として」</span>に</td><td><span class="tag chk">要ご確認</span></td></tr>
+      <tr><td class="page-n">座談会ページ</td><td><span class="ty a">A</span><span class="old">「業界No.1のリーディングカンパニー」</span>（意味が重複）</td><td><span class="new">「『業界No.1』『安定』…」</span>に整理 ※修辞意図なら据え置き可</td><td><span class="tag chk">要ご確認</span></td></tr>
+      <tr class="done"><td class="page-n">社員紹介ページ<br><small>南潤哉さま</small></td><td><span class="ty a">A</span><span class="old">「必ず必要とされる」</span>（「必ず」と「必要」が重複）</td><td><span class="new">「必ず求められ続ける」</span>へ修正</td><td><span class="tag done">対応済</span></td></tr>
+      <tr class="done"><td class="page-n">社員紹介ページ<br><small>勝部 葵さま</small></td><td><span class="ty a">A</span><span class="old">「大きな達成感を感じることができます」</span></td><td><span class="new">「大きな達成感を得られます」</span>へ修正</td><td><span class="tag done">対応済</span></td></tr>
+      <tr class="done"><td class="page-n">事業戦略ページ</td><td><span class="ty a">A</span><span class="old">「日々のあいさつや日常の会話」</span>（「日々」と「日常」が同義）</td><td><span class="new">「何気ない会話」</span>へ修正（重複を解消）</td><td><span class="tag done">対応済</span></td></tr>
+      <tr class="done"><td class="page-n">社員紹介ページ<br><small>南潤哉さま</small></td><td><span class="ty a">A</span>同じ文章内で<span class="old">「入社を決めました」が2回</span>繰り返し</td><td>重複を解消し<span class="new">一つに整理</span></td><td><span class="tag done">対応済</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="badge">3</span>見出しのフレーズを本文が反復している箇所（タイプB）</h2>
+  <p>事業戦略ページを中心に、見出しの言葉を本文がなぞって繰り返すパターンが見られます。本文側を少し言い換えるだけで、繰り返し感が和らぎます。</p>
+  <table>
+    <thead><tr><th style="width:18%">ページ</th><th style="width:38%">現状（見出し → 本文の反復）</th><th style="width:32%">改善の方向性</th><th style="width:12%">状態</th></tr></thead>
+    <tbody>
+      <tr><td class="page-n">事業戦略ページ</td><td>「部署も役職も越えて、活発に交わる職場」を本文が反復</td><td>本文末尾を「フラットに意見を交わせる環境です。」等に言い換え</td><td><span class="tag chk">要検討</span></td></tr>
+      <tr><td class="page-n">事業戦略ページ</td><td>「How was your weekend? から始まる信頼」を本文が反復</td><td>「日々／日常」の重複は解消済。フレーズの反復は言い換えの余地あり</td><td><span class="tag part">一部対応</span></td></tr>
+      <tr><td class="page-n">事業戦略ページ</td><td>「柔軟に時間を使い、しっかり切り替える」を本文が反復</td><td>本文側の重複フレーズを言い換え＋「調整」の連続を別語に</td><td><span class="tag chk">要検討</span></td></tr>
+      <tr><td class="page-n">事業戦略ページ</td><td>「メリハリが、仕事の原動力になる」を本文が反復</td><td>本文末尾を「仕事の活力にもつながります」等に</td><td><span class="tag low">低</span></td></tr>
+      <tr><td class="page-n">特集ページ<br>（プロジェクト）</td><td>「前例のない」「前例なき」がリード内で近接</td><td>一方を「この難題を」等に言い換え（見出しの反復は修辞として残す選択も可）</td><td><span class="tag chk">要検討</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot">
+    <span>ホシザキ本社採用サイト｜重複した言い回し 改善提案書（別紙）</span>
+    <span>2 / 3</span>
+  </div>
+</section>
+
+<!-- ============ PAGE 3 ============ -->
+<section class="page">
+  <h2><span class="badge">4</span>近い箇所での繰り返し（タイプC）― ページ別</h2>
+  <p>近接した繰り返しは大半が軽微で、文章の流れを見ながら個別に整えるのが適切です。ページごとの主な箇所と、改善の方向性をまとめます。</p>
+  <table>
+    <thead><tr><th style="width:22%">ページ</th><th style="width:26%">主な繰り返し</th><th style="width:38%">改善の方向性（一例）</th><th style="width:14%">状態</th></tr></thead>
+    <tbody>
+      <tr><td class="page-n">メッセージページ</td><td>「〜ことができます」「高める」の連続</td><td>一方を「養うことができます」「向上させる」等に言い換え</td><td><span class="tag low">要検討</span></td></tr>
+      <tr><td class="page-n">データ紹介ページ</td><td>「確かな」の重複</td><td>一方を「揺るぎない環境」「リアルな数字」等に</td><td><span class="tag low">要検討</span></td></tr>
+      <tr><td class="page-n">インターンシップページ</td><td>「現場」「解決」の重複</td><td>片方を省略、または「改善の最前線」等に言い換え</td><td><span class="tag low">要検討</span></td></tr>
+      <tr><td class="page-n">座談会ページ</td><td>「会社なんだな」「同期」「感じ」等の繰り返し（複数箇所）</td><td>語尾や構文を散らし、一部を別語（例：企業／人柄のよさ）に</td><td><span class="tag low">要検討</span></td></tr>
+      <tr><td class="page-n">特集ページ<br>（スペシャルトーク）</td><td>「技術」「軸」「積み重ね」の反復（複数箇所）</td><td>一部を「領域」「中心に」「取り組み」等に言い換え</td><td><span class="tag low">要検討</span></td></tr>
+      <tr><td class="page-n">職場環境・福利厚生ページ</td><td>見出し語（退職金／資格取得）を本文が反復</td><td>本文を「一時金が支給されます」「取得にかかる費用を負担し」等に</td><td><span class="tag low">要検討</span></td></tr>
+      <tr><td class="page-n">サイト共通の説明文</td><td>「情報」の反復</td><td>後半を「〜について掲載しています」等に言い換え</td><td><span class="tag low">要検討</span></td></tr>
+      <tr><td class="page-n">職種紹介ページ</td><td>「本社」の反復</td><td>導入文の全面見直しにより、すでに解消済み</td><td><span class="tag done">対応済</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="badge">5</span>社員紹介ページ ― 社員別の繰り返し（タイプC）</h2>
+  <p>社員紹介ページでは、次の社員さまの本文に軽微な繰り返しが見られます。いずれも優先度は低く、文章のトーンを見ながら個別に整えます。</p>
+  <table>
+    <thead><tr><th style="width:20%">社員紹介ページ</th><th style="width:28%">主な繰り返し</th><th style="width:40%">改善の方向性（一例）</th><th style="width:12%">状態</th></tr></thead>
+    <tbody>
+      <tr><td class="page-n">山本 凌大さま</td><td>「その後」「部署」の繰り返し</td><td>接続の言葉を「やがて」等に、「部署」の一部を「部門／そこ」に分散</td><td><span class="tag low">要検討</span></td></tr>
+      <tr><td class="page-n">加藤 圭二さま</td><td>「真摯」「お願い」の近接</td><td>「協力を依頼する場面では」等に言い換え</td><td><span class="tag low">要検討</span></td></tr>
+      <tr><td class="page-n">呉 瑋芳さま</td><td>「職場」の近接（※上記 橋渡し役とは別箇所）</td><td>一方を「ここで」「当部署で」等に置き換え</td><td><span class="tag low">要検討</span></td></tr>
+      <tr><td class="page-n">河村 真由さま</td><td>「支える」「意識」等の近接（複数箇所）</td><td>一方を「下支えする」「心がける」等に分散</td><td><span class="tag low">要検討</span></td></tr>
+      <tr><td class="page-n">横山 千穂さま ／<br>古田 彰謙さま ／<br>山根 一眞さま</td><td>「考えました」「曖昧」「周囲／重ね」等の軽微な繰り返し</td><td>語尾や語彙を散らして、繰り返し感をやわらげる</td><td><span class="tag low">要検討</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><b>今後の進め方について：</b> タイプA・B（優先度 高〜中）の残り4箇所は、ご了承いただければ改善案の方向で反映いたします。タイプC（優先度 低）は軽微なものが中心のため、原稿全体のトーンを見ながら、必要な箇所を個別に整えてまいります。修辞的にあえて繰り返している箇所は、そのまま残すご判断も可能です。ご確認のうえ、方針をお聞かせいただけますと幸いです。引き続き、丁寧に対応してまいります。</div>
+
+  <div class="foot">
+    <span>ホシザキ本社採用サイト｜重複した言い回し 改善提案書（別紙）　2026年7月9日</span>
+    <span>3 / 3</span>
+  </div>
+</section>
+
+</body>
+</html>
