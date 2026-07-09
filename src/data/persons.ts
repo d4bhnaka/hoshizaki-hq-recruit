@@ -79,7 +79,7 @@ export const persons: Person[] = [
     image: "person04.jpg",
     jobType: "品質保証",
     year: "2022年",
-    body: "暮らしの安心を、／品質で守る。",
+    body: "お客様の安心を、／品質で支える。",
     category: "技術系",
     tags: ["tech", "science", "midcareer"],
   },
