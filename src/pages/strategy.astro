@@ -16,24 +16,73 @@ const ratio = {
   beyond: { label: "飲食外市場", pct: "58.9" },
 };
 
-// 「飲食市場 / 飲食外市場」の取扱領域カード
-const foodColumn = {
-  label: "飲食市場",
-  en: "Food Service",
-  body: ["製氷機、業務用冷蔵庫、食器洗浄機、ディスペンサーなど"],
-};
-const beyondColumn = {
-  label: "飲食外市場",
-  en: "New Fields & Social Issues",
-  body: [
-    "医療・福祉（病院・介護施設）: 電解水生成装置、UV殺菌庫（高度な衛生管理）",
-    "第一次産業（農業・水産）・食品加工: 急速凍結機、真空包装機（鮮度保持・食品ロス削減）",
-    "流通・小売（スーパー・コンビニ）: 冷蔵ショーケース、バックヤード向け機器（サプライチェーンの最適化）",
-  ],
-};
+// 事業領域の広がり — ホシザキのロゴマークを中心に据えたハブ&スポーク図
+// ノードは中心から等間隔の円周上に配置。座標は frontmatter で算出し、CSS 変数として渡す。
+const domains = [
+  { label: "医療・福祉", sub: "病院・介護施設", color: "#00a0e9" },
+  { label: "飲食店", sub: "レストラン・カフェ", color: "#ef7d5e" },
+  { label: "学校・オフィス", sub: "給食・社員食堂", color: "#f2b134" },
+  { label: "小売・流通", sub: "スーパー・コンビニ", color: "#3bb98a" },
+  { label: "農業・水産", sub: "生産者", color: "#7b83e0" },
+];
+const DOMAIN_RADIUS = 37; // ステージ中心からノード中心までの距離（ステージ幅に対する %）
+const domainNodes = domains.map((d, i) => {
+  const angle = -90 + (360 / domains.length) * i; // 真上を起点に時計回り
+  const rad = (angle * Math.PI) / 180;
+  return {
+    ...d,
+    i,
+    x: +(50 + DOMAIN_RADIUS * Math.cos(rad)).toFixed(2),
+    y: +(50 + DOMAIN_RADIUS * Math.sin(rad)).toFixed(2),
+    angle: +angle.toFixed(2),
+  };
+});
 
-// 人物イラスト下のカテゴリーピル
-const audiences = ["医療", "学校・会社", "飲食店", "農業・漁業", "スーパー"];
+// 社会課題への取組（番号バッジ＋イラスト＋テキストのカード）
+// イラストは Gemini 画像生成（gemini-3.1-flash-image）で作成したフラットな線画。
+// 白背景で生成後、外周のみ透過処理して正方形に整えている（背景透過 PNG）。
+const contributions = [
+  {
+    title: "食の安全・衛生管理",
+    body: "病院・介護施設・飲食店などの衛生環境を支え、安心できる食事の提供に貢献します。",
+    image: `${base}images/strategy/contrib-safety.png`,
+    alt: "衛生管理を担う白衣の担当者と、安全を示すチェックマークの盾のイラスト",
+    w: 480,
+    h: 480,
+  },
+  {
+    title: "食品ロス削減",
+    body: "鮮度保持技術で食材のおいしさを長く保ち、食品ロスの削減に貢献します。",
+    image: `${base}images/strategy/contrib-foodloss.png`,
+    alt: "新鮮な野菜のかごと魚を持つ調理担当者と、鮮度を保つ循環マークのイラスト",
+    w: 480,
+    h: 480,
+  },
+  {
+    title: "環境負荷低減",
+    body: "省エネ設計や自然冷媒の採用などで、エネルギー消費やCO₂排出の削減に貢献します。",
+    image: `${base}images/strategy/contrib-environment.png`,
+    alt: "緑の葉に包まれた地球と風車を手にした作業員の、環境負荷低減を表すイラスト",
+    w: 480,
+    h: 480,
+  },
+  {
+    title: "自動化・省人化で人手不足をサポート",
+    body: "洗浄・製氷・保管などの自動化・省力化で、働く人の負担を減らし、生産性を向上させます。",
+    image: `${base}images/strategy/contrib-automation.png`,
+    alt: "自動食器洗浄機を操作する作業員とアシストするロボットアームのイラスト",
+    w: 480,
+    h: 480,
+  },
+  {
+    title: "一次産業支援",
+    body: "農業・漁業の鮮度維持や加工支援を通じて、一次産業の持続的な発展に貢献します。",
+    image: `${base}images/strategy/contrib-primary.png`,
+    alt: "野菜のかごを持つ農家と魚を持つ漁師が並ぶ、一次産業支援のイラスト",
+    w: 480,
+    h: 480,
+  },
+];
 
 // 海外展開の市場別カード
 // id … 地図上アイスボタンのスクロール先 / map … 世界地図上のボタン配置（map ノード基準の %）
@@ -268,42 +317,102 @@ const pioneers = [
                   >
                 </div>
               </div>
+            </div>
 
-              <div class="p-strategy-field__cols">
-                <div class="p-strategy-field__col p-strategy-field__col--food">
-                  <p class="p-strategy-field__col-label">{foodColumn.label}</p>
-                  <p class="p-strategy-field__col-en">{foodColumn.en}</p>
-                  <ul class="p-strategy-field__col-list">
-                    {foodColumn.body.map((line) => <li>{line}</li>)}
-                  </ul>
-                </div>
-                <div
-                  class="p-strategy-field__col p-strategy-field__col--beyond"
+            <!-- 事業領域の広がり（ホシザキを中心に円形波紋で広がるハブ&スポーク図） -->
+            <div class="p-strategy-domains" data-inview="fade">
+              <p class="p-strategy-domains__lead">
+                厨房から、社会のあらゆる現場へ。<br />
+                <span
+                  >ホシザキの技術は、暮らしを支えるさまざまなフィールドへ広がっています。</span
                 >
-                  <p class="p-strategy-field__col-label">
-                    {beyondColumn.label}
-                  </p>
-                  <p class="p-strategy-field__col-en">{beyondColumn.en}</p>
-                  <ul class="p-strategy-field__col-list">
-                    {beyondColumn.body.map((line) => <li>{line}</li>)}
-                  </ul>
+              </p>
+
+              <div
+                class="p-strategy-domains__stage"
+                role="img"
+                aria-label={`ホシザキを中心に、${domains.map((d) => d.label).join("、")}へと広がる事業領域`}
+              >
+                {
+                  [0, 1, 2, 3].map((i) => (
+                    <span
+                      class="p-strategy-domains__ripple"
+                      style={`--i:${i}`}
+                      aria-hidden="true"
+                    />
+                  ))
+                }
+
+                {
+                  domainNodes.map((n) => (
+                    <span
+                      class="p-strategy-domains__spoke"
+                      aria-hidden="true"
+                      style={`--angle:${n.angle}deg;--i:${n.i}`}
+                    />
+                  ))
+                }
+
+                <div class="p-strategy-domains__hub" aria-hidden="true">
+                  <img
+                    src={`${base}images/common/hoshizaki-logo-mark-l.png`}
+                    alt=""
+                    width="934"
+                    height="935"
+                    loading="lazy"
+                  />
                 </div>
+
+                {
+                  domainNodes.map((n) => (
+                    <div
+                      class="p-strategy-domains__node"
+                      style={`--x:${n.x}%;--y:${n.y}%;--i:${n.i};--accent:${n.color}`}
+                    >
+                      <span
+                        class="p-strategy-domains__node-dot"
+                        aria-hidden="true"
+                      />
+                      <span class="p-strategy-domains__node-label">
+                        {n.label}
+                      </span>
+                      <span class="p-strategy-domains__node-sub">{n.sub}</span>
+                    </div>
+                  ))
+                }
               </div>
             </div>
 
-            <div class="p-strategy-field__people" data-inview>
-              <img
-                class="p-strategy-field__people-img"
-                src={`${base}images/strategy/people-illust.png`}
-                alt="医療・学校・飲食・農業・小売など、ホシザキが支える現場の人々"
-                loading="lazy"
-                width="900"
-                height="324"
-              />
-              <ul class="p-strategy-field__audiences">
+            <!-- 社会課題への取組 -->
+            <div class="p-strategy-contrib">
+              <div class="p-strategy-contrib__head" data-inview>
+                <p class="p-strategy-contrib__en">Social Contribution</p>
+                <h3 class="p-strategy-contrib__title">社会課題への取組</h3>
+              </div>
+              <ul class="p-strategy-contrib__list">
                 {
-                  audiences.map((a) => (
-                    <li class="p-strategy-field__audience">{a}</li>
+                  contributions.map((c, i) => (
+                    <li
+                      class="p-strategy-contrib__card"
+                      data-inview="pop"
+                      style={`--inview-i: ${i}`}
+                    >
+                      <span class="p-strategy-contrib__num" aria-hidden="true">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <h4 class="p-strategy-contrib__card-title">{c.title}</h4>
+                      <figure class="p-strategy-contrib__figure">
+                        <img
+                          class="p-strategy-contrib__img"
+                          src={c.image}
+                          alt={c.alt}
+                          loading="lazy"
+                          width={c.w}
+                          height={c.h}
+                        />
+                      </figure>
+                      <p class="p-strategy-contrib__card-body">{c.body}</p>
+                    </li>
                   ))
                 }
               </ul>
@@ -448,7 +557,10 @@ const pioneers = [
                       {pioneer.market}
                     </span>
                     {/* 駐在社員の写真＋プロフィール（写真＝左、プロフィール＝右） */}
-                    <div class="p-strategy-pioneers__profile" data-inview="fade">
+                    <div
+                      class="p-strategy-pioneers__profile"
+                      data-inview="fade"
+                    >
                       <div class="p-strategy-pioneers__photo">
                         <img
                           src={pioneer.image}
@@ -494,9 +606,7 @@ const pioneers = [
                           <h3 class="p-strategy-pioneers__topic-heading">
                             {topic.heading}
                           </h3>
-                          <p class="p-strategy-pioneers__body">
-                            {topic.body}
-                          </p>
+                          <p class="p-strategy-pioneers__body">{topic.body}</p>
                         </div>
                       ))}
                     </div>

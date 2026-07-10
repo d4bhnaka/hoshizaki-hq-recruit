@@ -147,90 +147,375 @@
   }
 }
 
-// 2カラム（飲食市場 / 飲食外市場）
-.p-strategy-field__cols {
-  display: flex;
-  gap: 24px;
-  align-items: stretch;
-  margin: 0 0 56px;
+// --------------------------------------------
+// 事業領域の広がり（当社を中心としたハブ&スポーク図 / イラスト不使用・CSS のみ）
+//   ・ノードは frontmatter で算出した円周座標を --x/--y で受け取り絶対配置
+//   ・スポーク（中心→ノードの点線）は --angle で回転、scaleX で伸びる
+//   ・出現アニメは data-inview="fade" でステージ全体に .is-inview が付いてから
+//     子要素を順次再生（.inview-ready ゲートが無い＝低モーション時は静止表示）
+// --------------------------------------------
+.p-strategy-domains {
+  margin: 8px 0 64px;
 }
 
-.p-strategy-field__col {
-  background: var(--color-white);
-  border-radius: var(--strategy-card-radius);
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08);
-  padding: 32px clamp(20px, 3vw, 40px);
-}
-
-.p-strategy-field__col--food {
-  flex: 411 1 0;
-}
-
-.p-strategy-field__col--beyond {
-  flex: 589 1 0;
-}
-
-.p-strategy-field__col-label {
-  margin: 0 0 2px;
-  font-size: clamp(20px, 2.4vw, 28px);
+.p-strategy-domains__lead {
+  margin: 0 0 8px;
+  text-align: center;
+  font-size: clamp(19px, 2.4vw, 26px);
   font-weight: 700;
-  text-align: center;
-  color: var(--color-text-primary);
-}
+  line-height: 1.6;
+  color: var(--color-brand-navy);
 
-.p-strategy-field__col-en {
-  margin: 0 0 24px;
-  font-size: clamp(15px, 1.8vw, 20px);
-  text-align: center;
-  color: var(--color-text-secondary);
-  letter-spacing: 0.02em;
-}
-
-.p-strategy-field__col-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-
-  li {
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--color-text-primary);
+  span {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: clamp(13px, 1.5vw, 15px);
+    font-weight: 500;
+    color: var(--color-text-secondary);
   }
 }
 
-// 人物イラスト + カテゴリーピル
-.p-strategy-field__people {
+.p-strategy-domains__stage {
+  position: relative;
+  width: min(100%, 580px);
+  margin: 24px auto 0;
+  aspect-ratio: 1 / 1;
+}
+
+// 中心（ホシザキ）から水面のように広がる円形波紋。
+// 線ではなく「面（塗り）」で表現。境界はぼかさずくっきりした円のまま、
+// ハブとほぼ同径から外周のノード帯まで広がって（フェードして）消える。連続放射。
+.p-strategy-domains__ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22%; // ≒ ハブの直径。ここから scale で外へ広がる
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: rgba(0, 160, 233, 0.16); // 均一な塗り＝輪郭がくっきりした円
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0;
+  pointer-events: none;
+}
+
+// 中心 → 各ノードへ「外へ流れ出す」グラデーション線
+.p-strategy-domains__spoke {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 37%; // = DOMAIN_RADIUS（ステージ幅比）
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 160, 233, 0.55),
+    rgba(0, 160, 233, 0.05)
+  );
+  transform-origin: 0 50%;
+  transform: rotate(var(--angle)) scaleX(1);
+  pointer-events: none;
+}
+
+// 中心ハブ「ホシザキ」— 波紋が生まれる源
+.p-strategy-domains__hub {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: clamp(112px, 25%, 148px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    // 丸バッジの形状に沿ったドロップシャドウ（透過 PNG の輪郭に追従）
+    filter: drop-shadow(0 8px 16px rgba(0, 47, 95, 0.28));
+  }
+}
+
+// 領域ノード（白い円 + アクセントの縁）
+.p-strategy-domains__node {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: clamp(94px, 18vw, 126px);
+  aspect-ratio: 1 / 1;
+  padding: 6px;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: 3px solid var(--accent);
+  box-shadow: 0 8px 20px rgba(0, 47, 95, 0.12);
+  transform: translate(-50%, -50%);
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    background-color 0.35s ease;
+
+  &:hover {
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: 0 14px 28px rgba(0, 47, 95, 0.22);
+    background: color-mix(in srgb, var(--accent) 8%, #fff);
+  }
+}
+
+.p-strategy-domains__node-dot {
+  width: 8px;
+  height: 8px;
+  margin-bottom: 2px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.p-strategy-domains__node-label {
+  font-size: clamp(12px, 1.5vw, 15px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-brand-navy);
+}
+
+.p-strategy-domains__node-sub {
+  font-size: clamp(9px, 1.1vw, 11px);
+  line-height: 1.2;
+  color: var(--color-text-secondary);
+}
+
+// --- 出現アニメーション（.inview-ready ＆ .is-inview のときだけ） ---
+.inview-ready .p-strategy-domains:not(.is-inview) {
+  .p-strategy-domains__spoke {
+    transform: rotate(var(--angle)) scaleX(0);
+  }
+
+  .p-strategy-domains__hub,
+  .p-strategy-domains__node {
+    opacity: 0;
+  }
+
+  .p-strategy-domains__hub {
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+
+  .p-strategy-domains__node {
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+}
+
+.inview-ready .p-strategy-domains.is-inview {
+  .p-strategy-domains__hub {
+    animation: domain-hub-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  .p-strategy-domains__spoke {
+    animation: domain-spoke-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(0.35s + var(--i) * 0.09s);
+  }
+
+  .p-strategy-domains__node {
+    animation: domain-node-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: calc(0.6s + var(--i) * 0.09s);
+  }
+}
+
+@keyframes domain-hub-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes domain-spoke-in {
+  from {
+    transform: rotate(var(--angle)) scaleX(0);
+  }
+  to {
+    transform: rotate(var(--angle)) scaleX(1);
+  }
+}
+
+@keyframes domain-node-in {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+// 常時アニメ（円形波紋の連続放射）は低モーション以外でのみ。
+// 4本の波紋を時間差で放ち、水面に石を落としたような広がりを表現。
+@media (prefers-reduced-motion: no-preference) {
+  .p-strategy-domains__ripple {
+    animation: domain-ripple 5s ease-out infinite;
+    animation-delay: calc(var(--i) * 1.25s);
+  }
+}
+
+// 低モーション時は静的な同心円として広がりを示す
+@media (prefers-reduced-motion: reduce) {
+  .p-strategy-domains__ripple {
+    opacity: calc(0.28 - var(--i) * 0.05);
+    transform: translate(-50%, -50%) scale(calc(1 + var(--i) * 1.05));
+  }
+}
+
+@keyframes domain-ripple {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  12% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(4.1);
+  }
+}
+
+// --------------------------------------------
+// 社会課題への取組（番号バッジ + テキストカード）
+// --------------------------------------------
+.p-strategy-contrib {
   margin-top: 8px;
+}
+
+.p-strategy-contrib__head {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.p-strategy-contrib__en {
+  margin: 0;
+  font-family: var(--font-family-en);
+  font-size: clamp(13px, 1.6vw, 16px);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-brand-cyan-deep);
+}
+
+.p-strategy-contrib__title {
+  margin: 4px 0 0;
+  font-size: clamp(20px, 2.6vw, 28px);
+  font-weight: 700;
+  color: var(--color-brand-navy);
+}
+
+.p-strategy-contrib__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.p-strategy-contrib__card {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-white);
+  border-radius: var(--strategy-card-radius);
+  padding: 20px 22px 26px;
+  box-shadow: 0 6px 18px rgba(0, 47, 95, 0.08);
+
+  // 右下基準の氷テクスチャ（p-strategy-market と同様に疑似要素で敷く）
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: url("../images/strategy/card-texture.jpg") right center / cover
+      no-repeat;
+    opacity: 0.22;
+    -webkit-mask-image: radial-gradient(
+      130% 130% at 100% 100%,
+      #000 0%,
+      transparent 62%
+    );
+    mask-image: radial-gradient(
+      130% 130% at 100% 100%,
+      #000 0%,
+      transparent 62%
+    );
+    pointer-events: none;
+  }
+}
+
+.p-strategy-contrib__num {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  font-family: var(--font-family-en);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-white);
+  background: radial-gradient(
+    circle at 32% 28%,
+    var(--color-brand-cyan) 0%,
+    var(--color-brand-cyan-deep) 70%
+  );
+}
+
+.p-strategy-contrib__card-title {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 10px;
+  font-size: clamp(15px, 1.7vw, 17px);
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--color-brand-navy);
+}
+
+// タイトルと本文の間のイラスト（背景透過 PNG）
+.p-strategy-contrib__figure {
+  position: relative;
+  z-index: 1;
+  margin: 8px 0 8px;
   text-align: center;
 }
 
-.p-strategy-field__people-img {
+.p-strategy-contrib__img {
   display: block;
-  width: 100%;
-  max-width: 520px;
+  width: auto;
+  max-width: 100%;
   height: auto;
-  margin: 0 auto 18px;
+  // 全身イラストを高さ基準でそろえ、カードごとの見え方を統一
+  max-height: 156px;
+  margin: 0 auto;
 }
 
-.p-strategy-field__audiences {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  padding: 0;
+.p-strategy-contrib__card-body {
+  position: relative;
+  z-index: 1;
   margin: 0;
-}
-
-.p-strategy-field__audience {
-  padding: 5px 16px;
-  background: var(--strategy-cyan);
-  color: var(--color-white);
   font-size: 14px;
-  border-radius: var(--border-radius-pill);
+  line-height: 1.85;
+  color: var(--color-text-secondary);
 }
 
 // --------------------------------------------
@@ -403,7 +688,7 @@
 .p-strategy-pioneers {
   --pioneer-line: #0177fe; // トピック見出しの短い罫線
   --pioneer-radius: 20px; // カードの角丸
-  --pioneer-media-radius: 12px; // 写真サムネイルの角丸（角丸なしJPEGをCSSでクリップ）
+  --pioneer-media-radius: 16px; // 写真サムネイルの角丸（角丸なしJPEGをCSSでクリップ／カード20pxに対し自然に馴染む値）
 
   padding: 80px 0 96px;
   background: var(--color-bg-page); // #d8e5e8
@@ -553,16 +838,6 @@
     padding-bottom: 30px;
   }
 
-  .p-strategy-field__cols {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .p-strategy-field__col--food,
-  .p-strategy-field__col--beyond {
-    flex: 1 1 auto;
-  }
-
   // 写真＋プロフィールを縦積みにして、写真の下にプロフィールを配置
   .p-strategy-pioneers__profile {
     grid-template-columns: 1fr;
@@ -588,8 +863,50 @@
     padding: 12px 8px;
   }
 
-  .p-strategy-field__col {
-    padding: 24px 20px;
+  // 円周レイアウトが窮屈になるため、当社を上に据えた縦積みグリッドへ切替
+  .p-strategy-domains__stage {
+    aspect-ratio: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    max-width: 380px;
+  }
+
+  .p-strategy-domains__ripple,
+  .p-strategy-domains__spoke {
+    display: none;
+  }
+
+  // 縦積みでは絶対配置と出現アニメを無効化（.inview-ready ゲートより優先）
+  .p-strategy-domains__hub,
+  .p-strategy-domains__node {
+    position: static;
+    transform: none !important;
+    opacity: 1 !important;
+    animation: none !important;
+  }
+
+  .p-strategy-domains__hub {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: clamp(112px, 36vw, 148px);
+  }
+
+  .p-strategy-domains__node {
+    width: 100%;
+    aspect-ratio: auto;
+    min-height: 88px;
+    border-radius: 16px;
+    padding: 12px 10px;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  .p-strategy-contrib__list {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
   }
 
   .p-strategy-market {
