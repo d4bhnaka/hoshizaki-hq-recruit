@@ -97,6 +97,8 @@ const mapPenguins = [
 const pioneers = [
   {
     market: "フィリピン・マニラ",
+    image: `${base}images/strategy/pioneer-manila.jpg`,
+    alt: "ボラカイ島のビーチで砂の城とともに笑顔を見せる駐在社員",
     // 駐在社員プロフィール（エリア名の下・社員紹介の __meta と同じ並び）
     profile: {
       initials: "S.A",
@@ -117,13 +119,13 @@ const pioneers = [
       {
         heading: "休日は、筋トレとお笑いに捧げる",
         body: "休日は、筋トレとお笑いに捧げています。トレーニング後に飲むプロテインと食べるご飯は格別です。日本のバラエティ番組で思い切り笑えば気分もリセットでき、良いコンディションを保てます。行きつけのバーに足を運ぶのも楽しみのひとつ。マニラの再開発エリア・BGCにある「Tap Station」では、世界各国のクラフトビールを味わえます。マニラを離れるなら、おすすめはボラカイ島。今でもあのビーチの景色が忘れられません。何度でも訪れたい、最高の場所です。",
-        image: `${base}images/strategy/pioneer-manila.jpg`,
-        alt: "ボラカイ島のビーチで砂の城とともに笑顔を見せる駐在社員",
       },
     ],
   },
   {
     market: "英国・テルフォード",
+    image: `${base}images/strategy/pioneer-telford.jpg`,
+    alt: "英国・カナーヴォン城を背に立つ駐在社員",
     profile: {
       initials: "S.Y",
       department: "技術部",
@@ -143,13 +145,13 @@ const pioneers = [
       {
         heading: "メリハリが、仕事の原動力になる",
         body: "ローカルスタッフ以上に仕事をこなす場面も少なくないため、オンとオフのメリハリを大切にしています。プライベートをしっかり楽しんで充実させることが、リフレッシュになり、仕事への原動力にもつながります。休日は、家族と地方へ観光に出かけたり、趣味のゴルフを楽しんだりして過ごしています。",
-        image: `${base}images/strategy/pioneer-telford.jpg`,
-        alt: "英国・カナーヴォン城を背に立つ駐在社員",
       },
     ],
   },
   {
     market: "米国・ジョージア州",
+    image: `${base}images/strategy/pioneer-georgia-02.jpg`,
+    alt: "シカゴ川を背にほほえむ駐在社員",
     profile: {
       initials: "M.R",
       department: "経理部",
@@ -165,14 +167,10 @@ const pioneers = [
       {
         heading: "「How was your weekend?」から始まる信頼",
         body: "米国には、日本に比べて仕事以外の出来事も気軽に共有する文化があります。週明けは「How was your weekend?」から始まる雑談が延々と続き、最初は驚きましたが、こうした何気ない会話こそが信頼関係づくりにつながると感じています。外国人であり駐在員でもある自分だからこそ、現地スタッフに安心して一緒に働いてもらえるよう、日々のあいさつや会話を大切にしています。",
-        image: `${base}images/strategy/pioneer-georgia-01.jpg`,
-        alt: "現地スタッフとレストランのテーブルを囲む駐在社員",
       },
       {
         heading: "柔軟に時間を使い、しっかり切り替える",
         body: "仕事とプライベートのメリハリはつけやすく、日本と比べて柔軟に時間を使えると感じています。日中は集中して業務に取り組みつつ、自分でスケジュールを調整できる範囲が大きいのが特徴です。日本との時差の関係で夜間に対応することもありますが、その分、勤務時間を調整しながら無理なく働いています。休日は国内旅行や外食でリフレッシュし、オンとオフをしっかり切り替えています。",
-        image: `${base}images/strategy/pioneer-georgia-02.jpg`,
-        alt: "シカゴ川を背にほほえむ駐在社員",
       },
     ],
   },
@@ -188,11 +186,7 @@ const pioneers = [
     <Header basePath={base} />
     <main class="l-main">
       <article class="p-strategy">
-        <PageHero
-          en="Beyond HOSHIZAKI"
-          ja="「厨房」という事業領域の、その先へ。"
-          variant="cloud"
-        >
+        <PageHero en="Beyond HOSHIZAKI" ja="ホシザキの事業戦略" variant="cloud">
           <div class="p-strategy__fv">
             <img
               src={`${base}images/strategy/page-fv.png`}
@@ -453,58 +447,56 @@ const pioneers = [
                     >
                       {pioneer.market}
                     </span>
-                    {/* エリア名の下の駐在社員プロフィール（社員紹介の __meta と同形式） */}
-                    <div class="p-strategy-pioneers__meta" data-inview="fade">
-                      {pioneer.profile.initials && (
-                        <span class="p-strategy-pioneers__meta-name">
-                          {pioneer.profile.initials}
-                        </span>
-                      )}
-                      {pioneer.profile.department && (
-                        <span class="p-strategy-pioneers__meta-item">
-                          {pioneer.profile.department}
-                        </span>
-                      )}
-                      {pioneer.profile.secondment && (
-                        <span class="p-strategy-pioneers__meta-item">
-                          {pioneer.profile.secondment}
-                        </span>
-                      )}
-                      {(pioneer.profile.joinYear ||
-                        pioneer.profile.faculty) && (
-                        <span class="p-strategy-pioneers__meta-item">
-                          {[pioneer.profile.joinYear, pioneer.profile.faculty]
-                            .filter(Boolean)
-                            .join("　")}
-                        </span>
-                      )}
+                    {/* 駐在社員の写真＋プロフィール（写真＝左、プロフィール＝右） */}
+                    <div class="p-strategy-pioneers__profile" data-inview="fade">
+                      <div class="p-strategy-pioneers__photo">
+                        <img
+                          src={pioneer.image}
+                          alt={pioneer.alt}
+                          loading="lazy"
+                          width="220"
+                          height="150"
+                        />
+                      </div>
+                      <div class="p-strategy-pioneers__meta">
+                        {pioneer.profile.initials && (
+                          <span class="p-strategy-pioneers__meta-name">
+                            {pioneer.profile.initials}
+                          </span>
+                        )}
+                        {pioneer.profile.department && (
+                          <span class="p-strategy-pioneers__meta-item">
+                            {pioneer.profile.department}
+                          </span>
+                        )}
+                        {pioneer.profile.secondment && (
+                          <span class="p-strategy-pioneers__meta-item">
+                            {pioneer.profile.secondment}
+                          </span>
+                        )}
+                        {(pioneer.profile.joinYear ||
+                          pioneer.profile.faculty) && (
+                          <span class="p-strategy-pioneers__meta-item">
+                            {[pioneer.profile.joinYear, pioneer.profile.faculty]
+                              .filter(Boolean)
+                              .join("　")}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div class="p-strategy-pioneers__topics">
                       {pioneer.topics.map((topic, ti) => (
                         <div
-                          class={`p-strategy-pioneers__topic${topic.image ? " p-strategy-pioneers__topic--media" : ""}`}
+                          class="p-strategy-pioneers__topic"
                           data-inview
                           style={`--inview-i: ${ti}`}
                         >
-                          <div class="p-strategy-pioneers__topic-main">
-                            <h3 class="p-strategy-pioneers__topic-heading">
-                              {topic.heading}
-                            </h3>
-                            <p class="p-strategy-pioneers__body">
-                              {topic.body}
-                            </p>
-                          </div>
-                          {topic.image && (
-                            <div class="p-strategy-pioneers__media">
-                              <img
-                                src={topic.image}
-                                alt={topic.alt}
-                                loading="lazy"
-                                width="220"
-                                height="150"
-                              />
-                            </div>
-                          )}
+                          <h3 class="p-strategy-pioneers__topic-heading">
+                            {topic.heading}
+                          </h3>
+                          <p class="p-strategy-pioneers__body">
+                            {topic.body}
+                          </p>
                         </div>
                       ))}
                     </div>

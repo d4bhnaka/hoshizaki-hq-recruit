@@ -12,28 +12,28 @@ const members = [
     name: "M.J",
     dept: "開発設計",
     year: "2023年入社",
-    course: "人間科学部",
+    course: "人間科学部卒",
     photo: `${base}images/special/crosstalk/p01.png`,
   },
   {
     name: "Y.M",
     dept: "生産技術",
     year: "2023年入社",
-    course: "生物資源学部",
+    course: "生物資源学部卒",
     photo: `${base}images/special/crosstalk/p02.png`,
   },
   {
     name: "A.M",
     dept: "人事",
     year: "2023年入社",
-    course: "表象文化学部",
+    course: "表象文化学部卒",
     photo: `${base}images/special/crosstalk/p03.png`,
   },
   {
     name: "N.H",
     dept: "国内販売促進",
     year: "2023年入社",
-    course: "都市科学部",
+    course: "都市科学部卒",
     photo: `${base}images/special/crosstalk/p04.png`,
   },
 ];
@@ -103,7 +103,7 @@ const sections: QaSection[] = [
   },
   {
     q: "若手の意見は言いやすい？ 「ホシザキらしいチームワーク」を感じたエピソードは？",
-    lead: "上司や先輩、他部署の方との関わりの中で、「ホシザキって、いいチームだな」と感じた場面があれば、エピソードで教えてください。",
+    lead: "",
     items: [
       {
         who: 1,
@@ -133,7 +133,7 @@ const sections: QaSection[] = [
     ],
   },
   {
-    q: "3年間で一番「成長できた」仕事は？ そして、これから挑戦したいことは？",
+    q: "入社してから一番「成長できた」と実感した仕事は？ そして、これから挑戦したいことは？",
     lead: "",
     items: [
       {
@@ -192,10 +192,6 @@ const sections: QaSection[] = [
         body: "飲食店や映画館をお得に使えたり、メガネを割引価格で買えたりもします。有給休暇も取りやすくて、自分の予定に合わせて柔軟に休めるのは、働きやすさにつながっていますね。",
       },
       {
-        who: 1,
-        body: "私はリロクラブの割引はまだ映画くらいでしか使えていないので、これからいろいろ活用していきたいです。",
-      },
-      {
         who: 2,
         body: "育休についても、出産後に復帰されている女性社員の方が多い印象があります。",
       },
@@ -236,8 +232,8 @@ const sections: QaSection[] = [
 
 <Layout
   basePath={base}
-  title="若手が語るはたらく環境｜クロストーク｜ホシザキ本社採用サイト"
-  description="入社3年目を迎えた若手社員によるクロストーク。入社前後のギャップ、若手の意見が尊重される風土、チームワーク、そしてこれから叶えたいキャリアを語ります。"
+  title="若手社員が語るはたらく環境｜クロストーク｜ホシザキ本社採用サイト"
+  description="入社4年目を迎えた若手社員によるクロストーク。入社前後のギャップ、若手の意見が尊重される風土、チームワーク、そしてこれから叶えたいキャリアを語ります。"
 >
   <div class="l-container">
     <Header basePath={base} />
@@ -260,7 +256,7 @@ const sections: QaSection[] = [
               <p class="p-crosstalk__kicker"><span>クロストーク</span></p>
               <h1 class="p-crosstalk__title">
                 <span class="p-crosstalk__title-text"
-                  >若手が語るはたらく環境</span
+                  >若手社員が語るはたらく環境</span
                 >
               </h1>
             </div>
@@ -270,7 +266,7 @@ const sections: QaSection[] = [
                 data-inview
                 style="--inview-i: 1"
               >
-                常識を跳び越え、高め合う。入社3年目が語るホシザキの『リアル』と『チームワーク』
+                常識を跳び越え、高め合う。入社4年目が語るホシザキの『リアル』と『チームワーク』
               </p>
               <div class="p-crosstalk__lead" data-inview style="--inview-i: 2">
                 <p>
@@ -278,7 +274,7 @@ const sections: QaSection[] = [
                   />そこでは一体どんな人たちが、どのような想いで働いているのでしょうか？
                 </p>
                 <p>
-                  今回は入社3年目を迎えた若手社員4名が集結。入社前に抱いていたイメージと現実のギャップ、若手の意見が尊重される風土、<br
+                  今回は入社4年目を迎えた若手社員4名が集結。入社前に抱いていたイメージと現実のギャップ、若手の意見が尊重される風土、<br
                   />そして壁を乗り越えて実感した自らの成長まで、等身大の言葉で語り合います。
                 </p>
                 <p>
@@ -400,7 +396,7 @@ const sections: QaSection[] = [
           basePath={base}
           items={[
             { href: `${base}special/`, label: "スペシャルコンテンツ" },
-            { label: "若手が語るはたらく環境" },
+            { label: "若手社員が語るはたらく環境" },
           ]}
         />
       </article>

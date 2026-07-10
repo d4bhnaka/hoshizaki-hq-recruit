@@ -41,7 +41,7 @@
 
 ### 共通コンポーネント（詳細は [06-spec-common.md](./06-spec-common.md)）
 
-- [r] M2-C1 `Header.astro` ＋ `_l-header.scss`。Figma `361:538`。実装（2026-04-24）：ロゴ＋インターンシップ／応募はこちら CTA ＋ハンバーガー。
+- [r] M2-C1 `Header.astro` ＋ `_l-header.scss`。Figma `361:538`。実装（2026-04-24）：ロゴ＋インターンシップ／ENTRY CTA ＋ハンバーガー。
 - [r] M2-C2 `Footer.astro` ＋ `_l-footer.scss`。Figma `360:179`。実装：4 カラム構成＋大型 HOSHIZAKI ワードマーク。
 - [r] M2-C3 `Breadcrumb.astro` ＋ `_c-breadcrumb.scss`。Props: `basePath`, `items[]`（`.c-breadcrumb`）。
 - [r] M2-C4 [`IceLinkButton.astro`](../src/components/IceLinkButton.astro) ＋ `_c-ice-link.scss`。Figma `365:16915`。**2026-06-11 コンポーネント化**：`.c-ice-link` スタイルを `_p-top.scss` から component 層へ移設し、トップ 6 個＋strategy 地図 7 個の直書きマークアップを差し替え（出力 HTML は実質同一）。Props: `href` / `label` / `sublabel?` / `basePath?` / `fluid?` / `lazy?` / `class?` ＋透過属性。
@@ -208,7 +208,7 @@
   - 2 階層下層：[person/detail.astro](../src/pages/person/detail.astro) / [special.astro](../src/pages/special.astro) / [special/crosstalk.astro](../src/pages/special/crosstalk.astro) / [special/project.astro](../src/pages/special/project.astro) / [special/talk.astro](../src/pages/special/talk.astro)
 - **新規 SCSS partial**（13 ファイル、合計約 4,500 行）：`_p-top.scss` / `_p-message.scss` / `_p-fact.scss` / `_p-strategy.scss` / `_p-job.scss` / `_p-person.scss` / `_p-person-detail.scss` / `_p-environment.scss` / `_p-requirement.scss` / `_p-special.scss` / `_p-crosstalk.scss` / `_p-project-story.scss` / `_p-special-talk.scss`。すべて [style.scss](../src/scss/style.scss) に `@use` 登録済み。
 - **クラス命名の注意**：requirement / environment ページは `.p-req` / `.p-env` を使用（`.p-requirement` / `.p-environment` ではない）。次エージェントは既存の `_p-requirement.scss` / `_p-environment.scss` 内のクラスプレフィックスを尊重すること。
-- **Header / Footer の v2 化**：`Header.astro` を「ロゴ＋『インターンシップ』『応募はこちら』2 つの濃紺 CTA ＋ハンバーガー」構成に更新。`Footer.astro` を「採用TOP / About / SPECIAL / Career の 4 列構成＋大型 `HOSHIZAKI` ワードマーク」に更新。`l-header--light` / `l-header--solid` バリアント追加。
+- **Header / Footer の v2 化**：`Header.astro` を「ロゴ＋『インターンシップ』『ENTRY』2 つの濃紺 CTA ＋ハンバーガー」構成に更新。`Footer.astro` を「採用TOP / About / SPECIAL / Career の 4 列構成＋大型 `HOSHIZAKI` ワードマーク」に更新。`l-header--light` / `l-header--solid` バリアント追加。
 
 ### 2026-04-25 検証：14 ページ・クリーンビルド
 

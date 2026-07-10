@@ -38,7 +38,7 @@ interface Props {
 ```
 
 - 左：ホシザキロゴ（`images/common/hoshizaki-logo-mark-header.png`）＋テキストフォールバック（`onerror` で "HOSHIZAKI" テキスト表示）。
-- 右：インターンシップ CTA ボタン／応募はこちら CTA ボタン／ハンバーガー（3 本線）。
+- 右：インターンシップ CTA ボタン／ENTRY CTA ボタン／ハンバーガー（3 本線）。
 - `variant="solid"` は現状スタイル側のみ対応。ハンバーガー展開メニューの中身は未実装。
 - **注（2026-06-19）**：旧仕様にあった `logo-hoshizaki.svg` は不要（クライアント確認済み）。実装は PNG マーク `hoshizaki-logo-mark-header.png` を使用しており、別途 SVG を用意する必要はない。
 
@@ -69,7 +69,7 @@ interface Props {
 
 ### 残タスク
 
-- [ ] 列 3 の SPECIAL CONTENTS 3 項目（「入社3年目の挑戦」「社内SE職の挑戦」「ホシザキ 暮らしのクロストーク」）の正式タイトルをクライアント確認。**現状の実装で本体の 3 バナー（クロストーク／プロジェクトストーリー／スペシャルトーク）と文言が一致していない**（M5-4）。
+- [ ] 列 3 の SPECIAL CONTENTS 3 項目（「入社4年目の挑戦」「社内SE職の挑戦」「ホシザキ 暮らしのクロストーク」）の正式タイトルをクライアント確認。**現状の実装で本体の 3 バナー（クロストーク／プロジェクトストーリー／スペシャルトーク）と文言が一致していない**（M5-4）。
 
 ---
 
@@ -126,7 +126,7 @@ interface Props {
 | Environment | `Environment` | はたらく環境を知る | `cloud` | — |
 | Requirement | `Requirement` | 募集要項 | `cloud` | — |
 | Special index | `SPECIAL CONTENTS` | ホシザキをさらに深く知るスペシャルコンテンツ | `blue` | — |
-| Crosstalk | クロストーク | 若手が語るはたらく環境 | `light` | 独自ヒーロー（写真幅いっぱい） |
+| Crosstalk | クロストーク | 若手社員が語るはたらく環境 | `light` | 独自ヒーロー（写真幅いっぱい） |
 | Project story | プロジェクトストーリー | 妥協なき、食の未来への挑戦 | `light` | 同上 |
 | Special talk | スペシャルトーク | ホシザキの技術が作る未来 | `light` | 同上 |
 | Internship | — | — | — | 独自ヒーロー、`PageHero` 不使用 |

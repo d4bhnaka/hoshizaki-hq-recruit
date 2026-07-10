@@ -464,12 +464,20 @@
   transform: translateY(-50%);
 }
 
-// エリア名バッジ直下の駐在社員プロフィール（社員紹介の __meta と同形式・縦積み）
+// 駐在社員の写真＋プロフィール（写真＝左、プロフィール＝右の2カラム）
+.p-strategy-pioneers__profile {
+  display: grid;
+  grid-template-columns: clamp(170px, 22%, 220px) minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 40px);
+  align-items: center;
+  margin: 0 0 clamp(28px, 3.5vw, 40px);
+}
+
+// 社員紹介の __meta と同形式・縦積み
 .p-strategy-pioneers__meta {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  margin: 0 0 clamp(28px, 3.5vw, 40px);
   font-size: 15px;
   line-height: 1.85;
   color: var(--color-text-secondary);
@@ -485,14 +493,6 @@
   display: flex;
   flex-direction: column;
   gap: clamp(36px, 4vw, 48px);
-}
-
-// 写真つきトピック（本文＝左、写真＝右の2カラム）
-.p-strategy-pioneers__topic--media {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(170px, 22%, 220px);
-  gap: clamp(24px, 3vw, 40px);
-  align-items: center;
 }
 
 .p-strategy-pioneers__topic-heading {
@@ -523,7 +523,7 @@
 }
 
 // 写真サムネイル（角丸なしJPEGをCSSで角丸クリップ）
-.p-strategy-pioneers__media {
+.p-strategy-pioneers__photo {
   aspect-ratio: 220 / 150;
   border-radius: var(--pioneer-media-radius);
   overflow: hidden;
@@ -563,13 +563,13 @@
     flex: 1 1 auto;
   }
 
-  // 写真つきトピックを縦積みにして、本文の下に写真を配置
-  .p-strategy-pioneers__topic--media {
+  // 写真＋プロフィールを縦積みにして、写真の下にプロフィールを配置
+  .p-strategy-pioneers__profile {
     grid-template-columns: 1fr;
     gap: 20px;
   }
 
-  .p-strategy-pioneers__media {
+  .p-strategy-pioneers__photo {
     max-width: 320px;
   }
 }
