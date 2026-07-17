@@ -90,8 +90,8 @@ export const persons: Person[] = [
     jobType: "社内SE",
     year: "2025年",
     body: "「食」を支える、／世界で挑み続ける／強固な企業へ",
-    category: "技術系",
-    tags: ["tech", "humanities", "newgrad"],
+    category: "企画管理系",
+    tags: ["admin", "science", "newgrad"],
   },
   {
     slug: "06",
@@ -120,8 +120,8 @@ export const persons: Person[] = [
     jobType: "生産管理",
     year: "2024年",
     body: "地元で、世界で。／長く働ける／会社を選んだ。",
-    category: "技術系",
-    tags: ["tech", "science", "newgrad"],
+    category: "企画管理系",
+    tags: ["admin", "science", "newgrad"],
   },
   {
     slug: "09",
@@ -130,8 +130,8 @@ export const persons: Person[] = [
     jobType: "生産管理",
     year: "2024年",
     body: "安定供給で、／お客様の期待に応える。",
-    category: "技術系",
-    tags: ["tech", "science", "midcareer"],
+    category: "企画管理系",
+    tags: ["admin", "humanities", "midcareer"],
   },
   {
     slug: "10",
@@ -140,8 +140,8 @@ export const persons: Person[] = [
     jobType: "購買",
     year: "2020年",
     body: "自分の仕事が、／暮らしの中で、／形になる。",
-    category: "技術系",
-    tags: ["tech", "science", "newgrad"],
+    category: "企画管理系",
+    tags: ["admin", "science", "newgrad"],
   },
   {
     slug: "11",
