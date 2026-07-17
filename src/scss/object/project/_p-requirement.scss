@@ -204,6 +204,14 @@
   line-height: 1.7;
   color: var(--color-text-primary);
   letter-spacing: 0.02em;
+
+  &::before {
+    content: "＜";
+  }
+
+  &::after {
+    content: "＞";
+  }
 }
 
 .p-req__flow {
