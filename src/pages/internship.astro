@@ -10,6 +10,21 @@ import type { Course } from "../components/CourseDetail.astro";
 
 const base = "../";
 
+// キービジュアルの視差速度（data-parallax / main.js initParallax が参照）。
+// 正＝スクロールより遅く流れる（下に残る）、負＝速く流れる（上へ抜ける）。
+// ファーストビュー内なので基準は data-parallax-origin="page"
+// （スクロール 0 でデザイン通りの初期構図から始まる）。
+//
+// ペンギンは KV 下端を地面として立っているので、そこから浮き上がらせると
+// 足元に隙間ができて貼り付けたように見える。わずかに遅らせて下端の外へ
+// 沈ませることで接地感を保つ。氷は空中に浮いている設定なので逆に上へ流し、
+// ペンギンとの相対運動で奥行きを出す（大きい氷ほど手前＝速い）。
+const heroParallax = {
+  penguin: 0.06, // ペンギン：下端に接地したままゆっくり沈む
+  iceB: -0.12, // 左下の大きい氷：手前。いちばん速く上へ浮き上がる
+  iceA: -0.06, // 右上の小さい氷：奥。半分の速さで浮き上がる
+};
+
 // 「冒険を始める ENTRY」は外部の応募ページへ遷移。
 const entryHref =
   "https://hoshizaki-corporation-hr.snar.jp/jobboard/detail.aspx?id=hNWzuuEY-h8";
@@ -109,7 +124,7 @@ const courses: Course[] = [
       {
         num: "02",
         title: "ホシザキブランドの品質を守る品質保証の仕事をリアルに体感",
-        body: "ロボティクスやIoTを活用した最新の製造ラインで、生産技術エンジニアの課題解決プロセスを学ぶ。",
+        body: "測定器を用いた部品検査や量産前の認定試験を体験し、お客様目線で製品と向き合う品質へのこだわりを学ぶ。",
       },
       {
         num: "03",
@@ -327,7 +342,7 @@ const courses: Course[] = [
     ],
     programOverview: [
       { label: "対象", value: ["文理・学部学科不問"] },
-      { label: "開催時期", value: ["8月〜9月のうち1日（WEB開催）"] },
+      { label: "開催時期", value: ["9月・12月のうち1日（WEB開催）"] },
       { label: "会場", value: ["オンライン（Zoom など）"] },
       { label: "待遇", value: ["オンライン開催のため費用負担なし"] },
       { label: "選考", value: ["マイページよりエントリー → 参加決定"] },
@@ -380,13 +395,13 @@ const courses: Course[] = [
       },
       {
         day: "",
-        title: "経理仕事体験ワーク、管理部門社員との座談会",
+        title: "経営戦略立案ワークと座談会",
         body: "グループでの経営戦略立案ワーク、社員へのプレゼンと座談会",
       },
     ],
     programOverview: [
       { label: "対象", value: ["文理・学部学科不問"] },
-      { label: "開催時期", value: ["8月〜9月のうち1日（WEB開催）"] },
+      { label: "開催時期", value: ["9月・12月のうち1日（WEB開催）"] },
       { label: "会場", value: ["オンライン（Zoom など）"] },
       { label: "待遇", value: ["オンライン開催のため費用負担なし"] },
       { label: "選考", value: ["マイページよりエントリー → 参加決定"] },
@@ -450,18 +465,24 @@ const courses: Course[] = [
             src={`${base}images/internship/ice-cubes-02.png`}
             alt=""
             aria-hidden="true"
+            data-parallax={heroParallax.iceA}
+            data-parallax-origin="page"
           />
           <img
             class="p-internship-hero__ice p-internship-hero__ice--b"
             src={`${base}images/internship/ice-cubes-01.png`}
             alt=""
             aria-hidden="true"
+            data-parallax={heroParallax.iceB}
+            data-parallax-origin="page"
           />
           <img
             class="p-internship-hero__penguin"
             src={`${base}images/internship/penguin-hero.png`}
             alt=""
             aria-hidden="true"
+            data-parallax={heroParallax.penguin}
+            data-parallax-origin="page"
           />
           <h1
             class="p-internship-hero__title"

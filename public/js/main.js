@@ -982,6 +982,12 @@
   //   負＝速く流れる（手前に見える）。移動量は
   //   「ビューポート中央と要素の基準中央の差分 × 係数」を transform で適用。
   //   要素が画面中央にあるとき変位 0 なので、デザイン上の配置座標は崩れない。
+  //
+  //   data-parallax-origin="page" を併記した場合のみ、基準を「ページ最上部」に
+  //   切り替えて変位 = scrollY × 係数 とする。ファーストビュー内の要素は
+  //   読み込み直後から画面中央より上にいるため、既定の基準だと初期表示の時点で
+  //   すでにずれてしまう。この指定でスクロール 0 の時に変位 0 が保証され、
+  //   デザイン通りの初期構図のままスクロールで視差が付き始める。
   // --------------------------------------------
   function initParallax() {
     var targets = document.querySelectorAll("[data-parallax]");
@@ -1016,6 +1022,7 @@
           el: el,
           speed: parseFloat(el.getAttribute("data-parallax")) || 0,
           center: rect.top + window.scrollY + rect.height / 2,
+          fromPageTop: el.getAttribute("data-parallax-origin") === "page",
         });
       });
     }
@@ -1025,9 +1032,11 @@
       var vh = window.innerHeight;
       var viewCenter = window.scrollY + vh / 2;
       items.forEach(function (item) {
-        var delta = viewCenter - item.center;
+        var offset = viewCenter - item.center;
         // 画面から大きく離れている間は transform の更新をスキップ
-        if (Math.abs(delta) > vh * 1.5) return;
+        // （表示判定は基準の違いによらず素の位置関係で行う）
+        if (Math.abs(offset) > vh * 1.5) return;
+        var delta = item.fromPageTop ? window.scrollY : offset;
         item.el.style.transform =
           "translate3d(0, " + (delta * item.speed).toFixed(1) + "px, 0)";
       });

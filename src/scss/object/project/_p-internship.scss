@@ -134,6 +134,8 @@
   }
 }
 
+// ペンギン・氷はスクロール視差の対象（data-parallax / main.js initParallax）。
+// transform は JS が毎フレーム書き換えるので、ここでは指定しない。
 .p-internship-hero__penguin {
   position: absolute;
   left: clamp(12px, 7vw, 120px);
@@ -142,6 +144,7 @@
   height: auto;
   z-index: 1;
   pointer-events: none;
+  will-change: transform;
 }
 
 // ice-cubes-01 / ice-cubes-02 は複数キューブのクラスター画像なので回転させず原寸比で配置。
@@ -150,6 +153,7 @@
   height: auto;
   pointer-events: none;
   z-index: 1;
+  will-change: transform;
 
   // ice-cubes-02：右上
   &--a {
