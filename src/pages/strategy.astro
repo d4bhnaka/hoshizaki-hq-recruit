@@ -19,11 +19,46 @@ const ratio = {
 // 事業領域の広がり — ホシザキのロゴマークを中心に据えたハブ&スポーク図
 // ノードは中心から等間隔の円周上に配置。座標は frontmatter で算出し、CSS 変数として渡す。
 const domains = [
-  { label: "医療・福祉", sub: "病院・介護施設", color: "#00a0e9" },
-  { label: "飲食店", sub: "レストラン・カフェ", color: "#ef7d5e" },
-  { label: "学校・オフィス", sub: "給食・社員食堂", color: "#f2b134" },
-  { label: "小売・流通", sub: "スーパー・コンビニ", color: "#3bb98a" },
-  { label: "農業・水産", sub: "生産者", color: "#7b83e0" },
+  {
+    label: "医療・福祉",
+    sub: "病院・介護施設",
+    color: "#00a0e9",
+    img: "domain-medical.png",
+    w: 249,
+    h: 400,
+  },
+  {
+    label: "飲食店",
+    sub: "レストラン・カフェ",
+    color: "#ef7d5e",
+    img: "domain-restaurant.png",
+    w: 188,
+    h: 400,
+  },
+  {
+    label: "学校・オフィス",
+    sub: "給食・社員食堂",
+    color: "#f2b134",
+    img: "domain-school-office.png",
+    w: 177,
+    h: 400,
+  },
+  {
+    label: "小売・流通",
+    sub: "スーパー・コンビニ",
+    color: "#3bb98a",
+    img: "domain-retail.png",
+    w: 145,
+    h: 400,
+  },
+  {
+    label: "農業・水産",
+    sub: "生産者",
+    color: "#7b83e0",
+    img: "domain-agri-fishery.png",
+    w: 307,
+    h: 400,
+  },
 ];
 const DOMAIN_RADIUS = 37; // ステージ中心からノード中心までの距離（ステージ幅に対する %）
 const domainNodes = domains.map((d, i) => {
@@ -343,9 +378,13 @@ const pioneers = [
                       class="p-strategy-domains__node"
                       style={`--x:${n.x}%;--y:${n.y}%;--i:${n.i};--accent:${n.color}`}
                     >
-                      <span
-                        class="p-strategy-domains__node-dot"
-                        aria-hidden="true"
+                      <img
+                        class="p-strategy-domains__node-illust"
+                        src={`${base}images/strategy/${n.img}`}
+                        alt=""
+                        width={n.w}
+                        height={n.h}
+                        loading="lazy"
                       />
                       <span class="p-strategy-domains__node-label">
                         {n.label}
