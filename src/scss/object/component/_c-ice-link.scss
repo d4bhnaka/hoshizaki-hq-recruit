@@ -26,18 +26,18 @@
 }
 
 // ステージ内で使うときはステージ幅に比例して拡縮する流体サイズ版。
-// 1600px 時に 207×200 / ラベル14px・READ MORE 11px と一致。
+// 1600px 時に 207×200 / ラベル12px・READ MORE 17px と一致。
 // cqw の基準となる container-type: inline-size の祖先（ステージ）が必要。
 .c-ice-link--fluid {
   width: 12.9375cqw; // 207 / 16
   height: 12.5cqw; // 200 / 16
 
   .c-ice-link__label {
-    font-size: 0.875cqw; // 14 / 16
+    font-size: 0.75cqw; // 12 / 16
   }
 
   .c-ice-link__more {
-    font-size: 1cqw;
+    font-size: 1.0625cqw; // 17 / 16
     line-height: 1;
   }
 }
@@ -101,7 +101,7 @@
 .c-ice-link__label {
   font-family: var(--font-family-base);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.06em;
   color: var(--color-brand-navy-deep);
   line-height: 1.4;
@@ -110,12 +110,11 @@
 .c-ice-link__more {
   font-family: var(--font-family-display), var(--font-family-en);
   font-weight: 500;
-  font-size: 13px;
-  letter-spacing: 0.24em;
+  font-size: 17px;
+  letter-spacing: normal;
   color: var(--color-text-muted);
 
   &::after {
     content: ' ›';
-    letter-spacing: 0;
   }
 }
