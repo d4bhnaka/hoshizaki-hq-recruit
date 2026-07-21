@@ -38,49 +38,23 @@ const domainNodes = domains.map((d, i) => {
   };
 });
 
-// 社会課題への取組（番号バッジ＋イラスト＋テキストのカード）
-// イラストは Gemini 画像生成（gemini-3.1-flash-image）で作成したフラットな線画。
-// 白背景で生成後、外周のみ透過処理して正方形に整えている（背景透過 PNG）。
+// 社会課題への取組（番号バッジ＋テキストのカード）
 const contributions = [
   {
     title: "食の安全・衛生管理",
     body: "病院・介護施設・飲食店などの衛生環境を支え、安心できる食事の提供に貢献します。",
-    image: `${base}images/strategy/contrib-safety.png`,
-    alt: "衛生管理を担う白衣の担当者と、安全を示すチェックマークの盾のイラスト",
-    w: 480,
-    h: 480,
   },
   {
     title: "食品ロス削減",
     body: "鮮度保持技術で食材のおいしさを長く保ち、食品ロスの削減に貢献します。",
-    image: `${base}images/strategy/contrib-foodloss.png`,
-    alt: "新鮮な野菜のかごと魚を持つ調理担当者と、鮮度を保つ循環マークのイラスト",
-    w: 480,
-    h: 480,
   },
   {
     title: "環境負荷低減",
     body: "省エネ設計や自然冷媒の採用などで、エネルギー消費やCO₂排出の削減に貢献します。",
-    image: `${base}images/strategy/contrib-environment.png`,
-    alt: "緑の葉に包まれた地球と風車を手にした作業員の、環境負荷低減を表すイラスト",
-    w: 480,
-    h: 480,
   },
   {
     title: "自動化・省人化で人手不足をサポート",
     body: "洗浄・製氷・保管などの自動化・省力化で、働く人の負担を減らし、生産性を向上させます。",
-    image: `${base}images/strategy/contrib-automation.png`,
-    alt: "自動食器洗浄機を操作する作業員とアシストするロボットアームのイラスト",
-    w: 480,
-    h: 480,
-  },
-  {
-    title: "一次産業支援",
-    body: "農業・漁業の鮮度維持や加工支援を通じて、一次産業の持続的な発展に貢献します。",
-    image: `${base}images/strategy/contrib-primary.png`,
-    alt: "野菜のかごを持つ農家と魚を持つ漁師が並ぶ、一次産業支援のイラスト",
-    w: 480,
-    h: 480,
   },
 ];
 
@@ -401,16 +375,6 @@ const pioneers = [
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <h4 class="p-strategy-contrib__card-title">{c.title}</h4>
-                      <figure class="p-strategy-contrib__figure">
-                        <img
-                          class="p-strategy-contrib__img"
-                          src={c.image}
-                          alt={c.alt}
-                          loading="lazy"
-                          width={c.w}
-                          height={c.h}
-                        />
-                      </figure>
                       <p class="p-strategy-contrib__card-body">{c.body}</p>
                     </li>
                   ))
