@@ -11,7 +11,7 @@ interface ProgramDay {
   title: string;
   body: string;
 }
-interface Requirement {
+interface OverviewItem {
   label: string;
   value: string[];
 }
@@ -25,7 +25,7 @@ export interface Course {
   image: string;
   points: Point[];
   program: ProgramDay[];
-  requirements: Requirement[];
+  programOverview: OverviewItem[];
   voices: Voice[];
 }
 
@@ -94,19 +94,19 @@ const penguins = ["penguin-03.png", "penguin-02.png", "penguin-01.png"];
     </ul>
   </section>
 
-  <!-- REQUIREMENTS -->
+  <!-- PROGRAM OVERVIEW -->
   <section
-    class="p-internship-section p-requirements"
-    aria-labelledby={`req-${course.id}`}
+    class="p-internship-section p-program-overview"
+    aria-labelledby={`overview-${course.id}`}
   >
-    <InternshipHeading ja="募集要項" en="REQUIREMENTS" />
-    <dl class="p-requirements__card">
+    <InternshipHeading ja="開催概要" en="PROGRAM OVERVIEW" />
+    <dl class="p-program-overview__card">
       {
-        course.requirements.map((req) => (
-          <div class="p-requirements__row">
-            <dt class="p-requirements__label">{req.label}</dt>
-            <dd class="p-requirements__value">
-              {req.value.map((line, i) => (
+        course.programOverview.map((item) => (
+          <div class="p-program-overview__row">
+            <dt class="p-program-overview__label">{item.label}</dt>
+            <dd class="p-program-overview__value">
+              {item.value.map((line, i) => (
                 <Fragment>
                   {i > 0 && <br />}
                   {line}

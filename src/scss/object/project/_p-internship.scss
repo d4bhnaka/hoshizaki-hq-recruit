@@ -668,9 +668,16 @@
 }
 
 // --------------------------------------------
-// REQUIREMENTS
+// PROGRAM OVERVIEW
 // --------------------------------------------
-.p-requirements__card {
+// 「PROGRAM OVERVIEW」は他セクションの英字見出し（COURSE / POINT など）より
+// 文字数が多く、共通サイズのままだと横幅を占有しすぎ、狭幅では 2 行に折り返す。
+// 見た目の横幅が他の見出しと揃うようこの見出しだけ縮小率を掛ける。
+.p-program-overview .p-internship-head__en {
+  font-size: clamp(32px, 6vw, 76px);
+}
+
+.p-program-overview__card {
   position: relative;
   overflow: hidden;
   width: min(880px, 100% - var(--ip-gutter) * 2);
@@ -693,7 +700,7 @@
   }
 }
 
-.p-requirements__row {
+.p-program-overview__row {
   display: grid;
   grid-template-columns: clamp(80px, 14vw, 170px) 1fr;
   gap: 0 clamp(20px, 3vw, 48px);
@@ -706,13 +713,13 @@
   }
 }
 
-.p-requirements__label {
+.p-program-overview__label {
   font-weight: 700;
   font-size: clamp(14px, 1.1vw, 15px);
   line-height: 1.6;
 }
 
-.p-requirements__value {
+.p-program-overview__value {
   font-weight: 400;
   font-size: clamp(14px, 1.1vw, 15px);
   line-height: 1.6;
@@ -834,7 +841,7 @@
     gap: 6px;
   }
 
-  .p-requirements__row {
+  .p-program-overview__row {
     grid-template-columns: clamp(72px, 22vw, 120px) 1fr;
   }
 }

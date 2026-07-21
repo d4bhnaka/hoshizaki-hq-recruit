@@ -11,17 +11,19 @@ import type { Course } from "../components/CourseDetail.astro";
 const base = "../";
 
 // 「冒険を始める ENTRY」は外部の応募ページへ遷移。
-const entryHref = "https://job.mynavi.jp/28/pc/user/registEntry/index/?corpId=2913&optNo=pP01oA";
+const entryHref =
+  "https://hoshizaki-corporation-hr.snar.jp/jobboard/detail.aspx?id=hNWzuuEY-h8";
 
 const courses: Course[] = [
   {
     id: "course-01",
-    title: "【理系】開発設計職5Daysインターンシップ（機械設計コース／制御設計コース）",
+    title:
+      "【理系】開発設計職5Daysインターンシップ（機械設計コース／制御設計コース）",
     image: "course-01.png",
     points: [
       {
         num: "01",
-        title: "「1台丸ごと」を生み出す開発体験",
+        title: "「1台丸ごと」を生み出す開発環境",
         body: "少人数チームで開発の「1から10まで」に携わり、歯車ではないものづくりの醍醐味を味わう。",
       },
       {
@@ -31,14 +33,14 @@ const courses: Course[] = [
       },
       {
         num: "03",
-        title: "第一線のプロによる個別フィードバック",
+        title: "開発設計の社員による個別フィードバック",
         body: "最終日の報告会では、現場で活躍する社員が学生一人ひとりに本気のフィードバックを実施。",
       },
     ],
     program: [
       {
         day: "DAY 1",
-        title: "インプットと現場理解",
+        title: "オリエンテーションと開発設計部門紹介",
         body: "会社紹介、工場・試験室見学、オリエンテーション",
       },
       {
@@ -48,36 +50,49 @@ const courses: Course[] = [
       },
       {
         day: "DAY 5",
-        title: "アウトプットとフィードバック",
+        title: "振り返り報告とフィードバック",
         body: "実習の振返り、成果報告会、現場社員（若手〜マネジメント層）からの個別フィードバック",
       },
     ],
-    requirements: [
-      { label: "対象", value: ["理系学生（学部・学科不問／基礎的なOffice操作ができる方）"] },
+    programOverview: [
+      {
+        label: "対象",
+        value: [
+          "理系学生（学部・学科不問／基礎的なOffice操作ができる方）",
+          "で、機械やものづくりに興味がある方",
+        ],
+      },
       { label: "開催時期", value: ["8月〜9月の平日5日間"] },
       { label: "会場", value: ["愛知本社（中央研究所） または", "島根工場"] },
       {
         label: "待遇",
-        value: ["交通費実費支給", "宿泊手配あり（遠方者）", "昼食代支給（社員食堂利用可）"],
+        value: [
+          "交通費実費支給",
+          "宿泊手配あり（遠方者）",
+          "昼食代支給（社員食堂利用可）",
+        ],
       },
-      { label: "選考", value: ["マイナビよりES提出 → WEB面接（1回） → 参加決定"] },
+      {
+        label: "選考",
+        value: ["マイページよりES提出 → WEB面接（1回） → 参加決定"],
+      },
     ],
     voices: [
       {
         avatar: "voice-01.png",
-        text: "大手メーカーは分業制だと思っていましたが、ホシザキのインターンでは「1台丸ごと」設計に携われることに驚きました。チームで意見を出し合い、CADでの設計から試作まで一貫して体験できたことで、ものづくりの本質的な面白さを実感。自分のアイデアが形になる瞬間の達成感は想像以上でした。",
+        text: "用意されたワークではなく、実際に開発設計の業務を体験できたため、新入社員として配属されたような気分で参加することができ、貴社で働くイメージを具体的にもつことができました。",
       },
       {
         avatar: "voice-02.png",
-        text: "厨房機器という身近な製品の裏に、どれほど高度な熱力学や流体工学が使われているかを知り圧倒されました。中央研究所という最先端の設備の中で、プロが妥協なく「冷やす」技術を追求する姿を間近で見ることができ、自身の研究をどう社会実装していくかエンジニアとしての視界が一気に開けました。",
+        text: "設計者の思いがそのまま製品としてユーザーに届けられる、完成品メーカーでならではのやりがいを感じられる開発環境が魅力的だと感じました。",
       },
       {
         avatar: "voice-03.png",
-        text: "一番の収穫は、現場の最前線で活躍する社員の方々からの本気のフィードバックです。学生扱いせず、一人の技術者として厳しいながらも的確なアドバイスをいただき、自分の課題が明確になりました。座談会でも若手からベテランまで風通しが良く、ここでなら自分も大きく成長できると確信しました。",
+        text: "課内の方とのコミュニケーションをとる機会が多くあり、働くイメージを明確にすることができました。",
       },
       {
         avatar: "voice-04.png",
-        text: "単に機械をつくるのではなく、「食のインフラを支え、環境問題を解決する」という使命感に心を打たれました。特に自然冷媒を用いた省エネ技術のワークでは、自分の学んできた知識が社会課題の解決に直結することを実感。世界シェアNo.1企業の「パイオニア・スピリット」を肌で感じた5日間でした。",
+        text: "データ整理や結果の議論など、大学での研究で得た技能・経験がメーカーでの業務に生きることを体感できました。",
       },
     ],
   },
@@ -88,12 +103,12 @@ const courses: Course[] = [
     points: [
       {
         num: "01",
-        title: "世界品質を支える生産現場のリアル",
+        title: "生産現場の課題解決を実践ワークで体感できる",
         body: "多品種少量生産を実現するセル生産方式の現場に入り、量産設計と現場改善の最前線を体感する。",
       },
       {
         num: "02",
-        title: "スマートファクトリーの実務に触れる",
+        title: "ホシザキブランドの品質を守る品質保証の仕事をリアルに体感",
         body: "ロボティクスやIoTを活用した最新の製造ラインで、生産技術エンジニアの課題解決プロセスを学ぶ。",
       },
       {
@@ -105,41 +120,51 @@ const courses: Course[] = [
     program: [
       {
         day: "DAY 1",
-        title: "工場見学と現場理解",
-        body: "会社紹介、愛知本社工場・生産ラインの見学、生産技術職オリエンテーション",
+        title: "生産技術　体験ワーク",
+        body: "会社紹介、仕事体験（工程設計、設備設計 等）、生産技術職場見学、社員座談会",
       },
       {
         day: "DAY 2",
-        title: "改善ワークとフィードバック",
-        body: "実際の生産ラインを題材にした改善提案ワーク、社員へのプレゼンと個別フィードバック",
+        title: "品質保証　体験ワーク",
+        body: "仕事体験（部品検査、製品認定 等）、品質保証職場見学、社員座談会",
       },
     ],
-    requirements: [
-      { label: "対象", value: ["理系学生（学部・学科不問／基礎的なOffice操作ができる方）"] },
+    programOverview: [
+      {
+        label: "対象",
+        value: ["理系学生（学部・学科不問）"],
+      },
       { label: "開催時期", value: ["8月〜9月の平日2日間"] },
       { label: "会場", value: ["愛知本社（工場・生産技術部門）"] },
       {
         label: "待遇",
-        value: ["交通費実費支給", "宿泊手配あり（遠方者）", "昼食代支給（社員食堂利用可）"],
+        value: [
+          "交通費実費支給",
+          "宿泊補助あり（遠方者）",
+          "昼食代支給（社員食堂利用可）",
+        ],
       },
-      { label: "選考", value: ["マイナビよりES提出 → WEB面接（1回） → 参加決定"] },
+      {
+        label: "選考",
+        value: ["マイページよりES提出 → WEB面接（1回） → 参加決定"],
+      },
     ],
     voices: [
       {
         avatar: "voice-02.png",
-        text: "生産技術は「決められたものをつくるだけ」という印象を持っていましたが、量産品質とコストの両立をどう設計するかという奥深さに引き込まれました。改善ワークで自分の提案が現場の方に真剣に検討してもらえたのが嬉しかったです。",
+        text: "生産技術、品質保証いずれも、業務体験や職場見学があり、とても良かった。業務や会社の雰囲気を直接体感することはオンラインのプログラムではできないため、今回のプログラムに参加できてとても良かったです。",
       },
       {
         avatar: "voice-01.png",
-        text: "セル生産方式の現場を初めて見て、人と設備の役割分担の巧みさに驚きました。2日間という短い期間でも、ものづくりの全体像と生産技術の面白さがしっかり伝わってきました。",
+        text: "工場の価値を最大化する生産技術部門の重要性を理解できました。また、新製品の準備から設備保全まで幅広く関わり、現場を支える役割の大きさを実感できた点が特に良かったです。",
       },
       {
         avatar: "voice-04.png",
-        text: "社員の方々がフラットに接してくださり、質問にも本音で答えてくれたのが印象的でした。働く環境の風通しの良さを肌で感じられた2日間でした。",
+        text: "若手社員の方からフランクにお話を伺えたことが特に良かったです。就活の軸や面接の雰囲気など包み隠さず教えていただき、今後就職活動を進めていく上で非常に勉強になりました",
       },
       {
         avatar: "voice-03.png",
-        text: "IoTやロボットを活用したスマートファクトリーの取り組みは想像以上で、自分の学んだ制御の知識が量産現場でどう活きるのかを具体的にイメージできるようになりました。",
+        text: "品質保証が「ホシザキブランド」を支える重要な役割であることを実感しました。そして、グループワークではお客様目線を重視した改善策を考え、品質保証の視点を体験的に理解できた点が特に良かったです。",
       },
     ],
   },
@@ -172,33 +197,36 @@ const courses: Course[] = [
       },
       {
         day: "PM",
-        title: "設計体験ワーク",
+        title: "社員座談会",
         body: "簡単な回路・制御をテーマにしたグループワーク、社員への発表と質疑応答",
       },
     ],
-    requirements: [
-      { label: "対象", value: ["理系学生（学部・学科不問／基礎的なOffice操作ができる方）"] },
-      { label: "開催時期", value: ["7月〜9月のうち1日（WEB開催）"] },
-      { label: "会場", value: ["オンライン（Microsoft Teams など）"] },
+    programOverview: [
+      {
+        label: "対象",
+        value: ["理系学生（電気電子系、情報工学系 専攻の方）"],
+      },
+      { label: "開催時期", value: ["8月〜9月のうち1日（WEB開催）"] },
+      { label: "会場", value: ["オンライン（Zoom など）"] },
       { label: "待遇", value: ["オンライン開催のため費用負担なし"] },
-      { label: "選考", value: ["マイナビよりエントリー → 参加決定"] },
+      { label: "選考", value: ["マイページよりエントリー → 参加決定"] },
     ],
     voices: [
       {
         avatar: "voice-03.png",
-        text: "オンラインでも現役エンジニアの方と直接話せて、電子設計の仕事の解像度が一気に上がりました。1日でこれだけ得られるとは思っていませんでした。",
+        text: "アイデアを出す力やグループ内の意見をすり合わせるコミュニケーション能力を養うことができたと感じました。また、ワーク後にフィードバックがあったのも非常に学びになりました。",
       },
       {
         avatar: "voice-04.png",
-        text: "組込みソフトがどのように製品の使い心地を左右するのかを知り、ソフトとハードの境界で働く面白さに惹かれました。",
+        text: "社員の方々が実際にどのように考え、対策を行っているのか、電子設計者の視点を知ることができ、大変学びになりました。",
       },
       {
         avatar: "voice-01.png",
-        text: "WEB開催で移動の負担がなく、地方の大学からでも気軽に参加できたのがありがたかったです。グループワークも盛り上がりました。",
+        text: "ワークの内容だけでなく、電子設計社員との座談会を通して実際の業務内容の詳細をうかがえたのが大変良かったです。",
       },
       {
         avatar: "voice-02.png",
-        text: "回路設計から評価までの一連の流れを具体例で説明してもらえたので、自分の学びがどこで活きるのかイメージしやすくなりました。",
+        text: "ホシザキの電子設計業務についての具体的なイメージを掴むことができました。特に、システム構想から電子回路・ソフト設計まで一貫して携われる点が魅力的だと感じました。",
       },
     ],
   },
@@ -231,33 +259,36 @@ const courses: Course[] = [
       },
       {
         day: "PM",
-        title: "設計体験ワーク",
+        title: "社員座談会",
         body: "身近な製品をテーマにした機構・構造のグループワーク、社員への発表と質疑応答",
       },
     ],
-    requirements: [
-      { label: "対象", value: ["理系学生（学部・学科不問／基礎的なOffice操作ができる方）"] },
-      { label: "開催時期", value: ["7月〜9月のうち1日（WEB開催）"] },
-      { label: "会場", value: ["オンライン（Microsoft Teams など）"] },
+    programOverview: [
+      {
+        label: "対象",
+        value: ["理系学生（学部・学科不問）"],
+      },
+      { label: "開催時期", value: ["8月〜9月のうち1日（WEB開催）"] },
+      { label: "会場", value: ["オンライン（Zoom など）"] },
       { label: "待遇", value: ["オンライン開催のため費用負担なし"] },
-      { label: "選考", value: ["マイナビよりエントリー → 参加決定"] },
+      { label: "選考", value: ["マイページよりエントリー → 参加決定"] },
     ],
     voices: [
       {
         avatar: "voice-04.png",
-        text: "身近な厨房機器の裏側にこれほど緻密な機械設計があるとは思いませんでした。設計者の「なぜこの形なのか」という話がとても面白かったです。",
+        text: "普段目にするホシザキ製品を題材としたワーク。設計の工夫の一部を知ることで、製品全体としてはどれほどのアイデアが詰まっているのかさらに興味を持った。",
       },
       {
         avatar: "voice-02.png",
-        text: "1日で機械設計職の仕事の全体像がつかめました。熱や流体といった自分の専門が、製品開発に直結することを実感できました。",
+        text: "グループワークでは一人ひとりの意見を尊重し、議論を重ねて一つのアイデアにまとめるチームワークの重要性も学ぶことができました。",
       },
       {
         avatar: "voice-03.png",
-        text: "オンラインでも設計ワークに集中して取り組め、社員の方からの的確なフィードバックで自分の考えの甘さに気づけました。",
+        text: "多くの要素を緻密に計算する姿勢を肌で感じ、エンジニアとして深く追求したいという思いが強くなりました。",
       },
       {
         avatar: "voice-01.png",
-        text: "ホシザキのものづくりの考え方に触れ、世界No.1を目指す姿勢に刺激を受けました。機械設計という仕事への憧れが強くなりました。",
+        text: "チームで考えたプランに対して技術者の方からのフィードバックやアドバイスがもらえ、実際の仕事のような感覚を味わうことができた。",
       },
     ],
   },
@@ -274,14 +305,21 @@ const courses: Course[] = [
     rel="stylesheet"
     href={`${base}css/swiper-bundle.min.css`}
   />
-  <script slot="head" src={`${base}js/swiper-bundle.min.js`} defer is:inline></script>
+  <script slot="head" src={`${base}js/swiper-bundle.min.js`} defer is:inline
+  ></script>
 
   <div class="l-container">
-    <Header basePath={base} logoSrc={`${base}images/internship/internship-logo.png`} />
+    <Header
+      basePath={base}
+      logoSrc={`${base}images/internship/internship-logo.png`}
+    />
     <main class="l-main">
       <article class="p-internship">
         <!-- Hero -->
-        <section class="p-internship-hero" aria-labelledby="internship-hero-title">
+        <section
+          class="p-internship-hero"
+          aria-labelledby="internship-hero-title"
+        >
           <div class="p-internship-hero__media" aria-hidden="true">
             <div class="p-internship-hero__track">
               <img src={`${base}images/internship/hero-collage.jpg`} alt="" />
@@ -307,7 +345,11 @@ const courses: Course[] = [
             alt=""
             aria-hidden="true"
           />
-          <h1 class="p-internship-hero__title" id="internship-hero-title" data-inview="fade">
+          <h1
+            class="p-internship-hero__title"
+            id="internship-hero-title"
+            data-inview="fade"
+          >
             <img
               src={`${base}images/internship/main-copy.png`}
               alt="常識の先へ、一歩。未知の自分に、跳びこもう。"
@@ -333,10 +375,7 @@ const courses: Course[] = [
         <!-- Intro -->
         <section class="p-internship-intro">
           <p class="p-internship-intro__text" data-inview>
-            日本初の全自動製氷機を生み出したホシザキ。<br />
-            私たちの開発は、一部の設計だけを担う歯車ではありません。<br />
-            構想からリリースまでのすべての工程に携わるからこそ味わえる、<br />
-            「ものづくりの圧倒的な手触り感」を体感してください。
+            知るから、体感するへ。ホシザキのインターンシップでは、社員との交流や実践的なプログラムを通じて、仕事のリアルに触れることができます。あなた自身の将来を考えるきっかけを見つけてください。
           </p>
         </section>
 
@@ -369,14 +408,12 @@ const courses: Course[] = [
                 class="p-course__arrow p-course__arrow--prev"
                 type="button"
                 aria-label="前のコース"
-                data-course-prev
-              ></button>
+                data-course-prev></button>
               <button
                 class="p-course__arrow p-course__arrow--next"
                 type="button"
                 aria-label="次のコース"
-                data-course-next
-              ></button>
+                data-course-next></button>
             </div>
           </div>
         </section>
@@ -396,7 +433,11 @@ const courses: Course[] = [
           aria-labelledby="internship-message-title"
         >
           <InternshipHeading ja="採用担当からのメッセージ" en="MESSAGE" />
-          <p class="p-internship-message__body" data-inview style="--inview-i: 0">
+          <p
+            class="p-internship-message__body"
+            data-inview
+            style="--inview-i: 0"
+          >
             「ホシザキを、ただの厨房機器メーカーだと思っていないか。」<br />
             私たちが求めているのは、既存の枠を超え、<br />
             新しい「食の当たり前」を創り出すパイオニア精神です。<br />
@@ -404,7 +445,11 @@ const courses: Course[] = [
             どのような思考と情熱から生まれるのか。<br />
             この5日間で、あなたの「常識」を塗り替える体験が待っています。
           </p>
-          <p class="p-internship-message__lead" data-inview style="--inview-i: 1">
+          <p
+            class="p-internship-message__lead"
+            data-inview
+            style="--inview-i: 1"
+          >
             さあ、その想いを翼に変えて。<br />
             エントリーはマイページから。
           </p>
