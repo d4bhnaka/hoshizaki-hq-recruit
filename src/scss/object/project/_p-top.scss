@@ -776,10 +776,11 @@
 }
 
 // ボタン (Figma 365:16916 x81 y2990)
+// クライアント指示（2026-07-22）で採用メッセージとの距離を詰める
 .p-top-pioneer__button {
   position: absolute;
   left: 5.0625%;
-  top: 58.711%; // (2990-2562)/729
+  top: 50%; // 採用メッセージ (38.82%) に近づけて上げる
   z-index: 3;
 }
 
@@ -899,6 +900,19 @@
 
 .p-top-trio__en-line {
   display: block;
+}
+
+// 英字見出しの下に添える小さな和文キャプション（紺色）。
+// クライアント指示（2026-07-22）で What's / Beyond / Team の各見出し下に追記。
+.p-top-trio__ja-cap {
+  display: block;
+  margin-top: 0.6cqw;
+  font-family: var(--font-family-base);
+  font-weight: 500;
+  font-size: 1.5cqw; // 24 / 16
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: var(--color-brand-navy);
 }
 
 // アイスリンクボタン
@@ -1043,7 +1057,8 @@
 
 // アイスリンクボタン：サブから 93px 下・タイトルより 13px 左（クリスタルの透明余白分）
 .p-top-env__button {
-  margin-top: clamp(28px, 5.81vw, 93px); // サブ → ボタン間 93px
+  // クライアント指示（2026-07-22）で見出しとの距離を詰める（93px → 48px @1600）
+  margin-top: clamp(16px, 3vw, 48px);
   margin-left: -0.81vw; // 110 − 123 = −13px @1600
 }
 
@@ -1389,6 +1404,12 @@
     font-size: 14.03cqw; // 56.4 / 4.02
   }
 
+  // SP は狭いコンテナに合わせて和文キャプションを拡大（beyond は非表示のため対象外）
+  .p-top-trio__ja-cap {
+    margin-top: 1.2cqw;
+    font-size: 3.48cqw; // 14 / 4.02
+  }
+
   // 世界へ跳べ (Figma 431:4938 x107 y2230.5) Noto Sans JP Light 42.1px
   .p-top-trio__ja-beyond {
     display: block;
@@ -1518,7 +1539,7 @@
     }
 
     .c-ice-link__more {
-      font-size: 2.46cqw; // 9.88 / 4.02
+      font-size: 3.03cqw; // 12.16 / 4.02（READ MORE 拡大に合わせて増量）
     }
 
     .c-ice-link__inner {

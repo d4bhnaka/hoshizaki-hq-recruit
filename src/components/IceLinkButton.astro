@@ -31,7 +31,11 @@ const {
 ---
 
 <a
-  class:list={["c-ice-link", { "c-ice-link--fluid": fluid }, className]}
+  class:list={[
+    "c-ice-link",
+    { "c-ice-link--fluid": fluid, "c-ice-link--readmore": !!sublabel },
+    className,
+  ]}
   href={href}
   {...rest}
 >

@@ -42,6 +42,7 @@ const trioCards = [
     pos: "whats",
     href: `${basePath}fact/`,
     en: ["What's", "HOSHIZAKI"],
+    ja: "数字で見るホシザキ",
     label: "数字で見る",
     img: `${basePath}images/top/sec01_img.png`,
     imgAlt: "飛ぶペンギン",
@@ -50,6 +51,7 @@ const trioCards = [
     pos: "beyond",
     href: `${basePath}strategy/`,
     en: ["Beyond", "HOSHIZAKI"],
+    ja: "ホシザキの事業戦略",
     label: "ホシザキの事業戦略",
     img: `${basePath}images/top/sec02_img.png`,
     imgAlt: "地球儀の中を泳ぐペンギン",
@@ -58,6 +60,7 @@ const trioCards = [
     pos: "team",
     href: `${basePath}job/`,
     en: ["Team", "HOSHIZAKI"],
+    ja: "ホシザキの職種紹介",
     label: "職種紹介",
     img: `${basePath}images/top/sec03_img.png`,
     imgAlt: "寄り添う3羽のペンギン",
@@ -305,6 +308,7 @@ const trioCards = [
               >
                 <span class="p-top-trio__en-line">{card.en[0]}</span>
                 <span class="p-top-trio__en-line">{card.en[1]}</span>
+                <span class="p-top-trio__ja-cap">{card.ja}</span>
               </p>
               <IceLinkButton
                 class={`p-top-trio__button p-top-trio__button--${card.pos}`}

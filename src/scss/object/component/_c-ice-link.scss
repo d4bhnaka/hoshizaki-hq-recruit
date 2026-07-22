@@ -26,7 +26,7 @@
 }
 
 // ステージ内で使うときはステージ幅に比例して拡縮する流体サイズ版。
-// 1600px 時に 207×200 / ラベル12px・READ MORE 26px と一致。
+// 1600px 時に 207×200 / READ MORE 32px と一致。
 // cqw の基準となる container-type: inline-size の祖先（ステージ）が必要。
 .c-ice-link--fluid {
   width: 12.9375cqw; // 207 / 16
@@ -37,7 +37,7 @@
   }
 
   .c-ice-link__more {
-    font-size: 1.625cqw; // 26 / 16
+    font-size: 2cqw; // 32 / 16
     line-height: 1;
   }
 }
@@ -110,7 +110,7 @@
 .c-ice-link__more {
   font-family: var(--font-family-display), var(--font-family-en);
   font-weight: 500;
-  font-size: 26px;
+  font-size: 32px;
   line-height: 1; // fluid 版と合わせ、ラベルとの間隔が開かないようにする
   letter-spacing: normal;
   color: var(--color-brand-navy);
@@ -118,4 +118,21 @@
   &::after {
     content: ' ›';
   }
+}
+
+// READ MORE 表示のボタン（sublabel あり）はラベルを視覚的に隠し、
+// READ MORE のみを氷塊の中央に大きく表示する。
+// ラベルはリンクのアクセシブルネームとして DOM には残す（sr-only）。
+// ※ 地図用の .c-ice-link--map は sublabel="" で修飾子が付かないため対象外。
+.c-ice-link--readmore .c-ice-link__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
 }
