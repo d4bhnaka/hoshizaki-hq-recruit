@@ -315,6 +315,33 @@
   gap: 40px;
 }
 
+// ストリーム内のトピック小見出し（食堂／独身寮など）。Q見出しより一段軽く、
+// 発言ブロック（padding-left: 41px）と左端を揃える。
+.p-crosstalk__subhead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 -12px;
+  padding-left: 41px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #000;
+
+  &::before {
+    content: "";
+    flex: 0 0 12px;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: #00c8ff;
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
 .p-crosstalk__comment {
   display: flex;
   align-items: flex-start;
@@ -567,6 +594,20 @@
 
   .p-crosstalk__stream {
     gap: 2.67em;
+  }
+
+  .p-crosstalk__subhead {
+    gap: 0.62em;
+    margin: 0.8em 0 -0.6em;
+    padding-left: 0;
+    font-size: 3.6vw;
+
+    &::before {
+      flex-basis: 0.62em;
+      width: 0.62em;
+      height: 0.62em;
+      border-radius: 0.18em;
+    }
   }
 
   .p-crosstalk__comment {
