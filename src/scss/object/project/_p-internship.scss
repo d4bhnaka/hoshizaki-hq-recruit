@@ -589,6 +589,15 @@
   line-height: 1.5;
 }
 
+// 出典脚注（※ 製氷機国内シェア No.1 の算出根拠など）
+.p-point__note {
+  width: min(1240px, 100% - var(--ip-gutter) * 2);
+  margin: clamp(14px, 1.6vw, 20px) auto 0;
+  font-size: clamp(11px, 1vw, 13px);
+  line-height: 1.7;
+  text-align: right;
+}
+
 // --------------------------------------------
 // PROGRAM
 // --------------------------------------------

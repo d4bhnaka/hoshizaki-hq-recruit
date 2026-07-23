@@ -24,6 +24,8 @@ export interface Course {
   title: string;
   image: string;
   points: Point[];
+  /** POINT 内の「※」に対応する出典脚注（例: シェア表記の算出根拠） */
+  pointsNote?: string;
   program: ProgramDay[];
   programOverview: OverviewItem[];
   voices: Voice[];
@@ -63,6 +65,7 @@ const penguins = ["penguin-03.png", "penguin-02.png", "penguin-01.png"];
         ))
       }
     </ul>
+    {course.pointsNote && <p class="p-point__note">{course.pointsNote}</p>}
   </section>
 
   <!-- PROGRAM -->
