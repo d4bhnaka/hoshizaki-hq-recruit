@@ -896,6 +896,12 @@
     left: 49.5625%;
     top: 56.152%;
   }
+  // Person（クライアント指示 2026-07-22: 「ここに決めた！」を他導線と揃え Person 見出しに変更）
+  // 星型フレーム写真の右に見出し＋キャプション＋ボタンを縦積み。
+  &--decided {
+    left: 43.7%;
+    top: 73.5%;
+  }
 }
 
 .p-top-trio__en-line {
@@ -932,49 +938,20 @@
     left: 77%;
     top: 58.585%;
   }
+  // Person 見出し・キャプションの真下に配置（2026-07-22 レイアウト調整）
   &--decided {
-    left: 39.375%;
-    top: 77.828%;
+    left: 43%;
+    top: 81.5%;
   }
-}
-
-// 先輩たちの (Figma 296:12640 x448 y5191) Noto Sans JP Regular 36.8px #00a0e9
-.p-top-trio__decided-lead {
-  position: absolute;
-  z-index: 3;
-  left: 28%;
-  top: 85.985%;
-  margin: 0;
-  font-family: var(--font-family-base);
-  font-weight: 400;
-  font-size: 2.3cqw; // 36.8 / 16
-  line-height: 1;
-  letter-spacing: 0.02em;
-  color: var(--color-brand-cyan-deep); // Figma #00a0e9（2026-06-12 クライアント指示で統一）
-  white-space: nowrap;
-}
-
-// 「ここに決めた！」筆文字グラフィック (Figma 470:1395 x453 y5259 w409, #00A0E9 SVG)
-.p-top-trio__decided-koko {
-  position: absolute;
-  z-index: 3;
-  left: 28.3125%;
-  top: 89.05%;
-  width: 25.5625%; // 409 / 1600
-  height: auto;
-  pointer-events: none;
-  user-select: none;
 }
 
 // ── SP 専用要素（PC では非表示。座標・サイズは ≤960px のメディアクエリ内） ──
 // 絹布テクスチャ背景 (Figma top_sp 431:4925 pixta_115239461)
 // 小さな氷キューブ 7 個 (Figma top_sp ice 10/7/14/15/16/17/18)
 // 「世界へ跳べ」(Figma top_sp 431:4938 — SP では Beyond HOSHIZAKI の代替)
-// 「先輩たちの『ここに決めた！』」テキスト 2 行 (Figma top_sp 431:4974)
 .p-top-trio__silk,
 .p-top-trio__cube-sp,
-.p-top-trio__ja-beyond,
-.p-top-trio__decided-sp {
+.p-top-trio__ja-beyond {
   display: none;
 }
 
@@ -1440,37 +1417,15 @@
     top: 63.037%; // 822 / 1304
   }
   .p-top-trio__button--decided {
-    left: 68.159%;
-    top: 85.123%; // 1110 / 1304
+    left: 46.159%;
+    top: 93.123%;
   }
 
-  // PC 用の「先輩たちの」+ 筆文字 SVG は SP ではテキスト 2 行に置き換え
-  .p-top-trio__decided-lead,
-  .p-top-trio__decided-koko {
-    display: none;
-  }
-
-  // 先輩たちの「ここに決めた！」 (Figma 431:4974 x164 y3068.4) 17.2px / 24.5px
-  .p-top-trio__decided-sp {
-    display: block;
-    position: absolute;
-    z-index: 3;
-    left: 40.796%; // 164 / 402
-    top: 91.591%; // 1194.4 / 1304
-    margin: 0;
-    font-family: var(--font-family-base);
-    font-weight: 400;
-    line-height: 7.144cqw; // 28.72 / 4.02
-    color: var(--color-brand-cyan-deep); // Figma SP は #00a0e9
-    white-space: nowrap;
-  }
-  .p-top-trio__decided-sp-line1 {
-    display: block;
-    font-size: 4.274cqw; // 17.18 / 4.02
-  }
-  .p-top-trio__decided-sp-line2 {
-    display: block;
-    font-size: 6.107cqw; // 24.55 / 4.02
+  // Person（他導線と揃えた英字見出し。星型フレーム写真の下に配置）
+  .p-top-trio__en--decided {
+    left: 9.453%; // 38 / 402
+    top: 93.9%;
+    font-size: 14.03cqw; // 56.4 / 4.02（team と同サイズ）
   }
 
   // --- S5 はたらく環境を知る: 402×516 ステージ (Figma y 3178–3694) ---

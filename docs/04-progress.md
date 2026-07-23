@@ -562,6 +562,14 @@ dist/
 - **共通化しなかった見出し（意図的に別デザインのため据え置き）**: internship `InternshipHeading`（中央寄せ・青地に白・英字先頭 COURSE/MESSAGE・アイコン無し＝独立レイアウト）、strategy "Life Beyond Borders" `p-strategy-pioneers__heading`（英字先頭・アイコン無し）、fact `p-fact__heading`（和文のみ＋専用の大きめ `fact/heading-icon.png`・特大英字無し）。
 - **検証**: `npm run build` 28ページ クリーンビルド。strategy／job の出力が `c-ice-heading`（`c-section-heading`＝0）、`ice-01.png` が `../images/common/` で解決、`style.css` から `c-section-heading` 消失。`data-astro-cid`／ルート絶対パス／インライン `<style>`（SVG内除く）＝0。ヘッドレス Chrome で strategy "Business Field"・job "Job" がアイスキューブ大見出しで描画されることを目視確認。
 
+### 2026-07-23 セッション: strategy 事業領域イラストをトンマナ準拠に刷新（クライアントFB対応）
+
+- **背景**: 事業領域図5ノードのイラスト（b7cb1a8 で GPT Image 生成）が「かわいすぎてサイトの雰囲気に合わない」とクライアント指摘。
+- **対応**: 大人っぽい・シンプル・スタイリッシュなフラットベクター調（顔なし・実寸大人比率・マット単色・輪郭線/グラデ無し）で全5枚を GPT Image (gpt-image-1) で再生成し `public/images/strategy/domain-*.png` を差し替え。各グループのアクセント1色はノード枠色（#00a0e9/#ef7d5e/#f2b134/#3bb98a/#7b83e0）に一致させた。
+- **生成方法の変更**: 前回の「1枚生成→透過分割」はグロー混入・見切れが出たため、**グループ個別生成＋共通スタイル前文**方式に変更。パイプラインは [`scripts/generate_domain_illustrations.py`](../scripts/generate_domain_illustrations.py) として保存（要 `.env` の `OPENAI_API_KEY`。実寸変更時は `strategy.astro` の `domains[].w/h` を追従）。中間生成物 `scripts/_domain_raw/` は gitignore 済み。
+- **コード変更**: [strategy.astro](../src/pages/strategy.astro) の `domains[].w` を実寸（267/189/122/119/276、h=400）に更新。SCSS 変更なし。
+- **検証**: dev サーバー＋ヘッドレス Chromium で PC(1440px)／SP(390px) の事業領域図を目視確認。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。

@@ -339,24 +339,13 @@ const trioCards = [
           data-inview
           style="--inview-i: 0"
         />
-        <p class="p-top-trio__decided-lead" data-inview style="--inview-i: 1">
-          先輩たちの
-        </p>
-        <img
-          class="p-top-trio__decided-koko"
-          src={`${basePath}images/top/koko-decided.svg`}
-          alt="「ここに決めた！」"
+        <p
+          class="p-top-trio__en p-top-trio__en--decided"
           data-inview
-          style="--inview-i: 2"
-        />
-
-        {
-          /* SP では筆文字 SVG ではなくテキスト 2 行（Figma top_sp 431:4974。PC では非表示） */
-        }
-        {/* PC では display:none なので読み上げが重複することはない */}
-        <p class="p-top-trio__decided-sp" data-inview style="--inview-i: 2">
-          <span class="p-top-trio__decided-sp-line1"> 先輩たちの</span>
-          <span class="p-top-trio__decided-sp-line2">「ここに決めた！」</span>
+          style="--inview-i: 1"
+        >
+          <span class="p-top-trio__en-line">Person</span>
+          <span class="p-top-trio__ja-cap">はたらく人を知る</span>
         </p>
         <IceLinkButton
           class="p-top-trio__button p-top-trio__button--decided"
