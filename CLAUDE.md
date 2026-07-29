@@ -69,3 +69,24 @@ All image assets live under `public/images/` and are served as-is (no hashing, n
 - `public/images/<page-id>/` — images used only on a single page. The directory name matches the page id (e.g. `top/`, `environment/`, `message/`, `person/`, `job/`, `fact/`, `requirement/`, `special/`, `strategy/`).
 
 When adding a new page-specific image, place it in the matching page-id directory; create a new `<page-id>/` folder if one doesn't exist yet. Reference images with relative paths consistent with the page's depth (e.g. `./images/common/logo.svg` from the index, `../images/common/logo.svg` from a subpage).
+
+### Format: WebP
+
+Raster images are **WebP** (`.webp`). The site originally shipped PNGs; they were converted
+because many are photos with a baked-in alpha channel (cutout portraits, 38px rounded-corner
+photos) that JPEG cannot represent. WebP keeps the alpha, so no CSS changes were needed, and
+cut the image payload by ~94%. Export new raster assets as WebP.
+
+Two deliberate exceptions, both of which must stay non-WebP:
+
+- `public/images/top/concept-movie-poster.png` — used as `og:image`. Some SNS crawlers still
+  handle WebP unreliably, so the OGP image stays PNG.
+- `public/favicon.ico`, `icon-192.png`, `icon-512.png`, `apple-touch-icon.png` — favicon/PWA
+  icons, which must remain ICO/PNG.
+
+## Video assets
+
+`public/videos/` holds only the **web-delivery** encode that ships in `dist/` (currently
+`hoshizaki_M.mp4`, 720p H.264, ~10.8MB). Uncompressed masters live in `video-master/` at the
+repo root, which is gitignored and outside `public/` so it never reaches the build. Never put
+a master back under `public/` — a 176MB file previously shipped in the handoff this way.

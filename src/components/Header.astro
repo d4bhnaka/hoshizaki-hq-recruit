@@ -8,7 +8,7 @@ interface Props {
 const {
   basePath = "./",
   variant = "light",
-  logoSrc = `${Astro.props.basePath ?? "./"}images/common/hoshizaki-logo-mark-header.png`,
+  logoSrc = `${Astro.props.basePath ?? "./"}images/common/hoshizaki-logo-mark-header.webp`,
 } = Astro.props;
 
 // 現在表示中のページを判定する。URL の先頭セグメントをキーにする。
@@ -172,7 +172,7 @@ const headerCtas = [
                     <span class="l-drawer__link-icon" aria-hidden="true">
                       {isCurrent && (
                         <img
-                          src={`${basePath}images/common/ice-01.png`}
+                          src={`${basePath}images/common/ice-01.webp`}
                           alt=""
                           onerror="this.style.display='none'"
                         />
@@ -200,7 +200,7 @@ const headerCtas = [
       </nav>
       <img
         class="l-drawer__bg"
-        src={`${basePath}images/common/nav_bg.png`}
+        src={`${basePath}images/common/nav_bg.webp`}
         alt=""
         aria-hidden="true"
       />

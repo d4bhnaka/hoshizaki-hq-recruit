@@ -22,9 +22,9 @@ const titleText = person.title.join("");
 const card = persons.find((p) => p.slug === person.slug);
 const jobType = card?.jobType ?? "";
 const entry = card ? entryLabel(card) : "";
-// 背景写真は人物切り抜き（person.photo: 例 "p09.png"）のフレーム番号と対応させる。
-// 例: p09.png → p-bg-09.jpg（slug ではなく Figma フレーム番号で対応）。
-const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.png$/i, ".jpg");
+// 背景写真は人物切り抜き（person.photo: 例 "p09.webp"）のフレーム番号と対応させる。
+// 例: p09.webp → p-bg-09.jpg（slug ではなく Figma フレーム番号で対応）。
+const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.webp$/i, ".jpg");
 ---
 
 <Layout

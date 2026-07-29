@@ -4,8 +4,8 @@
  * SPECIAL CONTENTS インデックスページ（`/special/`）の両方から参照する。
  *
  * 画像は配列インデックス（1 始まり）から導出する。参照側で basePath を前置する:
- *   背景:     `${basePath}images/special/0{n}.png`
- *   アバター:  `${basePath}images/special/sp0{n}_pic0{m}.png`
+ *   背景:     `${basePath}images/special/0{n}.webp`
+ *   アバター:  `${basePath}images/special/sp0{n}_pic0{m}.webp`
  */
 export interface SpecialStory {
   slug: "crosstalk" | "project" | "special-talk";

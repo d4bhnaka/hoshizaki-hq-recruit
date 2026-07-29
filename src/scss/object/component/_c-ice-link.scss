@@ -2,7 +2,7 @@
 // Component: アイスリンクボタン (六角〜八角の氷塊画像 + ラベル)
 //   Figma: LinkButtonIce (207 × 200) node 365:16915。
 //   マークアップは src/components/IceLinkButton.astro。
-//   `images/common/link-button-ice.png` を背景画像として読み込む。
+//   `images/common/link-button-ice.webp` を背景画像として読み込む。
 //   地図用の縮小版 `.c-ice-link--map` は strategy 専用のため
 //   object/project/_p-strategy.scss 側で拡張している。
 // ============================================
@@ -46,8 +46,8 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  -webkit-mask-image: url(../images/common/link-button-ice.png);
-  mask-image: url(../images/common/link-button-ice.png);
+  -webkit-mask-image: url(../images/common/link-button-ice.webp);
+  mask-image: url(../images/common/link-button-ice.webp);
   -webkit-mask-size: contain;
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;

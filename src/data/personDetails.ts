@@ -42,7 +42,7 @@ export const personDetails: PersonDetail[] = [
     initials: "Y.C",
     faculty: "工学部卒",
     title: ["「これはお母さんが", "作った製品だよ」と", "言える仕事。"],
-    photo: "p07.png",
+    photo: "p07.webp",
     photoWidth: 644,
     qa: [
       {
@@ -83,7 +83,7 @@ export const personDetails: PersonDetail[] = [
     initials: "Y.R",
     faculty: "工学研究科卒",
     title: ["確かな土台の上で、", "まだ誰もやっていない", "ことに挑む。"],
-    photo: "p05.png",
+    photo: "p05.webp",
     photoWidth: 634,
     qa: [
       {
@@ -120,7 +120,7 @@ export const personDetails: PersonDetail[] = [
     initials: "F.S",
     faculty: "理工学部卒",
     title: ["挑戦できる環境で、", "ものづくりを", "支える人になる。"],
-    photo: "p06.png",
+    photo: "p06.webp",
     photoWidth: 635,
     qa: [
       {
@@ -164,7 +164,7 @@ export const personDetails: PersonDetail[] = [
     initials: "S.T",
     faculty: "工学研究科卒",
     title: ["お客様の安心を、", "品質で支える。"],
-    photo: "p04.png",
+    photo: "p04.webp",
     photoWidth: 600,
     qa: [
       {
@@ -206,7 +206,7 @@ export const personDetails: PersonDetail[] = [
     initials: "M.J",
     faculty: "都市情報学部卒",
     title: ["「食」を支える、", "世界で挑み続ける", "強固な企業へ"],
-    photo: "p03.png",
+    photo: "p03.webp",
     photoWidth: 583,
     qa: [
       {
@@ -248,7 +248,7 @@ export const personDetails: PersonDetail[] = [
     initials: "K.A",
     faculty: "情報工学科卒",
     title: ["島根から世界へ。", "ものづくりで", "未来をつくる"],
-    photo: "p14.png",
+    photo: "p14.webp",
     photoWidth: 358,
     qa: [
       {
@@ -287,7 +287,7 @@ export const personDetails: PersonDetail[] = [
     initials: "T.D",
     faculty: "機械工学科卒",
     title: ["地元・島根に", "貢献したい想いが", "私の原点。"],
-    photo: "p13.png",
+    photo: "p13.webp",
     photoWidth: 600,
     qa: [
       {
@@ -326,7 +326,7 @@ export const personDetails: PersonDetail[] = [
     initials: "N.K",
     faculty: "理工学部卒",
     title: ["地元で、世界で。", "長く働ける", "会社を選んだ。"],
-    photo: "p01.png",
+    photo: "p01.webp",
     photoWidth: 600,
     qa: [
       {
@@ -367,7 +367,7 @@ export const personDetails: PersonDetail[] = [
     initials: "Y.K",
     faculty: "",
     title: ["安定供給で、", "お客様の期待に応える。"],
-    photo: "p15.png",
+    photo: "p15.webp",
     photoWidth: 600,
     qa: [
       {
@@ -409,7 +409,7 @@ export const personDetails: PersonDetail[] = [
     initials: "K.K",
     faculty: "工学部卒",
     title: ["自分の仕事が、", "暮らしの中で、", "形になる。"],
-    photo: "p02.png",
+    photo: "p02.webp",
     photoWidth: 600,
     qa: [
       {
@@ -451,7 +451,7 @@ export const personDetails: PersonDetail[] = [
     initials: "Y.S",
     faculty: "法学部卒",
     title: ["この人たちと働きたい。", "そう思えた会社。"],
-    photo: "p10.png",
+    photo: "p10.webp",
     photoWidth: 600,
     qa: [
       {
@@ -487,7 +487,7 @@ export const personDetails: PersonDetail[] = [
     initials: "H.R",
     faculty: "文学部卒",
     title: ["海外事業のさらなる拡大。", "そのミッションを", "実現へ導く。"],
-    photo: "p11.png",
+    photo: "p11.webp",
     photoWidth: 600,
     qa: [
       {
@@ -523,7 +523,7 @@ export const personDetails: PersonDetail[] = [
     initials: "W.W",
     faculty: "語学部卒",
     title: ["限界を決めない。", "挑戦が私の", "世界を広げる。"],
-    photo: "p12.png",
+    photo: "p12.webp",
     photoWidth: 549,
     qa: [
       {
@@ -560,7 +560,7 @@ export const personDetails: PersonDetail[] = [
     initials: "T.K",
     faculty: "体育学科卒",
     title: ["人を支える仕事で、", "信頼される存在に。"],
-    photo: "p09.png",
+    photo: "p09.webp",
     photoWidth: 692,
     qa: [
       {
@@ -596,7 +596,7 @@ export const personDetails: PersonDetail[] = [
     initials: "K.M",
     faculty: "外国語学部卒",
     title: ["語学を武器に、", "世界No.1へ挑む", "会社を選んだ。"],
-    photo: "p08.png",
+    photo: "p08.webp",
     photoWidth: 600,
     qa: [
       {

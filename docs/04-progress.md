@@ -570,6 +570,29 @@ dist/
 - **コード変更**: [strategy.astro](../src/pages/strategy.astro) の `domains[].w` を実寸（267/189/122/119/276、h=400）に更新。SCSS 変更なし。
 - **検証**: dev サーバー＋ヘッドレス Chromium で PC(1440px)／SP(390px) の事業領域図を目視確認。
 
+### 2026-07-29 セッション: 納品データ QA ＋ 配信容量の是正（動画差し替え・画像 WebP 化）
+
+- **背景**: 納品前 QA として「ビルド出力が Astro に依存しない完全な編集可能データか」を検証。構造面は全項目合格だったが、**配信容量に致命的な問題**が見つかった（`dist` が 389MB）。
+- **QA 結果（構造面・すべて合格）**: `data-astro-cid` / `astro-island` / `_astro` / `assets/` = 0、ハッシュ付きファイル名 = 0、ソースマップ = 0、インライン `<style>` = 0、`type="module"` = 0、ルート絶対パス = 0、外部 CDN 依存 = 0、空 CSS ルール = 0、`<img>` の alt 欠落 = 0、h1 は全 28 ページで 1 個。参照 1,798 件すべて解決（リンク切れ 0）。`/saiyou/` サブディレクトリ配信を実際に再現して全ページ確認済み。JS は素の IIFE（`main.js` / vendored Swiper）でモジュール依存なし。
+- **修正1: 動画** — トップのコンセプトムービーが **176MB の原版**（`hoshizaki_01.mp4` / 1080p / 13Mbps）を参照していた。圧縮版 `hoshizaki_M.mp4`（720p / 10.8MB / faststart 済み）に差し替え（[index.astro](../src/pages/index.astro)）。原版と未使用の `_S.mp4` は `video-master/`（gitignore・`public/` の外）へ退避。**原版を `public/videos/` に戻さないこと。**
+- **修正2: 画像を WebP 化** — 100KB 超の PNG 113 枚を調査した結果、**79 枚が透過ありの切り抜き**（人物写真・図版・ペンギン）で JPEG 化不可、残り 34 枚も **38px の角丸が画像に焼き込まれ**（CSS 側に `border-radius` は無い）ていたため、JPEG ではなく **WebP** を採用。透過も角丸もそのまま保持されるので **CSS 変更は不要**だった。`public/images/**/*.png` 174 枚を WebP へ変換（フラットな図版・グラデは可逆 WebP と q92 の小さい方、写真は q80）。**86.2MB → 5.1MB（94% 削減）**。
+  - 参照の書き換えは 2 段階。①`images/...png` の実パス（astro / ts / scss、`url()` 内含む）→ 26 ファイル 82 箇所。②`"ap_03.png"` `photo: "p07.png"` のように**変数で組み立てられる基名だけの参照** → 13 ファイル 97 箇所。②を取りこぼすとリンク切れになるので注意。併せて [`[slug].astro`](../src/pages/person/) の `bgImage` 導出（`.replace(/\.png$/i, ".jpg")`）を `.webp` へ追従。
+  - **非 WebP のまま残す例外**: `images/top/concept-movie-poster.png`（`og:image`。SNS クローラの WebP 対応が不安定なため）、`favicon.ico` / `icon-192.png` / `icon-512.png` / `apple-touch-icon.png`。
+  - **画質検証**: git から元 PNG を復元して画素比較。アルファチャネルは**完全一致（差 0）**、可視画素のみで測った PSNR は 37〜52dB で視覚的に無劣化。※ 全画素での PSNR は透明領域の未定義 RGB に引きずられて 15dB 等の低値が出るため、**α>0 の画素だけで評価すること**。
+- **修正3: 不要物の削除** — `top/_layout-ref.png`（デザイン参照用）、`top/top_penguins.png`、`top/link-button-ice_01〜06.png` を削除。`public/videos/.DS_Store` も除去。
+- **結果**: `dist` **389MB → 73.6MB（81% 削減）**。
+- **検証**: `npm run build:production` → リンクチェッカーで参照 1,798 件すべて解決を確認、`/saiyou/` 配信でヘッドレス Chromium から**全 28 ページ・531 画像を HEAD リクエストで検査し切れ 0**、コンソールエラー 0。
+- **JPG は現状維持（2026-07-29 ユーザー判断）**: `public/images` の JPG 71 枚（30.6MB）は変換していない。WebP q82 なら 4.6MB（85% 削減）で `dist` は約 48MB まで下がるため、さらに軽くしたくなった場合の第一候補。大半は `environment/office-tour/` の拠点写真（1〜2MB/枚）。
+- **未参照ファイル 17 件（1.9MB）を残置**（用途判断が付かないため）: `special/crosstalk/02.webp`（01/03/04 のみ使用＝意図的スキップ）、`environment/office-tour/unnan/u02.jpg`、`strategy/contrib-*.webp` 5 件・`people-illust.webp`・`pioneer-georgia-01.jpg`、`common/hoshizaki-logo-mark-r.webp` ほか。
+
+### セルフホスト Web フォントの検証（2026-07-29）
+
+M2-F4 で移行済みのセルフホストフォントを納品 QA の一環で実測検証した。**追加の作業は不要**。
+
+- Google Fonts（`fonts.googleapis.com` / `fonts.gstatic.com`）への参照はソース・出力とも **0 件**。
+- トップページ実測で `document.fonts` に 133 face が宣言され、実際にダウンロードされたのは **Noto Sans JP 28 チャンク＋Barlow Condensed 4 ウェイトのみ**。`unicode-range` 分割が意図どおり機能している。
+- `Noto Sans JP` / `Barlow Condensed` とも canvas 実測で monospace と字幅が異なる＝**実フォントが適用されている**（フォールバックに落ちていない）。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。

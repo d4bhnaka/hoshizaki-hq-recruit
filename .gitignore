@@ -6,6 +6,9 @@ public/videos/*.mp4
 public/videos/*.mov
 public/videos/*.webm
 
+# 動画の原版（未圧縮マスター）。配信しないので public/ の外に置く
+video-master/
+
 # compiled CSS (generated from src/scss/style.scss)
 public/css/style.css
 

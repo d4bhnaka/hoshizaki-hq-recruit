@@ -24,11 +24,11 @@ const heroBodyLines = [
 
 // 飛ぶペンギン（Figma `penguins` フレーム 296:12720 の各 ap_0x）
 const heroPenguins = [
-  { n: 3, img: "ap_03.png" },
-  { n: 4, img: "ap_04.png" },
-  { n: 1, img: "ap_01.png" },
-  { n: 2, img: "ap_02.png" },
-  { n: 5, img: "ap_05.png" },
+  { n: 3, img: "ap_03.webp" },
+  { n: 4, img: "ap_04.webp" },
+  { n: 1, img: "ap_01.webp" },
+  { n: 2, img: "ap_02.webp" },
+  { n: 5, img: "ap_05.webp" },
 ];
 
 // S3 装飾氷キューブの視差速度（data-parallax / main.js initParallax が参照）。
@@ -44,7 +44,7 @@ const trioCards = [
     en: ["What's", "HOSHIZAKI"],
     ja: "数字で見るホシザキ",
     label: "数字で見る",
-    img: `${basePath}images/top/sec01_img.png`,
+    img: `${basePath}images/top/sec01_img.webp`,
     imgAlt: "飛ぶペンギン",
   },
   {
@@ -53,7 +53,7 @@ const trioCards = [
     en: ["Beyond", "HOSHIZAKI"],
     ja: "ホシザキの事業戦略",
     label: "ホシザキの事業戦略",
-    img: `${basePath}images/top/sec02_img.png`,
+    img: `${basePath}images/top/sec02_img.webp`,
     imgAlt: "地球儀の中を泳ぐペンギン",
   },
   {
@@ -62,7 +62,7 @@ const trioCards = [
     en: ["Team", "HOSHIZAKI"],
     ja: "ホシザキの職種紹介",
     label: "職種紹介",
-    img: `${basePath}images/top/sec03_img.png`,
+    img: `${basePath}images/top/sec03_img.webp`,
     imgAlt: "寄り添う3羽のペンギン",
   },
 ];
@@ -164,7 +164,7 @@ const trioCards = [
         {/* 都市イラスト（下端・背景） */}
         <img
           class="p-top-hero__city"
-          src={`${basePath}images/top/bg-city.png`}
+          src={`${basePath}images/top/bg-city.webp`}
           alt=""
           aria-hidden="true"
         />
@@ -173,19 +173,19 @@ const trioCards = [
         {/* 透過PNGをスクリーン合成・不透明度80%で空に重ねる（_p-top.scss） */}
         <img
           class="p-top-hero__cloud p-top-hero__cloud--left"
-          src={`${basePath}images/top/cloud02.png`}
+          src={`${basePath}images/top/cloud02.webp`}
           alt=""
           aria-hidden="true"
         />
         <img
           class="p-top-hero__cloud p-top-hero__cloud--center"
-          src={`${basePath}images/top/cloud01.png`}
+          src={`${basePath}images/top/cloud01.webp`}
           alt=""
           aria-hidden="true"
         />
         <img
           class="p-top-hero__cloud p-top-hero__cloud--right"
-          src={`${basePath}images/top/cloud03.png`}
+          src={`${basePath}images/top/cloud03.webp`}
           alt=""
           aria-hidden="true"
         />
@@ -195,13 +195,13 @@ const trioCards = [
         }
         <img
           class="p-top-hero__cloud p-top-hero__cloud--sp-l"
-          src={`${basePath}images/common/hero-cloud.png`}
+          src={`${basePath}images/common/hero-cloud.webp`}
           alt=""
           aria-hidden="true"
         />
         <img
           class="p-top-hero__cloud p-top-hero__cloud--sp-r"
-          src={`${basePath}images/common/hero-cloud.png`}
+          src={`${basePath}images/common/hero-cloud.webp`}
           alt=""
           aria-hidden="true"
         />
@@ -231,7 +231,7 @@ const trioCards = [
         />
         <img
           class="p-top-pioneer__visual"
-          src={`${basePath}images/top/pioneer.png`}
+          src={`${basePath}images/top/pioneer.webp`}
           alt=""
           aria-hidden="true"
         />
@@ -264,7 +264,7 @@ const trioCards = [
           trioCubeSpeeds.map((speed, idx) => (
             <img
               class={`p-top-trio__cube p-top-trio__cube--${idx + 1}`}
-              src={`${basePath}images/top/ice_cubes_0${idx + 1}.png`}
+              src={`${basePath}images/top/ice_cubes_0${idx + 1}.webp`}
               alt=""
               aria-hidden="true"
               data-parallax={speed}
@@ -282,7 +282,7 @@ const trioCards = [
           [1, 2, 3, 4, 5, 6, 7].map((n) => (
             <img
               class={`p-top-trio__cube-sp p-top-trio__cube-sp--${n}`}
-              src={`${basePath}images/top/ice_cube_sp.png`}
+              src={`${basePath}images/top/ice_cube_sp.webp`}
               alt=""
               aria-hidden="true"
               loading="lazy"
@@ -334,7 +334,7 @@ const trioCards = [
         {/* 先輩たちの「ここに決めた！」 */}
         <img
           class="p-top-trio__img p-top-trio__img--decided"
-          src={`${basePath}images/top/sec04_img.png`}
+          src={`${basePath}images/top/sec04_img.webp`}
           alt="星型の氷フレームに収まった先輩社員たち"
           data-inview
           style="--inview-i: 0"
@@ -374,7 +374,7 @@ const trioCards = [
       />
       <img
         class="p-top-env__photo p-top-env__photo--sp"
-        src={`${basePath}images/top/section-bg-environment_sp.png`}
+        src={`${basePath}images/top/section-bg-environment_sp.webp`}
         alt=""
         aria-hidden="true"
         loading="lazy"
@@ -450,7 +450,7 @@ const trioCards = [
             poster={`${basePath}images/top/concept-movie-poster.png`}
           >
             <source
-              src={`${basePath}videos/hoshizaki_01.mp4`}
+              src={`${basePath}videos/hoshizaki_M.mp4`}
               type="video/mp4"
             />
             お使いのブラウザは動画の再生に対応していません。

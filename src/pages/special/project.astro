@@ -12,18 +12,18 @@ const members = [
     name: "O.Y",
     dept: "生産技術",
     year: "1997年入社",
-    photo: `${base}images/special/project/p01.png`,
+    photo: `${base}images/special/project/p01.webp`,
   },
   {
     name: "S.Y",
     dept: "開発設計",
     year: "2016年入社",
-    photo: `${base}images/special/project/p02.png`,
+    photo: `${base}images/special/project/p02.webp`,
   },
 ];
 
 // コメントのアバターは参加メンバーの顔写真 p01〜p02.png（1=O.Y / 2=S.Y）
-const avatarSrc = (n: number) => `${base}images/special/project/p0${n}.png`;
+const avatarSrc = (n: number) => `${base}images/special/project/p0${n}.webp`;
 const memberName = (n: number) => members[n - 1].name;
 
 const qa = [
@@ -43,7 +43,7 @@ const qa = [
         body: "開発設計の「必要不可欠」と、生産技術の「量産で成立させる」。どちらも譲れないところからのスタートでした。しかも、ホシザキとして前例のない初めての挑戦だったので、お手本がない。そこが一番の難所だったと思います。",
       },
     ],
-    image: `${base}images/special/project/01.png`,
+    image: `${base}images/special/project/01.webp`,
   },
   {
     q: "開発設計の「こうしたい」という思想と、生産技術の「こうつくる」という現実。両者が最も上手く噛み合ったと感じた具体的なエピソードを教えてください。",
@@ -65,7 +65,7 @@ const qa = [
         body: "工場試作では生産技術の方だけでなく、実際に手を動かす作業者の方からも意見をいただけます。お互いの譲れないポイントを尊重しながら案を擦り合わせ、試作を重ねて……。粘り強く続けた末に、ようやく量産可能な形として測定孔を成立させられた。あの瞬間は、設計の思想と現場の知恵がぴたりと噛み合った実感がありました。",
       },
     ],
-    image: `${base}images/special/project/02.png`,
+    image: `${base}images/special/project/02.webp`,
   },
   {
     q: "職種を超えて協働する中で再認識した、ホシザキのものづくりに根付く「譲れないこだわり」とは何だと思いますか？",
@@ -83,7 +83,7 @@ const qa = [
         body: "いやいや（笑）。彼女はとにかく明るくて前向きで、一緒に仕事をしていて本当に楽しかったですよ。そういう人柄に、現場も自然と力を貸したくなるんです。",
       },
     ],
-    image: `${base}images/special/project/03.png`,
+    image: `${base}images/special/project/03.webp`,
   },
   {
     q: "このプロジェクトを経て、今後どのようなものづくりに挑んでいきたいですか？未来の技術者（学生）へのメッセージとあわせてお願いします。",
@@ -97,7 +97,7 @@ const qa = [
         body: "ひとつの製品を世に送り出すには、設計、生産技術、製造……たくさんの部署が力を合わせる必要があります。楽しさも苦労もありますが、その分やりがいは大きい。新しいものが立ち上がって世の中に出ていく瞬間は、何度経験してもうれしいものです。今回は苦労した分、達成感もひとしおでした。学生の皆さんには、職種の垣根を越えて「一緒に良いものをつくろう」と言い合える、この環境の面白さを、ぜひ知ってほしいですね。",
       },
     ],
-    image: `${base}images/special/project/04.png`,
+    image: `${base}images/special/project/04.webp`,
   },
 ];
 ---
@@ -115,7 +115,7 @@ const qa = [
           <div class="p-project-story__hero-inner">
             <figure class="p-project-story__kv" data-inview="pop">
               <img
-                src={`${base}images/special/project/kv.png`}
+                src={`${base}images/special/project/kv.webp`}
                 alt="生産技術のベテラン社員と設計の若手社員が対談する様子"
                 loading="eager"
               />
@@ -221,7 +221,7 @@ const qa = [
                   aria-hidden="true"
                 >
                   <img
-                    src={`${base}images/special/project/icon-ice.png`}
+                    src={`${base}images/special/project/icon-ice.webp`}
                     alt=""
                     width="48"
                     height="48"
@@ -247,7 +247,7 @@ const qa = [
               style="--inview-i: 3"
             >
               <img
-                src={`${base}images/special/project/product.png`}
+                src={`${base}images/special/project/product.webp`}
                 alt="薬品の保管に使われる薬用保冷庫と、保管対象の薬瓶・注射器"
                 loading="lazy"
               />
