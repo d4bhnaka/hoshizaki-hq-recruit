@@ -177,7 +177,7 @@
 
 .p-strategy-domains__stage {
   position: relative;
-  width: min(100%, 580px);
+  width: min(100%, 700px);
   margin: 60px auto 0;
   aspect-ratio: 1 / 1;
 }
@@ -248,7 +248,7 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
-  width: clamp(146px, 27vw, 198px);
+  width: clamp(175px, 32.4vw, 238px);
   aspect-ratio: 1 / 1;
   padding: 6px;
   box-sizing: border-box;
@@ -294,16 +294,50 @@
 }
 
 .p-strategy-domains__node-label {
-  font-size: clamp(12px, 1.5vw, 15px);
+  font-size: clamp(18px, 2.25vw, 22.5px);
   font-weight: 700;
   line-height: 1.25;
   color: var(--color-brand-navy);
 }
 
 .p-strategy-domains__node-sub {
-  font-size: clamp(9px, 1.1vw, 11px);
+  font-size: clamp(13.5px, 1.65vw, 16.5px);
   line-height: 1.2;
   color: var(--color-text-secondary);
+}
+
+// 図の下の外部リンク（fact の .c-stat-card__award-link と同デザインのピル型）
+.p-strategy-domains__cta {
+  margin: 40px 0 0;
+  text-align: center;
+}
+
+.p-strategy-domains__cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px clamp(18px, 2vw, 24px);
+  border-radius: 999px;
+  background: var(--color-brand-cyan-deep);
+  color: var(--color-text-inverse);
+  font-size: clamp(13px, 1.2vw, 15px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color var(--transition-base);
+
+  &:hover {
+    background: #007fb8; // cyan-deep より一段暗く
+  }
+
+  &:hover .p-strategy-domains__cta-arrow {
+    transform: translateX(4px);
+  }
+}
+
+.p-strategy-domains__cta-arrow {
+  transition: transform var(--transition-base);
 }
 
 // --- 出現アニメーション（.inview-ready ＆ .is-inview のときだけ） ---
