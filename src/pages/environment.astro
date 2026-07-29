@@ -37,7 +37,7 @@ const trainingCards = [
 ];
 
 // --------------------------------------------
-// Benefits (Figma 福利厚生 — 8 枚) — アイコンは Feather 系（stroke #2C82BB）
+// Benefits (Figma 福利厚生 — 12 枚) — アイコンは Feather 系（stroke #2C82BB）
 // --------------------------------------------
 const svg = (inner: string) =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true">${inner}</svg>`;
@@ -75,6 +75,9 @@ const benefitIcons: Record<string, string> = {
   ),
   monitor: svg(
     '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
+  ),
+  utensils: svg(
+    '<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>',
   ),
 };
 
@@ -139,6 +142,11 @@ const benefits: BenefitItem[] = [
     title: "テレワーク勤務制度",
     body: "在宅勤務などを導入し、柔軟で働きやすい環境づくりを進めています。",
     icon: "monitor",
+  },
+  {
+    title: "食事補助",
+    body: "会社補助により、食堂を安く利用できます。朝食・夕食も利用可能です。",
+    icon: "utensils",
   },
 ];
 
