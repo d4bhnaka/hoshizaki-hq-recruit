@@ -216,8 +216,11 @@
   opacity: 0.42;
 }
 // Figma: 「受賞回数」を上部へ、「15」を月桂冠の中心に重ねる
+// 受賞カテゴリ・ボタンを追加した分、数字を含む3要素を1グループとして中央寄せする
+// （number 単体を絶対中央固定にすると、カード高が足りないモバイルでテキスト/ボタンと衝突するため）
 .c-stat-card--award .c-stat-card__main {
-  justify-content: center; // 15 を冠の中心に
+  justify-content: center;
+  gap: clamp(12px, 1.6vw, 18px);
 }
 .c-stat-card--award .c-stat-card__sub {
   position: absolute;
@@ -233,6 +236,48 @@
 // 受賞「回」は大きめ（Figma 57px）
 .c-stat-card--award .c-stat-card__unit {
   font-size: clamp(30px, 3.8vw, 57px);
+}
+
+// 受賞歴：受賞カテゴリの列挙（数字の下）
+// 通常フローに置き、.c-stat-card__main の justify-content: center でグループごと中央寄せする。
+// 絶対配置だとカード高に対して固定オフセットになり、カードが低いモバイルでボタンと重なる。
+.c-stat-card__award-list {
+  position: relative;
+  z-index: 2;
+  width: 84%;
+  margin: 0;
+  font-size: clamp(12px, 1.1vw, 15px);
+  font-weight: 500;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+// 受賞歴：外部サイト（ホシザキデザインサイト）への導線ボタン
+.c-stat-card__award-link {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px clamp(18px, 2vw, 24px);
+  border-radius: 999px;
+  background: var(--stat-tab);
+  color: var(--color-text-inverse);
+  font-size: clamp(13px, 1.2vw, 15px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: background-color var(--transition-base);
+}
+.c-stat-card__award-link:hover {
+  background: #007fb8; // stat-tab より一段暗く
+}
+.c-stat-card__award-link-arrow {
+  transition: transform var(--transition-base);
+}
+.c-stat-card__award-link:hover .c-stat-card__award-link-arrow {
+  transform: translateX(4px);
 }
 
 // 業界シェア：王冠を上に、製氷機をうっすら背面（opacity 0.2）
@@ -524,6 +569,15 @@
 // 育児カードは横長なので説明文も広く取る（Figma 662px ≒ 2行）
 .c-benefit--childcare .c-stat-card__desc {
   max-width: 41em;
+}
+
+// 自己都合退職率：全幅カード。数字に合わせ説明文ブロックも中央寄せ
+.c-benefit--retention .c-benefit__row {
+  justify-content: center;
+}
+.c-benefit--retention .c-stat-card__desc {
+  max-width: 41em;
+  margin-inline: auto;
 }
 .c-stat-card__figure-label {
   display: block;

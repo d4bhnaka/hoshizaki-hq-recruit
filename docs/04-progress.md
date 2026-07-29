@@ -593,6 +593,15 @@ M2-F4 で移行済みのセルフホストフォントを納品 QA の一環で�
 - トップページ実測で `document.fonts` に 133 face が宣言され、実際にダウンロードされたのは **Noto Sans JP 28 チャンク＋Barlow Condensed 4 ウェイトのみ**。`unicode-range` 分割が意図どおり機能している。
 - `Noto Sans JP` / `Barlow Condensed` とも canvas 実測で monospace と字幅が異なる＝**実フォントが適用されている**（フォールバックに落ちていない）。
 
+### 2026-07-29 セッション: fact ページ「製品の評価」カードのクライアントFB反映
+
+- **背景**: クライアントFBに基づき、fact ページ成長セクションの受賞歴カード（`.c-stat-card--award`）を更新。
+- **数値更新**: 受賞回数 15回→22回、社員数 1,157名→1,227名（[fact.astro](../src/pages/fact.astro)）。
+- **新規追加**: 受賞カテゴリ列挙テキスト「グッドデザイン賞・省エネ大賞・地球温暖化防止賞」と、外部サイト（`https://www.hoshizaki.co.jp/design/`、`target="_blank"`）への遷移ボタン「ホシザキデザインサイト →」をカード下部に追加。Figma に該当ノードが無い新規要素のため、既存トークン（`--stat-tab` / `--color-text-secondary` / `--transition-base`）を使い既存デザインと統一感のある見た目で実装。新規クラスは `.c-stat-card__award-list` / `.c-stat-card__award-link` / `.c-stat-card__award-link-arrow`（[`_c-stat-card.scss`](../src/scss/object/component/_c-stat-card.scss)）。
+- **モバイル表示崩れの修正（同日）**: 初回実装では数字・列挙テキスト・ボタンの3要素をそれぞれ独立した `position: absolute` ＋固定 px オフセットで配置しており、カード高が `min-height: 320px` に縮むモバイルではオフセットの前提が崩れてテキストとボタンが重なっていた。`.c-stat-card__award-list` / `.c-stat-card__award-link` を通常フローに戻し、`.c-stat-card--award .c-stat-card__main` の `justify-content: center` ＋ `gap` で数字を含む3要素を1グループとして中央寄せする方式に変更（カードに `max-height` が無いため、必要なら自然に縦へ伸びて衝突を回避する）。デスクトップでの「22」と月桂冠背景の視覚的な中心合わせも維持されることを確認。
+- **検証**: `npm run build`（28 ページ）／`data-astro-cid` 0 件／ルート絶対パス 0 件／Playwright で PC（1280px）・SP（375×667・320×667）の実測 bounding box とスクリーンショットで重なりが無いことを確認、リンク先 `href` も確認。
+- **福利厚生に「自己都合退職率」カードを追加（同日・クライアントFB）**: 育児休暇取得率の下に 5 枚目のベネフィットカード `.c-benefit--retention` を新設（数字 1.9％＋説明文、アイコン無し。文言はクライアント支給のまま）。グリッドは 6 カラムの 3 段目・全幅（`grid-column: span 6`、[`_p-fact.scss`](../src/scss/object/project/_p-fact.scss)。SP の `grid-column: 1 / -1` リストにも追加）。数字は中央寄せ・説明文は `max-width: 41em` ＋ `margin-inline: auto` でブロックごと中央に（[`_c-stat-card.scss`](../src/scss/object/component/_c-stat-card.scss)）。`data-countup` 対応（既存実装が小数対応済み）。PC 1280px／SP 375px で表示確認、ビルド QA 全項目 0 件。
+
 ### 既知の未完タスク（次エージェントが拾うべき優先課題）
 
 1. **アセット入稿待ち（最優先）** — 全ページが画像参照を持つが、現状は多くがプレースホルダパス。Figma から書き出して各 `public/images/<page>/` 配下に配置する必要がある。詳細は [M6-A1](#m6-下層ページ実装) と各ページ仕様（[07-spec-subpages.md](./07-spec-subpages.md)）を参照。

@@ -158,6 +158,9 @@
 .p-fact__benefits .c-benefit--childcare {
   grid-column: span 4;
 }
+.p-fact__benefits .c-benefit--retention {
+  grid-column: span 6; // 3段目・全幅
+}
 
 // --------------------------------------------
 // Breadcrumb wrapper
@@ -197,7 +200,8 @@
   .p-fact__benefits .c-benefit--tenure,
   .p-fact__benefits .c-benefit--overtime,
   .p-fact__benefits .c-benefit--vacation,
-  .p-fact__benefits .c-benefit--childcare {
+  .p-fact__benefits .c-benefit--childcare,
+  .p-fact__benefits .c-benefit--retention {
     grid-column: 1 / -1;
   }
   .p-fact__intro-text {
