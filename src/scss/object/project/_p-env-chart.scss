@@ -1,0 +1,355 @@
+// ============================================
+// Project: Environment Page - 教育研修制度 図表
+// (HTMLインフォグラフィック版の研修体系図)
+// 左：階層列（役員〜新入社員）
+// 右：階層別研修 / 目的別研修 / オーダー研修 の3パネル
+// ============================================
+
+.p-env-chart {
+  --chart-blue-head: #2f80b5; // パネルタイトル帯
+  --chart-blue-sub: #35709c; // サブ見出し帯
+  --chart-box: #c9e5f5; // 研修ボックス
+  --chart-green: #62b76b; // 階層（左列）
+  --chart-gray: #ececec; // 説明帯
+  --chart-border: #aaa; // パネル枠線
+  --chart-heading: #2b9fd8; // オーダー研修の小見出し
+  --chart-head-h: 160px; // パネルヘッダー高（levels列のオフセット）
+  --chart-r1: 60px; // 役員
+  --chart-r2: 112px; // 部長
+  --chart-r3: 112px; // 課長
+  --chart-r4: 112px; // 係長
+
+  margin: clamp(28px, 3.5vw, 44px) 0 0;
+  color: #333;
+  line-height: 1.5;
+}
+
+.p-env-chart__grid {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 1rem;
+}
+
+// --------------------------------------------
+// 左：階層列
+// --------------------------------------------
+.p-env-chart__levels {
+  display: grid;
+  grid-template-rows: var(--chart-head-h) var(--chart-r1) var(--chart-r2) var(--chart-r3) var(--chart-r4) 1fr 12px;
+  row-gap: 8px;
+}
+
+// モバイル時のみ目的別研修の左に表示する複製（デスクトップでは非表示）
+.p-env-chart__levels--purpose {
+  display: none;
+}
+
+.p-env-chart__level {
+  background: var(--chart-green);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.p-env-chart__level--yakuin { grid-row: 2; }
+.p-env-chart__level--bucho { grid-row: 3; }
+.p-env-chart__level--kacho { grid-row: 4; }
+.p-env-chart__level--kakaricho { grid-row: 5; }
+
+.p-env-chart__level--staff {
+  grid-row: 6;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px 8px;
+  gap: 24px;
+}
+
+.p-env-chart__level-label {
+  letter-spacing: 0.05em;
+}
+
+// 上向き矢印
+.p-env-chart__arrow {
+  flex: 1;
+  width: 3px;
+  background: #fff;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.p-env-chart__arrow::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 14px solid #fff;
+}
+
+// --------------------------------------------
+// パネル共通
+// --------------------------------------------
+.p-env-chart__panel {
+  border: 1px solid var(--chart-border);
+  border-radius: 12px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.p-env-chart__panel-title {
+  margin: 0;
+  height: 44px;
+  background: var(--chart-blue-head);
+  color: #fff;
+  font-size: 19px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.1em;
+}
+
+.p-env-chart__panel-desc {
+  margin: 0;
+  min-height: 68px;
+  background: var(--chart-gray);
+  font-size: 13.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 12px;
+}
+
+.p-env-chart__subheads {
+  height: 38px;
+  display: grid;
+  column-gap: 8px;
+  padding: 0 10px;
+  margin-top: 8px;
+}
+
+.p-env-chart__subhead {
+  background: var(--chart-blue-sub);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+}
+
+.p-env-chart__body {
+  flex: 1;
+  min-height: 780px;
+  display: grid;
+  grid-template-rows: var(--chart-r1) var(--chart-r2) var(--chart-r3) var(--chart-r4) 1fr;
+  row-gap: 8px;
+  column-gap: 8px;
+  padding: 8px 10px 12px;
+}
+
+// 研修ボックス
+.p-env-chart__box {
+  background: var(--chart-box);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 10px 4px;
+}
+
+.p-env-chart__box-note {
+  font-size: 10.5px;
+  font-weight: 600;
+  margin-top: 6px;
+  white-space: nowrap;
+}
+
+// --------------------------------------------
+// パネル1：階層別研修
+// --------------------------------------------
+.p-env-chart__panel--hierarchy .p-env-chart__subheads,
+.p-env-chart__panel--hierarchy .p-env-chart__body {
+  grid-template-columns: 1fr 1fr 44px;
+}
+
+.p-env-chart__box--shinnin-bucho { grid-column: 1; grid-row: 2; }
+.p-env-chart__box--shinnin-kacho { grid-column: 1; grid-row: 3; }
+.p-env-chart__box--shinnin-kakaricho { grid-column: 1; grid-row: 4; }
+
+// 「新任◯責任者研修」(8文字) が1行で収まるサイズ
+.p-env-chart__box--shinnin-bucho,
+.p-env-chart__box--shinnin-kacho,
+.p-env-chart__box--shinnin-kakaricho {
+  font-size: 12px;
+}
+.p-env-chart__box--eval360 { grid-column: 2; grid-row: 1 / 5; }
+
+.p-env-chart__staffzone {
+  grid-column: 2;
+  grid-row: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.p-env-chart__staffzone .p-env-chart__box {
+  flex: 1;
+}
+
+.p-env-chart__box--compliance {
+  grid-column: 3;
+  grid-row: 1 / 6;
+  writing-mode: vertical-rl;
+  font-size: 16px;
+  letter-spacing: 0.35em;
+  padding: 16px 4px;
+}
+
+// --------------------------------------------
+// パネル2：目的別研修
+// --------------------------------------------
+.p-env-chart__panel--purpose .p-env-chart__subheads,
+.p-env-chart__panel--purpose .p-env-chart__body {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+// 「グローバル人材」が1行で収まるよう少し小さく
+.p-env-chart__panel--purpose .p-env-chart__subhead {
+  font-size: 12px;
+}
+
+.p-env-chart__box--keieisha { grid-column: 1; grid-row: 1 / 4; align-self: start; height: 100%; }
+.p-env-chart__box--global { grid-column: 2; grid-row: 3 / 6; }
+.p-env-chart__box--josei-yakushoku { grid-column: 3; grid-row: 3 / 5; }
+.p-env-chart__box--josei-suishin { grid-column: 3; grid-row: 5; align-self: start; min-height: 200px; width: 100%; }
+
+// --------------------------------------------
+// パネル3：オーダー研修
+// --------------------------------------------
+.p-env-chart__panel--order .p-env-chart__panel-desc {
+  min-height: 96px;
+}
+
+.p-env-chart__order-body {
+  flex: 1;
+  padding: 20px 26px 24px;
+  font-size: 14.5px;
+}
+
+.p-env-chart__order-section + .p-env-chart__order-section {
+  border-top: 2px solid var(--chart-heading);
+  margin-top: 18px;
+  padding-top: 16px;
+}
+
+.p-env-chart__order-title {
+  margin: 0 0 8px;
+  color: var(--chart-heading);
+  font-size: 16.5px;
+  font-weight: 700;
+}
+
+.p-env-chart__order-section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.p-env-chart__order-section li {
+  padding-left: 1em;
+  text-indent: -1em;
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+
+.p-env-chart__order-section li::before {
+  content: "・";
+}
+
+// --------------------------------------------
+// モバイル（〜960px）：
+// 「階層列 + 階層別研修」を横並びのまま、
+// 目的別研修 → オーダー研修 を下に縦積み
+// --------------------------------------------
+@media screen and (max-width: 960px) {
+  .p-env-chart {
+    --chart-head-h: 138px;
+    --chart-r1: 48px;
+    --chart-r2: 96px;
+    --chart-r3: 96px;
+    --chart-r4: 96px;
+  }
+
+  .p-env-chart__grid {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .p-env-chart__levels { grid-column: 1; grid-row: 1; row-gap: 6px; }
+  .p-env-chart__panel--hierarchy { grid-column: 2; grid-row: 1; }
+  .p-env-chart__levels--purpose { display: grid; grid-column: 1; grid-row: 2; }
+  .p-env-chart__panel--purpose { grid-column: 2; grid-row: 2; }
+  .p-env-chart__panel--order { grid-column: 1 / 3; grid-row: 3; }
+
+  .p-env-chart__panel-title { height: 40px; font-size: 16px; }
+  .p-env-chart__panel-desc { min-height: 58px; font-size: 11.5px; padding: 6px 8px; }
+  .p-env-chart__subheads { height: 32px; margin-top: 6px; padding: 0 8px; column-gap: 6px; }
+  .p-env-chart__subhead { font-size: 11px; }
+
+  .p-env-chart__body {
+    min-height: 620px;
+    padding: 6px 8px 10px;
+    row-gap: 6px;
+    column-gap: 6px;
+  }
+
+  .p-env-chart__box { font-size: 11.5px; padding: 8px 4px; border-radius: 3px; }
+  .p-env-chart__box--shinnin-bucho,
+  .p-env-chart__box--shinnin-kacho,
+  .p-env-chart__box--shinnin-kakaricho {
+    font-size: 10.5px;
+    letter-spacing: 0;
+  }
+  .p-env-chart__box-note { font-size: 9.5px; white-space: nowrap; }
+  .p-env-chart__level { font-size: 12px; border-radius: 3px; }
+  .p-env-chart__level--staff { padding: 16px 4px; gap: 16px; }
+
+  .p-env-chart__panel--hierarchy .p-env-chart__subheads,
+  .p-env-chart__panel--hierarchy .p-env-chart__body {
+    grid-template-columns: 1fr 1fr 34px;
+  }
+
+  .p-env-chart__box--compliance { font-size: 13px; padding: 10px 2px; letter-spacing: 0.25em; }
+
+  // 目的別研修（モバイルでは複製した階層列と横並びになり幅が狭い）
+  .p-env-chart__panel--purpose .p-env-chart__body { min-height: 520px; }
+  .p-env-chart__panel--purpose .p-env-chart__subhead {
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+  .p-env-chart__panel--purpose .p-env-chart__box {
+    font-size: 11px;
+    letter-spacing: 0;
+  }
+  .p-env-chart__box--josei-suishin { min-height: 140px; }
+
+  .p-env-chart__order-body { padding: 14px 16px 18px; font-size: 12.5px; }
+  .p-env-chart__order-title { font-size: 14px; }
+  .p-env-chart__panel--order .p-env-chart__panel-desc { min-height: 76px; }
+}
