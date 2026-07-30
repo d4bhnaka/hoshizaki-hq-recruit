@@ -47,4 +47,5 @@ __pycache__/
 # Basic auth password file (never commit)
 .htpasswd
 scripts/_domain_raw/
+scripts/_course05_raw/
 
