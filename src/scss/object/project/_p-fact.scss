@@ -175,6 +175,22 @@
 // --------------------------------------------
 // Responsive
 // --------------------------------------------
+// 1100px 以下では見出しの font-size / padding / アイコン幅の clamp が
+// 順に下限へ張り付き、アイコン(38px)がテキストの padding-left(22px)を
+// 上回るため文字に重なる。この帯はアイコンを一段小さくし、
+// padding をアイコン幅に合わせて取り直す（タイトルと補足は左端を揃える）。
+@media (max-width: 1100px) {
+  .p-fact__heading-mark {
+    width: 32px;
+    left: -6px;
+    top: -2px;
+  }
+  .p-fact__heading-title,
+  .p-fact__heading-note {
+    padding-left: 32px;
+  }
+}
+
 @media (max-width: 920px) {
   .p-fact__bento {
     display: grid;
@@ -188,11 +204,10 @@
   .p-fact__bento .c-stat-card {
     aspect-ratio: auto;
   }
-  // 福利厚生の下段: タブレットでは 3列だと狭すぎるため 2列＋全幅に落とす
+  // 福利厚生の下段: タブレット以下では 3列だと狭すぎるため、
+  // 3枚とも同じ全幅で縦積みにする（1枚だけ大きく見えないよう統一）
   .p-fact__benefits .c-benefit--vacation,
-  .p-fact__benefits .c-benefit--childcare {
-    grid-column: span 3;
-  }
+  .p-fact__benefits .c-benefit--childcare,
   .p-fact__benefits .c-benefit--retention {
     grid-column: span 6;
   }

@@ -180,12 +180,15 @@
   }
 }
 
+// 920px 以下は aspect-ratio が外れる。高さは中身に任せ、
+// 短いカードが間延びしない下限だけ残す（数字の拡大は最下部のブロック参照）
 @media (max-width: 920px) {
   .c-stat-card {
-    min-height: 220px;
+    min-height: 180px;
   }
-  .c-stat-card--tall {
-    min-height: 320px;
+  .c-stat-card--tall,
+  .c-stat-card--benefit {
+    min-height: 0;
   }
 }
 
@@ -369,6 +372,11 @@
   font-size: clamp(58px, 7.5vw, 112px); // Figma 112px
 }
 .c-stat-card__people {
+  // カードは aspect-ratio 442/314 で幅に比例して低くなるため、
+  // 人物アイコンも同じ勾配で縮めないと下端がカードから切れる
+  // （〜1100px で最大 25px はみ出していた）
+  --people-h: clamp(40px, calc(12.5vw - 72px), 116px);
+
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -378,11 +386,11 @@
   img {
     display: block;
     width: auto;
-    height: clamp(78px, 9vw, 116px);
+    height: var(--people-h);
     opacity: 0.6;
   }
   img:nth-child(2) {
-    height: clamp(86px, 10vw, 128px);
+    height: calc(var(--people-h) * 1.1);
     margin: 0 -2px;
   }
 }
@@ -558,14 +566,22 @@
   justify-content: center;
   flex: 0 0 auto;
 }
+.c-benefit--childcare .c-benefit__split {
+  margin-bottom: clamp(24px, 3vw, 44px); // ペンギンの下と説明文の間に余白を確保
+}
+// 1/3幅で2つの数字を並べるため、左右パディングは他カードより詰める
+// （〜1000px では標準の 4vw だと数字が枠外へ 10px はみ出していた）
+.c-benefit--childcare {
+  padding-inline: clamp(14px, 2vw, 56px);
+}
 .c-benefit--childcare .c-stat-card__num {
-  font-size: clamp(44px, 4.6vw, 68px);
+  font-size: clamp(50px, 5.4vw, 80px);
 }
 .c-benefit--childcare .c-stat-card__unit--pct {
-  font-size: clamp(20px, 2.2vw, 32px);
+  font-size: clamp(24px, 2.6vw, 38px);
 }
 .c-benefit--childcare .c-stat-card__figure-label {
-  font-size: clamp(14px, 1.4vw, 20px);
+  font-size: clamp(15px, 1.5vw, 22px);
 }
 .c-benefit--childcare .c-benefit__icon {
   position: absolute;
@@ -573,7 +589,7 @@
   top: 50%;
   z-index: 0;
   transform: translate(-50%, -50%);
-  width: clamp(88px, 8.6vw, 128px);
+  width: clamp(72px, 8.6vw, 128px);
   opacity: 0.9;
 }
 
@@ -592,4 +608,224 @@
   font-weight: 700;
   text-align: center; // 数字の中央に合わせる
   color: var(--stat-ink);
+}
+
+
+// --------------------------------------------
+// 920px 以下: 数字を主役にする
+//
+// desktop 用の clamp はすべて vw 基準のため、bento が 2 列（〜920px）や
+// 1 列（〜600px）になるとカード幅は 340〜350px 前後まで戻るのに、
+// 数字だけが下限（58〜74px）に張り付いて小さく見え、min-height 分の
+// 余白だけが残っていた。ここでは数字をカード幅に追従させて拡大する。
+//
+// --card-vw = カード幅の目安（2列なら 0.5vw、全幅なら 1vw）。
+// 各数字は calc(var(--card-vw) * 係数) で指定し、上限は px で止める。
+// --------------------------------------------
+@media (max-width: 920px) {
+  .c-stat-card {
+    --card-vw: 0.5vw; // bento は 2 列 = 画面幅の約半分
+  }
+
+  .c-stat-card__main {
+    // 数字は line-height 0.86 で字面がボックス外へ出るため、
+    // 下端が詰まって見えないよう下余白を厚めに取る
+    padding-bottom: 28px;
+    gap: 8px;
+  }
+
+  // 共通スケール
+  .c-stat-card__num {
+    font-size: min(calc(var(--card-vw) * 26), 116px);
+  }
+  .c-stat-card__prefix,
+  .c-stat-card__unit {
+    font-size: min(calc(var(--card-vw) * 6.4), 27px);
+  }
+  .c-stat-card__sub {
+    font-size: min(calc(var(--card-vw) * 5.6), 24px);
+  }
+  .c-stat-card__unit--pct {
+    font-size: min(calc(var(--card-vw) * 10), 44px);
+  }
+  .c-stat-card__suffix {
+    font-size: min(calc(var(--card-vw) * 3.9), 16px);
+  }
+
+  // 歴史：右上の時計 + 左下の数字という desktop の構成のまま数字だけ拡大
+  .c-stat-card--history .c-stat-card__num {
+    font-size: min(calc(var(--card-vw) * 27), 120px);
+  }
+
+  // 受賞歴：数字を拡大すると絶対配置の「受賞回数」に重なるため、
+  // 通常フローに戻して数字の真上に置く
+  .c-stat-card--award .c-stat-card__num {
+    font-size: min(calc(var(--card-vw) * 31), 140px);
+  }
+  .c-stat-card--award .c-stat-card__unit {
+    font-size: min(calc(var(--card-vw) * 9), 40px);
+  }
+  .c-stat-card--award .c-stat-card__sub {
+    position: static;
+    transform: none;
+  }
+  .c-stat-card--award .c-stat-card__main {
+    gap: 10px;
+  }
+
+  .c-stat-card--share .c-stat-card__num {
+    font-size: min(calc(var(--card-vw) * 28), 124px);
+  }
+  .c-stat-card__crown {
+    width: min(calc(var(--card-vw) * 26), 116px);
+  }
+
+  // 売上高：桁数が多く1行に収まらないので折り返しを許可しつつ数字を拡大
+  .c-stat-card__figure--sales {
+    flex-wrap: wrap;
+    white-space: normal;
+
+    .c-stat-card__num {
+      font-size: min(calc(var(--card-vw) * 14), 62px);
+    }
+    .c-stat-card__unit {
+      font-size: min(calc(var(--card-vw) * 6), 26px);
+    }
+  }
+
+  .c-stat-card--domestic .c-stat-card__num {
+    font-size: min(calc(var(--card-vw) * 28), 124px);
+  }
+  .c-stat-card__figure--stack .c-stat-card__unit {
+    font-size: min(calc(var(--card-vw) * 6.2), 26px);
+  }
+
+  .c-stat-card--products .c-stat-card__num {
+    font-size: min(calc(var(--card-vw) * 24), 106px);
+  }
+
+  .c-stat-card--staff .c-stat-card__num {
+    font-size: min(calc(var(--card-vw) * 25), 110px);
+  }
+  .c-stat-card__people {
+    --people-h: min(calc(var(--card-vw) * 19), 84px);
+  }
+
+  .c-stat-card--overseas .c-stat-card__num {
+    font-size: min(calc(var(--card-vw) * 29), 130px);
+  }
+  .c-stat-card--overseas .c-stat-card__unit--pct {
+    font-size: min(calc(var(--card-vw) * 12), 54px);
+  }
+  .c-stat-card--overseas .c-stat-card__main {
+    gap: 16px;
+  }
+  .c-stat-card__pie {
+    width: min(calc(var(--card-vw) * 40), 176px);
+  }
+  .c-stat-card__pie-label {
+    font-size: min(calc(var(--card-vw) * 5.4), 23px);
+  }
+
+  // グローバル展開：「世界 120」を1行、単位は下段に回して数字を大きく
+  .c-stat-card__figure--global {
+    flex-wrap: wrap;
+
+    .c-stat-card__num {
+      font-size: min(calc(var(--card-vw) * 26), 114px);
+    }
+  }
+  .c-stat-card__unit--stack {
+    width: 100%;
+    text-align: center;
+    font-size: min(calc(var(--card-vw) * 5.6), 24px);
+  }
+
+  // --- 福利厚生カード ---
+  // 有給・育児・退職率は全幅（p-fact 側で span 6）なのでカード幅の目安が変わる
+  .c-benefit--vacation,
+  .c-benefit--childcare,
+  .c-benefit--retention {
+    --card-vw: 1vw;
+  }
+
+  .c-stat-card--benefit {
+    .c-stat-card__num {
+      font-size: min(calc(var(--card-vw) * 27), 118px);
+    }
+  }
+  .c-benefit--tenure .c-stat-card__unit {
+    font-size: min(calc(var(--card-vw) * 8), 34px);
+  }
+  .c-benefit--overtime .c-stat-card__unit {
+    font-size: min(calc(var(--card-vw) * 5.6), 24px);
+  }
+
+  // 数字を大きくすると勤続の左のアイコンが数字に重なるため、
+  // アイコンはラベルと同じ高さの右上へ退避させる
+  // （育児のペンギンは数字の間に置く designなので除外）
+  .c-benefit__row {
+    position: static; // アイコンの絶対配置の基準を行からカードへ移す
+    justify-content: center;
+  }
+  .c-stat-card--benefit:not(.c-benefit--childcare) .c-benefit__icon {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    left: auto;
+    transform: none;
+    width: min(calc(var(--card-vw) * 15), 88px);
+  }
+
+  // 育児：2つの数字＋中央のペンギン
+  .c-benefit--childcare .c-stat-card__num {
+    font-size: min(calc(var(--card-vw) * 18), 82px);
+  }
+  .c-benefit--childcare .c-stat-card__unit--pct {
+    font-size: min(calc(var(--card-vw) * 7.4), 32px);
+  }
+  .c-benefit--childcare .c-stat-card__figure-label {
+    font-size: min(calc(var(--card-vw) * 4.6), 20px);
+  }
+  .c-benefit--childcare .c-benefit__icon {
+    width: min(calc(var(--card-vw) * 25), 108px);
+  }
+}
+
+// --------------------------------------------
+// 600px 以下（1カラム）: カード幅 = 画面幅なので係数の基準を戻し、
+// 余白を詰めて数字の表示領域を最大化する
+// --------------------------------------------
+@media (max-width: 600px) {
+  .c-stat-card {
+    --card-vw: 1vw; // 1 列 = 画面幅いっぱい
+  }
+
+  .c-stat-card__main {
+    padding-top: 58px;
+  }
+
+  .c-stat-card--benefit {
+    padding: 24px 22px 26px;
+
+    .c-stat-card__label {
+      margin-bottom: 14px;
+    }
+    .c-stat-card__desc {
+      font-size: 15px;
+      line-height: 1.75;
+    }
+  }
+
+  .c-benefit__row {
+    margin-bottom: 18px;
+  }
+  .c-stat-card--benefit:not(.c-benefit--childcare) .c-benefit__icon {
+    width: min(calc(var(--card-vw) * 15), 66px);
+  }
+
+  // 女性/男性ラベルを含む最大幅で決まるため、狭幅では左右パディングも詰める
+  .c-benefit--childcare {
+    padding-inline: 18px;
+  }
 }
