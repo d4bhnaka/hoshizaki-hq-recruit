@@ -138,7 +138,7 @@
 }
 
 // --------------------------------------------
-// Benefits grid（2行 / 上=50:50・下=33:67）
+// Benefits grid（2行 / 上=50:50・下=有給/育児/退職 各1/3）
 // --------------------------------------------
 .p-fact__benefits {
   display: grid;
@@ -156,10 +156,10 @@
   grid-column: span 2;
 }
 .p-fact__benefits .c-benefit--childcare {
-  grid-column: span 4;
+  grid-column: span 2;
 }
 .p-fact__benefits .c-benefit--retention {
-  grid-column: span 6; // 3段目・全幅
+  grid-column: span 2;
 }
 
 // --------------------------------------------
@@ -187,6 +187,14 @@
   // 高さ揃えをやめてカード単位で並べる
   .p-fact__bento .c-stat-card {
     aspect-ratio: auto;
+  }
+  // 福利厚生の下段: タブレットでは 3列だと狭すぎるため 2列＋全幅に落とす
+  .p-fact__benefits .c-benefit--vacation,
+  .p-fact__benefits .c-benefit--childcare {
+    grid-column: span 3;
+  }
+  .p-fact__benefits .c-benefit--retention {
+    grid-column: span 6;
   }
 }
 

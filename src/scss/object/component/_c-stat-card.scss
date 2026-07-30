@@ -543,12 +543,13 @@
   width: clamp(54px, 5.7vw, 86px);
 }
 
-// 育児：女性・男性の2数字 + 中央にペンギン親子（Figma 201×204）
+// 育児：女性・男性の2数字 + 中央にペンギン親子
 // ペンギンは数字の間に重なるよう中央に絶対配置し、行高は数字で決める
+// 1/3幅カードに収めるため、数字・ラベル・ペンギンは他カードより縮小
 .c-benefit--childcare .c-benefit__split {
   position: relative;
   justify-content: space-between;
-  gap: clamp(8px, 2vw, 24px);
+  gap: clamp(8px, 1vw, 16px);
 }
 .c-benefit--childcare .c-stat-card__figure {
   position: relative;
@@ -557,27 +558,31 @@
   justify-content: center;
   flex: 0 0 auto;
 }
+.c-benefit--childcare .c-stat-card__num {
+  font-size: clamp(44px, 4.6vw, 68px);
+}
+.c-benefit--childcare .c-stat-card__unit--pct {
+  font-size: clamp(20px, 2.2vw, 32px);
+}
+.c-benefit--childcare .c-stat-card__figure-label {
+  font-size: clamp(14px, 1.4vw, 20px);
+}
 .c-benefit--childcare .c-benefit__icon {
   position: absolute;
   left: 50%;
   top: 50%;
   z-index: 0;
   transform: translate(-50%, -50%);
-  width: clamp(120px, 13.5vw, 201px);
+  width: clamp(88px, 8.6vw, 128px);
   opacity: 0.9;
 }
-// 育児カードは横長なので説明文も広く取る（Figma 662px ≒ 2行）
-.c-benefit--childcare .c-stat-card__desc {
-  max-width: 41em;
-}
 
-// 自己都合退職率：全幅カード。数字に合わせ説明文ブロックも中央寄せ
-.c-benefit--retention .c-benefit__row {
-  justify-content: center;
-}
-.c-benefit--retention .c-stat-card__desc {
-  max-width: 41em;
-  margin-inline: auto;
+// 自己都合退職率：人物＋ハートのアイコンを右上に（有給と同じ配置）
+.c-benefit--retention .c-benefit__icon {
+  position: absolute;
+  top: clamp(-6px, -0.4vw, 0px);
+  right: clamp(8px, 2vw, 28px);
+  width: clamp(68px, 7.2vw, 108px);
 }
 .c-stat-card__figure-label {
   display: block;
