@@ -161,6 +161,27 @@
   color: var(--color-text-secondary);
 }
 
+// 勤務地など、値の後に続く補足の注釈（※〜）
+.p-req__desc-annotations {
+  display: block;
+  margin-top: 8px;
+}
+
+.p-req__desc-annotation {
+  display: block;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+// 待遇・福利厚生など、値の後に続く関連ページへのボタンリンク
+.p-req__desc-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
 .p-req__tier-group {
   display: block;
 
@@ -197,6 +218,12 @@
   color: var(--color-text-primary);
 }
 
+// 見出しを持たずリード文から始まるカードは、.p-req__row:first-child と
+// 同じ 24px を確保し、テーブルから始まるカードと天面の余白を揃える。
+.p-req__card-lead:first-child {
+  margin-top: 24px;
+}
+
 .p-req__card-heading {
   margin: 24px 0 4px;
   font-size: 16px;
@@ -214,12 +241,140 @@
   }
 }
 
-.p-req__flow {
-  margin: 12px 0 0;
+// 選考コースと職種テーブルなど、カード内の値の後に続く関連ページへのボタンリンク
+.p-req__card-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+// --------------------------------------------
+// Selection flow infographic (選考の流れ)
+//   1（一次面接＋適性検査）→ 2（二次面接）→ 3（最終面接）の3ステージ。
+//   ステージ1のみ2つの選考が並行して行われるため箱を2つ「+」で連結する。
+// --------------------------------------------
+.p-req-flow__sr-summary {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.p-req-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px 10px;
+  margin: 24px 0;
+  padding: 24px 0;
+  border-top: 1px solid #e4e9ec;
+}
+
+.p-req-flow__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.p-req-flow__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-brand-cyan-deep);
+  color: var(--color-text-inverse);
+  font-family: var(--font-family-en);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.p-req-flow__group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.p-req-flow__box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 116px;
+  padding: 16px 12px;
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-brand-blue-200);
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+}
+
+.p-req-flow__title {
+  margin: 0;
   font-size: 15px;
   font-weight: 700;
-  line-height: 1.8;
   color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+}
+
+.p-req-flow__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px;
+  border-radius: var(--border-radius-pill);
+  background: var(--color-brand-blue-100);
+  color: var(--color-brand-navy);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+.p-req-flow__badge--onsite {
+  background: var(--color-brand-navy);
+  color: var(--color-text-inverse);
+}
+
+.p-req-flow__plus {
+  flex: 0 0 auto;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-brand-cyan-deep);
+}
+
+.p-req-flow__arrow {
+  position: relative;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 2px;
+  margin-top: 20px; // ステージ番号ぶん、箱の中心高さに合わせる
+  background: var(--color-brand-cyan-deep);
+}
+
+.p-req-flow__arrow::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid var(--color-brand-cyan-deep);
+  border-right: 2px solid var(--color-brand-cyan-deep);
+  transform: translateY(-50%) rotate(45deg);
 }
 
 // --------------------------------------------
@@ -281,8 +436,49 @@
     line-height: 1.8;
   }
 
-  .p-req__card-lead,
-  .p-req__flow {
+  .p-req__card-lead {
     font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 840px) {
+  .p-req-flow {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .p-req-flow__stage {
+    // stage の幅を明示的に確定させ、box の width:80% がこの幅を基準に
+    // 一貫して解決されるようにする（box を直接持つ stage 2・3 と、
+    // group 経由で box を持つ stage 1 とでブレないようにするため）。
+    width: 100%;
+  }
+
+  .p-req-flow__group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .p-req-flow__box {
+    width: 80%;
+    max-width: 320px;
+  }
+
+  .p-req-flow__plus {
+    transform: rotate(90deg);
+  }
+
+  .p-req-flow__arrow {
+    width: 2px;
+    height: 28px;
+    margin-top: 0;
+  }
+
+  .p-req-flow__arrow::after {
+    left: 50%;
+    right: auto;
+    top: auto;
+    bottom: -1px;
+    transform: translateX(-50%) rotate(135deg);
   }
 }

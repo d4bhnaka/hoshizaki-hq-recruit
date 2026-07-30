@@ -1,0 +1,32 @@
+// ============================================
+// c-button — 丸ピル型の遷移ボタン（ラベル＋矢印）
+// p-strategy-domains__cta-link / c-stat-card__award-link と同じ意匠を
+// 3箇所目の利用にあたって共通コンポーネント化。
+// ============================================
+.c-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px clamp(18px, 2vw, 24px);
+  border-radius: 999px;
+  background: var(--color-brand-cyan-deep);
+  color: var(--color-text-inverse);
+  font-size: clamp(13px, 1.2vw, 15px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color var(--transition-base);
+}
+
+.c-button:hover {
+  background: #007fb8; // cyan-deep より一段暗く
+}
+
+.c-button:hover .c-button__arrow {
+  transform: translateX(4px);
+}
+
+.c-button__arrow {
+  transition: transform var(--transition-base);
+}

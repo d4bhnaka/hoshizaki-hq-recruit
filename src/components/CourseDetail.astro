@@ -1,5 +1,6 @@
 ---
 import InternshipHeading from "./InternshipHeading.astro";
+import MyPageLink from "./MyPageLink.astro";
 
 interface Point {
   num: string;
@@ -39,6 +40,10 @@ interface Props {
 
 const { course, index, basePath = "./" } = Astro.props;
 const penguins = ["penguin-03.webp", "penguin-02.webp", "penguin-01.webp"];
+
+// 開催概要の本文（「選考」行など）に出てくる「マイページ」は、
+// 採用マイページへのリンクに差し替える。
+const MYPAGE_LABEL = "マイページ";
 ---
 
 <div
@@ -112,7 +117,12 @@ const penguins = ["penguin-03.webp", "penguin-02.webp", "penguin-01.webp"];
               {item.value.map((line, i) => (
                 <Fragment>
                   {i > 0 && <br />}
-                  {line}
+                  {line.split(MYPAGE_LABEL).map((segment, j) => (
+                    <Fragment>
+                      {j > 0 && <MyPageLink />}
+                      {segment}
+                    </Fragment>
+                  ))}
                 </Fragment>
               ))}
             </dd>
