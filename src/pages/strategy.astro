@@ -17,7 +17,8 @@ const ratio = {
 };
 
 // 事業領域の広がり — ホシザキのロゴマークを中心に据えたハブ&スポーク図
-// ノードは中心から等間隔の円周上に配置。座標は frontmatter で算出し、CSS 変数として渡す。
+// ノードは中心から等間隔の円周上に配置。frontmatter では角度の単位ベクトル（--cx/--cy）
+// だけを渡し、中心からの距離は CSS 側の --domain-radius が持つ（画面幅で可変にするため）。
 const domains = [
   {
     label: "病院・福祉",
@@ -55,15 +56,14 @@ const domains = [
     h: 400,
   },
 ];
-const DOMAIN_RADIUS = 37; // ステージ中心からノード中心までの距離（ステージ幅に対する %）
 const domainNodes = domains.map((d, i) => {
   const angle = -90 + (360 / domains.length) * i; // 真上を起点に時計回り
   const rad = (angle * Math.PI) / 180;
   return {
     ...d,
     i,
-    x: +(50 + DOMAIN_RADIUS * Math.cos(rad)).toFixed(2),
-    y: +(50 + DOMAIN_RADIUS * Math.sin(rad)).toFixed(2),
+    cx: +Math.cos(rad).toFixed(4),
+    cy: +Math.sin(rad).toFixed(4),
     angle: +angle.toFixed(2),
   };
 });
@@ -371,7 +371,7 @@ const pioneers = [
                   domainNodes.map((n) => (
                     <div
                       class="p-strategy-domains__node"
-                      style={`--x:${n.x}%;--y:${n.y}%;--i:${n.i};--accent:${n.color}`}
+                      style={`--cx:${n.cx};--cy:${n.cy};--i:${n.i};--accent:${n.color}`}
                     >
                       <img
                         class="p-strategy-domains__node-illust"

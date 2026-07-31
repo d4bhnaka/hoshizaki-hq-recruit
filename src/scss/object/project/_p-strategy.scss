@@ -149,7 +149,8 @@
 
 // --------------------------------------------
 // 事業領域の広がり（当社を中心としたハブ&スポーク図 / イラスト不使用・CSS のみ）
-//   ・ノードは frontmatter で算出した円周座標を --x/--y で受け取り絶対配置
+//   ・ノードは frontmatter の単位ベクトル --cx/--cy と、ステージが持つ半径
+//     --domain-radius から円周座標を calc して絶対配置（スマホでは半径だけ縮める）
 //   ・スポーク（中心→ノードの点線）は --angle で回転、scaleX で伸びる
 //   ・出現アニメは data-inview="fade" でステージ全体に .is-inview が付いてから
 //     子要素を順次再生（.inview-ready ゲートが無い＝低モーション時は静止表示）
@@ -176,6 +177,7 @@
 }
 
 .p-strategy-domains__stage {
+  --domain-radius: 37%; // ステージ中心からノード中心までの距離（ステージ幅比）
   position: relative;
   width: min(100%, 700px);
   margin: 60px auto 0;
@@ -203,7 +205,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 37%; // = DOMAIN_RADIUS（ステージ幅比）
+  width: var(--domain-radius);
   height: 2px;
   background: linear-gradient(
     to right,
@@ -240,8 +242,8 @@
 // 領域ノード（白い円 + アクセントの縁）
 .p-strategy-domains__node {
   position: absolute;
-  top: var(--y);
-  left: var(--x);
+  top: calc(50% + var(--cy) * var(--domain-radius));
+  left: calc(50% + var(--cx) * var(--domain-radius));
   z-index: 3;
   display: flex;
   flex-direction: column;
@@ -888,49 +890,43 @@
     padding: 12px 8px;
   }
 
-  // 円周レイアウトが窮屈になるため、当社を上に据えた縦積みグリッドへ切替
+  // 事業領域の「広がり」を伝える図なので、スマホでも PC と同じ放射状レイアウトを維持。
+  // 半径（--domain-radius）とノード径をステージ幅比に切り替え、図全体を等比縮小する。
+  // ノードの外縁は 50% + 32% + 15.5% = 97.5% でステージ内に収まる。
   .p-strategy-domains__stage {
-    aspect-ratio: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    max-width: 380px;
-  }
-
-  .p-strategy-domains__ripple,
-  .p-strategy-domains__spoke {
-    display: none;
-  }
-
-  // 縦積みでは絶対配置と出現アニメを無効化（.inview-ready ゲートより優先）
-  .p-strategy-domains__hub,
-  .p-strategy-domains__node {
-    position: static;
-    transform: none !important;
-    opacity: 1 !important;
-    animation: none !important;
+    --domain-radius: 32%;
+    width: min(100%, 420px);
+    margin-top: 32px;
   }
 
   .p-strategy-domains__hub {
-    grid-column: 1 / -1;
-    justify-self: center;
-    width: clamp(112px, 36vw, 148px);
+    width: 23%;
+
+    img {
+      filter: drop-shadow(0 5px 10px rgba(0, 47, 95, 0.28));
+    }
   }
 
   .p-strategy-domains__node {
-    // static だとテクスチャ疑似要素の inset: 0 がステージ全体に広がるため、
-    // relative + inset: auto で絶対配置だけを無効化する
-    position: relative;
-    inset: auto;
-    width: 100%;
-    aspect-ratio: auto;
-    min-height: 88px;
-    border-radius: 16px;
-    padding: 12px 10px;
+    width: 31%;
+    padding: 4px;
+    border-width: 2px;
+    box-shadow: 0 5px 12px rgba(0, 47, 95, 0.12);
+  }
 
-    &:hover {
-      transform: none;
-    }
+  .p-strategy-domains__node-illust {
+    height: clamp(32px, 9.5vw, 46px);
+    margin-bottom: 0;
+  }
+
+  .p-strategy-domains__node-label {
+    font-size: clamp(11px, 3.3vw, 14px);
+    line-height: 1.2;
+  }
+
+  // 円周の下端とステージ下辺の余白ぶん、リンクを図に寄せる
+  .p-strategy-domains__cta {
+    margin-top: 16px;
   }
 
   .p-strategy-contrib__list {
@@ -984,5 +980,15 @@
   // 海外展開マップ：スマホでは地図上の氷アイコンを非表示（市場名は地図直下のカードが担う）
   .p-strategy-global__map-link {
     display: none;
+  }
+}
+
+// 小型スマホでは放射図が窮屈になるため、セクションの左右パディング分だけ外へ張り出す。
+// この幅（≤420px）では inner 幅 + 24px が上の max-width 420px を超えないため、
+// 常に幅ぴったりで中央に収まる。
+@media screen and (max-width: 420px) {
+  .p-strategy-domains__stage {
+    width: calc(100% + 24px);
+    margin-inline: -12px;
   }
 }

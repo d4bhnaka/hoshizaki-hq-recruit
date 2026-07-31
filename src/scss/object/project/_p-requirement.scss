@@ -252,10 +252,10 @@
 
 // --------------------------------------------
 // Selection flow infographic (選考の流れ)
-//   1（書類選考）→ 2（一次面接＋適性検査）→ 3（二次面接）→ 4（最終面接）の4ステージ。
-//   ステージ2のみ2つの選考が並行して行われるため箱を2つ「+」で連結する。
-//   カード内寸（800px − padding 56px×2 = 688px）に4ステージを1行で収めるため、
-//   箱幅と列 gap は控えめな値にしてある。
+//   書類選考 → 一次面接・適性検査 → 二次面接 → 最終面接 の4ステップ。
+//   ステップ番号は置かず、同じ大きさの箱を矢印で連結して見せる。
+//   箱は flex: 1 1 0 で等幅、align-items: stretch で等高に揃える
+//   （中身の行数が違っても高さが揃うよう、箱の中は縦中央寄せ）。
 // --------------------------------------------
 .p-req-flow__sr-summary {
   position: absolute;
@@ -273,50 +273,23 @@
 .p-req-flow {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
-  gap: 20px 8px;
+  gap: 20px 6px;
   margin: 24px 0;
   padding: 24px 0;
   border-top: 1px solid #e4e9ec;
 }
 
-.p-req-flow__stage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.p-req-flow__num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--color-brand-cyan-deep);
-  color: var(--color-text-inverse);
-  font-family: var(--font-family-en);
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.p-req-flow__group {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
 .p-req-flow__box {
   display: flex;
+  flex: 1 1 0;
+  min-width: 0;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  width: 104px;
-  padding: 16px 10px;
+  padding: 18px 8px;
   background: var(--color-bg-light);
   border: 1px solid var(--color-brand-blue-200);
   border-radius: var(--border-radius-lg);
@@ -325,23 +298,24 @@
 
 .p-req-flow__title {
   margin: 0;
-  font-size: 15px;
+  // 「一次面接・適性検査」（9文字）が箱の中で1行に収まる上限サイズ。
+  font-size: 14px;
   font-weight: 700;
   color: var(--color-text-primary);
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 
 .p-req-flow__badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 3px 10px;
+  padding: 3px 8px;
   border-radius: var(--border-radius-pill);
   background: var(--color-brand-blue-100);
   color: var(--color-brand-navy);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   line-height: 1.4;
   white-space: normal;
 }
@@ -351,19 +325,12 @@
   color: var(--color-text-inverse);
 }
 
-.p-req-flow__plus {
-  flex: 0 0 auto;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--color-brand-cyan-deep);
-}
-
 .p-req-flow__arrow {
   position: relative;
   flex: 0 0 auto;
-  width: 24px;
+  align-self: center; // stretch する箱の間で、矢印だけは中心に置く
+  width: 20px;
   height: 2px;
-  margin-top: 20px; // ステージ番号ぶん、箱の中心高さに合わせる
   background: var(--color-brand-cyan-deep);
 }
 
@@ -446,34 +413,20 @@
 @media screen and (max-width: 840px) {
   .p-req-flow {
     flex-direction: column;
+    align-items: center;
     gap: 20px;
   }
 
-  .p-req-flow__stage {
-    // stage の幅を明示的に確定させ、box の width:80% がこの幅を基準に
-    // 一貫して解決されるようにする（box を直接持つ stage 2・3 と、
-    // group 経由で box を持つ stage 1 とでブレないようにするため）。
-    width: 100%;
-  }
-
-  .p-req-flow__group {
-    flex-direction: column;
-    width: 100%;
-  }
-
   .p-req-flow__box {
+    // 縦積みでは flex-basis が高さに効いてしまうため、伸縮を切って幅で揃える。
+    flex: 0 0 auto;
     width: 80%;
     max-width: 320px;
-  }
-
-  .p-req-flow__plus {
-    transform: rotate(90deg);
   }
 
   .p-req-flow__arrow {
     width: 2px;
     height: 28px;
-    margin-top: 0;
   }
 
   .p-req-flow__arrow::after {
