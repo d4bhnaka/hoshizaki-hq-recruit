@@ -248,7 +248,7 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
-  width: clamp(175px, 32.4vw, 238px);
+  width: clamp(156px, 28.8vw, 212px);
   aspect-ratio: 1 / 1;
   padding: 6px;
   box-sizing: border-box;
@@ -298,12 +298,6 @@
   font-weight: 700;
   line-height: 1.25;
   color: var(--color-brand-navy);
-}
-
-.p-strategy-domains__node-sub {
-  font-size: clamp(13.5px, 1.65vw, 16.5px);
-  line-height: 1.2;
-  color: var(--color-text-secondary);
 }
 
 // 図の下の外部リンク（fact の .c-stat-card__award-link と同デザインのピル型）
@@ -544,7 +538,7 @@
   position: relative;
   z-index: 1;
   margin: 0;
-  font-size: clamp(15px, 1.35vw, 18px);
+  font-size: clamp(15px, 1.35vw, 16px);
   line-height: 1.95;
   color: var(--color-text-secondary);
 }
