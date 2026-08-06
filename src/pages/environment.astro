@@ -89,7 +89,7 @@ interface BenefitItem {
 
 const benefits: BenefitItem[] = [
   {
-    title: "福利厚生倶楽部（リロクラブ）",
+    title: "福利厚生サービス",
     body: "多様なサービスを優待価格で利用できる会員制の福利厚生です。",
     icon: "gift",
   },
@@ -256,10 +256,18 @@ const offices: OfficeBlock[] = [
               <div class="p-env-chart__grid">
                 <!-- 階層（左列） -->
                 <div class="p-env-chart__levels">
-                  <div class="p-env-chart__level p-env-chart__level--yakuin">役員</div>
-                  <div class="p-env-chart__level p-env-chart__level--bucho">部長</div>
-                  <div class="p-env-chart__level p-env-chart__level--kacho">課長</div>
-                  <div class="p-env-chart__level p-env-chart__level--kakaricho">係長</div>
+                  <div class="p-env-chart__level p-env-chart__level--yakuin">
+                    役員
+                  </div>
+                  <div class="p-env-chart__level p-env-chart__level--bucho">
+                    部長
+                  </div>
+                  <div class="p-env-chart__level p-env-chart__level--kacho">
+                    課長
+                  </div>
+                  <div class="p-env-chart__level p-env-chart__level--kakaricho">
+                    係長
+                  </div>
                   <div class="p-env-chart__level p-env-chart__level--staff">
                     <span class="p-env-chart__arrow"></span>
                     <span class="p-env-chart__level-label">新入社員</span>
@@ -267,7 +275,9 @@ const offices: OfficeBlock[] = [
                 </div>
 
                 <!-- 階層別研修 -->
-                <section class="p-env-chart__panel p-env-chart__panel--hierarchy">
+                <section
+                  class="p-env-chart__panel p-env-chart__panel--hierarchy"
+                >
                   <h3 class="p-env-chart__panel-title">階層別研修</h3>
                   <p class="p-env-chart__panel-desc">
                     各役職／階層に求められる<br />使命・役割認識とスキル習得
@@ -278,18 +288,40 @@ const offices: OfficeBlock[] = [
                     <div></div>
                   </div>
                   <div class="p-env-chart__body">
-                    <div class="p-env-chart__box p-env-chart__box--shinnin-bucho">新任部責任者研修</div>
-                    <div class="p-env-chart__box p-env-chart__box--shinnin-kacho">新任課責任者研修</div>
-                    <div class="p-env-chart__box p-env-chart__box--shinnin-kakaricho">新任係責任者研修</div>
-                    <div class="p-env-chart__box p-env-chart__box--eval360">360度評価研修</div>
+                    <div
+                      class="p-env-chart__box p-env-chart__box--shinnin-bucho"
+                    >
+                      新任部責任者研修
+                    </div>
+                    <div
+                      class="p-env-chart__box p-env-chart__box--shinnin-kacho"
+                    >
+                      新任課責任者研修
+                    </div>
+                    <div
+                      class="p-env-chart__box p-env-chart__box--shinnin-kakaricho"
+                    >
+                      新任係責任者研修
+                    </div>
+                    <div class="p-env-chart__box p-env-chart__box--eval360">
+                      360度評価研修
+                    </div>
                     <div class="p-env-chart__staffzone">
                       <div class="p-env-chart__box">
-                        ミドルキャリア<br />デザイン研修<span class="p-env-chart__box-note">30歳・35歳・40歳</span>
+                        ミドルキャリア<br />デザイン研修<span
+                          class="p-env-chart__box-note">30歳・35歳・40歳</span
+                        >
                       </div>
-                      <div class="p-env-chart__box">入社2・3年目<br />呼び戻し研修</div>
-                      <div class="p-env-chart__box">新人・キャリア<br />入社時研修</div>
+                      <div class="p-env-chart__box">
+                        入社2・3年目<br />呼び戻し研修
+                      </div>
+                      <div class="p-env-chart__box">
+                        新人・キャリア<br />入社時研修
+                      </div>
                     </div>
-                    <div class="p-env-chart__box p-env-chart__box--compliance">コンプライアンス研修</div>
+                    <div class="p-env-chart__box p-env-chart__box--compliance">
+                      コンプライアンス研修
+                    </div>
                   </div>
                 </section>
 
@@ -298,10 +330,18 @@ const offices: OfficeBlock[] = [
                   class="p-env-chart__levels p-env-chart__levels--purpose"
                   aria-hidden="true"
                 >
-                  <div class="p-env-chart__level p-env-chart__level--yakuin">役員</div>
-                  <div class="p-env-chart__level p-env-chart__level--bucho">部長</div>
-                  <div class="p-env-chart__level p-env-chart__level--kacho">課長</div>
-                  <div class="p-env-chart__level p-env-chart__level--kakaricho">係長</div>
+                  <div class="p-env-chart__level p-env-chart__level--yakuin">
+                    役員
+                  </div>
+                  <div class="p-env-chart__level p-env-chart__level--bucho">
+                    部長
+                  </div>
+                  <div class="p-env-chart__level p-env-chart__level--kacho">
+                    課長
+                  </div>
+                  <div class="p-env-chart__level p-env-chart__level--kakaricho">
+                    係長
+                  </div>
                   <div class="p-env-chart__level p-env-chart__level--staff">
                     <span class="p-env-chart__arrow"></span>
                     <span class="p-env-chart__level-label">新入社員</span>
@@ -320,10 +360,22 @@ const offices: OfficeBlock[] = [
                     <div class="p-env-chart__subhead">女性活躍</div>
                   </div>
                   <div class="p-env-chart__body">
-                    <div class="p-env-chart__box p-env-chart__box--keieisha">次世代経営者<br />育成研修</div>
-                    <div class="p-env-chart__box p-env-chart__box--global">グローバル<br />人材育成研修</div>
-                    <div class="p-env-chart__box p-env-chart__box--josei-yakushoku">女性役職者<br />育成研修</div>
-                    <div class="p-env-chart__box p-env-chart__box--josei-suishin">女性活躍<br />推進研修</div>
+                    <div class="p-env-chart__box p-env-chart__box--keieisha">
+                      次世代経営者<br />育成研修
+                    </div>
+                    <div class="p-env-chart__box p-env-chart__box--global">
+                      グローバル<br />人材育成研修
+                    </div>
+                    <div
+                      class="p-env-chart__box p-env-chart__box--josei-yakushoku"
+                    >
+                      女性役職者<br />育成研修
+                    </div>
+                    <div
+                      class="p-env-chart__box p-env-chart__box--josei-suishin"
+                    >
+                      女性活躍<br />推進研修
+                    </div>
                   </div>
                 </section>
 
@@ -331,7 +383,8 @@ const offices: OfficeBlock[] = [
                 <section class="p-env-chart__panel p-env-chart__panel--order">
                   <h3 class="p-env-chart__panel-title">オーダー研修</h3>
                   <p class="p-env-chart__panel-desc">
-                    組織／個人別に求められる知識や<br />ビジネススキル習得<br />製品知識、サービスに必要なスキル習得
+                    組織／個人別に求められる知識や<br />ビジネススキル習得<br
+                    />製品知識、サービスに必要なスキル習得
                   </p>
                   <div class="p-env-chart__order-body">
                     <div class="p-env-chart__order-section">
@@ -360,7 +413,9 @@ const offices: OfficeBlock[] = [
                       </ul>
                     </div>
                     <div class="p-env-chart__order-section">
-                      <h4 class="p-env-chart__order-title">製品知識・サービススキル</h4>
+                      <h4 class="p-env-chart__order-title">
+                        製品知識・サービススキル
+                      </h4>
                       <ul>
                         <li>新機種</li>
                         <li>モデルチェンジ機</li>

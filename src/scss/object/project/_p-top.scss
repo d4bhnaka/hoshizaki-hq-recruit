@@ -851,9 +851,12 @@
     width: 28.75%;
   }
   // Beyond: globe sec02 (Figma 475:8736 x360 y3834 w434)
+  // top は Figma 24.831% + 2%（2026-08-06 クライアント指示: What's の
+  // 和文キャプション「数字で見るホシザキ」と地球儀が近すぎたため下げて余白を確保）。
+  // en--beyond / button--beyond も同じ +2% で追従させること。
   &--beyond {
     left: 22.5%;
-    top: 24.831%;
+    top: 26.831%;
     width: 27.125%;
   }
   // Team: penguins sec03 (Figma 296:7149 x1007 y4316 w497)
@@ -888,9 +891,10 @@
     left: 45.3125%;
     top: 15.097%;
   }
+  // Figma 36.277% + 2%（img--beyond と同じ下げ幅）
   &--beyond {
     left: 5.8125%;
-    top: 36.277%;
+    top: 38.277%;
   }
   &--team {
     left: 49.5625%;
@@ -930,9 +934,10 @@
     left: 72.4375%;
     top: 17.711%;
   }
+  // Figma 38.55% + 2%（img--beyond と同じ下げ幅）
   &--beyond {
     left: 40%;
-    top: 38.55%;
+    top: 40.55%;
   }
   &--team {
     left: 77%;
