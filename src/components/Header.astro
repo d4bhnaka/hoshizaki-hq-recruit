@@ -8,12 +8,12 @@ interface Props {
 const {
   basePath = "./",
   variant = "light",
-  logoSrc = `${Astro.props.basePath ?? "./"}images/common/hoshizaki-logo-mark-header.webp`,
+  logoSrc = `${Astro.props.basePath ?? "./"}images/common/hoshizaki-logo-mark-r.webp`,
 } = Astro.props;
 
 // 現在表示中のページを判定する。URL の先頭セグメントをキーにする。
-//   "/" → ""（トップ） / "/message/" → "message" / "/person/01/" → "person"
-// person 詳細などの下層ページも先頭セグメントで親メニュー項目に一致させる。
+//   "/" → ""（トップ） / "/message/" → "message" / "/people/01/" → "people"
+// people 詳細などの下層ページも先頭セグメントで親メニュー項目に一致させる。
 const currentKey = Astro.url.pathname.split("/").filter(Boolean)[0] ?? "";
 
 // Figma 518:1195 (Navigation) をベースに、スペシャルコンテンツを加えた 9 項目。
@@ -28,7 +28,7 @@ const drawerLinks = [
     key: "strategy",
   },
   { href: `${basePath}job/`, label: "ホシザキの職種紹介", key: "job" },
-  { href: `${basePath}person/`, label: "はたらく人を知る", key: "person" },
+  { href: `${basePath}people/`, label: "はたらく人を知る", key: "people" },
   {
     href: `${basePath}environment/`,
     label: "はたらく環境を知る",

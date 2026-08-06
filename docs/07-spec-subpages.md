@@ -11,8 +11,8 @@
 - [02 What's HOSHIZAKI（数字で見るホシザキ） `/fact/`](#02-whats-hoshizaki数字で見るホシザキ--fact)
 - [03 Beyond HOSHIZAKI（事業領域／海外展開） `/strategy/`](#03-beyond-hoshizaki事業領域海外展開--strategy)
 - [04 Team HOSHIZAKI（職種紹介） `/job/`](#04-team-hoshizaki職種紹介--job)
-- [05 先輩たちの「ここに決めた」一覧 `/person/`](#05-先輩たちのここに決めた一覧--person)
-- [05s Person 詳細 `/person/[slug]/`](#05s-person-詳細--personslug)
+- [05 先輩たちの「ここに決めた」一覧 `/people/`](#05-先輩たちのここに決めた一覧--people)
+- [05s People 詳細 `/people/[slug]/`](#05s-people-詳細--peopleslug)
 - [06 はたらく環境（Environment） `/environment/`](#06-はたらく環境environment--environment)
 - [07 募集要項（Requirement） `/requirement/`](#07-募集要項requirement--requirement)
 - [08 SPECIAL CONTENTS インデックス `/special/`](#08-special-contents-インデックス--special)
@@ -82,8 +82,8 @@ const base = "../"; // 深さに応じて "../" or "../../"
 | `/fact/` | `src/pages/fact.astro` | `.p-fact` | `_p-fact.scss` |
 | `/strategy/` | `src/pages/strategy.astro` | `.p-strategy` | `_p-strategy.scss` |
 | `/job/` | `src/pages/job.astro` | `.p-job` | `_p-job.scss` |
-| `/person/` | `src/pages/person.astro` | `.p-person` | `_p-person.scss` |
-| `/person/[slug]/` | `src/pages/person/[slug].astro` | `.p-person-detail` | `_p-person-detail.scss` |
+| `/people/` | `src/pages/people.astro` | `.p-people` | `_p-person.scss` |
+| `/people/[slug]/` | `src/pages/people/[slug].astro` | `.p-people-detail` | `_p-person-detail.scss` |
 | `/environment/` | `src/pages/environment.astro` | `.p-environment` | `_p-environment.scss` |
 | `/requirement/` | `src/pages/requirement.astro` | `.p-requirement` | `_p-requirement.scss` |
 | `/special/` | `src/pages/special.astro` | `.p-special` | `_p-special.scss` |
@@ -92,7 +92,7 @@ const base = "../"; // 深さに応じて "../" or "../../"
 | `/special/special-talk/` | `src/pages/special/special-talk.astro` | `.p-special-talk` | `_p-special-talk.scss` |
 | `/internship/` | `src/pages/internship.astro` | `.p-internship` | `_p-internship.scss` |
 
-> Person 詳細は **動的ルート `src/pages/person/[slug].astro` ＋ `src/data/personDetails.ts`（15 名・slug `01`〜`15`）** で実装されている（`getStaticPaths` で個別ページを静的生成。2026-06-08 時点）。
+> People 詳細は **動的ルート `src/pages/people/[slug].astro` ＋ `src/data/personDetails.ts`（15 名・slug `01`〜`15`）** で実装されている（`getStaticPaths` で個別ページを静的生成。2026-06-08 時点）。
 > SPECIAL CONTENTS 3 ストーリーの**索引・トップ用カード UI は `SpecialContents.astro` ＋ `specialStories.ts` で共通化済み**。ただし各ストーリー本文ページ（crosstalk／project／special-talk）は内容が異なるため **1 本ずつ別クラス／別 partial**（`_p-crosstalk.scss`／`_p-project-story.scss`／`_p-special-talk.scss`）のまま。
 
 ### アセット配置規則（全ページ共通）
@@ -313,25 +313,25 @@ const base = "../"; // 深さに応じて "../" or "../../"
 
 ---
 
-## 05 先輩たちの「ここに決めた」一覧 — `/person/`
+## 05 先輩たちの「ここに決めた」一覧 — `/people/`
 
 ### Figma / 出力先
 
 - node：`246:1055`（1600×3744）
-- Astro：`src/pages/person/index.astro`
+- Astro：`src/pages/people.astro`
 - `basePath`：`"../"`
 
 ### セクション構成
 
 | # | セクション | クラス | 主な中身 |
 |:--|:--|:--|:--|
-| P-1 | `PageHeader`（白背景版） | — | 英字 `Person` ／サブ「はたらく人を知る」＋さらに手書き風の「先輩たちの『ここに決めた！』」（青ラインのフキダシ風） |
-| P-2 | フィルター | `.p-person-list__filter` | 青ボタン × 6：すべて／技術系／企画管理系／理系／文系／男性／女性 |
-| P-3 | カードグリッド | `.p-person-list__grid` | 4 列 × 4 行（14 枚）。各カードは `PersonCard`（`src/components/PersonCard.astro`、Figma symbol `365:655` 由来） |
+| P-1 | `PageHeader`（白背景版） | — | 英字 `People` ／サブ「はたらく人を知る」＋さらに手書き風の「先輩たちの『ここに決めた！』」（青ラインのフキダシ風） |
+| P-2 | フィルター | `.p-people__filter` | 青ボタン × 6：すべて／技術系／企画管理系／理系／文系／男性／女性 |
+| P-3 | カードグリッド | `.p-people__grid` | 4 列 × 4 行（14 枚）。各カードは `PeopleCard`（`src/components/PersonCard.astro`、Figma symbol `365:655` 由来） |
 | P-4 | CTA ペア | — | `CtaBannerPair` |
 | P-5 | パンくず | — | `採用TOP ▸ はたらく人を知る` |
 
-### PersonCard の構造
+### PeopleCard の構造
 
 ```astro
 ---
@@ -344,15 +344,15 @@ interface Props {
 }
 const { href, photo, title, dept, highlightPhoto } = Astro.props;
 ---
-<a class="c-person-card" href={href}>
-  <figure class="c-person-card__photo">
+<a class="c-people-card" href={href}>
+  <figure class="c-people-card__photo">
     <img src={photo} alt="" />
-    {highlightPhoto && <img src={highlightPhoto} class="c-person-card__ribbon" alt="" />}
+    {highlightPhoto && <img src={highlightPhoto} class="c-people-card__ribbon" alt="" />}
   </figure>
-  <div class="c-person-card__body">
-    <h3 class="c-person-card__title">{title}</h3>
-    <p class="c-person-card__dept">{dept}</p>
-    <span class="c-person-card__arrow">▸</span>
+  <div class="c-people-card__body">
+    <h3 class="c-people-card__title">{title}</h3>
+    <p class="c-people-card__dept">{dept}</p>
+    <span class="c-people-card__arrow">▸</span>
   </div>
 </a>
 ```
@@ -379,29 +379,29 @@ const { href, photo, title, dept, highlightPhoto } = Astro.props;
 
 ---
 
-## 05s Person 詳細 — `/person/[slug]/`
+## 05s People 詳細 — `/people/[slug]/`
 
 ### Figma / 出力先
 
 - node：`360:58`（1600×4434）
-- Astro：`src/pages/person/[slug].astro`（**動的ルート**）。[`src/data/personDetails.ts`](../src/data/personDetails.ts) の `personDetails`（15 名・slug `01`〜`15`）を `getStaticPaths` で展開し、`/person/01/`〜`/person/15/` を静的生成する。
+- Astro：`src/pages/people/[slug].astro`（**動的ルート**）。[`src/data/personDetails.ts`](../src/data/personDetails.ts) の `peopleDetails`（15 名・slug `01`〜`15`）を `getStaticPaths` で展開し、`/people/01/`〜`/people/15/` を静的生成する。
 - `basePath`：`"../../"`
-- **実装状態（2026-06-08）**：当初の「固定テンプレ 1 本（`/person/detail/`）」から**動的ルートへ移行済み**。一覧 [`person.astro`](../src/pages/person.astro) のカードから `./01/`〜`./15/` にリンク。`personDetails.ts` の 1 レコード = `{ slug, initials, dept, year, faculty, title[], photo, photoWidth, qa[{ question, headline[], body }] }`。本文は実データ（プレースホルダではない）。
+- **実装状態（2026-06-08）**：当初の「固定テンプレ 1 本（`/people/detail/`）」から**動的ルートへ移行済み**。一覧 [`people.astro`](../src/pages/people.astro) のカードから `./01/`〜`./15/` にリンク。`peopleDetails.ts` の 1 レコード = `{ slug, initials, dept, year, faculty, title[], photo, photoWidth, qa[{ question, headline[], body }] }`。本文は実データ（プレースホルダではない）。
 
 ### セクション構成
 
-ルート要素は `<article class="p-person-detail">`。クラスはすべて `.p-person-detail__*` BEM。`__inner` に CSS 変数 `--person-bg`（背景写真 `p-bg-NN.jpg`）と `--photo-w`（人物切り抜き幅）をインライン付与する。
+ルート要素は `<article class="p-people-detail">`。クラスはすべて `.p-people-detail__*` BEM。`__inner` に CSS 変数 `--person-bg`（背景写真 `p-bg-NN.jpg`）と `--photo-w`（人物切り抜き幅）をインライン付与する。
 
 | # | セクション | クラス | 主な中身 |
 |:--|:--|:--|:--|
-| PS-1 | Sticky 全幅ビジュアル | `.p-person-detail__stage` / `__bg` / `__stage-inner` / `__photo` | **`position: sticky` で画面に固定**。青帯（`__bg`）＋横幅いっぱいの背景写真（`--person-bg`）＋人物切り抜き（`__photo`、頭が背景写真上端より少しはみ出す）。`loading="eager"` |
-| PS-2 | スクロールするインタビュー本文 | `.p-person-detail__flow` | sticky ステージに重なって流れる |
-| PS-3 | 小英字 `Person` | `.p-person-detail__label` | 青字 |
-| PS-4 | 人物紹介見出し | `.p-person-detail__title`（h1）／`.p-person-detail__meta` | `title[]` を `<br>` 連結した大見出し＋メタ（`__meta-name`=initials／`__meta-item`=dept・year・faculty。faculty が空なら省略） |
-| PS-5 | Q&A ブロック × N | `.p-person-detail__qa-list` / `__qa` | 各ブロック：`__q`（先頭に `__q-tick` 装飾＋question）／`__answer`（h2、`headline[]` を `<br>` 連結）／`__body`（回答本文） |
-| PS-6 | 「社員インタビュー一覧を見る」ボタン | `.p-person-detail__list` / `__list-btn` | `href="../"`（一覧へ）。`__list-label`＋シェブロン `__list-chevron`（インライン SVG） |
+| PS-1 | Sticky 全幅ビジュアル | `.p-people-detail__stage` / `__bg` / `__stage-inner` / `__photo` | **`position: sticky` で画面に固定**。青帯（`__bg`）＋横幅いっぱいの背景写真（`--person-bg`）＋人物切り抜き（`__photo`、頭が背景写真上端より少しはみ出す）。`loading="eager"` |
+| PS-2 | スクロールするインタビュー本文 | `.p-people-detail__flow` | sticky ステージに重なって流れる |
+| PS-3 | 小英字 `People` | `.p-people-detail__label` | 青字 |
+| PS-4 | 人物紹介見出し | `.p-people-detail__title`（h1）／`.p-people-detail__meta` | `title[]` を `<br>` 連結した大見出し＋メタ（`__meta-name`=initials／`__meta-item`=dept・year・faculty。faculty が空なら省略） |
+| PS-5 | Q&A ブロック × N | `.p-people-detail__qa-list` / `__qa` | 各ブロック：`__q`（先頭に `__q-tick` 装飾＋question）／`__answer`（h2、`headline[]` を `<br>` 連結）／`__body`（回答本文） |
+| PS-6 | 「社員インタビュー一覧を見る」ボタン | `.p-people-detail__list` / `__list-btn` | `href="../"`（一覧へ）。`__list-label`＋シェブロン `__list-chevron`（インライン SVG） |
 | PS-7 | CTA ペア | — | `BottomCta`（INTERNSHIP / ENTRY） |
-| PS-8 | パンくず | `.p-person-detail__breadcrumb` | `Breadcrumb`：`採用TOP ▸ はたらく人を知る ▸ {initials}` |
+| PS-8 | パンくず | `.p-people-detail__breadcrumb` | `Breadcrumb`：`採用TOP ▸ はたらく人を知る ▸ {initials}` |
 
 ### Q&A データ
 
@@ -413,7 +413,7 @@ const { href, photo, title, dept, highlightPhoto } = Astro.props;
 
 ### データ駆動（実装済み）
 
-[`src/data/personDetails.ts`](../src/data/personDetails.ts) に 15 名分の配列（slug／initials／dept／year／faculty／title[]／photo／photoWidth／qa[]）を持ち、`[slug].astro` の `getStaticPaths` で `/person/01/`〜`/person/15/` を静的ビルドする。
+[`src/data/personDetails.ts`](../src/data/personDetails.ts) に 15 名分の配列（slug／initials／dept／year／faculty／title[]／photo／photoWidth／qa[]）を持ち、`[slug].astro` の `getStaticPaths` で `/people/01/`〜`/people/15/` を静的ビルドする。
 
 ### アセット
 

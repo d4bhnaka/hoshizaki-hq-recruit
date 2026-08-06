@@ -4,58 +4,58 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import BottomCta from "../../components/BottomCta.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
-import { personDetails } from "../../data/personDetails";
-import { persons, entryLabel } from "../../data/persons";
+import { peopleDetails } from "../../data/personDetails";
+import { people, entryLabel } from "../../data/persons";
 
 export function getStaticPaths() {
-  return personDetails.map((person) => ({
-    params: { slug: person.slug },
-    props: { person },
+  return peopleDetails.map((peopleDetail) => ({
+    params: { slug: peopleDetail.slug },
+    props: { peopleDetail },
   }));
 }
 
 const base = "../../";
-const { person } = Astro.props;
-const titleText = person.title.join("");
+const { peopleDetail } = Astro.props;
+const titleText = peopleDetail.title.join("");
 
-// 職種・入社年は一覧データ（persons.ts）を正とし、slug で突き合わせる。
-const card = persons.find((p) => p.slug === person.slug);
+// 職種・入社年は一覧データ（people.ts）を正とし、slug で突き合わせる。
+const card = people.find((p) => p.slug === peopleDetail.slug);
 const jobType = card?.jobType ?? "";
 const entry = card ? entryLabel(card) : "";
-// 背景写真は人物切り抜き（person.photo: 例 "p09.webp"）のフレーム番号と対応させる。
+// 背景写真は人物切り抜き（peopleDetail.photo: 例 "p09.webp"）のフレーム番号と対応させる。
 // 例: p09.webp → p-bg-09.jpg（slug ではなく Figma フレーム番号で対応）。
-const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.webp$/i, ".jpg");
+const bgImage = peopleDetail.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.webp$/i, ".jpg");
 ---
 
 <Layout
   basePath={base}
-  title={`${person.initials}／${jobType}｜はたらく人を知る｜ホシザキ本社採用サイト`}
-  description={`ホシザキ本社の先輩社員インタビュー。${jobType}・${entry}の${person.initials}が語る「${titleText}」｜入社理由とやりがい、これからの目標。`}
+  title={`${peopleDetail.initials}／${jobType}｜People｜ホシザキ本社採用サイト`}
+  description={`ホシザキ本社の先輩社員インタビュー。${jobType}・${entry}の${peopleDetail.initials}が語る「${titleText}」｜入社理由とやりがい、これからの目標。`}
 >
   <div class="l-container">
     <Header basePath={base} />
     <main class="l-main">
-      <article class="p-person-detail">
+      <article class="p-people-detail">
         <div
-          class="p-person-detail__inner"
-          style={`--photo-w: ${person.photoWidth}px`}
+          class="p-people-detail__inner"
+          style={`--photo-w: ${peopleDetail.photoWidth}px`}
         >
           <!-- Sticky full-bleed visual: blue band + 横幅いっぱいの背景写真 + 人物切り抜き。
                人物は背景写真の下端に合わせ、頭が背景写真の上端より少し上にはみ出す。 -->
-          <div class="p-person-detail__stage">
+          <div class="p-people-detail__stage">
             <!-- 背景写真は直接インラインの background-image で指定する（HTMLドキュメント基準で
                  相対解決されるため、サブディレクトリ配置でもパスが正しく繋がる）。
                  CSS カスタムプロパティ経由（var()）だと外部 style.css 基準で解決され、
                  サブディレクトリ配置でパスがずれて 404 になるため避ける。 -->
             <div
-              class="p-person-detail__bg"
+              class="p-people-detail__bg"
               style={`background-image: url(${base}images/person/${bgImage})`}
             ></div>
-            <div class="p-person-detail__stage-inner">
-              <figure class="p-person-detail__photo">
+            <div class="p-people-detail__stage-inner">
+              <figure class="p-people-detail__photo">
                 <img
-                  src={`${base}images/person/${person.photo}`}
-                  alt={`${person.initials}さん`}
+                  src={`${base}images/person/${peopleDetail.photo}`}
+                  alt={`${peopleDetail.initials}さん`}
                   loading="eager"
                 />
               </figure>
@@ -63,39 +63,39 @@ const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.webp$/i, ".
           </div>
 
           <!-- Scrollable interview content (overlaps the sticky stage) -->
-          <div class="p-person-detail__flow">
-            <section class="p-person-detail__split">
-              <div class="p-person-detail__left">
-                <p class="p-person-detail__label" data-inview style="--inview-i: 0">Person</p>
-                <h1 class="p-person-detail__title" data-inview style="--inview-i: 1">
+          <div class="p-people-detail__flow">
+            <section class="p-people-detail__split">
+              <div class="p-people-detail__left">
+                <p class="p-people-detail__label" data-inview style="--inview-i: 0">People</p>
+                <h1 class="p-people-detail__title" data-inview style="--inview-i: 1">
                   {
-                    person.title.map((line, i) => (
+                    peopleDetail.title.map((line, i) => (
                       <>
                         {line}
-                        {i < person.title.length - 1 && <br />}
+                        {i < peopleDetail.title.length - 1 && <br />}
                       </>
                     ))
                   }
                 </h1>
 
-                <div class="p-person-detail__meta" data-inview style="--inview-i: 2">
-                  <span class="p-person-detail__meta-name">{person.initials}</span>
-                  <span class="p-person-detail__meta-item">{jobType}</span>
-                  <span class="p-person-detail__meta-item">{entry}</span>
-                  {person.faculty && (
-                    <span class="p-person-detail__meta-item">{person.faculty}</span>
+                <div class="p-people-detail__meta" data-inview style="--inview-i: 2">
+                  <span class="p-people-detail__meta-name">{peopleDetail.initials}</span>
+                  <span class="p-people-detail__meta-item">{jobType}</span>
+                  <span class="p-people-detail__meta-item">{entry}</span>
+                  {peopleDetail.faculty && (
+                    <span class="p-people-detail__meta-item">{peopleDetail.faculty}</span>
                   )}
                 </div>
 
-                <div class="p-person-detail__qa-list">
+                <div class="p-people-detail__qa-list">
                   {
-                    person.qa.map((block, i) => (
-                      <div class="p-person-detail__qa" data-inview style={`--inview-i: ${i}`}>
-                        <p class="p-person-detail__q">
-                          <span class="p-person-detail__q-tick" aria-hidden="true" />
+                    peopleDetail.qa.map((block, i) => (
+                      <div class="p-people-detail__qa" data-inview style={`--inview-i: ${i}`}>
+                        <p class="p-people-detail__q">
+                          <span class="p-people-detail__q-tick" aria-hidden="true" />
                           {block.question}
                         </p>
-                        <h2 class="p-person-detail__answer">
+                        <h2 class="p-people-detail__answer">
                           {block.headline.map((line, i) => (
                             <>
                               {line}
@@ -103,7 +103,7 @@ const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.webp$/i, ".
                             </>
                           ))}
                         </h2>
-                        <p class="p-person-detail__body">{block.body}</p>
+                        <p class="p-people-detail__body">{block.body}</p>
                       </div>
                     ))
                   }
@@ -112,10 +112,10 @@ const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.webp$/i, ".
             </section>
 
             <!-- Back to list -->
-            <div class="p-person-detail__list">
-              <a class="p-person-detail__list-btn" href="../" data-inview="fade">
-                <span class="p-person-detail__list-label">社員インタビュー一覧を見る</span>
-                <span class="p-person-detail__list-chevron" aria-hidden="true">
+            <div class="p-people-detail__list">
+              <a class="p-people-detail__list-btn" href="../" data-inview="fade">
+                <span class="p-people-detail__list-label">社員インタビュー一覧を見る</span>
+                <span class="p-people-detail__list-chevron" aria-hidden="true">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -136,12 +136,12 @@ const bgImage = person.photo.replace(/^p(?=\d)/, "p-bg-").replace(/\.webp$/i, ".
         <BottomCta basePath={base} />
 
         <!-- Breadcrumb -->
-        <div class="p-person-detail__breadcrumb">
+        <div class="p-people-detail__breadcrumb">
           <Breadcrumb
             basePath={base}
             items={[
               { label: "はたらく人を知る", href: "../" },
-              { label: person.initials },
+              { label: peopleDetail.initials },
             ]}
           />
         </div>

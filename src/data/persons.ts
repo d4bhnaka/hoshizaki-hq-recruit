@@ -1,11 +1,11 @@
 // ============================================================================
-// 社員紹介 一覧ページのカードデータ（src/pages/person.astro が参照）
-//   - 表示順 = Figma の並び順（左上→右下、4 列。node 978-2031 / PersonCard_01〜15）。
+// 社員紹介 一覧ページのカードデータ（People list, src/pages/people.astro が参照）
+//   - 表示順 = Figma の並び順（左上→右下、4 列。node 978-2031 / PeopleCard_01〜15）。
 //   - slug は掲載順の連番。詳細データ src/data/personDetails.ts の slug、
-//     カード写真 person<NN>.jpg、URL(/person/NN/) と一致させる。
+//     カード写真 person<NN>.jpg、URL(/people/NN/) と一致させる。
 //   - body（キャッチコピー）は writing/sources の確定原稿どおり（personDetails.title と一致）。
 //   - jobType（職種）は Figma カードのメタ行表記（node 837:4547 ほか）。
-//     一覧カードと個別ページ（person/[slug].astro）のプロフィール双方で「職種」として表示する。
+//     一覧カードと個別ページ（people/[slug].astro）のプロフィール双方で「職種」として表示する。
 //     ここが職種・入社年の単一ソース（旧 personDetails.dept / year は廃止）。
 //   - category（技術系 / 企画管理系）は Figma のカード左下タグ表記。
 //   - tags = 絞り込みトークン: カテゴリ / 文理 / 入社区分(newgrad|midcareer)。
@@ -13,8 +13,8 @@
 //     ため、入社区分の真実の置き場所は tags 側に一本化している（フィルターと表示を同期）。
 // ============================================================================
 
-export interface Person {
-  /** URL slug。詳細データ(personDetails)・写真(person<NN>.jpg) と一致（"01" → /person/01/） */
+export interface People {
+  /** URL slug。詳細データ(peopleDetails)・写真(person<NN>.jpg) と一致（"01" → /people/01/） */
   slug: string;
   /** カード写真ファイル名（public/images/person/ 配下）。base はページ側で付与 */
   image: string;
@@ -37,12 +37,12 @@ export interface Person {
  * 新卒/中途は tags(newgrad|midcareer) から判定（入社区分の単一ソース）。
  * 一覧カードのバッジと個別ページのプロフィールで共用する。
  */
-export function entryLabel(person: Pick<Person, "year" | "tags">): string {
-  const suffix = person.tags.includes("midcareer") ? "中途入社" : "新卒入社";
-  return `${person.year} ${suffix}`;
+export function entryLabel(people: Pick<People, "year" | "tags">): string {
+  const suffix = people.tags.includes("midcareer") ? "中途入社" : "新卒入社";
+  return `${people.year} ${suffix}`;
 }
 
-export const persons: Person[] = [
+export const people: People[] = [
   {
     slug: "01",
     name: "横山千穂",

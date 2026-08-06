@@ -28,7 +28,7 @@ Figma の Y 座標順。スクリーンショット（画像1）と Figma `296:7
 | S1 | Hero | ファーストビュー：タグライン＋コンセプトムービー＋ペンギン＋都市風景 | `_p-hero.scss` | `.p-hero` | 見出し「常識の先へ、跳べ。」／飛ぶペンギン 4〜5 羽／CONCEPT MOVIE プレイヤー／本文導入コピー／「さぁ、その想いを翼に変えて。」／背景の都市＋雲＋氷山＋ペンギン群 |
 | S2 | PIONEER SPIRIT（採用メッセージ） | ブランドメッセージへの導入 | `_p-pioneer-spirit.scss` | `.p-pioneer-spirit` | 見出し `PIONEER SPIRIT` ／サブ「採用メッセージ」／氷山に立つペンギンイラスト／IceLinkButton（`href="./message/"`, label「採用メッセージ」） |
 | S3 | コーポレートナビ（What's / Beyond / Team） | 下層 3 ページへの導線 | `_p-corporate-nav.scss` | `.p-corporate-nav` | 中央：地球儀＋ペンギンの装飾／上「What's HOSHIZAKI」IceLinkButton（`./fact/`, label「数字で見る」）／左「Beyond HOSHIZAKI」IceLinkButton（`./strategy/`, label「ホシザキの海外展開」）／右「Team HOSHIZAKI」ペンギン群写真＋IceLinkButton（`./job/`, label「グループの役割」） |
-| S4 | 先輩たちの「ここに決めた！」 | 社員インタビュー一覧への導線 | `_p-person-lead.scss` | `.p-person-lead` | 星型マスクの集合（中央に大きな星＋周囲に 4 枚の社員写真）／見出し「先輩たちの『ここに決めた！』」／IceLinkButton（`./person/`, label「はたらく人を知る」） |
+| S4 | 先輩たちの「ここに決めた！」 | 社員インタビュー一覧への導線 | `_p-person-lead.scss` | `.p-person-lead` | 星型マスクの集合（中央に大きな星＋周囲に 4 枚の社員写真）／見出し「先輩たちの『ここに決めた！』」／IceLinkButton（`./people/`, label「はたらく人を知る」） |
 | S5 | はたらく環境を知る | 環境ページへの導線 | `_p-top.scss` | `.p-top-env` | 横長オフィス写真（女性＋ペンギン群, `images/top/section-bg-environment.jpg`）／シアン帯（#00a0e9）の見出し「はたらく環境を知る」(56px 白)／IceLinkButton（`./environment/`, label「はたらく環境を知る」）。Figma 868:5243 |
 | S6 | SPECIAL CONTENTS | 企画コンテンツ 3 本への導線 | `_p-special-contents.scss` | `.p-special-contents` | 大見出し `SPECIAL CONTENTS`（白抜き）＋クジラ／ペンギンシルエット背景／サブ「ホシザキではたらくリアル」／横長ダークカード × 3（クロストーク／プロジェクトストーリー／スペシャルトーク。各カードは背景写真＋ラベル＋見出し＋概要＋顔写真 avatar＋`READ MORE`） |
 | S7 | Entry / Internship CTA | 共通 CTA ペア | 共通コンポーネント | — | Entry / Internship の 2 つの CTA バナー（[06-spec-common.md](./06-spec-common.md) の `EntryCta` / `InternshipCta` を使用） |
@@ -106,7 +106,7 @@ Figma の Y 座標順。スクリーンショット（画像1）と Figma `296:7
 - 大きな星型マスクに人物写真（4 名のビジネス人物、ひとりが前に出るように構成）。
 - 小さな星型マスク × 3〜4（周囲に散りばめ）。
 - 見出し「先輩たちの」＋手書き風の「ここに決めた！」（フキダシ風）。
-- IceLinkButton（`./person/`, label「はたらく人を知る」）。
+- IceLinkButton（`./people/`, label「はたらく人を知る」）。
 
 ### アセット
 
@@ -152,7 +152,7 @@ Figma の Y 座標順。スクリーンショット（画像1）と Figma `296:7
 
 | カード | 見出し | 概要 | href |
 |:--|:--|:--|:--|
-| 1 | 若手社員が語るはたらく環境 | 入社4年目社員に聞いてみた！会社のリアル | `./special/crosstalk/` |
+| 1 | 若手社員が語るはたらく環境 | 入社4年目社員に聞いてみた！ 会社のリアル | `./special/crosstalk/` |
 | 2 | 互いの知恵を重ね、前例なきモノづくりへ。 | 設計×生産技術、職種を越えた共創 | `./special/project/` |
 | 3 | ホシザキの技術、その未来とは？ | ホシザキの開発責任者による特別トーク | `./special/special-talk/` |
 

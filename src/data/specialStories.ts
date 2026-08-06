@@ -27,7 +27,7 @@ export const specialStories: SpecialStory[] = [
     category: "クロストーク",
     title: "若手社員が語るはたらく環境",
     titleLines: ["若手社員が語る", "はたらく環境"],
-    sub: "入社4年目社員に聞いてみた！会社のリアル",
+    sub: "入社4年目社員に聞いてみた！ 会社のリアル",
     avatars: 4,
   },
   {

@@ -13,7 +13,7 @@
 | C5 | BottomCta | [`src/components/BottomCta.astro`](../src/components/BottomCta.astro) | `object/component/_c-bottom-cta.scss` | component | `.c-bottom-cta` | `367:815` / `367:869` のペア | 実装済み |
 | C6 | IceHeading | [`src/components/IceHeading.astro`](../src/components/IceHeading.astro) | `object/component/_c-ice-heading.scss` | component | `.c-ice-heading` | — | 実装済み。EN+JA セクション見出しの共通版（旧 `SectionHeading` を 2026-06-19 に統合し削除） |
 | C7 | IceLinkButton | [`src/components/IceLinkButton.astro`](../src/components/IceLinkButton.astro) | `object/component/_c-ice-link.scss` | component | `.c-ice-link` | `365:16915` | 実装済み（2026-06-11 コンポーネント化）。トップ 6 個＋strategy 地図 7 個で使用 |
-| C8 | PersonCard | [`src/components/PersonCard.astro`](../src/components/PersonCard.astro) | `object/component/_c-person-card.scss` | component | `.c-person-card` | `365:655` | 実装済み（2026-04-25） |
+| C8 | PeopleCard | [`src/components/PersonCard.astro`](../src/components/PersonCard.astro) | `object/component/_c-person-card.scss` | component | `.c-people-card` | `365:655` | 実装済み（2026-04-25） |
 | C9 | SPECIAL ストーリーデータ | [`src/data/specialStories.ts`](../src/data/specialStories.ts) | — | data | — | トップ S6 / SC index で共用 | **データのみ共通化**（コンポーネントは統合せず、`.p-top-special__card` と `.p-special__card` は別構造を維持） |
 
 > **`c-interview-block` / `c-stat-card` / `c-entry-button`**：`style.scss` に登録済みだが Astro コンポーネント化されておらず、各ページで直書きマークアップを `.c-*` クラスだけ使っている状態。ヘルパー的な component 層のクラス集として運用中。
@@ -121,8 +121,8 @@ interface Props {
 | Fact | `What's HOSHIZAKI` | 数字で見るホシザキ | `cloud` | — |
 | Strategy | `Beyond HOSHIZAKI` | — | `cloud` | — |
 | Job | `Team HOSHIZAKI` | ホシザキの職種紹介 | `cloud` | — |
-| Person list | `Person` | はたらく人を知る | `light` | — |
-| Person single | `Person` | — | `light` | 独自レイアウト（sticky 右カラム） |
+| People list | `People` | はたらく人を知る | `light` | — |
+| People single | `People` | — | `light` | 独自レイアウト（sticky 右カラム） |
 | Environment | `Environment` | はたらく環境を知る | `cloud` | — |
 | Requirement | `Requirement` | 募集要項 | `cloud` | — |
 | Special index | `SPECIAL CONTENTS` | ホシザキをさらに深く知るスペシャルコンテンツ | `blue` | — |
@@ -215,19 +215,19 @@ interface Props {
 
 ### 残タスク
 
-- [ ] Team／Environment／Person の各ページでも同ボタンが使われているかを Figma で確認し、使われていれば差し替え。
+- [ ] Team／Environment／People の各ページでも同ボタンが使われているかを Figma で確認し、使われていれば差し替え。
 
 ---
 
-## C8 PersonCard — `.c-person-card`
+## C8 PeopleCard — `.c-people-card`
 
 ### Figma
 
-- node：`365:655`（`PersonCard` symbol, 318×431）
+- node：`365:655`（`PeopleCard` symbol, 318×431）
 
 ### 実装（[src/components/PersonCard.astro](../src/components/PersonCard.astro)）
 
-Person 一覧（`/person/`）で使用。`src/pages/person.astro` が `<li>` でラップしつつ本コンポーネントを 14 回呼ぶ。
+People 一覧（`/people/`）で使用。`src/pages/people.astro` が `<li>` でラップしつつ本コンポーネントを 14 回呼ぶ。
 
 ```astro
 interface Props {
@@ -239,9 +239,9 @@ interface Props {
 }
 ```
 
-- 写真 (`<figure class="c-person-card__photo">`) には `<div>` 背景画像 + `<img>` + `<figcaption>` の吹き出し。
+- 写真 (`<figure class="c-people-card__photo">`) には `<div>` 背景画像 + `<img>` + `<figcaption>` の吹き出し。
 - `body` は `／` で分割して `<br>` で繋ぐ（Figma の文面「ペンギンマークの会社で／働いています！と／自信をもって言える事」に合わせた構文糖衣）。
-- フィルター用の `data-person-tags` は **呼び出し側の `<li>`** で管理（カードには持たせない）。
+- フィルター用の `data-people-tags` は **呼び出し側の `<li>`** で管理（カードには持たせない）。
 
 ### 残タスク
 

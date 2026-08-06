@@ -1,7 +1,7 @@
 // ============================================================================
-// 社員紹介 個別ページのデータ
-//   - 一覧 (src/pages/person.astro) の person<NN>.jpg と slug を一致させる
-//     （例: slug "01" = /person/01/ = 一覧 person01.jpg = 横山千穂(Y.C)）
+// 社員紹介 個別ページのデータ（People detail）
+//   - 一覧 (src/pages/people.astro) の person<NN>.jpg と slug を一致させる
+//     （例: slug "01" = /people/01/ = 一覧 person01.jpg = 横山千穂(Y.C)）
 //     ※ 掲載順は Figma の並び順（node 978-2031）に合わせている。
 //   - 本文は writing/sources の原稿どおり（このファイルは scripts/ で原稿から自動生成）。
 //   - 写真は public/images/person/p<NN>.png（透過の人物切り抜き・2x）。
@@ -10,7 +10,7 @@
 //   - Figma: 05_person 1〜15 = node 978-2031 ほか。
 // ============================================================================
 
-export interface PersonQa {
+export interface PeopleQa {
   /** 質問ラベル（左の青ティック付き見出し） */
   question: string;
   /** 回答見出し（太字・改行ごとに配列要素） */
@@ -19,8 +19,8 @@ export interface PersonQa {
   body: string;
 }
 
-export interface PersonDetail {
-  /** URL slug。一覧の person<NN> と一致（"01" → /person/01/） */
+export interface PeopleDetail {
+  /** URL slug。一覧の person<NN> と一致（"01" → /people/01/） */
   slug: string;
   /** 表示用イニシャル */
   initials: string;
@@ -33,10 +33,10 @@ export interface PersonDetail {
   /** 写真の表示最大幅(px)。Figma のフレーム幅に準拠 */
   photoWidth: number;
   /** Q&A（4 ブロック） */
-  qa: PersonQa[];
+  qa: PeopleQa[];
 }
 
-export const personDetails: PersonDetail[] = [
+export const peopleDetails: PeopleDetail[] = [
   {
     slug: "01",
     initials: "Y.C",

@@ -316,7 +316,7 @@
 **35. キャッチコピー「ここに決めた」の感嘆符「！」の有無**　🟡 中（確信度: high）
 
 - 「**感嘆符付き「ここに決めた！」**」: `src/pages/index.astro:320`「alt="「ここに決めた！」"」 / `src/pages/index.astro:327`「<span class="p-top-trio__decided-sp-line2">「ここに決めた！」</span>」 / `src/pages/person.astro:47`「alt="先輩たちの「ここに決めた！」"」
-- 「**感嘆符なし「ここに決めた」**」: `src/components/Footer.astro:28`「{ href: `${basePath}person/`, label: "先輩たちの「ここに決めた」" },」
+- 「**感嘆符なし「ここに決めた」**」: `src/components/Footer.astro:28`「{ href: `${basePath}people/`, label: "先輩たちの「ここに決めた」" },」
 - 💡 提案: 同一コピー「先輩たちの『ここに決めた！』」が、トップ・社員紹介ページでは感嘆符付き、フッターのナビゲーションラベルでは感嘆符なしになっている。固定のキャッチコピーなので、フッターも「ここに決めた！」と感嘆符付きに揃えることを提案する。
 
 **36. 全角スペース（U+3000）によるインデント／字下げの有無**　⚪ 低（確信度: medium）

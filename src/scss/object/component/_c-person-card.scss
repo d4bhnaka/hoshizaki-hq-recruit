@@ -1,9 +1,9 @@
 // ============================================
-// c-person-card : Reusable person card (grid item)
-// Figma: PersonCard 318 x 431 (05_person / 837:4547)
+// c-people-card : Reusable people card (grid item)
+// Figma: PeopleCard 318 x 431 (05_person / 837:4547)
 // ============================================
 
-.c-person-card {
+.c-people-card {
   position: relative;
   display: flex;
   flex: 1;
@@ -32,7 +32,7 @@
 }
 
 // Hover lift only when the card is interactive (an <a>)
-a.c-person-card:hover {
+a.c-people-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(0, 47, 95, 0.12);
 }
@@ -40,7 +40,7 @@ a.c-person-card:hover {
 // --------------------------------------------
 // Photo (cover, inset ~7px, rounded)
 // --------------------------------------------
-.c-person-card__photo {
+.c-people-card__photo {
   position: relative;
   margin: 7px 7px 0;
   aspect-ratio: 304 / 188;
@@ -49,7 +49,7 @@ a.c-person-card:hover {
   background: var(--color-brand-blue-100);
 }
 
-.c-person-card__photo-img {
+.c-people-card__photo-img {
   display: block;
   width: 100%;
   height: 100%;
@@ -59,7 +59,7 @@ a.c-person-card:hover {
 // --------------------------------------------
 // Body : heading text + footer (tag / chevron)
 // --------------------------------------------
-.c-person-card__body {
+.c-people-card__body {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -70,7 +70,7 @@ a.c-person-card:hover {
 // Meta row : 職種 (left) + 入社年バッジ (right)
 // Figma 837:4547 — 写真とキャッチコピーの間に置く
 // --------------------------------------------
-.c-person-card__meta {
+.c-people-card__meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -79,7 +79,7 @@ a.c-person-card:hover {
   margin-bottom: 12px;
 }
 
-.c-person-card__job {
+.c-people-card__job {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
@@ -95,7 +95,7 @@ a.c-person-card:hover {
   white-space: nowrap;
 }
 
-.c-person-card__badge {
+.c-people-card__badge {
   min-width: 0;
   // 職種は1行で表示。狭い2カラム時は折り返さず、代わりにバッジが下段へ回る。
   white-space: nowrap;
@@ -107,7 +107,7 @@ a.c-person-card:hover {
   color: var(--color-brand-primary);
 }
 
-.c-person-card__text {
+.c-people-card__text {
   margin: 0;
   // Figma 20px Noto Bold (318px card) — fluid so it tracks the card width
   font-size: clamp(18px, 1.5vw, 20px);
@@ -117,7 +117,7 @@ a.c-person-card:hover {
   color: #000;
 }
 
-.c-person-card__footer {
+.c-people-card__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -126,7 +126,7 @@ a.c-person-card:hover {
   padding-top: 40px;
 }
 
-.c-person-card__tag {
+.c-people-card__tag {
   font-size: 13px;
   font-weight: 700;
   line-height: 1.3;
@@ -134,7 +134,7 @@ a.c-person-card:hover {
   color: var(--color-brand-cyan-deep);
 }
 
-.c-person-card__chevron {
+.c-people-card__chevron {
   flex: 0 0 auto;
   width: 13px;
   height: 22px;

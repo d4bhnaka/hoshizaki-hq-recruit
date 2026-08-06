@@ -114,18 +114,18 @@
   }
 
   // --------------------------------------------
-  // Person filter (client-side, no JS frameworks)
+  // People filter (client-side, no JS frameworks)
   // --------------------------------------------
-  function initPersonFilter() {
-    var tabs = document.querySelectorAll("[data-person-filter]");
-    var cards = document.querySelectorAll("[data-person-card]");
+  function initPeopleFilter() {
+    var tabs = document.querySelectorAll("[data-people-filter]");
+    var cards = document.querySelectorAll("[data-people-card]");
     if (!tabs.length || !cards.length) return;
-    var empty = document.querySelector("[data-person-empty]");
+    var empty = document.querySelector("[data-people-empty]");
 
     function applyFilter(value) {
       var matched = [];
       cards.forEach(function (card) {
-        var tags = (card.getAttribute("data-person-tags") || "").split(/\s+/);
+        var tags = (card.getAttribute("data-people-tags") || "").split(/\s+/);
         var match = value === "all" || tags.indexOf(value) !== -1;
         if (match) {
           card.style.display = ""; // display を先に戻してから stagger へ渡す
@@ -141,7 +141,7 @@
 
     tabs.forEach(function (tab) {
       tab.addEventListener("click", function () {
-        var value = tab.getAttribute("data-person-filter");
+        var value = tab.getAttribute("data-people-filter");
         tabs.forEach(function (t) {
           t.setAttribute("aria-pressed", t === tab ? "true" : "false");
         });
@@ -151,14 +151,14 @@
   }
 
   // --------------------------------------------
-  // Person grid 初回表示 stagger
+  // People grid 初回表示 stagger
   //   グリッドセクションが初めてビューポートに入った瞬間、
   //   全表示カードを triggerCardStagger で波状に登場させる（1回限り）。
   //   reduced-motion は CSS 側（@media no-preference）が吸収するため JS 判定不要。
   // --------------------------------------------
-  function initPersonGridReveal() {
-    var section = document.querySelector(".p-person__grid-section");
-    var cards = document.querySelectorAll("[data-person-card]");
+  function initPeopleGridReveal() {
+    var section = document.querySelector(".p-people__grid-section");
+    var cards = document.querySelectorAll("[data-people-card]");
     if (!section || !cards.length) return;
     if (!("IntersectionObserver" in window)) return;
 
@@ -1138,8 +1138,8 @@
   function init() {
     initDrawer();
     initHeaderScroll();
-    initPersonFilter();
-    initPersonGridReveal();
+    initPeopleFilter();
+    initPeopleGridReveal();
     initInternship();
     initCourseBackToTop();
     initOfficeTour();

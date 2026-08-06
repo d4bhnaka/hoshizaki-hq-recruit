@@ -1,20 +1,20 @@
 // ============================================
-// p-person-detail : 社員紹介 個別ページ（Figma 819:1646 / 1858 / 1964）
+// p-people-detail : 社員紹介 個別ページ（Figma 819:1646 / 1858 / 1964）
 //   上部に淡い水色のバンド。その下に「横幅いっぱい」の背景写真（社員ごと、
 //   フレーム番号 p-bg-<NN>.jpg）をスクロール追従(sticky)で固定。人物切り抜きは
 //   背景写真の下端に下端を合わせ、頭が背景写真の上端より少し上にはみ出す。
 //   インタビュー本文は左の白い半透明パネルとして背景の上をスクロールする。
 // ============================================
 
-.p-person-detail {
+.p-people-detail {
   display: block;
   width: 100%;
   background: var(--color-bg-page);
 }
 
 // 背景(sticky)と本文(scroll)を同じグリッドセルへ重ねる。
-// max-width は本文側(.p-person-detail__split)に持たせ、inner は全幅。
-.p-person-detail__inner {
+// max-width は本文側(.p-people-detail__split)に持たせ、inner は全幅。
+.p-people-detail__inner {
   // 社員ごとに調整できるツマミ
   --band-h: 210px; // 上部の淡い水色バンドの高さ（背景写真の上端 = 人物の頭が出る基準線）
   --bg-aspect: 1600 / 700; // 背景写真(p-bg-*.jpg)の比率
@@ -24,8 +24,8 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
-.p-person-detail__stage,
-.p-person-detail__flow {
+.p-people-detail__stage,
+.p-people-detail__flow {
   grid-column: 1;
   grid-row: 1;
   min-width: 0;
@@ -35,7 +35,7 @@
 // 背景ステージ（淡い水色バンド + 横幅いっぱいの背景写真 + 人物）
 //   スクロールしても画面内に残るよう sticky 固定。
 // --------------------------------------------
-.p-person-detail__stage {
+.p-people-detail__stage {
   position: sticky;
   top: 0;
   align-self: start; // セル高さに引き伸ばさず自身の高さを保つ（sticky を効かせる）
@@ -45,7 +45,7 @@
 }
 
 // 横幅いっぱいの背景写真。バンドの下に置く。
-.p-person-detail__bg {
+.p-people-detail__bg {
   width: 100%;
   aspect-ratio: var(--bg-aspect);
   margin-top: var(--band-h);
@@ -58,7 +58,7 @@
 }
 
 // ステージ上に人物を重ねる枠（コンテンツと同じ max-width で中央寄せ）
-.p-person-detail__stage-inner {
+.p-people-detail__stage-inner {
   position: absolute;
   inset: 0;
   max-width: var(--page-max-width);
@@ -69,7 +69,7 @@
 
 // 人物切り抜き：下端をステージ下端（= 背景写真の下端）に合わせる。
 // 表示幅は社員ごと（Figma フレーム幅）。頭は背景写真の上端より上＝バンドへ出る。
-.p-person-detail__photo {
+.p-people-detail__photo {
   position: absolute;
   right: 40px;
   bottom: 0;
@@ -87,12 +87,12 @@
 // --------------------------------------------
 // 本文（背景ステージの上にかぶせてスクロール）
 // --------------------------------------------
-.p-person-detail__flow {
+.p-people-detail__flow {
   position: relative;
   z-index: 2;
 }
 
-.p-person-detail__split {
+.p-people-detail__split {
   max-width: var(--page-max-width);
   margin: 0 auto;
   // 絶対配置ヘッダー（z-index 20）とバンドの下に本文を逃がす
@@ -102,7 +102,7 @@
 // --------------------------------------------
 // 左カラム（白い半透明パネル：背景写真がうっすら透ける）
 // --------------------------------------------
-.p-person-detail__left {
+.p-people-detail__left {
   width: min(830px, 62%);
   min-width: 0;
   background: rgba(255, 255, 255, 0.8);
@@ -110,7 +110,7 @@
   padding: 72px 72px 96px 124px;
 }
 
-.p-person-detail__label {
+.p-people-detail__label {
   margin: 0 0 14px;
   font-family: var(--font-family-en);
   font-size: 16px;
@@ -119,7 +119,7 @@
   color: var(--color-brand-primary);
 }
 
-.p-person-detail__title {
+.p-people-detail__title {
   margin: 0 0 28px;
   font-family: var(--font-family-base);
   font-size: 40px;
@@ -128,7 +128,7 @@
   color: var(--color-text-primary);
 }
 
-.p-person-detail__meta {
+.p-people-detail__meta {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -138,7 +138,7 @@
   color: var(--color-text-secondary);
 }
 
-.p-person-detail__meta-name {
+.p-people-detail__meta-name {
   font-weight: 700;
   letter-spacing: 0.04em;
   color: var(--color-text-primary);
@@ -147,13 +147,13 @@
 // --------------------------------------------
 // Q&A ブロック
 // --------------------------------------------
-.p-person-detail__qa-list {
+.p-people-detail__qa-list {
   display: flex;
   flex-direction: column;
   gap: 100px;
 }
 
-.p-person-detail__q {
+.p-people-detail__q {
   display: flex;
   align-items: center;
   gap: 20px;
@@ -164,14 +164,14 @@
   color: var(--color-text-primary);
 }
 
-.p-person-detail__q-tick {
+.p-people-detail__q-tick {
   flex: 0 0 auto;
   width: 50px;
   height: 2px;
   background: #0177fe;
 }
 
-.p-person-detail__answer {
+.p-people-detail__answer {
   margin: 0 0 22px;
   font-size: 28px;
   font-weight: 700;
@@ -179,7 +179,7 @@
   color: var(--color-text-primary);
 }
 
-.p-person-detail__body {
+.p-people-detail__body {
   margin: 0;
   font-size: 18px;
   font-weight: 400;
@@ -190,13 +190,13 @@
 // --------------------------------------------
 // 一覧へ戻るボタン
 // --------------------------------------------
-.p-person-detail__list {
+.p-people-detail__list {
   display: flex;
   justify-content: center;
   padding: 96px 24px 104px;
 }
 
-.p-person-detail__list-btn {
+.p-people-detail__list-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -221,7 +221,7 @@
   }
 }
 
-.p-person-detail__list-chevron {
+.p-people-detail__list-chevron {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -237,7 +237,7 @@
 // --------------------------------------------
 // パンくず
 // --------------------------------------------
-.p-person-detail__breadcrumb {
+.p-people-detail__breadcrumb {
   max-width: var(--page-max-width);
   margin: 0 auto;
   padding: 24px 40px 56px 124px;
@@ -247,110 +247,110 @@
 // レスポンシブ
 // --------------------------------------------
 @media screen and (max-width: 1024px) {
-  .p-person-detail__inner {
+  .p-people-detail__inner {
     --band-h: 150px;
   }
 
-  .p-person-detail__left {
+  .p-people-detail__left {
     width: min(640px, 64%);
     padding: 56px 40px 72px 56px;
   }
 
-  .p-person-detail__title {
+  .p-people-detail__title {
     font-size: 34px;
   }
 
-  .p-person-detail__answer {
+  .p-people-detail__answer {
     font-size: 24px;
   }
 
-  .p-person-detail__breadcrumb {
+  .p-people-detail__breadcrumb {
     padding-left: 56px;
   }
 }
 
 @media screen and (max-width: 768px) {
   // モバイルは縦積み：背景写真＋人物のヒーローを上に、本文を下に。
-  .p-person-detail__inner {
+  .p-people-detail__inner {
     --band-h: 90px;
     display: block;
   }
 
-  .p-person-detail__stage {
+  .p-people-detail__stage {
     position: static;
     align-self: stretch;
   }
 
-  .p-person-detail__bg {
+  .p-people-detail__bg {
     aspect-ratio: 16 / 11;
     background-position: center top;
   }
 
-  .p-person-detail__stage-inner {
+  .p-people-detail__stage-inner {
     padding: 0 20px;
   }
 
-  .p-person-detail__photo {
+  .p-people-detail__photo {
     right: 50%;
     transform: translateX(50%);
     width: min(300px, 70%);
     max-width: none;
   }
 
-  .p-person-detail__split {
+  .p-people-detail__split {
     padding: 0;
   }
 
-  .p-person-detail__left {
+  .p-people-detail__left {
     width: 100%;
     border-radius: 24px 24px 0 0;
     padding: 40px 24px 56px;
   }
 
-  .p-person-detail__title {
+  .p-people-detail__title {
     font-size: 28px;
     margin-bottom: 22px;
   }
 
-  .p-person-detail__meta {
+  .p-people-detail__meta {
     margin-bottom: 48px;
     font-size: 15px;
   }
 
-  .p-person-detail__qa-list {
+  .p-people-detail__qa-list {
     gap: 48px;
   }
 
-  .p-person-detail__q {
+  .p-people-detail__q {
     gap: 14px;
     font-size: 16px;
   }
 
-  .p-person-detail__q-tick {
+  .p-people-detail__q-tick {
     width: 36px;
   }
 
-  .p-person-detail__answer {
+  .p-people-detail__answer {
     font-size: 20px;
     margin-bottom: 16px;
   }
 
-  .p-person-detail__body {
+  .p-people-detail__body {
     font-size: 16px;
   }
 
-  .p-person-detail__list {
+  .p-people-detail__list {
     padding: 64px 20px 72px;
   }
 
-  .p-person-detail__list-btn {
+  .p-people-detail__list-btn {
     min-width: 0;
     width: 100%;
     max-width: 360px;
     font-size: 16px;
   }
 
-  .p-person-detail__breadcrumb {
+  .p-people-detail__breadcrumb {
     padding: 20px 20px 48px;
   }
 }

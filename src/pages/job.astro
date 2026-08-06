@@ -6,18 +6,18 @@ import PageHero from "../components/PageHero.astro";
 import IceHeading from "../components/IceHeading.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import BottomCta from "../components/BottomCta.astro";
-import { personDetails } from "../data/personDetails";
-import { persons } from "../data/persons";
+import { peopleDetails } from "../data/personDetails";
+import { people } from "../data/persons";
 
 const base = "../";
 
 // 先輩インタビュー導線で使う slug → イニシャル（リンクのアクセシブル名に使用。
 // 社員名は非公開だがイニシャルは個別ページで公開している表記）。
 const initialsBySlug = Object.fromEntries(
-  personDetails.map((p) => [p.slug, p.initials]),
+  peopleDetails.map((p) => [p.slug, p.initials]),
 );
-// slug → 入社年（"2014年"）。persons.ts が入社年の単一ソース。表示時に「入社」を付与。
-const yearBySlug = Object.fromEntries(persons.map((p) => [p.slug, p.year]));
+// slug → 入社年（"2014年"）。people.ts が入社年の単一ソース。表示時に「入社」を付与。
+const yearBySlug = Object.fromEntries(people.map((p) => [p.slug, p.year]));
 
 const chart = {
   create: {
@@ -44,7 +44,7 @@ interface Job {
   lead: string;
   body?: string;
   image: string;
-  /** この職種の先輩社員の slug 一覧（/person/<slug>/ へリンク・アバターは images/person/a<slug>.png） */
+  /** この職種の先輩社員の slug 一覧（/people/<slug>/ へリンク・アバターは images/person/a<slug>.png） */
   seniors?: string[];
 }
 
@@ -266,7 +266,7 @@ const groups: JobGroup[] = [
                                   <li class="p-job-card__interview-item">
                                     <a
                                       class="p-job-card__interview-link"
-                                      href={`${base}person/${slug}/`}
+                                      href={`${base}people/${slug}/`}
                                       aria-label={`先輩社員 ${initialsBySlug[slug]} さん（${yearBySlug[slug]}入社）のインタビューを見る`}
                                     >
                                       <img

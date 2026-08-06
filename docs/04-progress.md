@@ -47,11 +47,11 @@
 - [r] M2-C4 [`IceLinkButton.astro`](../src/components/IceLinkButton.astro) ＋ `_c-ice-link.scss`。Figma `365:16915`。**2026-06-11 コンポーネント化**：`.c-ice-link` スタイルを `_p-top.scss` から component 層へ移設し、トップ 6 個＋strategy 地図 7 個の直書きマークアップを差し替え（出力 HTML は実質同一）。Props: `href` / `label` / `sublabel?` / `basePath?` / `fluid?` / `lazy?` / `class?` ＋透過属性。
 - [r] M2-C5 `BottomCta.astro` ＋ `_c-bottom-cta.scss`。INTERNSHIP + ENTRY 横並びバナーで M2-C5 統合版。
 - [r] M2-C6 `PageHero.astro` ＋ `_c-page-hero.scss`。Props: `en`, `ja`, `variant`, `compact`, `align`, `bg`。
-- [r] M2-C7 [`PersonCard.astro`](../src/components/PersonCard.astro) ＋ `_c-person-card.scss`（2026-04-25 にコンポーネント化）。`person.astro` から 14 回呼出し。Props: `image`, `quote`, `body`, `department`, `href?`。
+- [r] M2-C7 [`PeopleCard.astro`](../src/components/PersonCard.astro) ＋ `_c-person-card.scss`（2026-04-25 にコンポーネント化）。`person.astro` から 14 回呼出し。Props: `image`, `quote`, `body`, `department`, `href?`。
 - [r] M2-C8 SPECIAL CONTENTS の共通化。データは [`src/data/specialStories.ts`](../src/data/specialStories.ts)（3 件、`slug: crosstalk | project | special-talk`）。**2026-06-08 時点で見た目も [`SpecialContents.astro`](../src/components/SpecialContents.astro) ＋ `_p-special.scss` で共通化済み**：トップ S6 と `/special/` インデックスが同一のスタックカード UI を共有し、`basePath` / `storyBase` / `headingTag` プロップで差分を吸収する。当初の「見た目は意図的に非共通化」方針からコンポーネント共通化へ移行した。
 - [r] M2-C9 新規 SCSS partial をすべて [style.scss](../src/scss/style.scss) に `@use` 登録。
 - [r] M2-C10 ~~`SectionHeading.astro` ＋ `_c-section-heading.scss`（新規）。日本語＋英語セクション見出し。~~ **2026-06-19 に [`IceHeading`](../src/components/IceHeading.astro) へ統合し削除**（見出し共通化。C6 参照）。
-- [r] M2-C11 `.c-interview-block` ＋ `_c-interview-block.scss`（新規）。Person 詳細・Special 各ページの Q+A ブロック。
+- [r] M2-C11 `.c-interview-block` ＋ `_c-interview-block.scss`（新規）。People 詳細・Special 各ページの Q+A ブロック。
 - [r] M2-C12 `.c-stat-card` ＋ `_c-stat-card.scss`（新規）。Fact ページの数値カード。
 - [r] M2-C13 [`SpecialContents.astro`](../src/components/SpecialContents.astro)（新規）。SPECIAL CONTENTS のヒーロー見出し＋スクロール連動スタックカード。トップ `/` と `/special/` で共有（M2-C8 の見た目共通化の実体）。
 - [r] M2-C14 [`IceHeading.astro`](../src/components/IceHeading.astro) ＋ `_c-ice-heading.scss`（新規・2026-06-04）。アイスキューブ＋日本語28px＋巨大英字（Barlow Condensed 100px）の大見出し。**2026-06-19 以降、EN+JA セクション見出しはこのコンポーネントに一本化**（environment / job / strategy で共用。旧 `SectionHeading` は削除）。
@@ -63,7 +63,7 @@
 - [x] M2-S1 ~~Lenis のスムーススクロール初期化~~ → **不採用に確定（2026-06-19）**。納品制約（クライアントが生成物を手編集・FTP配布。重いランタイム依存を足さない）＋ユーザー確認により、Lenis は導入しない。スムーススクロールはブラウザ標準に委ねる（固定ヘッダー／ページ遷移シャッター／パララックスとの競合も回避）。
 - [x] M2-S2 ~~GSAP の共通セットアップ~~ → **不採用に確定（2026-06-19）**。スクロール出現・パララックス・各種演出はすべて**素のバニラ CSS＋IntersectionObserver＋rAF**で実装済み（[`_u-inview.scss`](../src/scss/object/utility/_u-inview.scss) ＋ [`main.js`](../public/js/main.js) の `initInview` / `initHeroReveals` / `initParallax` / `initCountUp`）。GSAP/ScrollTrigger は既存バニラ実装と二重化し納品物に重い依存を持ち込むため導入しない。ユーザー確認済み（「素のJSで実装できるならそれに越したことはない」）。
 - [ ] M2-S3 Swiper は使用セクションで個別初期化する方針を合意（共通化しない）。
-- [r] M2-S4 Person 一覧のクライアントサイドフィルター。**実装済み**：`src/scripts/person-filter.ts` ではなく [`public/js/main.js`](../public/js/main.js) の `initPersonFilter()`（`data-person-tags` による 7 種絞り込み＋空状態トグル）。
+- [r] M2-S4 People 一覧のクライアントサイドフィルター。**実装済み**：`src/scripts/person-filter.ts` ではなく [`public/js/main.js`](../public/js/main.js) の `initPeopleFilter()`（`data-people-tags` による 7 種絞り込み＋空状態トグル）。
 - [r] M2-S5 全ページ共通のページ遷移アニメーション（斜めシアーシャッター）。**2026-06-09 実装**：[`public/js/main.js`](../public/js/main.js) の `initPageTransition()` ＋ [`_c-page-transition.scss`](../src/scss/object/component/_c-page-transition.scss)（[style.scss](../src/scss/style.scss) に `@use` 登録）、[Layout.astro](../src/layouts/Layout.astro) の `head` インラインガード＋`body` のシャッター/`.pt-page` ラッパー。参考サイト `~/Projects/sok-c.com/` の遷移を、納品制約に合わせ**バニラ CSS+JS** で移植。サイト内リンク遷移時にシアン2トーンの平行四辺形シャッターが左→右へスイープ（覆う→見せる）。詳細は下のセッションログ参照。
 
 ---
@@ -101,7 +101,7 @@
 
 ## M4. 動作検証（トップページ時点）
 
-- [r] M4-1 `npm run build` が警告なしで通る（**2026-06-08 時点 28 ページ**＝固定 13 ルート＋Person 詳細 15 ルート。旧 14 ページのうち Person 詳細 1 ルートを 15 名分の動的ルートへ拡張した結果。初回クリーンビルドは 2026-04-25 の 14 ページ）。
+- [r] M4-1 `npm run build` が警告なしで通る（**2026-06-08 時点 28 ページ**＝固定 13 ルート＋People 詳細 15 ルート。旧 14 ページのうち People 詳細 1 ルートを 15 名分の動的ルートへ拡張した結果。初回クリーンビルドは 2026-04-25 の 14 ページ）。
 - [r] M4-2 `grep -r 'data-astro-cid' dist/` が 0 件。
 - [r] M4-3 `grep -rE 'href="/|src="/' dist/ --include='*.html'` が 0 件。
 - [r] M4-4 `dist/assets/` 内のファイル名にハッシュが付いていない。
@@ -151,8 +151,8 @@
 - [r] M6b-P02 What's HOSHIZAKI `/fact/`（node `238:6058`）— [07 の 02 節](./07-spec-subpages.md#02-whats-hoshizaki数字で見るホシザキ--fact)。2026-06-05 に Figma 忠実コーディング＋実アセット書き出し済み：ヒーローを job 同様の「左インデント＋右ブリード」写真帯に修正／成長セクションを 3 列ベント配置（短=261・中=314・高=589 のアスペクト比で列揃え）に再構築／淡色ウォーターマーク画像（王冠/月桂冠/日本地図/世界地図/製品/棒グラフ、Figma 指定 opacity 再現）／海外売上比率は conic-gradient 円グラフ／福利厚生4枚を上50:50・下33:67 グリッドに。アイコン16点を `public/images/fact/` へ書き出し。**2026-06-19 に数字カードを Figma 実測で忠実化**：ラベルを平行四辺形→**六角形**（`clip-path` で左右9.86px尖り・180×41・Noto Sans JP Bold 20px・#00A0E9）に修正／カード角丸22px＋影 `0 4px 5px rgba(0,0,0,.1)`／数字を DIN Condensed 実寸に合わせ Barlow Condensed 600 で再サイズ（1947=124・No.1=150・15=198(回57)・600=122・45.9=169(％72)・427=152・120・1,157=112／福利厚生は120, ％52, 単位 年40/時間月26, 女性男性30, 説明文18px）／円グラフ配色を #B9D7FF(海外)・#E1EDFF(国内) に修正／見出しを28px＋アイス氷アイコン左はみ出し配置／福利厚生カードを全4枚 358px 高さに統一（育児のペンギンは数字間に中央絶対配置）。CDP で実測一致を確認（成長カード 442×261/589/314・ラベル180×41・数字124px ピクセル一致）。
 - [r] M6b-P03 Beyond HOSHIZAKI `/strategy/`（node `245:557`）— [07 の 03 節](./07-spec-subpages.md#03-beyond-hoshizaki事業領域海外展開--strategy)
 - [r] M6b-P04 Team HOSHIZAKI `/job/`（node `245:287`）— [07 の 04 節](./07-spec-subpages.md#04-team-hoshizaki職種紹介--job)。2026-05-28 に Figma 忠実コーディング＋実アセット書き出し済み（後述セッションログ参照）。
-- [r] M6b-P05 Person 一覧 `/person/`（**最新 node `836:2220`**／旧 `246:1055`）— [07 の 05 節](./07-spec-subpages.md#05-先輩たちのここに決めた一覧--person)。2026-06-04 に Figma `836:2220` 忠実コーディング＋実データ反映済み（後述セッションログ）。
-- [r] M6b-P05s Person 詳細 `/person/[slug]/`（node `360:58`）— **動的ルートで 15 名分を静的生成**（[`src/pages/person/[slug].astro`](../src/pages/person/) ＋ [`src/data/personDetails.ts`](../src/data/personDetails.ts) の `getStaticPaths`、slug は `01`〜`15`）。一覧カードから `./01/`〜`./15/` へリンク済み。各ページは横幅いっぱいの固定背景写真（`p-bg-NN.jpg`）＋人物切り抜き（`pNN.png`）。[07 の 05s 節](./07-spec-subpages.md#05s-person-詳細--personslug)
+- [r] M6b-P05 People 一覧 `/person/`（**最新 node `836:2220`**／旧 `246:1055`）— [07 の 05 節](./07-spec-subpages.md#05-先輩たちのここに決めた一覧--person)。2026-06-04 に Figma `836:2220` 忠実コーディング＋実データ反映済み（後述セッションログ）。
+- [r] M6b-P05s People 詳細 `/person/[slug]/`（node `360:58`）— **動的ルートで 15 名分を静的生成**（[`src/pages/person/[slug].astro`](../src/pages/person/) ＋ [`src/data/personDetails.ts`](../src/data/personDetails.ts) の `getStaticPaths`、slug は `01`〜`15`）。一覧カードから `./01/`〜`./15/` へリンク済み。各ページは横幅いっぱいの固定背景写真（`p-bg-NN.jpg`）＋人物切り抜き（`pNN.png`）。[07 の 05s 節](./07-spec-subpages.md#05s-person-詳細--personslug)
 - [r] M6b-P06 はたらく環境 `/environment/`（node `242:446`）— [07 の 06 節](./07-spec-subpages.md#06-はたらく環境environment--environment)。2026-06-04 に Figma 忠実コーディングへ全面再実装＋実アセット書き出し済み（後述セッションログ参照）。Office Tour は Swiper カルーセル。
 - [r] M6b-P07 募集要項 `/requirement/`（node `242:71`）— [07 の 07 節](./07-spec-subpages.md#07-募集要項requirement--requirement)
 - [r] M6b-P08 SPECIAL CONTENTS インデックス `/special/`（node `368:1401`）— [07 の 08 節](./07-spec-subpages.md#08-special-contents-インデックス--special)
@@ -163,7 +163,7 @@
 ### アセット一括配置
 
 - [ ] M6-A1 13 ページ分のアセットを Figma から書き出して [../public/images/<page>/](../public/images/) 配下へ配置（各ページ仕様書のアセット表に従う）。
-- [r] M6-A2 Person 用 **15 名分**のカード写真を [../public/images/person/](../public/images/person/) に配置（`person01.jpg`〜`person15.jpg`）。Figma のプレースホルダー写真（人物切り抜き＋ぼかし背景の合成）を再現して書き出し。2026-06-04。**実社員写真の支給後に差し替え予定**。
+- [r] M6-A2 People 用 **15 名分**のカード写真を [../public/images/person/](../public/images/person/) に配置（`person01.jpg`〜`person15.jpg`）。Figma のプレースホルダー写真（人物切り抜き＋ぼかし背景の合成）を再現して書き出し。2026-06-04。**実社員写真の支給後に差し替え予定**。
 
 ---
 

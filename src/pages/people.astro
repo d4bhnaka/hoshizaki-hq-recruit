@@ -5,15 +5,15 @@ import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import BottomCta from "../components/BottomCta.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
-import PersonCard from "../components/PersonCard.astro";
-import { persons, entryLabel } from "../data/persons";
+import PeopleCard from "../components/PersonCard.astro";
+import { people, entryLabel } from "../data/persons";
 
 const base = "../";
 
 // --------------------------------------------------------------------------
 // 絞り込みフィルター（職種・属性で絞り込み）
-// 値はカードの data-person-tags（英語トークン）と突き合わせる。
-// 新卒入社 / 中途入社 は persons.ts の tags（newgrad|midcareer）と対応。
+// 値はカードの data-people-tags（英語トークン）と突き合わせる。
+// 新卒入社 / 中途入社 は people.ts の tags（newgrad|midcareer）と対応。
 // --------------------------------------------------------------------------
 const filters = [
   { label: "すべて", value: "all", active: true },
@@ -36,11 +36,11 @@ const filters = [
   <div class="l-container">
     <Header basePath={base} />
     <main class="l-main">
-      <article class="p-person">
-        <PageHero en="Person" ja="はたらく人を知る" variant="cloud">
-          <p class="p-person__catch" data-inview="pop">
+      <article class="p-people">
+        <PageHero en="People" ja="はたらく人を知る" variant="cloud">
+          <p class="p-people__catch" data-inview="pop">
             <img
-              class="p-person__catch-img"
+              class="p-people__catch-img"
               src={`${base}images/person/copy.webp`}
               alt="先輩たちの「ここに決めた！」"
               width="531"
@@ -50,15 +50,15 @@ const filters = [
         </PageHero>
 
         <!-- Filter tabs -->
-        <section class="p-person__filter" aria-label="職種・属性で絞り込み">
-          <ul class="p-person__filter-list">
+        <section class="p-people__filter" aria-label="職種・属性で絞り込み">
+          <ul class="p-people__filter-list">
             {
               filters.map((f, i) => (
-                <li class="p-person__filter-item">
+                <li class="p-people__filter-item">
                   <button
                     type="button"
-                    class="p-person__filter-btn"
-                    data-person-filter={f.value}
+                    class="p-people__filter-btn"
+                    data-people-filter={f.value}
                     aria-pressed={f.active ? "true" : "false"}
                     data-inview="fade"
                     style={`--inview-i: ${Math.min(i, 5)}`}
@@ -71,17 +71,17 @@ const filters = [
           </ul>
         </section>
 
-        <!-- Person card grid -->
-        <section class="p-person__grid-section" aria-label="社員一覧">
-          <ul class="p-person__grid">
+        <!-- People card grid -->
+        <section class="p-people__grid-section" aria-label="社員一覧">
+          <ul class="p-people__grid">
             {
-              persons.map((p) => (
+              people.map((p) => (
                 <li
-                  class="p-person__grid-item"
-                  data-person-card
-                  data-person-tags={p.tags.join(" ")}
+                  class="p-people__grid-item"
+                  data-people-card
+                  data-people-tags={p.tags.join(" ")}
                 >
-                  <PersonCard
+                  <PeopleCard
                     image={`${base}images/person/${p.image}`}
                     jobType={p.jobType}
                     entry={entryLabel(p)}
@@ -93,7 +93,7 @@ const filters = [
               ))
             }
           </ul>
-          <p class="p-person__empty" data-person-empty hidden>
+          <p class="p-people__empty" data-people-empty hidden>
             該当する社員が見つかりませんでした。
           </p>
         </section>
@@ -102,7 +102,7 @@ const filters = [
         <BottomCta basePath={base} />
 
         <!-- Breadcrumb -->
-        <div class="p-person__breadcrumb">
+        <div class="p-people__breadcrumb">
           <Breadcrumb basePath={base} items={[{ label: "はたらく人を知る" }]} />
         </div>
       </article>

@@ -44,8 +44,9 @@
 .l-header__logo {
   display: inline-flex;
   align-items: center;
-  width: 135px;
+  width: 88px;
   flex-shrink: 0;
+  margin-left: 10px;
   // 200px 以上スクロールで JS が .is-scrolled を付与 → ロゴを 60% に縮小（左上基点）。
   // transform はレイアウトに影響しないため、CTA 列（margin-left:auto）の位置は不変。
   // ゆっくり滑らかに効かせるため、専用に長め（0.8s）＆イーズアウト寄りのカーブを指定。

@@ -1,8 +1,8 @@
 // ============================================
-// p-person : Person list page (Figma 836:2220 / "05_person")
+// p-people : People list page (Figma 836:2220 / "05_person")
 // ============================================
 
-.p-person {
+.p-people {
   display: block;
   width: 100%;
   background: var(--color-bg-page);
@@ -12,7 +12,7 @@
 // upper-right of an airy light-sky field that blends into the page (#d8e5e8).
 // Approximate the cloud with a soft white radial glow over a vertical sky
 // gradient (vector cloud can't be rasterised; this keeps the handoff asset-free).
-.p-person .c-page-hero {
+.p-people .c-page-hero {
   background-color: var(--color-bg-page);
   background-image:
     radial-gradient(
@@ -26,19 +26,19 @@
 
 // Figma の本文バンド: カードは x=129〜1461（= 1332px）を 1600 幅の中央に配置。
 // フィルター・グリッド・パンくずをこのバンド幅に揃える。
-$person-band: 1332px;
+$people-band: 1332px;
 
 // --------------------------------------------
 // Catch copy (image, sits in the PageHero slot)
 // 「先輩たちの『ここに決めた！』」— copy.png（白ハイライトボックス焼き込み済み）
 // --------------------------------------------
-.p-person__catch {
+.p-people__catch {
   display: flex;
   justify-content: flex-start;
   margin: 28px 0 0;
 }
 
-.p-person__catch-img {
+.p-people__catch-img {
   display: block;
   width: 531px;
   max-width: 100%;
@@ -48,13 +48,13 @@ $person-band: 1332px;
 // --------------------------------------------
 // Filter tabs (Figma ToggleButton ×7)
 // --------------------------------------------
-.p-person__filter {
-  max-width: $person-band;
+.p-people__filter {
+  max-width: $people-band;
   margin: 0 auto;
   padding: 40px 20px 18px;
 }
 
-.p-person__filter-list {
+.p-people__filter-list {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -64,11 +64,11 @@ $person-band: 1332px;
   justify-content: flex-start;
 }
 
-.p-person__filter-item {
+.p-people__filter-item {
   margin: 0;
 }
 
-.p-person__filter-btn {
+.p-people__filter-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -96,7 +96,7 @@ $person-band: 1332px;
 // 選択中の状態は JS が切り替える aria-pressed="true" を正として塗りつぶす。
 // （以前はクラス .--active のみで、JS が aria-pressed しか更新せず塗りが
 //  追従しなかった。アクセシブルな状態と見た目を一致させる。）
-.p-person__filter-btn[aria-pressed="true"] {
+.p-people__filter-btn[aria-pressed="true"] {
   background: var(--color-brand-cyan-deep);
   border-color: var(--color-brand-cyan-deep);
   color: var(--color-white);
@@ -112,13 +112,13 @@ $person-band: 1332px;
 // --------------------------------------------
 // Grid
 // --------------------------------------------
-.p-person__grid-section {
-  max-width: $person-band;
+.p-people__grid-section {
+  max-width: $people-band;
   margin: 0 auto;
   padding: 18px 20px 96px;
 }
 
-.p-person__grid {
+.p-people__grid {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -129,7 +129,7 @@ $person-band: 1332px;
   row-gap: 36px;
 }
 
-.p-person__grid-item {
+.p-people__grid-item {
   margin: 0;
   display: flex;
 }
@@ -137,7 +137,7 @@ $person-band: 1332px;
 // 絞り込み時のマイクロインタラクション。
 // JS が一致カードに .is-filtering を付け直し（リフロー後）、
 // 表示順に応じた animation-delay を inline で与えてスタッガー表示する。
-@keyframes p-person-card-in {
+@keyframes p-people-card-in {
   from {
     opacity: 0;
     transform: translateY(18px) scale(0.97);
@@ -149,13 +149,13 @@ $person-band: 1332px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .p-person__grid-item.is-filtering {
-    animation: p-person-card-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  .p-people__grid-item.is-filtering {
+    animation: p-people-card-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
     will-change: opacity, transform;
   }
 }
 
-.p-person__empty {
+.p-people__empty {
   margin: 48px 0 0;
   text-align: center;
   font-size: 16px;
@@ -166,8 +166,8 @@ $person-band: 1332px;
 // --------------------------------------------
 // Breadcrumb wrapper
 // --------------------------------------------
-.p-person__breadcrumb {
-  max-width: $person-band;
+.p-people__breadcrumb {
+  max-width: $people-band;
   margin: 0 auto;
   padding: 24px 20px 56px;
 }
@@ -176,33 +176,33 @@ $person-band: 1332px;
 // Responsive
 // --------------------------------------------
 @media screen and (max-width: 1080px) {
-  .p-person__grid {
+  .p-people__grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media screen and (max-width: 768px) {
-  .p-person__grid {
+  .p-people__grid {
     grid-template-columns: repeat(2, 1fr);
     column-gap: 14px;
     row-gap: 28px;
   }
 
-  .p-person__filter {
+  .p-people__filter {
     padding-top: 28px;
   }
 
-  .p-person__catch-img {
+  .p-people__catch-img {
     width: 65cqw;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .p-person__grid {
+  .p-people__grid {
     grid-template-columns: 1fr;
   }
 
-  .c-person-card__text {
+  .c-people-card__text {
     font-size: 1.25rem;
   }
 }

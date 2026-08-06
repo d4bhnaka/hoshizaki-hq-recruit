@@ -19,21 +19,21 @@ const bodyLines = body.split("／");
 const Tag = href ? "a" : "article";
 ---
 
-<Tag class="c-person-card" {...href ? { href } : {}}>
-  <figure class="c-person-card__photo">
+<Tag class="c-people-card" {...href ? { href } : {}}>
+  <figure class="c-people-card__photo">
     <img
-      class="c-person-card__photo-img"
+      class="c-people-card__photo-img"
       src={image}
       alt=""
       loading="lazy"
     />
   </figure>
-  <div class="c-person-card__body">
-    <div class="c-person-card__meta">
-      <span class="c-person-card__job">{jobType}</span>
-      <span class="c-person-card__badge">{entry}</span>
+  <div class="c-people-card__body">
+    <div class="c-people-card__meta">
+      <span class="c-people-card__job">{jobType}</span>
+      <span class="c-people-card__badge">{entry}</span>
     </div>
-    <p class="c-person-card__text">
+    <p class="c-people-card__text">
       {
         bodyLines.map((line, i) => (
           <>
@@ -43,10 +43,10 @@ const Tag = href ? "a" : "article";
         ))
       }
     </p>
-    <div class="c-person-card__footer">
-      <span class="c-person-card__tag">{category}</span>
+    <div class="c-people-card__footer">
+      <span class="c-people-card__tag">{category}</span>
       <svg
-        class="c-person-card__chevron"
+        class="c-people-card__chevron"
         viewBox="0 0 320 512"
         aria-hidden="true"
         focusable="false"
